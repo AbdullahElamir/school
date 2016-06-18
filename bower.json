@@ -1,0 +1,39 @@
+{
+  "name": "school",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Aladdin Sonni <alaaden3000@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/AbdullahElamir/school",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "bootstrap-rtl": "^3.4.0",
+    "font-awesome": "^4.6.3",
+    "angular": "^1.5.7",
+    "angular-ui-router": "^0.3.1",
+    "angular-strap": "^2.3.9",
+    "angular-auto-validate": "^1.19.6",
+    "angular-sanitize": "^1.5.7",
+    "angular-motion": "^0.4.4",
+    "angular-touch": "^1.5.7",
+    "ng-file-upload": "^12.0.4",
+    "nya-bootstrap-select": "^2.1.6",
+    "oclazyload": "^1.0.9",
+    "jquery-slimscroll": "^1.3.8",
+    "morris.js": "^0.5.1",
+    "raphael": "^2.2.0",
+    "angular-toastr": "^1.7.0",
+    "bootstrap-hover-dropdown": "^2.2.1",
+    "simple-line-icons": "^2.3.2"
+  }
+}
