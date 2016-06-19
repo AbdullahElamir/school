@@ -1,14 +1,14 @@
 <div class="content">
-  <!-- BEGIN FORGOT PASSWORD FORM -->
-  <form>
+  <form novalidate ng-submit="forget()">
     <h3 class="font-green">استعادة كلمت المرور</h3>
     <p> الرجاء ادخال البريد الالكتروني الخاص بك لاستعادة كلمة المرور. </p>
     <div class="form-group">
-      <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="البريد الالكتروني" name="email" /> </div>
+      <label class="control-label visible-ie8 visible-ie9">البريد الالكتروني</label>
+      <input class="form-control placeholder-no-fix" ng-model="forgetForm.email" type="email" autocomplete="off" placeholder="البريد الالكتروني" ng-required-err-type="emailType" required />
+    </div>
     <div class="form-actions">
       <a type="button" ui-sref="login" class="btn btn-default pull-left">رجوع</a>
       <button type="submit" class="btn btn-success">استعادة</button>
     </div>
   </form>
-  <!-- END FORGOT PASSWORD FORM -->
 </div>

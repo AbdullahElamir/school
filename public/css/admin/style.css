@@ -23,3 +23,16 @@ body, h1, h2, h3, h4, h5, h6, a {
   padding-left: 15px;
   padding-right: 0;
 }
+.table {
+  margin-bottom: 0px; 
+}
+.panel-title{
+  padding-top: 8px;
+}
+table.jambo_table {
+  border: 1px solid rgba(221, 221, 221, 0.78);
+}
+table.jambo_table thead {
+    background: rgba(52, 73, 94, 0.94);
+    color: #ECF0F1;
+}

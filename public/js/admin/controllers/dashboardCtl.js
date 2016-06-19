@@ -1,10 +1,13 @@
-angular.module('school').controller('DashboardCtl', function($rootScope, $scope, $http, $timeout) {
-  $scope.$on('$viewContentLoaded', function() {   
-      // initialize core components
-      App.initAjax();
+(function() {
+  'use strict';
+  angular.module('school').controller('DashboardCtl', function($rootScope, $scope, $http, $timeout) {
+    $scope.$on('$viewContentLoaded', function() {   
+        // initialize core components
+        App.initAjax();
+    });
+    // set sidebar closed and body solid layout mode
+    $rootScope.settings.layout.pageContentWhite = true;
+    $rootScope.settings.layout.pageBodySolid = false;
+    $rootScope.settings.layout.pageSidebarClosed = false;
   });
-  // set sidebar closed and body solid layout mode
-  $rootScope.settings.layout.pageContentWhite = true;
-  $rootScope.settings.layout.pageBodySolid = false;
-  $rootScope.settings.layout.pageSidebarClosed = false;
-});
+}());
