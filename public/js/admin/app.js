@@ -61,7 +61,7 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRo
     resolve: {
       deps: ['$ocLazyLoad',function($ocLazyLoad){
         return $ocLazyLoad.load({
-          insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+          insertBefore: '#ngLoadPluginsBefore', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
           files: [
             '/morris.js/morris.css',                            
             '/morris.js/morris.min.js',

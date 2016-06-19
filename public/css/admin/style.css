@@ -1,13 +1,13 @@
 @font-face {
   font-family: 'JFFlat';
-  src : url("../fonts/JF-Flat-regular.ttf") format("truetype");
+  src : url("../../fonts/JF-Flat-regular.ttf") format("truetype");
 }
 @font-face {
   font-family: 'DroidKufi';
-  src : url("../fonts/DroidKufi-Regular.ttf") format("truetype");
+  src : url("../../fonts/DroidKufi-Regular.ttf") format("truetype");
 }
 body, h1, h2, h3, h4, h5, h6, a {
-  font-family: 'DroidKufi', sans-serif;
+  font-family: 'JFFlat', sans-serif;
 }
 .dashboard-stat .details {
   position: absolute;
