@@ -1,0 +1,143 @@
+var generatePassword = require('password-generator'),
+  easyPbkdf2 = require("easy-pbkdf2")();
+var model = require("../models");
+var student = null;
+
+module.exports = {
+
+  getAllStudent :function(cb){
+    model.Student.find({},function(err, students){
+      if(!err){
+        cb(students);
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+
+  //getAllCustomerCount
+  getAllStudentsCount :function(cb){
+    model.Student.count({},function(err, students){
+      if(!err){
+        cb({count:students});
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+
+  getAllStudentStatus:function(status,cb){
+    model.Student.find({status:status},function(err, students){
+      if(!err){
+        cb(students);
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+  
+  getStudentName :function(name,cb){
+    model.Student.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
+      if(!err){
+        cb(custom);
+      }else{
+        cb(null);
+      }
+    });
+  },
+
+  getStudentId :function(id,cb){
+    model.Student.findOne({_id : id}, function(err, custom){
+      if(!err){
+        cb(custom);
+      }else{
+        cb(null);
+      }
+    });
+  },
+
+  addStudent : function(body,cb){
+    var obj ={
+      name : body.name,
+      password : body.password,
+      nid : body.nid,
+      address : body.address,
+      email : body.email,
+      phone : body.phone,
+      birthDay : body.birth_day,
+      parentId : body.parent_id
+      lastLogin : body.last_login
+      dateJoun : body.date_joun
+      gender : body.gender
+      nationality : body.nationality
+      startDate : body.StartDate
+      bloodType : body.BloodType
+    }
+
+    student = new model.Student(obj);
+    student.save(function(err,result){
+      if (!err) {
+        cb(true);
+      } else {
+        console.log(err);
+        cb(false);
+      }
+    });
+  },
+
+  updateStudentById : function(studentId,adminId,cb){
+    obj={
+      status:1,
+      user : adminId
+    }
+     model.Student.findOneAndUpdate({_id:studentId},obj, function(err,result) {
+      if (!err) {
+        cb(true);
+      } else {
+        cb(false);
+      }
+    });
+  },
+
+  updateStudent : function(id,body,cb){
+    var obj ={
+      name : body.name,
+      password : body.password,
+      nid : body.nid,
+      address : body.address,
+      email : body.email,
+      phone : body.phone,
+      birthDay : body.birth_day,
+      parentId : body.parent_id
+      lastLogin : body.last_login
+      dateJoun : body.date_joun
+      gender : body.gender
+      nationality : body.nationality
+      startDate : body.StartDate
+      bloodType : body.BloodType
+    }
+    model.Student.findOneAndUpdate({_id:id}, obj, function(err,result) {
+      if (!err) {
+        cb(true)
+      } else {
+        console.log(err);
+        cb(false);
+      }
+    });
+  },
+  
+  deleteStudent : function(id,cb){
+    model.Student.remove({_id:id}, function(err,result) {
+      if (!err) {
+        cb(2)
+      } else {
+        console.log(err);
+        cb(3);
+      }
+    });
+  },
+
+};
