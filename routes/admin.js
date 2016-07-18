@@ -5,6 +5,7 @@ var router = express.Router();
 router.get('/:folder/:name', function(req, res) {
   var folder = req.params.folder;
   var name = req.params.name;
+  console.log(name);
   res.render('admin/' + folder + '/' + name);
 });
 
