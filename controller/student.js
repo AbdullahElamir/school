@@ -17,14 +17,19 @@ module.exports = {
   },
 
   //getAllCustomerCount
-  getAllStudentsCount :function(cb){
-    model.Student.count({},function(err, students){
-      if(!err){
-        cb({count:students});
-      }else{
-        console.log(err);
-        cb(null);
-      }
+  getAllStudentsCount :function(limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.Student.count({},function(err, count){
+      model.Student.find({}).limit(limit).skip(page*limit).exec(function(err,students){
+        if(!err){
+          cb({result:students,count:count});
+        }else{
+          console.log(err);
+          cb(null);
+        }
+      });
     });
   },
 
@@ -60,6 +65,7 @@ module.exports = {
   },
 
   addStudent : function(body,cb){
+    // obj = body
     var obj ={
       name : body.name,
       password : body.password,
@@ -87,22 +93,24 @@ module.exports = {
       }
     });
   },
-
-  updateStudentById : function(studentId,adminId,cb){
-    obj={
-      status:1,
-      user : adminId
-    }
-     model.Student.findOneAndUpdate({_id:studentId},obj, function(err,result) {
-      if (!err) {
-        cb(true);
-      } else {
-        cb(false);
-      }
-    });
-  },
+// هذي لي شني ؟؟؟؟؟؟؟؟؟؟؟
+// this is for what
+  // updateStudentById : function(studentId,adminId,cb){
+  //   obj={
+  //     status:1,
+  //     user : adminId
+  //   }
+  //    model.Student.findOneAndUpdate({_id:studentId},obj, function(err,result) {
+  //     if (!err) {
+  //       cb(true);
+  //     } else {
+  //       cb(false);
+  //     }
+  //   });
+  // },
 
   updateStudent : function(id,body,cb){
+    // obj = body
     var obj ={
       name : body.name,
       password : body.password,
