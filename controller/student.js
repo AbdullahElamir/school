@@ -93,21 +93,6 @@ module.exports = {
       }
     });
   },
-// هذي لي شني ؟؟؟؟؟؟؟؟؟؟؟
-// this is for what
-  // updateStudentById : function(studentId,adminId,cb){
-  //   obj={
-  //     status:1,
-  //     user : adminId
-  //   }
-  //    model.Student.findOneAndUpdate({_id:studentId},obj, function(err,result) {
-  //     if (!err) {
-  //       cb(true);
-  //     } else {
-  //       cb(false);
-  //     }
-  //   });
-  // },
 
   updateStudent : function(id,body,cb){
     // obj = body
@@ -147,5 +132,5 @@ module.exports = {
       }
     });
   },
-
+  
 };
