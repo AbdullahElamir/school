@@ -11,8 +11,8 @@ router.get('/:name', function(req, res) {
   res.render(name);
 });
 
-router.get('/admin', function(req, res, next) {
-  res.render('admin/index', { title: 'Admin Dashboard' });
-});
+// router.get('/admin', function(req, res, next) {
+//   res.render('admin/index', { title: 'Admin Dashboard' });
+// });
 
 module.exports = router;
