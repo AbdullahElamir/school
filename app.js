@@ -8,7 +8,9 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
-
+var parent = require('./routes/parent');
+var teacher = require('./routes/teacher');
+var student = require('./routes/student');
 var app = express();
 
 // view engine setup
@@ -28,7 +30,9 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/admin', admin);
-
+app.use('/parent',parent);
+app.use('/teacher', teacher);
+app.use('/student',student);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

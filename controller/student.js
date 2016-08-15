@@ -1,5 +1,4 @@
-var generatePassword = require('password-generator'),
-  easyPbkdf2 = require("easy-pbkdf2")();
+
 var model = require("../models");
 var student = null;
 
@@ -65,23 +64,7 @@ module.exports = {
   },
 
   addStudent : function(body,cb){
-    // obj = body
-    var obj ={
-      name : body.name,
-      password : body.password,
-      nid : body.nid,
-      address : body.address,
-      email : body.email,
-      phone : body.phone,
-      birthDay : body.birth_day,
-      parentId : body.parent_id
-      lastLogin : body.last_login
-      dateJoun : body.date_joun
-      gender : body.gender
-      nationality : body.nationality
-      startDate : body.StartDate
-      bloodType : body.BloodType
-    }
+    obj = body
 
     student = new model.Student(obj);
     student.save(function(err,result){
@@ -95,23 +78,7 @@ module.exports = {
   },
 
   updateStudent : function(id,body,cb){
-    // obj = body
-    var obj ={
-      name : body.name,
-      password : body.password,
-      nid : body.nid,
-      address : body.address,
-      email : body.email,
-      phone : body.phone,
-      birthDay : body.birth_day,
-      parentId : body.parent_id
-      lastLogin : body.last_login
-      dateJoun : body.date_joun
-      gender : body.gender
-      nationality : body.nationality
-      startDate : body.StartDate
-      bloodType : body.BloodType
-    }
+    obj = body
     model.Student.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true)
