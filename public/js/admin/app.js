@@ -59,7 +59,7 @@
     // Dashboard
     $stateProvider.state('dashboard',{
       url: '/dashboard',
-      templateUrl: '/admin/pages/dashboard',            
+      templateUrl: 'admin/pages/dashboard',            
       data: {pageTitle: 'لوحة التحكم'},
       controller: 'DashboardCtl',
       resolve: {
@@ -76,10 +76,9 @@
           });
         }]
       }
-      console.log("fff");
     }).state('printTable',{
       url: '/printTable',
-      templateUrl: '/admin/pages/printTable',            
+      templateUrl: 'admin/pages/printTable',            
       data: {pageTitle: 'طباعة الجدول'},
       controller: 'PrintTableCtl',
       resolve: {
