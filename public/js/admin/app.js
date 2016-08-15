@@ -92,6 +92,25 @@
         }]
       }
     })
+
+    .state('students',{
+      url: '/students',
+      templateUrl: 'admin/pages/student/students',            
+      data: {pageTitle: 'طباعة الجدول'},
+      controller: 'studentsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/studentsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
+
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){
     defaultErrorMessageResolver.setI18nFileRootPath('/lang');
