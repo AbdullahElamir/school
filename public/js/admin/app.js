@@ -95,9 +95,25 @@
 
     .state('students',{
       url: '/students',
-      templateUrl: 'admin/pages/students',            
+      templateUrl: 'admin/pages/student/students',            
       data: {pageTitle: 'طباعة الجدول'},
       controller: 'StudentsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/studentsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+    .state('newStudent',{
+      url: '/newStudent',
+      templateUrl: 'admin/pages/student/newStudent',            
+      data: {pageTitle: 'طباعة الجدول'},
+      controller: 'newStudentCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({
