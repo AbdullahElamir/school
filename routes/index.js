@@ -6,13 +6,18 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Login' });
 });
 
-router.get('/:name', function(req, res) {
-  var name = req.params.name;
-  res.render(name);
-});
 
 // router.get('/admin', function(req, res, next) {
 //   res.render('admin/index', { title: 'Admin Dashboard' });
 // });
 
-module.exports = router;
+router.get('/:name', function(req, res) {
+  var name = req.params.name;
+  res.render(name);
+});
+
+
+// router.get('/admin', function(req, res, next) {
+//   res.render('admin/index', { title: 'Admin Dashboard' });
+// });
+
