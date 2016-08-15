@@ -95,9 +95,9 @@
 
     .state('students',{
       url: '/students',
-      templateUrl: 'admin/pages/student/students',            
+      templateUrl: 'admin/pages/students',            
       data: {pageTitle: 'طباعة الجدول'},
-      controller: 'studentsCtl',
+      controller: 'StudentsCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({

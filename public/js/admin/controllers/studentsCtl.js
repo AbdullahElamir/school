@@ -1,14 +1,8 @@
 (function(){
   'use strict';
-  var app = angular.module('isp');
+  var app = angular.module('school');
   //permissionsCtl
-  app.controller('studentsCtl',['$scope',function($scope){
-  	alert("fff");
+  app.controller('StudentsCtl',['$scope',function($scope){
+  	// alert("fff");
   }]);
-
-
-
-
-
-
-  }());
+}());
