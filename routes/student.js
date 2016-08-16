@@ -26,7 +26,7 @@ router.post('/add',function(req, res) {
 });
 
 /* Edit student by id  */
-router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
+router.put('/edit/:id',function(req, res) {
   studentMgr.updateStudent(req.params.id,req.body,function(student){
     res.send(student);
   });

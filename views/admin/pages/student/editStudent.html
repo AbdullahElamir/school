@@ -2,23 +2,23 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>إضافة طالب جديد</h2>
+        <h2>تعديل طالب</h2>
         <div class="clearfix"></div>
       </div>
       <br>
       <div class="x_content">
-        <form novalidate ng-submit="newStudent()">
+        <form novalidate ng-submit="editStudent()">
           <div class="row"> 
             <div class="col-md-4" >
               <div class="form-group">
                 <label class="control-label">اسم الطالب</label>
-                <input class="form-control input-sm" type="text" ng-model="newStudentForm.name"  placeholder="اسم الطالب" required>
+                <input class="form-control input-sm" type="text" ng-model="editStudentForm.name"  placeholder="اسم الطالب" required>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label class="control-label">اسم ولي الامر</label>
-                 <select class="form-control input-sm" ng-model="newStudentForm.parentId" >
+                 <select class="form-control input-sm" ng-model="editStudentForm.parentId" >
                   <option value="" disabled selected>الرجاء الاختيار</option>
                  
                 </select>
@@ -27,7 +27,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="control-label">رقم الهاتف</label>
-                <input class="form-control input-sm" type="text" ng-model="newStudentForm.phone" ng-required-err-type="area" placeholder="رقم الهاتف" required>
+                <input class="form-control input-sm" type="text" ng-model="editStudentForm.phone" ng-required-err-type="area" placeholder="رقم الهاتف" required>
               </div>
             </div>
 
@@ -36,7 +36,7 @@
           <div class="col-md-3">
                <div class="form-group">
                 <label class="control-label">فصيلة الدم</label>
-                 <select class="form-control input-sm" ng-model="newStudentForm.bloodType"  required>
+                 <select class="form-control input-sm" ng-model="editStudentForm.bloodType"  required>
                   <option value="" disabled selected>الرجاء الاختيار</option>
                   <option value="+AB">+AB</option>
                   <option value="-AB">-AB</option>
@@ -52,19 +52,19 @@
             <div class="col-md-3">
               <div class="form-group">
                 <label class="control-label">البريد الالكتروني</label>
-                <input class="form-control input-sm" type="text" ng-model="newStudentForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
+                <input class="form-control input-sm" type="text" ng-model="editStudentForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label class="control-label">الرقم الوطني</label>
-                <input class="form-control input-sm" type="text" ng-model="newStudentForm.nid"  placeholder="الرقم الوطني" required>
+                <input class="form-control input-sm" type="text" ng-model="editStudentForm.nid"  placeholder="الرقم الوطني" required>
               </div>
             </div>
             <div class="col-md-3">
             <div class="form-group">
               <label class="control-label">الجنس</label>
-               <select class="form-control input-sm" ng-model="newStudentForm.gender"  required>
+               <select class="form-control input-sm" ng-model="editStudentForm.gender"  required>
                 <option value="" disabled selected>الرجاء الاختيار</option>
                 <option value="1">دكر</option>
                 <option value="2">انثي</option>
@@ -76,19 +76,19 @@
              <div class="col-md-3">
               <div class="form-group">
                 <label class="control-label">الجنسية</label>
-                <input class="form-control input-sm" type="text" ng-model="newStudentForm.nationality" ng-required-err-type="phone" placeholder="الجنسية" required>
+                <input class="form-control input-sm" type="text" ng-model="editStudentForm.nationality" ng-required-err-type="phone" placeholder="الجنسية" required>
               </div>
             </div>
              <div class="col-md-3">
               <div class="form-group">
                 <label class="control-label">العنوان</label>
-                <input class="form-control input-sm" type="text" ng-model="newStudentForm.address" placeholder="العنوان" required>
+                <input class="form-control input-sm" type="text" ng-model="editStudentForm.address" placeholder="العنوان" required>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
             <p class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup ng-model="newStudentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" />
+              <input type="text" class="form-control" uib-datepicker-popup ng-model="editStudentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -99,7 +99,7 @@
           <hr>
           <div class="row">
             <div class="col-md-2 col-md-offset-4">
-              <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
+              <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;تعديل</button>
             </div>
             <div class="col-md-2">
               <a class="btn btn-success btn-sm btn-block" ui-sref="students"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>

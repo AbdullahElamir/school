@@ -127,6 +127,23 @@
       }
     })
 
+    .state('editStudent',{
+      url: '/editStudent/edit/:id',
+      templateUrl: 'admin/pages/student/editStudent',            
+      data: {pageTitle: 'طباعة الجدول'},
+      controller: 'editStudentCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/studentsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
 
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){

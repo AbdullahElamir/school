@@ -1,9 +1,15 @@
 <div class="portlet light bordered ">
   <div class="portlet-title">
+    <br>
     <div class="caption caption-md">
       <i class="icon-settings font-green"></i>
       <span class="caption-subject font-green bold">عرض الطلبة</span>
     </div>
+     <div class="col-xs-7">
+            <input type="text" class="form-control input-sm" ng-model="searchByName" ng-change="searchCustomer()" placeholder="بحث...">
+          </div>
+          <div class="col-xs-3 text-left">
+            <a ui-sref="newStudent" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة طالب جديد</a>
   </div>
   <div class="portlet-body" style="padding-top:0px;">
     <table class="table table-striped">
@@ -27,7 +33,7 @@
           <td>{{student.address}}</td>
           <td>{{student.nid}}</td>
           <td>
-            <a class="btn btn-success btn-xs" ui-sref="editCustomer({id:perm._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل / عرض</a>
+            <a class="btn btn-success btn-xs" ui-sref="editStudent({id:student._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل / عرض</a>
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteStudent(student._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
           </td>
         </tr>

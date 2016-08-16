@@ -11,6 +11,12 @@
       },
       'deleteStudent': function(id){
         return $http.delete('/student/delete/'+id)
+      },
+      'getStudentById': function(id){
+        return $http.get('/student/'+id.id)
+      },
+      'editStudent': function(id,obj){
+        return $http.put('/student/edit/'+id,obj)
       }
     };
     return self;
