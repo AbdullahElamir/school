@@ -7,7 +7,7 @@
     'ngSanitize',
     'AngularPrint',
     'jcs-autoValidate',
-    'toaster',
+    'state',
   ]);
   /* Setup global settings */
   app.factory('settings',['$rootScope',function($rootScope){

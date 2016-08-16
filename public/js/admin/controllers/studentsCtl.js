@@ -2,18 +2,18 @@
   'use strict';
   var app = angular.module('school');
 
-  app.controller('StudentsCtl',['$scope',function($scope){
+  app.controller('StudentsCtl',['$scope','$state',function($scope,state){
     
   }]);
 
   //newStudentCtl
-   app.controller('newStudentCtl',['$scope','StudentServ','toastr',function($scope,StudentServ,toastr){
+   app.controller('newStudentCtl',['$scope','StudentServ',function($scope,StudentServ){
     $scope.newStudentForm={};
     $scope.newStudent = function(){
       StudentServ.addStudent($scope.newStudentForm).then(function(response){
         if(response.data){
           alert("true");
-         /* $state.go('permissions');*/
+          $state.go('students');
           /*toastr.success('تمت إضافة الصلاحية بنجاح');*/
         } else {
           alert("false"); 
