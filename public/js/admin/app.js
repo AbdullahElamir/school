@@ -76,7 +76,6 @@
           });
         }]
       }
-      console.log("fff");
     }).state('printTable',{
       url: '/printTable',
       templateUrl: '/admin/pages/printTable',            
