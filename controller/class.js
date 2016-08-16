@@ -1,7 +1,5 @@
-var generatePassword = require('password-generator'),
-  easyPbkdf2 = require("easy-pbkdf2")();
 var model = require("../models");
-var class = null;
+var class1 = null;
 
 module.exports = {
 
@@ -65,13 +63,7 @@ module.exports = {
   },
 
   addClass : function(body,cb){
-    var obj ={
-      name : body.name,
-      description : body.description,
-      studyId : body.studyId
-
-    }
-
+    var obj =body;
     class1 = new model.Class(obj);
     class1.save(function(err,result){
       if (!err) {
@@ -84,12 +76,7 @@ module.exports = {
   },
 
   updateClass : function(id,body,cb){
-    // obj = body
-    var obj ={
-      name : body.name,
-      description : body.description,
-      studyId : body.studyId
-    }
+    obj = body
     model.Class.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true)

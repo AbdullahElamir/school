@@ -5,7 +5,6 @@ var Schema = mongoose.Schema;
 var Class = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
   description: {type: String,default:"NULL"},
-  studyId:{ type: Schema.Types.ObjectId , ref: 'Study'},
   status: {type: Number, default:1}
 });
 
