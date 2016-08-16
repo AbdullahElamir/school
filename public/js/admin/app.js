@@ -6,7 +6,8 @@
     'oc.lazyLoad',  
     'ngSanitize',
     'AngularPrint',
-    'jcs-autoValidate'
+    'jcs-autoValidate',
+    'toaster'
   ]);
   /* Setup global settings */
   app.factory('settings',['$rootScope',function($rootScope){

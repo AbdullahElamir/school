@@ -16,7 +16,8 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
 });
 
 /* Add new student  */
-router.post('/add', userHelpers.isLogin ,function(req, res) {
+router.post('/add',function(req, res) {
+  console.log(req.body);
   studentMgr.addStudent(req.body,function(student){
     res.send(student);
   });
