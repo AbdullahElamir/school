@@ -59,7 +59,7 @@
     // Dashboard
     $stateProvider.state('dashboard',{
       url: '/dashboard',
-      templateUrl: '/admin/pages/dashboard',            
+      templateUrl: 'admin/pages/dashboard',            
       data: {pageTitle: 'لوحة التحكم'},
       controller: 'DashboardCtl',
       resolve: {
@@ -78,7 +78,7 @@
       }
     }).state('printTable',{
       url: '/printTable',
-      templateUrl: '/admin/pages/printTable',            
+      templateUrl: 'admin/pages/printTable',            
       data: {pageTitle: 'طباعة الجدول'},
       controller: 'PrintTableCtl',
       resolve: {
@@ -92,6 +92,41 @@
         }]
       }
     })
+
+    .state('students',{
+      url: '/students',
+      templateUrl: 'admin/pages/student/students',            
+      data: {pageTitle: 'طباعة الجدول'},
+      controller: 'StudentsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/studentsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+    .state('newStudent',{
+      url: '/newStudent',
+      templateUrl: 'admin/pages/student/newStudent',            
+      data: {pageTitle: 'طباعة الجدول'},
+      controller: 'newStudentCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/studentsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
+
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){
     defaultErrorMessageResolver.setI18nFileRootPath('/lang');
