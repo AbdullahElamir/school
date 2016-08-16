@@ -7,14 +7,15 @@
   }]);
 
   //newStudentCtl
-   app.controller('newStudentCtl',['$scope','StudentServ','toastr',function($scope,StudentServ,toastr){
+   app.controller('newStudentCtl',['$scope','StudentServ','$state','toastr',function($scope,StudentServ,$state,toastr){
     $scope.newStudentForm={};
     $scope.newStudent = function(){
       StudentServ.addStudent($scope.newStudentForm).then(function(response){
         if(response.data){
           alert("true");
+          $state.go('students');
          /* $state.go('permissions');*/
-          /*toastr.success('تمت إضافة الصلاحية بنجاح');*/
+          toastr.success('تم التطوير بنجاح');
         } else {
           alert("false"); 
         }
