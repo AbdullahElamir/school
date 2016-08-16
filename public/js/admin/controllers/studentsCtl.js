@@ -7,14 +7,33 @@
   }]);
 
   //newStudentCtl
-   app.controller('newStudentCtl',['$scope',function($scope){
+   app.controller('newStudentCtl',['$scope','StudentServ','toastr',function($scope,StudentServ,toastr){
+    $scope.newStudentForm={};
+    $scope.newStudent = function(){
+      StudentServ.addStudent($scope.newStudentForm).then(function(response){
+        if(response.data){
+          alert("true");
+         /* $state.go('permissions');*/
+          /*toastr.success('تمت إضافة الصلاحية بنجاح');*/
+        } else {
+          alert("false"); 
+        }
+        
+      },function(response){
+        console.log("Somthing went wrong");
+      });
+        
+    }
+
+
+
       
       $scope.today = function() {
-      $scope.BDate = new Date();
+      $scope.newStudentForm.birth_day = new Date();
       };
       $scope.today();
       $scope.clear = function() {
-      $scope.BDate = null;
+      $scope.newStudentForm.birth_day = null;
       };
 
       $scope.inlineOptions = {
@@ -24,7 +43,7 @@
       };
 
       $scope.dateOptions = {
-        dateDisabled: disabled,
+        /*dateDisabled: disabled,*/
         formatYear: 'yy',
         maxDate: new Date(2020, 5, 22),
         minDate: new Date(),
