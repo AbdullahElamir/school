@@ -6,6 +6,7 @@ var userHelpers = require("../controller/userHelpers");
 /* GET all student */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   studentMgr.getAllStudentsCount(req.params.limit,req.params.page,function(student){
+    console.log(student);
     res.send(student);
   });
 });

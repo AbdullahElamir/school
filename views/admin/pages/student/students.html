@@ -9,20 +9,54 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          <th>الاسم</th>
+          <th>البريد الالكتروني</th>
+          <th>ألهاتف</th>
+          <th>الجنسية</th>
+          <th>العنوان</th>
+          <th>رقم الوطني</th>
+          <th ><i class="fa fa-cog"></i></th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+        <tr ng-repeat="student in students">
+          <td>{{student.name}}</td>
+          <td>{{student.email}}</td>
+          <td>{{student.phone}}</td>
+          <td>{{student.nationality}}</td>
+          <td>{{student.address}}</td>
+          <td>{{student.nid}}</td>
+          <td>
+            <a class="btn btn-success btn-xs" ui-sref="editCustomer({id:perm._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل / عرض</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteStudent(student._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+          </td>
         </tr>
       </tbody>
     </table>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">مســح طالب</h4>
+      </div>
+      <div class="modal-body">
+        هل حقا تريد مسح هذا الطالب ؟
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+        <button ng-click="deleteConfirm(idStudent)" value="idStudent" type="button" class="btn btn-danger">مسح</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="row" ng-show="students.length">
+      <div class="col-xs-12 col-md-12 text-center">
+        <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
+        <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
+      </div>
+    </div>
   </div>
 </div>

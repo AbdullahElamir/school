@@ -15,8 +15,6 @@
                 <input class="form-control input-sm" type="text" ng-model="newStudentForm.name"  placeholder="اسم الطالب" required>
               </div>
             </div>
-
-            
             <div class="col-md-4">
               <div class="form-group">
                 <label class="control-label">اسم ولي الامر</label>
@@ -35,7 +33,6 @@
 
           </div>
           <div class="row">
-       
           <div class="col-md-3">
                <div class="form-group">
                 <label class="control-label">فصيلة الدم</label>
@@ -64,32 +61,22 @@
                 <input class="form-control input-sm" type="text" ng-model="newStudentForm.nid"  placeholder="الرقم الوطني" required>
               </div>
             </div>
-
-              <div class="col-md-3">
-              <div class="form-group">
-                <label class="control-label">الجنس</label>
-                 <select class="form-control input-sm" ng-model="newStudentForm.gender"  required>
-                  <option value="" disabled selected>الرجاء الاختيار</option>
-                  <option value="1">دكر</option>
-                  <option value="2">انثي</option>
-                </select>
-              </div>
+            <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">الجنس</label>
+               <select class="form-control input-sm" ng-model="newStudentForm.gender"  required>
+                <option value="" disabled selected>الرجاء الاختيار</option>
+                <option value="1">دكر</option>
+                <option value="2">انثي</option>
+              </select>
             </div>
-
-
-          <!--   <div class="col-md-3">
-              <div class="form-group">
-                <label class="control-label">ملاحظات</label>
-                <textarea class="form-control input-sm" rows="6" ng-model="newCustomerForm.notes" ng-required-err-type="notes" placeholder="ملاحظات" required></textarea>
-              </div>
-            </div> -->
           </div>
-
+          </div>
            <div class="row">
              <div class="col-md-3">
               <div class="form-group">
-                <label class="control-label">البلد</label>
-                <input class="form-control input-sm" type="text" ng-model="newStudentForm.nationality" ng-required-err-type="phone" placeholder="البلد" required>
+                <label class="control-label">الجنسية</label>
+                <input class="form-control input-sm" type="text" ng-model="newStudentForm.nationality" ng-required-err-type="phone" placeholder="الجنسية" required>
               </div>
             </div>
              <div class="col-md-3">

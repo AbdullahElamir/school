@@ -2,23 +2,76 @@
   'use strict';
   var app = angular.module('school');
 
-  app.controller('StudentsCtl',['$scope','$state',function($scope,state){
-    
+  app.controller('StudentsCtl',['$scope','$state','StudentServ','toastr',function($scope,state,StudentServ,toastr){
+    $scope.pageSize = 10;
+    $scope.currentPage = 1;
+    $scope.total = 0;
+    $scope.init = function () {
+     StudentServ.getStudents($scope.pageSize,$scope.currentPage).then(function(response) {
+        $scope.students = response.data.result;
+        $scope.total = response.data.count;
+      }, function(response) {
+        console.log("Something went wrong");
+      });
+   }
+   $scope.init();
+
+   $scope.deleteStudent = function(id) {
+    $scope.idStudent = id;
+   }
+   $scope.deleteConfirm = function(id) {
+    StudentServ.deleteStudent(id).then(function(response){
+      if(response.data.result == 1){
+          toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
+        } else if (response.data.result == 2){
+   
+          $('#myModal').modal('hide');
+          toastr.success('تم الحذف بنجاح');
+          $scope.init();
+        } else if (response.data.result == 3){
+          toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
+        }
+
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+   }
+
+
+ /*   $scope.confirmDelete = function(id){
+      PermissionServ.deletePermission(id).then(function(response){
+        if(response.data.result == 1){
+          $scope.deleteModel.hide();
+          toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
+        } else if (response.data.result == 2){
+          $scope.deleteModel.hide();
+          toastr.success('تم الحذف بنجاح');
+          $scope.init();
+        } else if (response.data.result == 3){
+          $scope.deleteModel.hide();
+          toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
+        }
+      }, function(response) {
+        console.log("Somthing went wrong");
+      });
+    }*/
+
+
+
   }]);
 
-  //newStudentCtl
-   app.controller('newStudentCtl',['$scope','StudentServ',function($scope,StudentServ){
+
+
+   app.controller('newStudentCtl',['$scope','StudentServ','$state','toastr',function($scope,StudentServ,$state,toastr){
     $scope.newStudentForm={};
     $scope.newStudent = function(){
       StudentServ.addStudent($scope.newStudentForm).then(function(response){
         if(response.data){
-          alert("true");
           $state.go('students');
-          /*toastr.success('تمت إضافة الصلاحية بنجاح');*/
+          toastr.success('تم الإضافة بنجاح');
         } else {
-          alert("false"); 
+          toastr.error('خطأ في عملية الادخال');
         }
-        
       },function(response){
         console.log("Somthing went wrong");
       });
