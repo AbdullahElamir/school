@@ -36,27 +36,6 @@
     });
    }
 
-
- /*   $scope.confirmDelete = function(id){
-      PermissionServ.deletePermission(id).then(function(response){
-        if(response.data.result == 1){
-          $scope.deleteModel.hide();
-          toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
-        } else if (response.data.result == 2){
-          $scope.deleteModel.hide();
-          toastr.success('تم الحذف بنجاح');
-          $scope.init();
-        } else if (response.data.result == 3){
-          $scope.deleteModel.hide();
-          toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
-        }
-      }, function(response) {
-        console.log("Somthing went wrong");
-      });
-    }*/
-
-
-
   }]);
 
 //editStudentCtl

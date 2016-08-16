@@ -1,8 +1,16 @@
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <br>
+    <div class="caption caption-md">
+      <i class="icon-settings font-green"></i>
+      <span class="caption-subject font-green bold">إضافة طالب جديد</span>
+    </div>
+
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>إضافة طالب جديد</h2>
+        <h2></h2>
         <div class="clearfix"></div>
       </div>
       <br>
@@ -87,12 +95,14 @@
             </div>
             <div class="col-md-3">
               <div class="form-group">
-            <p class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup ng-model="newStudentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" />
+                <label class="control-label">تاريخ الميلاد</label>
+            <div class="input-group">
+                
+              <input type="text" class="form-control input-sm" uib-datepicker-popup ng-model="newStudentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
-            </p>
+            </div>
             </div>
               </div>
             </div>
@@ -109,4 +119,6 @@
       </div>
     </div>
   </div>
+</div>
+</div>
 </div>
