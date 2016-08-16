@@ -9,6 +9,7 @@
 body, h1, h2, h3, h4, h5, h6, a {
   font-family: 'JFFlat', sans-serif;
 }
+
 .dashboard-stat .details {
   position: absolute;
   right: 15px;
@@ -36,3 +37,14 @@ table.jambo_table thead {
     background: rgba(52, 73, 94, 0.94);
     color: #ECF0F1;
 }
+
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
