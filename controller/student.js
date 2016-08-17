@@ -6,6 +6,7 @@ module.exports = {
 
   getAllStudent :function(cb){
     model.Student.find({},function(err, students){
+      console.log("fff");
       if(!err){
         cb(students);
       }else{

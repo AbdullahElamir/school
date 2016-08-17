@@ -1,4 +1,4 @@
-var model = require("../models");
+var model = require('../models');
 var class1 = null;
 
 module.exports = {
