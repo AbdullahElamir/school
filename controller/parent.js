@@ -78,7 +78,8 @@ module.exports = {
 
   updateParent : function(id,body,cb){
     obj = body
-    
+    console.log(body);
+    console.log(id);
     model.Parent.findOneAndUpdate({_id:id}, obj, function(err,parents) {
       if (!err) {
         cb(true)

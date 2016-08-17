@@ -32,6 +32,12 @@
       },
       'deleteParent': function(id){
         return $http.delete('/parent/delete/'+id)
+      },
+      'getParentById': function(id) {
+        return $http.get('/parent/'+id.id);
+      },
+      'editParent': function(id,obj) {
+        return $http.put('/parent/edit/'+id,obj)
       }
     };
     return self;
