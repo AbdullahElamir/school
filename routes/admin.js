@@ -10,10 +10,13 @@ router.get('/:folder/:name', function(req, res) {
 });
 
 router.get('/:folder/:student/:name', function(req, res) {
+	console.log("ddd");
   var folder = req.params.folder;
   var student = req.params.student;
   var name = req.params.name;
   console.log(name);
+  console.log(folder);
+  console.log(student);
   res.render('admin/' + folder +'/'+ student + '/' + name);
 });
 

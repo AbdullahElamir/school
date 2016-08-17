@@ -144,6 +144,41 @@
       }
     })
 
+    .state('newParent',{
+      url: '/newParent',
+      templateUrl: 'admin/pages/parent/newParent',            
+      data: {pageTitle: 'طباعة الجدول'},
+      controller: 'newParenttCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/parentsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('parents',{
+      url: '/parents',
+      templateUrl: 'admin/pages/parent/parents',            
+      data: {pageTitle: 'طباعة الجدول'},
+      controller: 'ParenttCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/parentsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
+
 
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){
