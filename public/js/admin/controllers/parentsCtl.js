@@ -118,7 +118,7 @@
 
 //editStudentCtl
 
-app.controller('editStudentCtl',['$scope','$state','ParentServ','toastr','$stateParams',function($scope,$state,ParentServ,toastr,$stateParams){
+app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateParams',function($scope,$state,ParentServ,toastr,$stateParams){
   $scope.editParentForm ={};
    
     ParentServ.getParentById($stateParams).then(function(response) {

@@ -182,7 +182,7 @@
       url: '/editParent/edit/:id',
       templateUrl: 'admin/pages/parent/editParent',            
       data: {pageTitle: 'طباعة الجدول'},
-      controller: 'editStudentCtl',
+      controller: 'editParentCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({

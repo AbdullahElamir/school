@@ -40,8 +40,6 @@
 
 //editStudentCtl
   app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,StudentServ,$state,toastr){
-
-  
       ParentServ.getAllParents().then(function(response){
       $scope.getAllParents = response.data;
     },function(response){
@@ -51,7 +49,7 @@
     $scope.editStudentForm={};
    
     StudentServ.getStudentById($stateParams).then(function(response) {
-      response.data.birth_day=new Date(response.data.birth_day);
+      response.data.birth_day = new Date(response.data.birth_day);
         $scope.editStudentForm = response.data;
       }, function(response) {
         console.log("Something went wrong");
