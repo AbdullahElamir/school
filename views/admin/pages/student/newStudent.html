@@ -26,9 +26,9 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="control-label">اسم ولي الامر</label>
-                 <select class="form-control input-sm" ng-model="newStudentForm.parentId" >
+                 <select class="form-control input-sm" ng-model="newStudentForm.parent" ng-options="parent._id as parent.name for parent in getAllParents">
                   <option value="" disabled selected>الرجاء الاختيار</option>
-                 
+
                 </select>
               </div>
             </div>

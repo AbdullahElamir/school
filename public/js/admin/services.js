@@ -38,6 +38,9 @@
       },
       'editParent': function(id,obj) {
         return $http.put('/parent/edit/'+id,obj)
+      },
+      'getAllParents': function(){
+        return $http.get('/parent/all');
       }
     };
     return self;

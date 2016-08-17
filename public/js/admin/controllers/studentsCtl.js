@@ -39,13 +39,19 @@
   }]);
 
 //editStudentCtl
-  app.controller('editStudentCtl',['$scope','$stateParams','StudentServ','$state','toastr',function($scope,$stateParams,StudentServ,$state,toastr){
+  app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,StudentServ,$state,toastr){
 
   
+      ParentServ.getAllParents().then(function(response){
+      $scope.getAllParents = response.data;
+    },function(response){
+      console.log("Somthing went wrong");
+    })
+
     $scope.editStudentForm={};
    
     StudentServ.getStudentById($stateParams).then(function(response) {
-      response.data.birth_day=new Date(response.data.birth_day)
+      response.data.birth_day=new Date(response.data.birth_day);
         $scope.editStudentForm = response.data;
       }, function(response) {
         console.log("Something went wrong");
@@ -164,7 +170,15 @@
   
 
 
-   app.controller('newStudentCtl',['$scope','StudentServ','$state','toastr',function($scope,StudentServ,$state,toastr){
+   app.controller('newStudentCtl',['$scope','StudentServ','ParentServ','$state','toastr',function($scope,StudentServ,ParentServ,$state,toastr){
+    
+    ParentServ.getAllParents().then(function(response){
+      $scope.getAllParents = response.data;
+    },function(response){
+      console.log("Somthing went wrong");
+    })
+
+
     $scope.newStudentForm={};
     $scope.newStudent = function(){
       StudentServ.addStudent($scope.newStudentForm).then(function(response){
