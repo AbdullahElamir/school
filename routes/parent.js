@@ -32,7 +32,7 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 
 /* Delete parent by id  */
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
-  parentMgr.deleteTeacher(req.params.id,function(parents){
+  parentMgr.deleteParent(req.params.id,function(parents){
     res.send({result:parents});
   });
 });

@@ -1,1 +1,68 @@
-<h1>parents</h1>
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <br>
+    <div class="caption caption-md">
+      <i class="icon-settings font-green"></i>
+      <span class="caption-subject font-green bold">عرض ولي الامر</span>
+    </div>
+     <div class="col-xs-7">
+            <input type="text" class="form-control input-sm" ng-model="searchByName" ng-change="searchCustomer()" placeholder="بحث...">
+          </div>
+          <div class="col-xs-3 text-left">
+            <a ui-sref="newParent" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة ولي الامر </a>
+  </div>
+  <div class="portlet-body" style="padding-top:0px;">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>البريد الالكتروني</th>
+          <th>الهاتف</th>
+          <th>الجنسية</th>
+          <th>العنوان</th>
+          <th>رقم الوطني</th>
+          <th ><i class="fa fa-cog"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="parent in parents">
+          <td>{{parent.name}}</td>
+          <td>{{parent.email}}</td>
+          <td>{{parent.phone}}</td>
+          <td>{{parent.nationality}}</td>
+          <td>{{parent.address}}</td>
+          <td>{{parent.nid}}</td>
+          <td>
+            <a class="btn btn-success btn-xs" ui-sref="editParent({id:parent._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل / عرض</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteStudent(parent._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">مســح طالب</h4>
+      </div>
+      <div class="modal-body">
+        هل حقا تريد مسح ولي الامر ؟
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+        <button ng-click="deleteConfirm(idStudent)" value="idStudent" type="button" class="btn btn-danger">مسح</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="row" ng-show="parents.length">
+      <div class="col-xs-12 col-md-12 text-center">
+        <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
+        <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
+      </div>
+    </div>
+  </div>
+</div>

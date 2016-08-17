@@ -65,8 +65,6 @@ module.exports = {
 
   addParent : function(body,cb){
     obj = body
-
-
     parent = new model.Parent(obj);
     parent.save(function(err,result){
       if (!err) {

@@ -178,6 +178,23 @@
       }
     })
 
+    .state('editParent',{
+      url: '/editParent/edit/:id',
+      templateUrl: 'admin/pages/parent/editParent',            
+      data: {pageTitle: 'طباعة الجدول'},
+      controller: 'editStudentCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/parentsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
 
 
   }]);

@@ -22,5 +22,21 @@
     return self;
   }]);
 
+  app.service('ParentServ',['$http',function($http){
+     var self = {
+    'addParent': function(parent){
+        return $http.post('/parent/add',parent);
+      },
+      'getParnts': function(limit,page){
+        return $http.get('/parent/'+limit+'/'+page)
+      },
+      'deleteParent': function(id){
+        return $http.delete('/parent/delete/'+id)
+      }
+    };
+    return self;
+  }]);
+
+
 
 }());
