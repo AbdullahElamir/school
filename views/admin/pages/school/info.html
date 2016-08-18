@@ -1,0 +1,57 @@
+<div class="container-fluid">
+  <div class="info-timeline row">
+    <div class="col-xs-12">
+      <ul class="timeline">
+          <li>
+            <div class="timeline-badge"><i class="icon glyphicon glyphicon-check"></i></div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <h4 class="timeline-title">اسم المدرسة</h4>
+              </div>
+              <div class="timeline-body">
+                <p>{{school.name}}</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="timeline-badge danger"><i class="icon glyphicon glyphicon-map-marker"></i></div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <h4 class="timeline-title">العنوان</h4>
+              </div>
+              <div class="timeline-body">
+                <p>{{school.address}}</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="timeline-badge info"><i class=" icon glyphicon glyphicon-earphone"></i></div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <h4 class="timeline-title">رقم الهاتف</h4>
+              </div>
+              <div class="timeline-body">
+                <p>{{school.phone}}</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="timeline-badge warning"><i class=" icon glyphicon glyphicon-info-sign"></i></div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <h4 class="timeline-title">معلومات اخرى</h4>
+              </div>
+              <div class="timeline-body">
+                <p>{{school.des}}</p>
+              </div>
+            </div>
+          </li>
+      </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-4 text-left">
+          <a ui-sref="editSchool" class="btn btn-sm btn-primary"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل المعلومات</a>
+        </div>
+      </div>
+  </div>
+</div>

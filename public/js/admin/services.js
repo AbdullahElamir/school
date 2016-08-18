@@ -46,6 +46,17 @@
     return self;
   }]);
 
+  app.service('SchoolServ',['$http',function($http){
+    var self = {
+      'getInfo': function(){
+        return $http.get('/school/info');
+      },
+      'editSchool': function(obj){
+        return $http.put('/school/edit',obj)
+      }
+    };
+    return self;
+  }]);
 
 
 }());

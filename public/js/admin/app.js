@@ -93,6 +93,40 @@
         }]
       }
     })
+    .state('school',{
+      url: '/school',
+      templateUrl: 'admin/pages/school/info',            
+      data: {pageTitle: 'معلومات المدرسة'},
+      controller: 'SchoolCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/schoolCtl.js',
+              '/css/admin/timeline.css',
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('editSchool',{
+      url: '/editSchool/edit/:id',
+      templateUrl: 'admin/pages/school/editSchool',            
+      data: {pageTitle: 'تعديل معلومات المدرسة'},
+      controller: 'EditSchoolCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/schoolCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
 
     .state('students',{
       url: '/students',
