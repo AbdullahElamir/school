@@ -3,6 +3,8 @@ var router = express.Router();
 var parentMgr = require("../controller/parent");
 var userHelpers = require("../controller/userHelpers");
 
+
+
 /* GET all parent */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   parentMgr.getAllParentCount(req.params.limit,req.params.page,function(parents){

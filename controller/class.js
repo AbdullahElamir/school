@@ -1,10 +1,10 @@
-var model = require("../models");
+var model = require('../models');
 var class1 = null;
 
 module.exports = {
 
   getAllClass :function(cb){
-    model.Class.find({},function(err, classes){
+    model.Class.find({}, function(err, classes){
       if(!err){
         cb(classes);
       }else{
@@ -76,10 +76,10 @@ module.exports = {
   },
 
   updateClass : function(id,body,cb){
-    obj = body
+    obj = body;
     model.Class.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
-        cb(true)
+        cb(true);
       } else {
         console.log(err);
         cb(false);
