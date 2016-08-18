@@ -10,7 +10,7 @@ var Student = new Schema({
   phone: {type: String,default:"NULL"},
   nid: {type: String, index: true},
   birth_day:{ type:Date, required: [true, 'start date required']},
-  parent:[{ type: Schema.Types.ObjectId , ref: 'Parent'},],
+  parent:[{ type: Schema.Types.ObjectId , ref: 'Parent'}],
  /* lastLogin:{ type:Date, required: [true, 'start date required']},
   dateJoun:{ type:Date, required: [true, 'start date required']},*/
   gender:{type: String,default:"NULL"},

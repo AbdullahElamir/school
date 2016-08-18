@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "eslint controller & node ./bin/www "
+    "start": "eslint controller/ models/ views/ routes/  & node ./bin/www "
 
   },
   "dependencies": {
