@@ -14,5 +14,5 @@ module.exports = {
 
   updateSchool : function(body,cb){
     cb(true);
-  },
+  }
 };

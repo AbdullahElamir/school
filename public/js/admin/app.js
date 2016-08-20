@@ -181,7 +181,7 @@
     .state('teachers',{
       url: '/teachers',
       templateUrl: 'admin/pages/teacher/teachers',            
-      data: {pageTitle: 'طباعة الجدول'},
+      data: {pageTitle: 'المدرسين'},
       controller: 'TeachersCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
@@ -197,7 +197,7 @@
     .state('newTeacher',{
       url: '/newTeacher',
       templateUrl: 'admin/pages/teacher/newTeacher',            
-      data: {pageTitle: 'إضافة مُدرس'},
+      data: {pageTitle: 'إضافة مدرس'},
       controller: 'newTeacherCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
@@ -214,7 +214,7 @@
     .state('editTeacher',{
       url: '/editTeacher/edit/:id',
       templateUrl: 'admin/pages/teacher/editTeacher',            
-      data: {pageTitle: 'طباعة الجدول'},
+      data: {pageTitle: 'تعديل مدرس'},
       controller: 'editTeacherCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
@@ -222,6 +222,56 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/teachersCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('classes',{
+      url: '/classes',
+      templateUrl: 'admin/pages/class/classes',            
+      data: {pageTitle: 'الصفوف الدراسية'},
+      controller: 'ClassesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/classesCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+    .state('newClass',{
+      url: '/newClass',
+      templateUrl: 'admin/pages/class/newClass',            
+      data: {pageTitle: 'إضافة صف دراسي'},
+      controller: 'newClassCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/classesCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('editClass',{
+      url: '/editClass/edit/:id',
+      templateUrl: 'admin/pages/class/editClass',            
+      data: {pageTitle: 'تعديل الصف'},
+      controller: 'editClassCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/classesCtl.js',
             ] 
           });
         }]

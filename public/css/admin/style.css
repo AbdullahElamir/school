@@ -38,13 +38,16 @@ table.jambo_table thead {
     color: #ECF0F1;
 }
 
-  .full button span {
-    background-color: limegreen;
-    border-radius: 32px;
-    color: black;
-  }
-  .partially button span {
-    background-color: orange;
-    border-radius: 32px;
-    color: black;
-  }
+.full button span {
+  background-color: limegreen;
+  border-radius: 32px;
+  color: black;
+}
+.partially button span {
+  background-color: orange;
+  border-radius: 32px;
+  color: black;
+}
+.label-success{
+  
+} 

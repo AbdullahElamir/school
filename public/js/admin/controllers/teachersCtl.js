@@ -38,7 +38,7 @@
 
   }]);
 
-//editStudentCtl
+//editTeacherCtl
   app.controller('editTeacherCtl',['$scope','$stateParams','TeacherServ','$state','toastr',function($scope,$stateParams,TeacherServ,$state,toastr){
     $scope.editTeacherForm={};
    

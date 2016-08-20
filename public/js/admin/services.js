@@ -46,6 +46,27 @@
     return self;
   }]);
 
+  app.service('ClassServ',['$http',function($http){
+    var self = {
+      'addClass': function(_class){
+        return $http.post('/class/add',_class);
+      },
+      'getClasses': function(limit,page){
+        return $http.get('/class/'+limit+'/'+page)
+      },
+      'deleteClass': function(id){
+        return $http.delete('/class/delete/'+id)
+      },
+      'getClassById': function(id){
+        return $http.get('/class/'+id.id)
+      },
+      'editClass': function(id,obj){
+        return $http.put('/class/edit/'+id,obj)
+      }
+    };
+    return self;
+  }]);
+
   app.service('ParentServ',['$http',function($http){
       var self = {
       'addParent': function(parent){
