@@ -16,6 +16,23 @@ module.exports = {
     });
   },
 
+  //getAllStudentsBySearchValue
+  getAllStudentsBySearchValue :function(searchValue,limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.Student.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]},function(err, count){
+      model.Student.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,students){
+        if(!err){
+          cb({result:students,count:count});
+        }else{
+          console.log(err);
+          cb(null);
+        }
+      });
+    });
+  },
+
   //getAllCustomerCount
   getAllStudentsCount :function(limit,page,cb){
     page = parseInt(page);

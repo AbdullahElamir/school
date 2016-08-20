@@ -245,19 +245,27 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
   //ParenttCtl
 
   app.controller('ParenttCtl',['$scope','$state','ParentServ','toastr',function($scope,state,ParentServ,toastr){
-     $scope.pageSize = 10;
+    $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
-    $scope.init = function () {
-     ParentServ.getParnts($scope.pageSize,$scope.currentPage).then(function(response) {
+    $scope.init = function (searchValue) {
+      if( searchValue === 'undefined' || !searchValue ){
+        searchValue = "";
+      }
+      ParentServ.getParensBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
         $scope.parents = response.data.result;
         $scope.total = response.data.count;
       }, function(response) {
         console.log("Something went wrong");
       });
-    }
-    $scope.init();
-
+     };
+     $scope.init("");
+     
+      $scope.getParentsBySearchValue = function (searchValue){
+        $scope.currentPage = 1;
+        $scope.init(searchValue);
+      };
+   
     $scope.deleteStudent = function(id) {
     $scope.idStudent = id;
    }

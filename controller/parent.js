@@ -14,6 +14,25 @@ module.exports = {
       }
     });
   },
+  
+  
+  //getAllParentsBySearchValue
+  getAllParentsBySearchValue :function(searchValue,limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.Parent.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]},function(err, count){
+      model.Parent.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,parents){
+        if(!err){
+          cb({result:parents,count:count});
+        }else{
+          console.log(err);
+          cb(null);
+        }
+      });
+    });
+  },
+
 
   //getAllParentCount
   getAllParentCount :function(limit,page,cb){

@@ -4,6 +4,12 @@ var parentMgr = require("../controller/parent");
 var userHelpers = require("../controller/userHelpers");
 
 
+/*GET all Student By Search Value*/
+router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
+  parentMgr.getAllParentsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(parents){
+    res.send(parents);
+  });
+});
 
 /* GET all parent */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {

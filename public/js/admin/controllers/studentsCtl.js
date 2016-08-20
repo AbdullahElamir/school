@@ -6,18 +6,25 @@
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
-    $scope.init = function () {
-     StudentServ.getStudents($scope.pageSize,$scope.currentPage).then(function(response) {
+    $scope.init = function (searchValue) {
+      if( searchValue === 'undefined' || !searchValue ){
+        searchValue = "";
+      }
+      StudentServ.getStudentsBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
         $scope.students = response.data.result;
         $scope.total = response.data.count;
-      }, function(response) {
+      }, function(response){
         console.log("Something went wrong");
       });
-   }
-   $scope.init();
+     };
+    $scope.init("");
+    $scope.getStudentBySearchValue = function (searchValue){
+      $scope.currentPage = 1;
+      $scope.init(searchValue);
+    };
    $scope.deleteStudent = function(id) {
     $scope.idStudent = id;
-   }
+   };
    $scope.deleteConfirm = function(id) {
     StudentServ.deleteStudent(id).then(function(response){
       if(response.data.result == 1){
@@ -26,7 +33,7 @@
    
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
-          $scope.init();
+          $scope.init($scope.searchValue);
         } else if (response.data.result == 3){
           toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
         }
