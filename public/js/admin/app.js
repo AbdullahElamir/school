@@ -178,6 +178,56 @@
       }
     })
 
+    .state('teachers',{
+      url: '/teachers',
+      templateUrl: 'admin/pages/teacher/teachers',            
+      data: {pageTitle: 'طباعة الجدول'},
+      controller: 'TeachersCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/teachersCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+    .state('newTeacher',{
+      url: '/newTeacher',
+      templateUrl: 'admin/pages/teacher/newTeacher',            
+      data: {pageTitle: 'إضافة مُدرس'},
+      controller: 'newTeacherCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/teachersCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('editTeacher',{
+      url: '/editTeacher/edit/:id',
+      templateUrl: 'admin/pages/teacher/editTeacher',            
+      data: {pageTitle: 'طباعة الجدول'},
+      controller: 'editTeacherCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/teachersCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
     .state('newParent',{
       url: '/newParent',
       templateUrl: 'admin/pages/parent/newParent',            

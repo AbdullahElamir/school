@@ -2,38 +2,31 @@
   'use strict';
   var app = angular.module('school');
 
-  app.controller('StudentsCtl',['$scope','$state','StudentServ','toastr',function($scope,state,StudentServ,toastr){
+  app.controller('TeachersCtl',['$scope','$state','TeacherServ','toastr',function($scope,state,TeacherServ,toastr){
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
-    $scope.init = function (searchValue) {
-      if( searchValue === 'undefined' || !searchValue ){
-        searchValue = "";
-      }
-      StudentServ.getStudentsBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
-        $scope.students = response.data.result;
+    $scope.init = function () {
+     TeacherServ.getTeachers($scope.pageSize,$scope.currentPage).then(function(response) {
+        $scope.teachers = response.data.result;
         $scope.total = response.data.count;
-      }, function(response){
+      }, function(response) {
         console.log("Something went wrong");
       });
-     };
-    $scope.init("");
-    $scope.getStudentBySearchValue = function (searchValue){
-      $scope.currentPage = 1;
-      $scope.init(searchValue);
-    };
-   $scope.deleteStudent = function(id) {
-    $scope.idStudent = id;
-   };
+   }
+   $scope.init();
+   $scope.deleteTeacher = function(id) {
+    $scope.idTeacher = id;
+   }
    $scope.deleteConfirm = function(id) {
-    StudentServ.deleteStudent(id).then(function(response){
+    TeacherServ.deleteTeacher(id).then(function(response){
       if(response.data.result == 1){
           toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
         } else if (response.data.result == 2){
    
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
-          $scope.init($scope.searchValue);
+          $scope.init();
         } else if (response.data.result == 3){
           toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
         }
@@ -46,31 +39,25 @@
   }]);
 
 //editStudentCtl
-  app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,StudentServ,$state,toastr){
-      ParentServ.getAllParents().then(function(response){
-      $scope.getAllParents = response.data;
-    },function(response){
-      console.log("Somthing went wrong");
-    })
-
-    $scope.editStudentForm={};
+  app.controller('editTeacherCtl',['$scope','$stateParams','TeacherServ','$state','toastr',function($scope,$stateParams,TeacherServ,$state,toastr){
+    $scope.editTeacherForm={};
    
-    StudentServ.getStudentById($stateParams).then(function(response) {
+    TeacherServ.getTeacherById($stateParams).then(function(response) {
       response.data.birth_day = new Date(response.data.birth_day);
-        $scope.editStudentForm = response.data;
+        $scope.editTeacherForm = response.data;
       }, function(response) {
         console.log("Something went wrong");
       });
     
 
-     $scope.editStudent = function(){
+     $scope.editTeacher = function(){
     
-      StudentServ.editStudent($stateParams.id,$scope.editStudentForm).then(function(response) {
+      TeacherServ.editTeacher($stateParams.id,$scope.editTeacherForm).then(function(response) {
         if(response.data){
-          $state.go('students');
+          $state.go('teachers');
           toastr.info('تم التعديل بنجاح');
         } else {
-          console.log(response.data);
+          toastr.error('عملية التعديل فشلت');
         }
       }, function(response) {
         console.log("Something went wrong");
@@ -80,11 +67,11 @@
 
 
     $scope.today = function() {
-      $scope.editStudentForm.birth_day = new Date();
+      $scope.editTeacherForm.birth_day = new Date();
       };
       $scope.today();
       $scope.clear = function() {
-      $scope.editStudentForm.birth_day = null;
+      $scope.editTeacherForm.birth_day = null;
       };
 
       $scope.inlineOptions = {
@@ -172,25 +159,16 @@
       }  
   }]);
 
-  
-
-
-   app.controller('newStudentCtl',['$scope','StudentServ','ParentServ','$state','toastr',function($scope,StudentServ,ParentServ,$state,toastr){
+  app.controller('newTeacherCtl',['$scope','TeacherServ','$state','toastr',function($scope,TeacherServ,$state,toastr){
     
-    ParentServ.getAllParents().then(function(response){
-      $scope.getAllParents = response.data;
-    },function(response){
-      console.log("Somthing went wrong");
-    })
-
-
-    $scope.newStudentForm={};
-    $scope.newStudent = function(){
-      StudentServ.addStudent($scope.newStudentForm).then(function(response){
+    $scope.newTeacherForm={};
+    $scope.newTeacher = function(){
+      TeacherServ.addTeacher($scope.newTeacherForm).then(function(response){
         if(response.data){
-          $state.go('students');
+          $state.go('teachers');
           toastr.success('تم الإضافة بنجاح');
         } else {
+          console.log($scope.newTeacherForm);
           toastr.error('خطأ في عملية الادخال');
         }
       },function(response){
@@ -203,11 +181,11 @@
 
       
       $scope.today = function() {
-      $scope.newStudentForm.birth_day = new Date();
+      $scope.newTeacherForm.birth_day = new Date();
       };
       $scope.today();
       $scope.clear = function() {
-      $scope.newStudentForm.birth_day = null;
+      $scope.newTeacherForm.birth_day = null;
       };
 
       $scope.inlineOptions = {
@@ -294,7 +272,5 @@
         return '';
       }  
   }]);
-
-
 
 }());
