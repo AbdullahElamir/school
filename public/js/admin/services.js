@@ -31,16 +31,19 @@
         return $http.post('/teacher/add',student);
       },
       'getTeachers': function(limit,page){
-        return $http.get('/teacher/'+limit+'/'+page)
+        return $http.get('/teacher/'+limit+'/'+page);
+      },
+      'getTeachersBySearchValue': function(searchValue,limit,page){
+        return $http.get('/teacher/'+searchValue+'/'+limit+'/'+page);
       },
       'deleteTeacher': function(id){
-        return $http.delete('/teacher/delete/'+id)
+        return $http.delete('/teacher/delete/'+id);
       },
       'getTeacherById': function(id){
-        return $http.get('/teacher/'+id.id)
+        return $http.get('/teacher/'+id.id);
       },
       'editTeacher': function(id,obj){
-        return $http.put('/teacher/edit/'+id,obj)
+        return $http.put('/teacher/edit/'+id,obj);
       }
     };
     return self;
@@ -100,7 +103,7 @@
         return $http.get('/school/info');
       },
       'editSchool': function(obj){
-        return $http.put('/school/edit',obj)
+        return $http.put('/school/edit',obj);
       }
     };
     return self;

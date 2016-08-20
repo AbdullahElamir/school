@@ -77,21 +77,6 @@
           });
         }]
       }
-    }).state('printTable',{
-      url: '/printTable',
-      templateUrl: 'admin/pages/printTable',            
-      data: {pageTitle: 'طباعة الجدول'},
-      controller: 'PrintTableCtl',
-      resolve: {
-        deps: ['$ocLazyLoad',function($ocLazyLoad){
-          return $ocLazyLoad.load({
-            insertBefore: '#ngLoadControllerAfter',
-            files: [
-              '/js/admin/controllers/printTableCtl.js',
-            ] 
-          });
-        }]
-      }
     })
     .state('school',{
       url: '/school',

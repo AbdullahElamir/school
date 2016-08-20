@@ -34,6 +34,11 @@
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
           $scope.init($scope.searchValue);
+          var count = $scope.students.filter(function(obj){return obj._id != id;}).length;
+          if( $scope.currentPage > 1 && count == 0 ){
+            $scope.currentPage -= 1;
+            $scope.init($scope.searchValue);
+          }
         } else if (response.data.result == 3){
           toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
         }
@@ -41,7 +46,7 @@
     },function(response){
       console.log("Somthing went wrong");
     });
-   }
+   };
 
   }]);
 
@@ -51,7 +56,7 @@
       $scope.getAllParents = response.data;
     },function(response){
       console.log("Somthing went wrong");
-    })
+    });
 
     $scope.editStudentForm={};
    
@@ -75,7 +80,7 @@
       }, function(response) {
         console.log("Something went wrong");
       });
-    }
+    };
 
 
 
@@ -181,7 +186,7 @@
       $scope.getAllParents = response.data;
     },function(response){
       console.log("Somthing went wrong");
-    })
+    });
 
 
     $scope.newStudentForm={};
@@ -197,7 +202,7 @@
         console.log("Somthing went wrong");
       });
         
-    }
+    };
 
 
 

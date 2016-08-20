@@ -3,6 +3,13 @@ var router = express.Router();
 var teacherMgr = require("../controller/teacher");
 var userHelpers = require("../controller/userHelpers");
 
+/*GET all Teachers By Search Value*/
+router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
+  teacherMgr.getTeachersBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(student){
+    res.send(student);
+  });
+});
+
 /* GET all teacher */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   teacherMgr.getAllTeacherCount(req.params.limit,req.params.page,function(teacher){

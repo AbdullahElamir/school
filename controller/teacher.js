@@ -15,6 +15,23 @@ module.exports = {
     });
   },
 
+  //getTeachersBySearchValue
+  getTeachersBySearchValue :function(searchValue,limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.Teacher.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]},function(err, count){
+      model.Teacher.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,teachers){
+        if(!err){
+          cb({result:teachers,count:count});
+        }else{
+          console.log(err);
+          cb(null);
+        }
+      });
+    });
+  },
+
   getAllTeacherCount :function(limit,page,cb){
     page = parseInt(page);
     page-=1;
@@ -63,7 +80,7 @@ module.exports = {
   },
 
   addTeacher : function(body,cb){
-    obj = body
+    obj = body;
 
 
     teacher = new model.Teacher(obj);
@@ -78,11 +95,11 @@ module.exports = {
   },
 
   updateTeacher : function(id,body,cb){
-    obj = body
+    obj = body;
     
     model.Teacher.findOneAndUpdate({_id:id}, obj, function(err,teachers) {
       if (!err) {
-        cb(true)
+        cb(true);
       } else {
         console.log(err);
         cb(false);
@@ -93,12 +110,12 @@ module.exports = {
   deleteTeacher : function(id,cb){
     model.Teacher.remove({_id:id}, function(err,result) {
       if (!err) {
-        cb(2)
+        cb(2);
       } else {
         console.log(err);
         cb(3);
       }
     });
-  },
+  }
   
 };
