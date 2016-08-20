@@ -25,6 +25,27 @@
     return self;
   }]);
 
+  app.service('TeacherServ',['$http',function($http){
+    var self = {
+      'addTeacher': function(student){
+        return $http.post('/teacher/add',student);
+      },
+      'getTeachers': function(limit,page){
+        return $http.get('/teacher/'+limit+'/'+page)
+      },
+      'deleteTeacher': function(id){
+        return $http.delete('/teacher/delete/'+id)
+      },
+      'getTeacherById': function(id){
+        return $http.get('/teacher/'+id.id)
+      },
+      'editTeacher': function(id,obj){
+        return $http.put('/teacher/edit/'+id,obj)
+      }
+    };
+    return self;
+  }]);
+
   app.service('ParentServ',['$http',function($http){
       var self = {
       'addParent': function(parent){
@@ -52,6 +73,17 @@
     return self;
   }]);
 
+  app.service('SchoolServ',['$http',function($http){
+    var self = {
+      'getInfo': function(){
+        return $http.get('/school/info');
+      },
+      'editSchool': function(obj){
+        return $http.put('/school/edit',obj)
+      }
+    };
+    return self;
+  }]);
 
 
 }());
