@@ -10,6 +10,7 @@ router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   });
 });
 router.get('/all', userHelpers.isLogin ,function(req, res) {
+  console.log("www");
   teacherMgr.getAllTeacher(function(teacher){
     res.send(teacher);
   });
