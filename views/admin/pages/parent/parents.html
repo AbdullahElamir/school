@@ -11,8 +11,10 @@
           <div class="col-xs-3 text-left">
             <a ui-sref="newParent" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة ولي الامر </a>
   </div>
-  <div class="portlet-body" style="padding-top:0px;">
-    <table class="table table-striped">
+
+          </div>
+  <div class="portlet-body" style="padding-top:0px;"> 
+    <table class="table table-striped" ng-show="parents.length">
       <thead>
         <tr>
           <th>الاسم</th>
@@ -58,6 +60,12 @@
     </div>
   </div>
 </div>
+<div ng-show="parents.length == 0">
+            <div class="alert alert-info">
+              <p class="text-center">
+                عفوا لاتوجد بيانات
+              </p>
+            </div>
   <div class="row" ng-show="parents.length">
       <div class="col-xs-12 col-md-12 text-center">
         <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
