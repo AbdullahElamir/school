@@ -110,12 +110,12 @@ module.exports = {
   deleteStudent : function(id,cb){
     model.Student.remove({_id:id}, function(err,result) {
       if (!err) {
-        cb(2)
+        cb(2);
       } else {
         console.log(err);
         cb(3);
       }
     });
-  },
+  }
   
 };

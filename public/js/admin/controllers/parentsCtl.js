@@ -4,7 +4,7 @@
 
   app.controller('newParenttCtl',['$scope','$state','ParentServ','toastr',function($scope,$state,ParentServ,toastr){
     
-    $scope.newParentForm = {}
+    $scope.newParentForm = {};
     $scope.newParent = function(){
       console.log($scope.newParentForm);
       ParentServ.addParent($scope.newParentForm).then(function(response){
@@ -19,7 +19,7 @@
         console.log("Somthing went wrong");
       });
 
-    }
+    };
 
 
     $scope.today = function() {
@@ -122,7 +122,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
   $scope.editParentForm ={};
    
     ParentServ.getParentById($stateParams).then(function(response) {
-      response.data.birth_day=new Date(response.data.birth_day)
+      response.data.birth_day=new Date(response.data.birth_day);
         $scope.editParentForm = response.data;
       }, function(response) {
         console.log("Something went wrong");
@@ -141,7 +141,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
       }, function(response) {
         console.log("Something went wrong");
       });
-    }
+    };
 
 
 
@@ -266,9 +266,9 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
         $scope.init(searchValue);
       };
    
-    $scope.deleteStudent = function(id) {
-    $scope.idStudent = id;
-   }
+    $scope.deleteParent = function(id) {
+    $scope.idParent = id;
+   };
    $scope.deleteConfirm = function(id) {
     ParentServ.deleteParent(id).then(function(response){
       if(response.data.result == 1){
@@ -277,7 +277,14 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
    
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
-          $scope.init();
+          
+          $scope.init($scope.searchValue);
+          var count = $scope.parents.filter(function(obj){return obj._id != id;}).length;
+          if( $scope.currentPage > 1 && count == 0 ){
+            $scope.currentPage -= 1;
+            $scope.init($scope.searchValue);
+          }
+          
         } else if (response.data.result == 3){
           toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
         }
@@ -285,7 +292,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
     },function(response){
       console.log("Somthing went wrong");
     });
-   }
+   };
 
   
 

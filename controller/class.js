@@ -90,11 +90,11 @@ module.exports = {
   deleteClass : function(id,cb){
     model.Study.find({customer:id}, function(err,resul) {
       if(resul.length > 0){
-        cb(1)
+        cb(1);
       } else{
         model.Class.remove({_id:id}, function(err,result) {
           if (!err) {
-            cb(2)
+            cb(2);
           } else {
             console.log(err);
             cb(3);
@@ -102,6 +102,6 @@ module.exports = {
         });
       }
     });
-  },
+  }
   
 };
