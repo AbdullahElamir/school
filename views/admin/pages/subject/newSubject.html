@@ -3,7 +3,7 @@
     <br>
     <div class="caption caption-md">
       <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">إضافة صف دراسي</span>
+      <span class="caption-subject font-green bold">إضافة مادة دراسية</span>
     </div>
   </div>
   <div class="row">
@@ -15,18 +15,27 @@
         </div>
         <br>
         <div class="x_content">
-          <form novalidate ng-submit="newClass()">
+          <form novalidate ng-submit="newSubject()">
             <div class="row"> 
               <div class="col-md-4" >
                 <div class="form-group">
-                  <label class="control-label">الاسم</label>
-                  <input class="form-control input-sm" type="text" ng-model="newClassForm.name"  placeholder="الاسم" required>
+                  <label class="control-label">اسم المادة</label>
+                  <input class="form-control input-sm" type="text" ng-model="newSubjectForm.name"  placeholder="أسم المادة" required>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">الوصف</label>
-                  <input class="form-control input-sm" type="text" ng-model="newClassForm.description" ng-required-err-type="area" placeholder="الوصف" required>
+                  <input class="form-control input-sm" type="text" ng-model="newSubjectForm.description" placeholder="الوصف" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">الصف</label>
+                   <select class="form-control input-sm" ng-model="newSubjectForm.clas" ng-options="clas._id as clas.name for clas in getAllClasses">
+                    <option value="" disabled selected>الرجاء الاختيار</option>
+                   
+                  </select>
                 </div>
               </div>
             </div>
@@ -36,7 +45,7 @@
                 <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
               </div>
               <div class="col-md-2">
-                <a class="btn btn-success btn-sm btn-block" ui-sref="students"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+                <a class="btn btn-success btn-sm btn-block" ui-sref="subjects"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
               </div>
             </div>
           </form>

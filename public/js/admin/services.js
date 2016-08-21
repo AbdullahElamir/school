@@ -65,6 +65,30 @@
       },
       'editClass': function(id,obj){
         return $http.put('/class/edit/'+id,obj)
+      },
+      'getAllClasses': function(){
+        return $http.get('/class/all');
+      }
+    };
+    return self;
+  }]);
+
+  app.service('SubjectServ',['$http',function($http){
+    var self = {
+      'addSubject': function(subject){
+        return $http.post('/subject/add',subject);
+      },
+      'getSubjects': function(limit,page){
+        return $http.get('/subject/'+limit+'/'+page)
+      },
+      'deleteSubject': function(id){
+        return $http.delete('/subject/delete/'+id)
+      },
+      'getSubjectById': function(id){
+        return $http.get('/subject/'+id.id)
+      },
+      'editSubject': function(id,obj){
+        return $http.put('/subject/edit/'+id,obj)
       }
     };
     return self;

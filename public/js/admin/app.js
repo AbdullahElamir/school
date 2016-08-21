@@ -263,6 +263,56 @@
       }
     })
 
+    .state('subjects',{
+      url: '/subjects',
+      templateUrl: 'admin/pages/subject/subjects',            
+      data: {pageTitle: 'المواد الدراسية'},
+      controller: 'SubjectsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/subjectsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+    .state('newSubject',{
+      url: '/newSubject',
+      templateUrl: 'admin/pages/subject/newSubject',            
+      data: {pageTitle: 'إضافة مادة جديدة'},
+      controller: 'newSubjectCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/subjectsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('editSubject',{
+      url: '/editSubject/edit/:id',
+      templateUrl: 'admin/pages/subject/editSubject',            
+      data: {pageTitle: 'تعديل مادة دراسية'},
+      controller: 'editSubjectCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/subjectsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
     .state('newParent',{
       url: '/newParent',
       templateUrl: 'admin/pages/parent/newParent',            
