@@ -72,7 +72,7 @@
               '/morris.js/morris.min.js',
               '/raphael/raphael.min.js',
               '/assets/js/dashboard.min.js',
-              '/js/admin/controllers/dashboardCtl.js',
+              '/js/admin/controllers/dashboardCtl.js'
             ] 
           });
         }]
@@ -89,7 +89,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/schoolCtl.js',
-              '/css/admin/timeline.css',
+              '/css/admin/timeline.css'
             ] 
           });
         }]
@@ -106,7 +106,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/schoolCtl.js',
+              '/js/admin/controllers/schoolCtl.js'
             ] 
           });
         }]
@@ -123,7 +123,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/studentsCtl.js',
+              '/js/admin/controllers/studentsCtl.js'
             ] 
           });
         }]
@@ -139,7 +139,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/studentsCtl.js',
+              '/js/admin/controllers/studentsCtl.js'
             ] 
           });
         }]
@@ -156,7 +156,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/studentsCtl.js',
+              '/js/admin/controllers/studentsCtl.js'
             ] 
           });
         }]
@@ -173,7 +173,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/teachersCtl.js',
+              '/js/admin/controllers/teachersCtl.js'
             ] 
           });
         }]
@@ -189,7 +189,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/teachersCtl.js',
+              '/js/admin/controllers/teachersCtl.js'
             ] 
           });
         }]
@@ -206,7 +206,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/teachersCtl.js',
+              '/js/admin/controllers/teachersCtl.js'
             ] 
           });
         }]
@@ -223,7 +223,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/classesCtl.js',
+              '/js/admin/controllers/classesCtl.js'
             ] 
           });
         }]
@@ -239,7 +239,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/classesCtl.js',
+              '/js/admin/controllers/classesCtl.js'
             ] 
           });
         }]
@@ -256,7 +256,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/classesCtl.js',
+              '/js/admin/controllers/classesCtl.js'
             ] 
           });
         }]
@@ -323,7 +323,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/parentsCtl.js',
+              '/js/admin/controllers/parentsCtl.js'
             ] 
           });
         }]
@@ -340,7 +340,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/parentsCtl.js',
+              '/js/admin/controllers/parentsCtl.js'
             ] 
           });
         }]
@@ -357,12 +357,12 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/parentsCtl.js',
+              '/js/admin/controllers/parentsCtl.js'
             ] 
           });
         }]
       }
-    })
+    });
 
 
 
@@ -372,6 +372,10 @@
     defaultErrorMessageResolver.setCulture('ar-ly');
     defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
       errorMessages['repName'] = "الرجاء إدخال اسم المخول";
+      errorMessages['emailType'] = "الرجاء إدخال بريد إلكتروني صالح";
+      errorMessages['phone'] = "الرجاء إدخال رقم هاتف صالح";
+      
+      
     });
   }]);
 }());

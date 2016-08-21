@@ -13,6 +13,23 @@ module.exports = {
       }
     });
   },
+  
+  //getAllClassesBySearchValue
+  getAllClassesBySearchValue :function(searchValue,limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.Class.count({name:new RegExp(searchValue, 'i')},function(err, count){
+      model.Class.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,classes){
+        if(!err){
+          cb({result:classes,count:count});
+        }else{
+          console.log(err);
+          cb(null);
+        }
+      });
+    });
+  },
 
   //getAllCustomerCount
   getAllClassCount :function(limit,page,cb){

@@ -1,5 +1,5 @@
 var jsonfile = require('jsonfile');
-var file = './school.json' 
+var file = './school.json';
 
 module.exports = {
   getSchoolInfo :function(cb){  

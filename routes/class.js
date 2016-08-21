@@ -3,6 +3,13 @@ var router = express.Router();
 var classMgr = require("../controller/class");
 var userHelpers = require("../controller/userHelpers");
 
+/*GET all Classes By Search Value*/
+router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
+  classMgr.getAllClassesBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(parents){
+    res.send(parents);
+  });
+});
+
 // GET all class
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   classMgr.getAllClassCount(req.params.limit,req.params.page,function(_class){
