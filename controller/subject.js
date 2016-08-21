@@ -1,12 +1,12 @@
-var generatePassword = require('password-generator'),
-  easyPbkdf2 = require("easy-pbkdf2")();
 var model = require("../models");
 var subject = null;
 
 module.exports = {
 
   getAllSubject :function(cb){
-    model.Subject.find({},function(err, Subjects){
+    model.Subject.find({})
+    .populate('clas')
+    .exec(function(err, Subjects){
       if(!err){
         cb(Subjects);
       }else{
@@ -22,7 +22,9 @@ module.exports = {
     page-=1;
     limit = parseInt(limit);
     model.Subject.count({},function(err, count){
-      model.Subject.find({}).limit(limit).skip(page*limit).exec(function(err,subjects){
+      model.Subject.find({}).limit(limit).skip(page*limit)
+      .populate('clas')
+      .exec(function(err,subjects){
         if(!err){
           cb({result:subjects,count:count});
         }else{
@@ -34,7 +36,9 @@ module.exports = {
   },
 
   getAllSubjectStatus:function(status,cb){
-    model.Subject.find({status:status},function(err, subjects){
+    model.Subject.find({status:status})
+    .populate('clas')
+    .exec(function(err, subjects){
       if(!err){
         cb(subjects);
       }else{
@@ -45,7 +49,9 @@ module.exports = {
   },
   
   getSubjectName :function(name,cb){
-    model.Subject.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
+    model.Subject.find({name :{ $regex:name, $options: 'i' }}).limit(30)
+    .populate('clas')
+    .exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -53,9 +59,11 @@ module.exports = {
       }
     });
   },
-
+  //.populate('clas')
   getSubjectId :function(id,cb){
-    model.Subject.findOne({_id : id}, function(err, custom){
+    model.Subject.findOne({_id : id})
+    .populate('clas')
+    .exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -65,12 +73,7 @@ module.exports = {
   },
 
   addSubject : function(body,cb){
-    var obj ={
-      name : body.name,
-      description : body.description,
-      studyId : body.studyId
-
-    }
+    var obj = body;
 
     subject = new model.Subject(obj);
     subject.save(function(err,result){
@@ -84,12 +87,7 @@ module.exports = {
   },
 
   updateSubject : function(id,body,cb){
-    // obj = body
-    var obj ={
-      name : body.name,
-      description : body.description,
-      studyId : body.studyId
-    }
+    obj = body
     model.Subject.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true)
@@ -100,21 +98,15 @@ module.exports = {
     });
   },
   
-  deleteClass : function(id,cb){
-    model.Study.find({customer:id}, function(err,resul) {
-      if(resul.length > 0){
-        cb(1)
-      } else{
-        model.Subject.remove({_id:id}, function(err,result) {
-          if (!err) {
-            cb(2)
-          } else {
-            console.log(err);
-            cb(3);
-          }
-        });
+  deleteSubject : function(id,cb){
+    model.Subject.remove({_id:id}, function(err,result) {
+      if (!err) {
+        cb(2);
+      } else {
+        console.log(err);
+        cb(3);
       }
     });
-  },
+  }
   
 };

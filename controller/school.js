@@ -1,5 +1,3 @@
-
-var model = require("../models");
 var jsonfile = require('jsonfile');
 var file = './school.json';
 

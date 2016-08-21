@@ -52,7 +52,7 @@
 
 //editStudentCtl
   app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,StudentServ,$state,toastr){
-      ParentServ.getAllParents().then(function(response){
+    ParentServ.getAllParents().then(function(response){
       $scope.getAllParents = response.data;
     },function(response){
       console.log("Somthing went wrong");
