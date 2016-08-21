@@ -92,7 +92,6 @@
           $state.go('classes');
           toastr.success('تم الإضافة بنجاح');
         } else {
-          console.log($scope.newClassForm);
           toastr.error('خطأ في عملية الادخال');
         }
       },function(response){
