@@ -9,9 +9,8 @@
       <input type="text" class="form-control input-sm" ng-model="searchByName" ng-change="searchSubjects()" placeholder="بحث...">
     </div>
     <div class="col-md-3">
-       <select class="form-control input-sm" ng-model="clas" ng-options="clas._id as clas.name for clas in getAllClasses">
+      <select class="form-control input-sm" ng-model="clas" ng-options="clas._id as clas.name for clas in getAllClasses">
         <option value="" disabled selected>اختر صف</option>
-       
       </select>
     </div>
     <div class="col-xs-3 text-left">
@@ -26,7 +25,7 @@
           <th>الوصف</th>
           <th>الصف</th>
           <th>الحالة</th>
-          <th ><i class="fa fa-cog"></i></th>
+          <th><i class="fa fa-cog"></i></th>
         </tr>
       </thead>
       <tbody>
@@ -52,25 +51,25 @@
       </div>
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel">مســح المادة</h4>
-      </div>
-      <div class="modal-body">
-        هل حقا تريد مسح هذه المادة ؟
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-        <button ng-click="deleteConfirm(idSubject)" value="idSubject" type="button" class="btn btn-danger">مسح</button>
+            <h4 class="modal-title" id="myModalLabel">مســح المادة</h4>
+          </div>
+          <div class="modal-body">
+            هل حقا تريد مسح هذه المادة ؟
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            <button ng-click="deleteConfirm(idSubject)" value="idSubject" type="button" class="btn btn-danger">مسح</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-  <div class="row" ng-show="subjects.length">
+    <div class="row" ng-show="subjects.length">
       <div class="col-xs-12 col-md-12 text-center">
         <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
         <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
