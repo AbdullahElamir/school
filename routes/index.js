@@ -1,6 +1,6 @@
 var express = require('express');
-var school = require('../school')
 var router = express.Router();
+var school = require('../controller/school') 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -15,7 +15,14 @@ router.get('/', function(req, res, next) {
 router.get('/:name', function(req, res) {
   var name = req.params.name;
   console.log(school);
-  res.render(name,{info : school});
+  school.getSchoolInfo(function(result){
+  	console.log(result);
+  	schoolName="لا يوجد";
+  	if(result!=null){
+  		schoolName = result.name
+  	}
+  	res.render(name,{schoolName : schoolName});
+  });
 });
 
 
