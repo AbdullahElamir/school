@@ -9,7 +9,6 @@ module.exports = {
     // }
     // res.redirect('/');
      return next();
-  },
-  
+  }
   
 };
