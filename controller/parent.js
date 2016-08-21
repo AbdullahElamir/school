@@ -83,7 +83,7 @@ module.exports = {
   },
 
   addParent : function(body,cb){
-    obj = body
+    obj = body;
     parent = new model.Parent(obj);
     parent.save(function(err,result){
       if (!err) {
@@ -96,12 +96,12 @@ module.exports = {
   },
 
   updateParent : function(id,body,cb){
-    obj = body
+    obj = body;
     console.log(body);
     console.log(id);
     model.Parent.findOneAndUpdate({_id:id}, obj, function(err,parents) {
       if (!err) {
-        cb(true)
+        cb(true);
       } else {
         console.log(err);
         cb(false);
@@ -112,12 +112,12 @@ module.exports = {
   deleteParent : function(id,cb){
     model.Parent.remove({_id:id}, function(err,result) {
       if (!err) {
-        cb(2)
+        cb(2);
       } else {
         console.log(err);
         cb(3);
       }
     });
-  },
+  }
   
 };

@@ -55,16 +55,19 @@
         return $http.post('/class/add',_class);
       },
       'getClasses': function(limit,page){
-        return $http.get('/class/'+limit+'/'+page)
+        return $http.get('/class/'+limit+'/'+page);
+      },
+      'getClassesBySearchValue': function(searchValue,limit,page){
+        return $http.get('/class/'+searchValue+'/'+limit+'/'+page);
       },
       'deleteClass': function(id){
-        return $http.delete('/class/delete/'+id)
+        return $http.delete('/class/delete/'+id);
       },
       'getClassById': function(id){
-        return $http.get('/class/'+id.id)
+        return $http.get('/class/'+id.id);
       },
       'editClass': function(id,obj){
-        return $http.put('/class/edit/'+id,obj)
+        return $http.put('/class/edit/'+id,obj);
       }
     };
     return self;

@@ -26,7 +26,7 @@
           <div class="col-md-3">
             <div class="form-group">
               <label class="control-label">رقم الهاتف</label>
-              <input class="form-control input-sm" type="text" ng-model="newStudentForm.phone" ng-required-err-type="area" placeholder="رقم الهاتف" required>
+              <input class="form-control input-sm" type="text" ng-model="newStudentForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
             </div>
           </div>
           <div class="col-md-3">
@@ -72,7 +72,7 @@
           <div class="col-md-3">
             <div class="form-group">
               <label class="control-label">الجنسية</label>
-              <input class="form-control input-sm" type="text" ng-model="newStudentForm.nationality" ng-required-err-type="phone" placeholder="الجنسية" required>
+              <input class="form-control input-sm" type="text" ng-model="newStudentForm.nationality" placeholder="الجنسية" required>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@
             <div class="form-group">
               <label class="control-label">تاريخ الميلاد</label>
               <div class="input-group">              
-                <input type="text" class="form-control input-sm" uib-datepicker-popup ng-model="newStudentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" />
+                <input type="text" required class="form-control input-sm" uib-datepicker-popup ng-model="newStudentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" />
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default btn-sm" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>

@@ -3,7 +3,7 @@
     <br>
     <div class="caption caption-md">
       <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">إضافة ولي الامر الجديد</span>
+      <span class="caption-subject font-green bold">تعديل ولي الأمر</span>
     </div>
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
@@ -31,7 +31,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label class="control-label">رقم الهاتف</label>
-                <input class="form-control input-sm" type="text" ng-model="editParentForm.phone" ng-required-err-type="area" placeholder="رقم الهاتف" required>
+                <input class="form-control input-sm" type="text" ng-model="editParentForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
               </div>
             </div>
 
@@ -40,7 +40,7 @@
           <div class="col-md-3">
               <div class="form-group">
                 <label class="control-label">الجنسية</label>
-                <input class="form-control input-sm" type="text" ng-model="editParentForm.nationality" ng-required-err-type="phone" placeholder="الجنسية" required>
+                <input class="form-control input-sm" type="text" ng-model="editParentForm.nationality" placeholder="الجنسية" required>
               </div>
             </div>
             <div class="col-md-3">
@@ -72,7 +72,7 @@
               <div class="form-group">
                 <label class="control-label">تاريخ الميلاد</label>
             <div class="input-group">
-              <input type="text" class="form-control input-sm" uib-datepicker-popup ng-model="editParentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" />
+              <input type="text" required class="form-control input-sm" uib-datepicker-popup ng-model="editParentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
