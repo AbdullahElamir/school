@@ -14,6 +14,7 @@ var student = require('./routes/student');
 var school = require('./routes/school');
 var _class = require('./routes/class');
 var subject = require('./routes/subject');
+var room = require('./routes/room');
 var app = express();
 
 // view engine setup
@@ -39,6 +40,7 @@ app.use('/student',student);
 app.use('/school',school);
 app.use('/class',_class);
 app.use('/subject',subject);
+app.use('/room',room);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
