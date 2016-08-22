@@ -2,7 +2,7 @@
   <div class="portlet-title">
     <div class="caption caption-md">
       <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">تعديل المادة الدراسي</span>
+      <span class="caption-subject font-green bold">تعديل المادة الدراسية</span>
     </div>
   </div>
   <div class="row">
@@ -24,7 +24,7 @@
           <div class="col-xs-12 col-md-4">
             <div class="form-group">
               <label class="control-label">الصف</label>
-              <select class="form-control input-sm" ng-model="editSubjectForm.clas._id" ng-options="clas._id as clas.name for clas in getAllClasses">
+              <select required class="form-control input-sm" ng-model="editSubjectForm.clas._id" ng-options="clas._id as clas.name for clas in getAllClasses">
                 <option value="" disabled selected>الرجاء الاختيار</option>
               </select>
             </div>

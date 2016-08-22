@@ -13,10 +13,11 @@ router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res)
 /* GET all student */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   studentMgr.getAllStudentsCount(req.params.limit,req.params.page,function(student){
-    console.log(student);
     res.send(student);
   });
 });
+
+
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   studentMgr.getAllStudent(function(student){
     res.send(student);
@@ -25,7 +26,6 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
 
 /* Add new student  */
 router.post('/add',function(req, res) {
-  console.log(req.body);
   studentMgr.addStudent(req.body,function(student){
     res.send(student);
   });
@@ -51,6 +51,5 @@ router.get('/:id',userHelpers.isLogin , function(req, res) {
     res.send(student);
   });
 });
-
 
 module.exports = router;

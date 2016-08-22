@@ -3,6 +3,20 @@ var router = express.Router();
 var subjectMgr = require("../controller/subject");
 var userHelpers = require("../controller/userHelpers");
 
+/*GET all Subjects By Search Value And Class*/
+router.get('/:searchValue/:clas/:limit/:page',userHelpers.isLogin , function(req, res) {
+  subjectMgr.getSubjectsBySearchValueAndClass(req.params.searchValue,req.params.clas,req.params.limit,req.params.page,function(subject){
+    res.send(subject);
+  });
+});
+
+// GET all subject
+router.get('/:clas/:limit/:page',userHelpers.isLogin , function(req, res) {
+  subjectMgr.getSubjectsBySearchValueAndClass("",req.params.clas,req.params.limit,req.params.page,function(subject){
+    res.send(subject);
+  });
+});
+
 // GET all subject
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   subjectMgr.getAllSubjectCount(req.params.limit,req.params.page,function(subject){
