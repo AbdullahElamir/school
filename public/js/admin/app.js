@@ -313,6 +313,56 @@
       }
     })
 
+    .state('rooms',{
+      url: '/rooms',
+      templateUrl: 'admin/pages/room/rooms',            
+      data: {pageTitle: 'الغرف الدراسية'},
+      controller: 'RoomsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/roomsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+    .state('newRoom',{
+      url: '/newRoom',
+      templateUrl: 'admin/pages/room/newRoom',            
+      data: {pageTitle: 'إضافة غرفة جديدة'},
+      controller: 'newRoomCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/roomsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('editRoom',{
+      url: '/editRoom/edit/:id',
+      templateUrl: 'admin/pages/room/editRoom',            
+      data: {pageTitle: 'تعديل غرفة دراسية'},
+      controller: 'editRoomCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/roomsCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
     .state('newParent',{
       url: '/newParent',
       templateUrl: 'admin/pages/parent/newParent',            

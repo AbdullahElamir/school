@@ -15,6 +15,35 @@ module.exports = {
       }
     });
   },
+  
+  //getAllStudentsBySearchValue
+  getSubjectsBySearchValueAndClass :function(searchValue,clas,limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    if( clas != "all" ){
+      model.Subject.count({$and :[{name:new RegExp(searchValue, 'i')},{clas:clas}]},function(err, count){
+        model.Subject.find({$and :[{name:new RegExp(searchValue, 'i')},{clas:clas}]}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
+          if(!err){
+            cb({result:subjects,count:count});
+          }else{
+            console.log(err);
+            cb(null);
+          }
+        });
+      });
+    } else {
+      model.Subject.count({name:new RegExp(searchValue, 'i')},function(err, count){model.Subject.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
+          if(!err){
+            cb({result:subjects,count:count});
+          }else{
+            console.log(err);
+            cb(null);
+          }
+        });
+      });
+    }
+  },
 
   //getAllCustomerCount
   getAllSubjectCount :function(limit,page,cb){
@@ -87,10 +116,10 @@ module.exports = {
   },
 
   updateSubject : function(id,body,cb){
-    obj = body
+    obj = body;
     model.Subject.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
-        cb(true)
+        cb(true);
       } else {
         console.log(err);
         cb(false);
@@ -99,12 +128,18 @@ module.exports = {
   },
   
   deleteSubject : function(id,cb){
-    model.Subject.remove({_id:id}, function(err,result) {
-      if (!err) {
-        cb(2);
-      } else {
-        console.log(err);
-        cb(3);
+    model.Study.find({customer:id}, function(err,resul) {
+      if(resul.length > 0){
+        cb(1);
+      } else{
+        model.Subject.remove({_id:id}, function(err,result) {
+          if (!err) {
+            cb(2);
+          } else {
+            console.log(err);
+            cb(3);
+          }
+        });
       }
     });
   }

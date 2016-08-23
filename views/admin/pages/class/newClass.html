@@ -1,47 +1,37 @@
-<div class="portlet light bordered ">
+<div class="portlet light bordered">
   <div class="portlet-title">
-    <br>
     <div class="caption caption-md">
       <i class="icon-settings font-green"></i>
       <span class="caption-subject font-green bold">إضافة صف دراسي</span>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-      <div class="x_panel">
-        <div class="x_title">
-          <h2></h2>
-          <div class="clearfix"></div>
-        </div>
-        <br>
-        <div class="x_content">
-          <form novalidate ng-submit="newClass()">
-            <div class="row"> 
-              <div class="col-md-4" >
-                <div class="form-group">
-                  <label class="control-label">الاسم</label>
-                  <input class="form-control input-sm" type="text" ng-model="newClassForm.name"  placeholder="الاسم" required>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label">الوصف</label>
-                  <input class="form-control input-sm" type="text" ng-model="newClassForm.description" placeholder="الوصف" required>
-                </div>
-              </div>
+    <div class="col-xs-12 col-md-12 col-lg-12">
+      <form novalidate ng-submit="newClass()">
+        <div class="row">
+          <div class="col-xs-12 col-md-3 col-md-offset-3">
+            <div class="form-group">
+              <label class="control-label">الاسم</label>
+              <input class="form-control input-sm" type="text" ng-model="newClassForm.name" placeholder="الاسم" required>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-md-2 col-md-offset-4">
-                <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
-              </div>
-              <div class="col-md-2">
-                <a class="btn btn-success btn-sm btn-block" ui-sref="classes"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
-              </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">الوصف</label>
+              <input class="form-control input-sm" type="text" ng-model="newClassForm.description" placeholder="الوصف" required>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-6 col-md-2 col-md-offset-4">
+            <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
+          </div>
+          <div class="col-xs-6 col-md-2">
+            <a class="btn btn-success btn-sm btn-block" onclick="$('#ClassesId').click();"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

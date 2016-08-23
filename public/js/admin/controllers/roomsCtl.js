@@ -2,7 +2,7 @@
   'use strict';
   var app = angular.module('school');
 
-  app.controller('ClassesCtl',['$scope','$state','ClassServ','toastr',function($scope,state,ClassServ,toastr){
+  app.controller('RoomsCtl',['$scope','$state','RoomServ','toastr',function($scope,state,RoomServ,toastr){
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
@@ -11,8 +11,8 @@
       if( searchValue === 'undefined' || !searchValue ){
         searchValue = "";
       }
-      ClassServ.getClassesBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
-        $scope.classes = response.data.result;
+      RoomServ.getRoomsBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
+        $scope.rooms = response.data.result;
         $scope.total = response.data.count;
       }, function(response) {
         console.log("Something went wrong");
@@ -20,26 +20,26 @@
      };
      $scope.init("");
      
-      $scope.getClassesBySearchValue = function (searchValue){
-        $scope.currentPage = 1;
-        $scope.init(searchValue);
-      };
+    $scope.getRoomsBySearchValue = function (searchValue){
+      $scope.currentPage = 1;
+      $scope.init(searchValue);
+    };
    
-   $scope.deleteClass = function(id) {
-    $scope.idClass = id;
+   $scope.deleteRoom = function(id) {
+    $scope.idRoom = id;
    };
    
    $scope.deleteConfirm = function(id) {
-    ClassServ.deleteClass(id).then(function(response){
+    RoomServ.deleteRoom(id).then(function(response){
         if(response.data.result == 1){
-          toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليه');
+          toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
         } else if (response.data.result == 2){
    
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
           
           $scope.init($scope.searchValue);
-          var count = $scope.classes.filter(function(obj){return obj._id != id;}).length;
+          var count = $scope.rooms.filter(function(obj){return obj._id != id;}).length;
           if( $scope.currentPage > 1 && count == 0 ){
             $scope.currentPage -= 1;
             $scope.init($scope.searchValue);
@@ -56,22 +56,22 @@
 
   }]);
 
-//editClassCtl
-  app.controller('editClassCtl',['$scope','$stateParams','ClassServ','$state','toastr',function($scope,$stateParams,ClassServ,$state,toastr){
-    $scope.editClassForm={};
+//editRoomCtl
+  app.controller('editRoomCtl',['$scope','$stateParams','RoomServ','$state','toastr',function($scope,$stateParams,RoomServ,$state,toastr){
+    $scope.editRoomForm={};
    
-    ClassServ.getClassById($stateParams).then(function(response) {
-      $scope.editClassForm = response.data;
+    RoomServ.getRoomById($stateParams).then(function(response) {
+      $scope.editRoomForm = response.data;
     }, function(response) {
       console.log("Something went wrong");
     });
     
 
-    $scope.editClass = function(){
+    $scope.editRoom = function(){
   
-      ClassServ.editClass($stateParams.id,$scope.editClassForm).then(function(response) {
+      RoomServ.editRoom($stateParams.id,$scope.editRoomForm).then(function(response) {
         if(response.data){
-          $('#ClassesId').click();
+          $('#RoomsId').click();
           toastr.info('تم التعديل بنجاح');
         } else {
           toastr.error('عملية التعديل فشلت');
@@ -83,20 +83,21 @@
 
   }]);
 
-  app.controller('newClassCtl',['$scope','ClassServ','$state','toastr',function($scope,ClassServ,$state,toastr){
+  app.controller('newRoomCtl',['$scope','RoomServ','$state','toastr',function($scope,RoomServ,$state,toastr){
     
-    $scope.newClassForm={};
-    $scope.newClass = function(){
-      ClassServ.addClass($scope.newClassForm).then(function(response){
+    $scope.newRoomForm={};
+    $scope.newRoom = function(){
+      RoomServ.addRoom($scope.newRoomForm).then(function(response){
         if(response.data){
-          $('#ClassesId').click();
+          $('#RoomsId').click();
           toastr.success('تم الإضافة بنجاح');
         } else {
           toastr.error('خطأ في عملية الادخال');
         }
       },function(response){
         console.log("Somthing went wrong");
-      });    
+      });
+        
     };
 
   }]);

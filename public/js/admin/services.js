@@ -67,10 +67,37 @@
         return $http.get('/class/'+id.id);
       },
       'editClass': function(id,obj){
-        return $http.put('/class/edit/'+id,obj)
+        return $http.put('/class/edit/'+id,obj);
       },
       'getAllClasses': function(){
         return $http.get('/class/all');
+      }
+    };
+    return self;
+  }]);
+
+  app.service('RoomServ',['$http',function($http){
+    var self = {
+      'addRoom': function(room){
+        return $http.post('/room/add',room);
+      },
+      'getRooms': function(limit,page){
+        return $http.get('/room/'+limit+'/'+page);
+      },
+      'getRoomsBySearchValue': function(searchValue,limit,page){
+        return $http.get('/room/'+searchValue+'/'+limit+'/'+page);
+      },
+      'deleteRoom': function(id){
+        return $http.delete('/room/delete/'+id);
+      },
+      'getRoomById': function(id){
+        return $http.get('/room/'+id.id);
+      },
+      'editRoom': function(id,obj){
+        return $http.put('/room/edit/'+id,obj)
+      },
+      'getAllRooms': function(){
+        return $http.get('/room/all');
       }
     };
     return self;
@@ -82,16 +109,19 @@
         return $http.post('/subject/add',subject);
       },
       'getSubjects': function(limit,page){
-        return $http.get('/subject/'+limit+'/'+page)
+        return $http.get('/subject/'+limit+'/'+page);
+      },
+      'getSubjectsBySearchValueAndClass' : function(searchValue,clas,limit,page){
+        return $http.get('/subject/'+searchValue+'/'+clas+'/'+limit+'/'+page);
       },
       'deleteSubject': function(id){
-        return $http.delete('/subject/delete/'+id)
+        return $http.delete('/subject/delete/'+id);
       },
       'getSubjectById': function(id){
-        return $http.get('/subject/'+id.id)
+        return $http.get('/subject/'+id.id);
       },
       'editSubject': function(id,obj){
-        return $http.put('/subject/edit/'+id,obj)
+        return $http.put('/subject/edit/'+id,obj);
       }
     };
     return self;

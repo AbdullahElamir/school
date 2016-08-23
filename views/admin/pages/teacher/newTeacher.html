@@ -1,103 +1,93 @@
-<div class="portlet light bordered ">
+<div class="portlet light bordered">
   <div class="portlet-title">
-    <br>
     <div class="caption caption-md">
       <i class="icon-settings font-green"></i>
       <span class="caption-subject font-green bold">إضافة مدرس جديد</span>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-      <div class="x_panel">
-        <div class="x_title">
-          <h2></h2>
-          <div class="clearfix"></div>
+    <div class="col-xs-12 col-md-12 col-lg-12">
+      <form novalidate ng-submit="newTeacher()">
+
+        <div class="row"> 
+          <div class="col-md-3" >
+            <div class="form-group">
+              <label class="control-label">اسم المدرس</label>
+              <input class="form-control input-sm" type="text" ng-model="newTeacherForm.name"  placeholder="اسم المدرس" required>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">رقم الهاتف</label>
+              <input class="form-control input-sm" type="text" ng-model="newTeacherForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">الجنس</label>
+              <select class="form-control input-sm" ng-model="newTeacherForm.gender"  required>
+                <option value="" disabled selected>الرجاء الاختيار</option>
+                <option value="1">ذكر</option>
+                <option value="2">انثى</option>
+              </select>
+            </div>
+          </div>
         </div>
-        <br>
-        <div class="x_content">
-          <form novalidate ng-submit="newTeacher()">
-            <div class="row"> 
-              <div class="col-md-3" >
-                <div class="form-group">
-                  <label class="control-label">اسم المدرس</label>
-                  <input class="form-control input-sm" type="text" ng-model="newTeacherForm.name"  placeholder="اسم المدرس" required>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="control-label">رقم الهاتف</label>
-                  <input class="form-control input-sm" type="text" ng-model="newTeacherForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="control-label">الجنس</label>
-                   <select class="form-control input-sm" ng-model="newTeacherForm.gender"  required>
-                    <option value="" disabled selected>الرجاء الاختيار</option>
-                    <option value="1">ذكر</option>
-                    <option value="2">انثى</option>
-                  </select>
-                </div>
-              </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">البريد الالكتروني</label>
+              <input class="form-control input-sm" type="text" ng-model="newTeacherForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="control-label">البريد الالكتروني</label>
-                  <input class="form-control input-sm" type="text" ng-model="newTeacherForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="control-label">الرمز السري</label>
-                  <input class="form-control input-sm" type="password" ng-model="newTeacherForm.password"  placeholder="الرمز السري" required>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="control-label">الرقم الوطني</label>
-                  <input class="form-control input-sm" type="text" ng-model="newTeacherForm.nid"  placeholder="الرقم الوطني" required>
-                </div>
-              </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">الرمز السري</label>
+              <input class="form-control input-sm" type="password" ng-model="newTeacherForm.password"  placeholder="الرمز السري" required>
             </div>
-             <div class="row">
-               <div class="col-md-3">
-                <div class="form-group">
-                  <label class="control-label">الجنسية</label>
-                  <input class="form-control input-sm" type="text" ng-model="newTeacherForm.nationality" placeholder="الجنسية" required>
-                </div>
-              </div>
-               <div class="col-md-3">
-                <div class="form-group">
-                  <label class="control-label">العنوان</label>
-                  <input class="form-control input-sm" type="text" ng-model="newTeacherForm.address" placeholder="العنوان" required>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="control-label">تاريخ الميلاد</label>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">الرقم الوطني</label>
+              <input class="form-control input-sm" type="text" ng-model="newTeacherForm.nid"  placeholder="الرقم الوطني" required>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">الجنسية</label>
+              <input class="form-control input-sm" type="text" ng-model="newTeacherForm.nationality" placeholder="الجنسية" required>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">العنوان</label>
+              <input class="form-control input-sm" type="text" ng-model="newTeacherForm.address" placeholder="العنوان" required>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">تاريخ الميلاد</label>
               <div class="input-group">
-                  
-                <input type="text" required class="form-control input-sm" uib-datepicker-popup ng-model="newTeacherForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" />
+                <input type="text" required class="form-control input-sm" uib-datepicker-popup ng-model="newTeacherForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </div>
-              </div>
-                </div>
-              </div>
-            <hr>
-            <div class="row">
-              <div class="col-md-2 col-md-offset-4">
-                <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
-              </div>
-              <div class="col-md-2">
-                <a class="btn btn-success btn-sm btn-block" ui-sref="teachers"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
-              </div>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-6 col-md-2 col-md-offset-4">
+            <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
+          </div>
+          <div class="col-xs-6 col-md-2">
+            <a class="btn btn-success btn-sm btn-block" onclick="$('#TeachersId').click();"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

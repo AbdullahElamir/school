@@ -4,11 +4,11 @@
       <i class="icon-settings font-green"></i>
       <span class="caption-subject font-green bold">عرض الطلبة</span>
     </div>
-     <div class="col-xs-7">
-       <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init='searchValue = "" ' ng-change="getStudentBySearchValue(searchValue)" placeholder="بحث بواسطة إسم الطالب أو الرقم الوطني ..">
+    <div class="col-xs-7">
+      <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getStudentBySearchValue(searchValue)" placeholder="بحث بواسطة إسم الطالب أو الرقم الوطني ..">
     </div>
     <div class="col-xs-3 text-left">
-      <a ui-sref="newStudent" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة طالب جديد</a>
+      <a onclick="$('#newStudentId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة طالب جديد</a>
     </div>
     <div class="portlet-body" style="padding-top:5px;">
       <table class="table table-striped" ng-show="students.length">
@@ -20,7 +20,7 @@
             <th>الجنسية</th>
             <th>العنوان</th>
             <th>الرقم الوطني</th>
-            <th ><i class="fa fa-cog"></i></th>
+            <th><i class="fa fa-cog"></i></th>
           </tr>
         </thead>
         <tbody>
@@ -57,7 +57,6 @@
           </div>
         </div>
       </div>
-
       <div class="row" ng-show="students.length">
         <div class="col-xs-12 col-md-12 text-center">
           <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
@@ -65,7 +64,6 @@
         </div>
       </div>
     </div>
-
   </div>
   <div ng-show="students.length == 0">
     <div class="alert alert-info">

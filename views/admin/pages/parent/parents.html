@@ -1,19 +1,17 @@
 <div class="portlet light bordered ">
   <div class="portlet-title">
-    <br>
     <div class="caption caption-md">
       <i class="icon-settings font-green"></i>
       <span class="caption-subject font-green bold">عرض ولي الامر</span>
     </div>
-     <div class="col-xs-7">
-            <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init='searchValue = "" ' ng-change="getParentsBySearchValue(searchValue)" placeholder="بحث بواسطة إسم ولي الأمر أو الرقم الوطني ..">
-          </div>
-          <div class="col-xs-3 text-left">
-            <a ui-sref="newParent" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة ولي الامر </a>
+    <div class="col-xs-7">
+      <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getParentsBySearchValue(searchValue)" placeholder="بحث بواسطة إسم ولي الأمر أو الرقم الوطني ..">
+    </div>
+    <div class="col-xs-3 text-left">
+      <a onclick="$('#newParentId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة ولي الامر </a>
+    </div>
   </div>
-
-          </div>
-  <div class="portlet-body" style="padding-top:0px;"> 
+  <div class="portlet-body" style="padding-top:0px;">
     <table class="table table-striped" ng-show="parents.length">
       <thead>
         <tr>
@@ -23,7 +21,7 @@
           <th>الجنسية</th>
           <th>العنوان</th>
           <th>رقم الوطني</th>
-          <th ><i class="fa fa-cog"></i></th>
+          <th><i class="fa fa-cog"></i></th>
         </tr>
       </thead>
       <tbody>
@@ -42,36 +40,36 @@
       </tbody>
     </table>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel">مســح طالب</h4>
-      </div>
-      <div class="modal-body">
-        هل حقا تريد مسح ولي الامر ؟
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-        <button ng-click="deleteConfirm(idParent)" value="idParent" type="button" class="btn btn-danger">مسح</button>
+            <h4 class="modal-title" id="myModalLabel">مســح طالب</h4>
+          </div>
+          <div class="modal-body">
+            هل حقا تريد مسح ولي الامر ؟
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            <button ng-click="deleteConfirm(idParent)" value="idParent" type="button" class="btn btn-danger">مسح</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<div ng-show="parents.length == 0">
-            <div class="alert alert-info">
-              <p class="text-center">
-                عفوا لاتوجد بيانات
-              </p>
-            </div>
-</div>
-  <div class="row" ng-show="parents.length">
+    <div ng-show="parents.length == 0">
+      <div class="alert alert-info">
+        <p class="text-center">
+          عفوا لاتوجد بيانات
+        </p>
+      </div>
+    </div>
+    <div class="row" ng-show="parents.length">
       <div class="col-xs-12 col-md-12 text-center">
         <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
         <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
       </div>
     </div>
-</div>
+  </div>
 </div>

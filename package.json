@@ -12,6 +12,7 @@
     "easy-pbkdf2": "^0.1.1",
     "ejs": "~2.3.3",
     "express": "~4.13.1",
+    "ico": "^0.3.3",
     "jsonfile": "^2.3.1",
     "lodash": "^4.13.1",
     "mongoose": "^4.5.0",
@@ -23,6 +24,13 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
-    "eslint": "^3.3.1"
+    "eslint": "^3.3.1",
+    "gulp": "^3.9.1",
+    "gulp-htmlhint": "^0.3.1",
+    "gulp-jsbeautifier": "^2.0.3",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-remove-empty-lines": "0.0.4",
+    "htmlhint-stylish": "^1.0.3"
   }
 }
