@@ -69,7 +69,7 @@
     
       TeacherServ.editTeacher($stateParams.id,$scope.editTeacherForm).then(function(response) {
         if(response.data){
-          $state.go('teachers');
+          $('#TeachersId').click();
           toastr.info('تم التعديل بنجاح');
         } else {
           toastr.error('عملية التعديل فشلت');
@@ -180,7 +180,7 @@
     $scope.newTeacher = function(){
       TeacherServ.addTeacher($scope.newTeacherForm).then(function(response){
         if(response.data){
-          $state.go('teachers');
+          $('#TeachersId').click();
           toastr.success('تم الإضافة بنجاح');
         } else {
           console.log($scope.newTeacherForm);

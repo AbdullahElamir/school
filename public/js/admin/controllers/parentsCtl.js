@@ -9,7 +9,7 @@
       console.log($scope.newParentForm);
       ParentServ.addParent($scope.newParentForm).then(function(response){
          if(response.data){
-          $state.go('parents');
+          $('#ParentsId').click();
           toastr.success('تم الإضافة بنجاح');
         } else {
           toastr.error('خطأ في عملية الادخال');
@@ -133,7 +133,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
     
       ParentServ.editParent($stateParams.id,$scope.editParentForm).then(function(response) {
         if(response.data){
-          $state.go('parents');
+          $('#ParentsId').click();
           toastr.info('تم التعديل بنجاح');
         } else {
           console.log(response.data);
@@ -240,8 +240,6 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
 
  }]);
 
-
-
   //ParenttCtl
 
   app.controller('ParenttCtl',['$scope','$state','ParentServ','toastr',function($scope,state,ParentServ,toastr){
@@ -294,13 +292,6 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
     });
    };
 
-  
-
-
   }]);
 
-
-
-
-
-  }());
+}());
