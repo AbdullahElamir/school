@@ -76,6 +76,33 @@
     return self;
   }]);
 
+  app.service('RoomServ',['$http',function($http){
+    var self = {
+      'addRoom': function(room){
+        return $http.post('/room/add',room);
+      },
+      'getRooms': function(limit,page){
+        return $http.get('/room/'+limit+'/'+page);
+      },
+      'getRoomsBySearchValue': function(searchValue,limit,page){
+        return $http.get('/room/'+searchValue+'/'+limit+'/'+page);
+      },
+      'deleteRoom': function(id){
+        return $http.delete('/room/delete/'+id);
+      },
+      'getRoomById': function(id){
+        return $http.get('/room/'+id.id);
+      },
+      'editRoom': function(id,obj){
+        return $http.put('/room/edit/'+id,obj)
+      },
+      'getAllRooms': function(){
+        return $http.get('/room/all');
+      }
+    };
+    return self;
+  }]);
+
   app.service('SubjectServ',['$http',function($http){
     var self = {
       'addSubject': function(subject){
