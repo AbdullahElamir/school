@@ -16,28 +16,53 @@
       <div class="x_content">
         <form novalidate ng-submit="newParent()">
           <div class="row"> 
-            <div class="col-md-4" >
+            <div class="col-md-3" >
               <div class="form-group">
                 <label class="control-label">اسم ولي الامر</label>
                 <input class="form-control input-sm" type="text" ng-model="newParentForm.name"  placeholder="اسم الطالب" required>
               </div>
             </div>
-            <div class="col-md-4">
-             <div class="form-group">
-                <label class="control-label">البريد الالكتروني</label>
-                <input class="form-control input-sm" type="text" ng-model="newParentForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
-              </div>
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class="form-group">
                 <label class="control-label">رقم الهاتف</label>
                 <input class="form-control input-sm" type="text" ng-model="newParentForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
               </div>
             </div>
-
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">الجنس</label>
+                <select class="form-control input-sm" ng-model="newParentForm.gender"  required>
+                  <option value="" disabled selected>الرجاء الاختيار</option>
+                  <option value="1">دكر</option>
+                  <option value="2">انثي</option>
+                </select>
+            </div>
+          </div>
           </div>
           <div class="row">
-          <div class="col-md-3">
+            <div class="col-md-3">
+             <div class="form-group">
+                <label class="control-label">البريد الالكتروني</label>
+                <input class="form-control input-sm" type="text" ng-model="newParentForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">الرمز السري</label>
+                <input class="form-control input-sm" type="password" ng-model="newParentForm.password"  placeholder="الرمز السري" required>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="control-label">الرقم الوطني</label>
+                <input class="form-control input-sm" type="text" ng-model="newParentForm.nid"  placeholder="الرقم الوطني" required>
+              </div>
+            </div>
+          </div>  
+            
+            
+           <div class="row">
+            <div class="col-md-3">
               <div class="form-group">
                 <label class="control-label">الجنسية</label>
                 <input class="form-control input-sm" type="text" ng-model="newParentForm.nationality" placeholder="الجنسية" required>
@@ -50,24 +75,6 @@
               </div>
               
             </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label class="control-label">الرقم الوطني</label>
-                <input class="form-control input-sm" type="text" ng-model="newParentForm.nid"  placeholder="الرقم الوطني" required>
-              </div>
-            </div>
-            <div class="col-md-3">
-            <div class="form-group">
-              <label class="control-label">الجنس</label>
-               <select class="form-control input-sm" ng-model="newParentForm.gender"  required>
-                <option value="" disabled selected>الرجاء الاختيار</option>
-                <option value="1">دكر</option>
-                <option value="2">انثي</option>
-              </select>
-            </div>
-          </div>
-          </div>
-           <div class="row">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="control-label">تاريخ الميلاد</label>

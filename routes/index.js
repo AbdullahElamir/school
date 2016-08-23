@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var school = require('../controller/school') 
+var school = require('../controller/school') ;
+var login = require('../controller/login')(router);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

@@ -17,19 +17,28 @@
         <div class="x_content">
           <form novalidate ng-submit="newTeacher()">
             <div class="row"> 
-              <div class="col-md-4" >
+              <div class="col-md-3" >
                 <div class="form-group">
                   <label class="control-label">اسم المدرس</label>
                   <input class="form-control input-sm" type="text" ng-model="newTeacherForm.name"  placeholder="اسم المدرس" required>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label class="control-label">رقم الهاتف</label>
                   <input class="form-control input-sm" type="text" ng-model="newTeacherForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
                 </div>
               </div>
-
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">الجنس</label>
+                   <select class="form-control input-sm" ng-model="newTeacherForm.gender"  required>
+                    <option value="" disabled selected>الرجاء الاختيار</option>
+                    <option value="1">ذكر</option>
+                    <option value="2">انثى</option>
+                  </select>
+                </div>
+              </div>
             </div>
             <div class="row">
               <div class="col-md-3">
@@ -40,20 +49,16 @@
               </div>
               <div class="col-md-3">
                 <div class="form-group">
+                  <label class="control-label">الرمز السري</label>
+                  <input class="form-control input-sm" type="password" ng-model="newTeacherForm.password"  placeholder="الرمز السري" required>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
                   <label class="control-label">الرقم الوطني</label>
                   <input class="form-control input-sm" type="text" ng-model="newTeacherForm.nid"  placeholder="الرقم الوطني" required>
                 </div>
               </div>
-              <div class="col-md-3">
-              <div class="form-group">
-                <label class="control-label">الجنس</label>
-                 <select class="form-control input-sm" ng-model="newTeacherForm.gender"  required>
-                  <option value="" disabled selected>الرجاء الاختيار</option>
-                  <option value="1">ذكر</option>
-                  <option value="2">انثى</option>
-                </select>
-              </div>
-            </div>
             </div>
              <div class="row">
                <div class="col-md-3">

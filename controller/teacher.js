@@ -1,7 +1,6 @@
-
 var model = require("../models");
 var teacher = null;
-
+var userHelpers = require("./userHelpers");
 module.exports = {
 
   getAllTeacher :function(cb){
@@ -78,19 +77,29 @@ module.exports = {
       }
     });
   },
-
+  getTeacherEmail :function(email,cb){
+    model.Teacher.findOne({email : email}, function(err, teachers){
+      if(!err){
+        cb(teachers);
+      }else{
+        cb(null);
+      }
+    });
+  },
   addTeacher : function(body,cb){
     obj = body;
-
-
-    teacher = new model.Teacher(obj);
-    teacher.save(function(err,result){
-      if (!err) {
-        cb(true);
-      } else {
-        console.log(err);
-        cb(false);
-      }
+    userHelpers.Hash(body.password,function(hash){
+      obj.password=hash.password;
+      obj.salt=hash.salt;
+      teacher = new model.Teacher(obj);
+      teacher.save(function(err,result){
+        if (!err) {
+          cb(true);
+        } else {
+          console.log(err);
+          cb(false);
+        }
+      });
     });
   },
 
