@@ -8,7 +8,7 @@
       <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getRoomsBySearchValue(searchValue)" placeholder="بحث ..">
     </div>
     <div class="col-xs-3 text-left">
-      <a ui-sref="newRoom" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة غرفة دراسية</a>
+      <a onclick="$('#newRoomId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة غرفة دراسية</a>
     </div>
   </div>
   <div class="portlet-body" style="padding-top:0px;">
@@ -52,7 +52,7 @@
             <h4 class="modal-title" id="myModalLabel">مســح الغرفة</h4>
           </div>
           <div class="modal-body">
-            هل حقا تريد مسح هذه الغرفة الدراسي ؟
+            هل حقا تريد مسح هذه الغرفة الدراسية ؟
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>

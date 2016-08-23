@@ -8,7 +8,7 @@
       <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getTeachersBySearchValue(searchValue)" placeholder="بحث بواسطة إسم المدرس أو الرقم الوطني ..">
     </div>
     <div class="col-xs-3 text-left">
-      <a ui-sref="newTeacher" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة مدرس جديد</a>
+      <a onclick="$('#newTeacherId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة مدرس جديد</a>
     </div>
     <div class="portlet-body" style="padding-top:0px;">
       <table class="table table-striped" ng-show="teachers.length">
