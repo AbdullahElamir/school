@@ -2,12 +2,14 @@ var mongoose = require('mongoose');
 var timestamps = require('mongoose-timestamp');
 var Schema = mongoose.Schema;
 
-var Study = new Schema({
+var Fees = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
+  id_class:{type: Schema.Types.ObjectId , ref: 'Class'},
+  amount:{type:Number},
   description: {type: String,default:"NULL"},
   status: {type: Number, default:1}
 });
 
-Study.plugin(timestamps);
-Study.index({ name: 'text'});
-exports.Study = mongoose.model('Study', Study);
+Fees.plugin(timestamps);
+Fees.index({ name: 'text'});
+exports.Fees = mongoose.model('Fees', Fees); 
