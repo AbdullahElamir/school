@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var Teacher = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
-  /*password: { type: String, required: true},*/
+  password: { type: String, required: true},
   salt: String,
   email: { type: String, unique : true, required : true},
   phone: {type: String,default:"NULL"},

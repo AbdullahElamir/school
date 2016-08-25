@@ -52,7 +52,7 @@
     },function(response){
       console.log("Somthing went wrong");
     });
-   }
+   };
 
   }]);
 
@@ -71,7 +71,7 @@
   
       ClassServ.editClass($stateParams.id,$scope.editClassForm).then(function(response) {
         if(response.data){
-          $state.go('classes');
+          $('#ClassesId').click();
           toastr.info('تم التعديل بنجاح');
         } else {
           toastr.error('عملية التعديل فشلت');
@@ -79,7 +79,7 @@
       }, function(response) {
         console.log("Something went wrong");
       });
-    }
+    };
 
   }]);
 
@@ -89,16 +89,15 @@
     $scope.newClass = function(){
       ClassServ.addClass($scope.newClassForm).then(function(response){
         if(response.data){
-          $state.go('classes');
+          $('#ClassesId').click();
           toastr.success('تم الإضافة بنجاح');
         } else {
           toastr.error('خطأ في عملية الادخال');
         }
       },function(response){
         console.log("Somthing went wrong");
-      });
-        
-    }
+      });    
+    };
 
   }]);
 

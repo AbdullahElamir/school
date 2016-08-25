@@ -72,7 +72,7 @@
     
       StudentServ.editStudent($stateParams.id,$scope.editStudentForm).then(function(response) {
         if(response.data){
-          $state.go('students');
+          $('#StudentsId').click();
           toastr.info('تم التعديل بنجاح');
         } else {
           console.log(response.data);
@@ -193,7 +193,7 @@
     $scope.newStudent = function(){
       StudentServ.addStudent($scope.newStudentForm).then(function(response){
         if(response.data){
-          $state.go('students');
+          $('#StudentsId').click();
           toastr.success('تم الإضافة بنجاح');
         } else {
           toastr.error('خطأ في عملية الادخال');

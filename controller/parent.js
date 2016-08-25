@@ -1,4 +1,4 @@
-
+var userHelpers = require("./userHelpers");
 var model = require("../models");
 var parent = null;
 
@@ -81,17 +81,31 @@ module.exports = {
       }
     });
   },
-
+  getParentEmail :function(email,cb){
+    model.Parent.findOne({email : email}, function(err, parents){
+      if(!err){
+        cb(parents);
+      }else{
+        cb(null);
+      }
+    });
+  },
   addParent : function(body,cb){
     obj = body;
-    parent = new model.Parent(obj);
-    parent.save(function(err,result){
-      if (!err) {
-        cb(true);
-      } else {
-        console.log(err);
-        cb(false);
-      }
+    console.log(body);
+    userHelpers.Hash(body.password,function(hash){
+      obj.password=hash.password;
+      obj.salt=hash.salt;
+      console.log(obj);
+      parent = new model.Parent(obj);
+      parent.save(function(err,result){
+        if (!err) {
+          cb(true);
+        } else {
+          console.log(err);
+          cb(false);
+        }
+      });
     });
   },
 

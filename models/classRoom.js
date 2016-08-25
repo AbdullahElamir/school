@@ -2,12 +2,14 @@ var mongoose = require('mongoose');
 var timestamps = require('mongoose-timestamp');
 var Schema = mongoose.Schema;
 
-var System_year = new Schema({
+var ClassRoom = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
   description: {type: String,default:"NULL"},
+  room:{type: Schema.Types.ObjectId , ref: 'Room'},
+  sheft:{type: Number, default:1},
   status: {type: Number, default:1}
 });
 
-System_year.plugin(timestamps);
-System_year.index({ name: 'text'});
-exports.System_year = mongoose.model('System_year', System_year);
+ClassRoom.plugin(timestamps);
+ClassRoom.index({ name: 'text'});
+exports.ClassRoom = mongoose.model('ClassRoom', ClassRoom); 

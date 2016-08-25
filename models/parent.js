@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 
 var Parent = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
-  /*password: { type: String, required: true},
-  salt: String,*/
+  password: { type: String, required: true},
+  salt: String,
   email: { type: String, required : true},
   phone: {type: String,default:"NULL"},
   nid: {type: String, index: true},

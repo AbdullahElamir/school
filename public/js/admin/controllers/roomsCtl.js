@@ -20,10 +20,10 @@
      };
      $scope.init("");
      
-      $scope.getRoomsBySearchValue = function (searchValue){
-        $scope.currentPage = 1;
-        $scope.init(searchValue);
-      };
+    $scope.getRoomsBySearchValue = function (searchValue){
+      $scope.currentPage = 1;
+      $scope.init(searchValue);
+    };
    
    $scope.deleteRoom = function(id) {
     $scope.idRoom = id;
@@ -52,7 +52,7 @@
     },function(response){
       console.log("Somthing went wrong");
     });
-   }
+   };
 
   }]);
 
@@ -71,7 +71,7 @@
   
       RoomServ.editRoom($stateParams.id,$scope.editRoomForm).then(function(response) {
         if(response.data){
-          $state.go('rooms');
+          $('#RoomsId').click();
           toastr.info('تم التعديل بنجاح');
         } else {
           toastr.error('عملية التعديل فشلت');
@@ -79,7 +79,7 @@
       }, function(response) {
         console.log("Something went wrong");
       });
-    }
+    };
 
   }]);
 
@@ -89,7 +89,7 @@
     $scope.newRoom = function(){
       RoomServ.addRoom($scope.newRoomForm).then(function(response){
         if(response.data){
-          $state.go('rooms');
+          $('#RoomsId').click();
           toastr.success('تم الإضافة بنجاح');
         } else {
           toastr.error('خطأ في عملية الادخال');
@@ -98,7 +98,7 @@
         console.log("Somthing went wrong");
       });
         
-    }
+    };
 
   }]);
 

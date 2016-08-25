@@ -42,7 +42,7 @@
       }, function(response) {
         console.log("Something went wrong");
       });
-    }
+    };
 
   }]);
 
