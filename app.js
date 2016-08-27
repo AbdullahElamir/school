@@ -21,7 +21,7 @@ var room = require('./routes/room');
 var app = express();
 
 var store = new MongoDBStore({
-  uri: 'mongodb://localhost:27017/isp',
+  uri: 'mongodb://localhost:27017/school',
   collection: 'mySessions'
 });
 
