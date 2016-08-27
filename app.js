@@ -20,6 +20,7 @@ var subject = require('./routes/subject');
 var room = require('./routes/room');
 var classRoom = require('./routes/classRoom');
 var attendance = require('./routes/attendance');
+var exam = require('./routes/exam');
 var app = express();
 
 var store = new MongoDBStore({
@@ -69,6 +70,7 @@ app.use('/subject',subject);
 app.use('/room',room);
 app.use('/classRoom',classRoom);
 app.use('/attendance',attendance);
+app.use('/exam',exam);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
