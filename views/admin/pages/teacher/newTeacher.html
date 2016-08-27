@@ -67,6 +67,16 @@
         <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
+              <label class="control-label">الصفة</label>
+              <select class="form-control input-sm" ng-model="newTeacherForm.level" required>
+                <option value="" disabled selected>الرجاء الاختيار</option>
+                <option value="1">مدير</option>
+                <option value="2">مدرس</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
               <label class="control-label">تاريخ الميلاد</label>
               <div class="input-group">
                 <input type="text" required class="form-control input-sm" uib-datepicker-popup ng-model="newTeacherForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />

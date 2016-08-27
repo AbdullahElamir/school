@@ -14,6 +14,7 @@ var Parent = new Schema({
   gender:{type: String,default:"NULL"},
   nationality:{type: String,default:"NULL"},
   address:{type: String,default:"NULL"},
+  level:{type:Number,default:3},
   status: {type: Number, default:1}
 });
 

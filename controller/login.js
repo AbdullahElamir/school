@@ -47,10 +47,12 @@ module.exports = function (router) {
       
       req.logIn(user, function(err) {
         if (err) { return next(err); }
-        if (user.repName){
-          return res.send({login: true,admin:false });
+        if (user.level==1){
+          return res.send({login: true,admin:1 });
+        }else if (user.level==1){
+          return res.send({login: true,admin:2 });  
         }else{
-          return res.send({login: true,admin:true });  
+          return res.send({login: true,admin:3 });
         }
         
       });
