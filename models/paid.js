@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var Paid = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
   id_fees:{type: Schema.Types.ObjectId , ref: 'Fees'},
-  SysPro:{type: Schema.Types.ObjectId , ref: 'SysPro'},
+  StuPro:{type: Schema.Types.ObjectId , ref: 'StuPro'},
   paidUp:{type:Number},
   description: {type: String,default:"NULL"},
   residual:{type:Number},

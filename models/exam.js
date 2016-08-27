@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var Exam = new Schema({
   name: { type: String, index: true, default: "Unknown"},
   system:{ type: Schema.Types.ObjectId , ref: 'System'},
+  clas:{ type: Schema.Types.ObjectId , ref: 'Class'},
   semester: {type: Number},
   type: {type: Number},
   status: {type: Number, default:1}

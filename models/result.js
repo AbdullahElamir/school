@@ -3,9 +3,10 @@ var timestamps = require('mongoose-timestamp');
 var Schema = mongoose.Schema;
 
 var Result = new Schema({
-  SysPro:{type: Schema.Types.ObjectId , ref: 'SysPro'},
+  StuPro:{type: Schema.Types.ObjectId , ref: 'StuPro'},
   exam:{type: Schema.Types.ObjectId , ref: 'Exam'},
   subject:{ type: Schema.Types.ObjectId , ref: 'Subject'},
+  mark:{type:Number,default:0},
   status: {type: Number, default:1}
 });
 
