@@ -33,7 +33,7 @@ module.exports = {
         });
       });
     } else {
-      model.Subject.count({name:new RegExp(searchValue, 'i')},function(err, count){model.Subject.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
+      model.Subject.count({name:new RegExp(searchValue, 'i')},function(err, count){ model.Subject.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
           if(!err){
             cb({result:subjects,count:count});
           }else{
@@ -80,7 +80,7 @@ module.exports = {
   getSubjectName :function(name,cb){
     model.Subject.find({name :{ $regex:name, $options: 'i' }}).limit(30)
     .populate('clas')
-    .exec(function(err, custom){
+    .exec(function(err, custom){ 
       if(!err){
         cb(custom);
       }else{
