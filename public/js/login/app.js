@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  var app = angular.module('schoolLogin',['ui.router','jcs-autoValidate']);
+  var app = angular.module('schoolLogin',['ui.router','jcs-autoValidate','toastr']);
   app.run(['$rootScope','$state',function($rootScope,$state){
     $rootScope.$state = $state; // state to be accessed from view
   }]);
@@ -30,7 +30,7 @@
     })
   }]);
   /* Setup Login Controller */
-  app.controller('LoginCtl',['$scope',function($scope){
+  app.controller('LoginCtl',['$scope','$http','toastr',function($scope,$http,toastr){
     $scope.loginForm = {};
     $scope.login = function(){
       $http.post('/login',{
@@ -45,7 +45,7 @@
           window.location.replace('/admin');  
         }else if(response.data.admin==2){
           window.location.replace('/');
-        }else if(response.data.admin==3{
+        }else if(response.data.admin==3){
           window.location.replace('/');
         }
       }

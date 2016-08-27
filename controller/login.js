@@ -40,7 +40,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 module.exports = function (router) {
-  router.post('/user/login', function(req, res, next) {
+  router.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user) {
       if (err) { return next(err); }
       if (!user) { return res.send({login: 2 }); }
@@ -60,7 +60,7 @@ module.exports = function (router) {
   });
 
   // here if a user wants to logout of the app
-  router.get('/user/logout', ensureAuthenticated, function (req, res) {
+  router.get('/logout', ensureAuthenticated, function (req, res) {
     req.session.destroy();
     res.redirect('/');
   });

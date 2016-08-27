@@ -15,9 +15,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:name', function(req, res) {
   var name = req.params.name;
-  console.log(school);
   school.getSchoolInfo(function(result){
-  	console.log(result);
   	schoolName="لا يوجد";
   	if(result!=null){
   		schoolName = result.name
