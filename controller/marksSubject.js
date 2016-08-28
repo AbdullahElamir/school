@@ -70,7 +70,7 @@ module.exports = {
     });
   },
   getMarksSubSubject :function(subject,cb){
-    model.MarksSub.findOne({subject : subject,status:1}).populate('subject').populate('subject').exec(function(err, MarksSubes){
+    model.MarksSub.find({subject : subject,status:1}).populate('exam').populate('subject').exec(function(err, MarksSubes){
       if(!err){
         cb(MarksSubes);
       }else{
@@ -79,7 +79,7 @@ module.exports = {
     });
   },
   getMarksSubExam :function(exam,cb){
-    model.MarksSub.findOne({exam : exam,status:1}).populate('exam').populate('subject').exec(function(err, MarksSubes){
+    model.MarksSub.find({exam : exam,status:1}).populate('exam').populate('subject').exec(function(err, MarksSubes){
       if(!err){
         cb(MarksSubes);
       }else{
@@ -89,7 +89,7 @@ module.exports = {
   },
 
   getMarksSubExamSubject :function(exam,subject,semester,cb){
-    model.MarksSub.findOne({exam : exam,status:1,semester,semester,subject:subject}).populate('exam').populate('subject').exec(function(err, MarksSubes){
+    model.MarksSub.find({exam : exam,status:1,semester:semester,subject:subject}).populate('exam').populate('subject').exec(function(err, MarksSubes){
       if(!err){
         cb(MarksSubes);
       }else{

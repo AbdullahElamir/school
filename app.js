@@ -24,6 +24,7 @@ var exam = require('./routes/exam');
 var fees = require('./routes/fees');
 var marksSubject= require('./routes/marksSubject');
 var message= require('./routes/message');
+var paid= require('./routes/paid');
 var app = express();
 
 var store = new MongoDBStore({
@@ -77,6 +78,7 @@ app.use('/exam',exam);
 app.use('/fees',fees);
 app.use('/marksSubject',marksSubject);
 app.use('/message',message);
+app.use('/paid',paid);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
