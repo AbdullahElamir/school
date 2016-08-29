@@ -5,7 +5,6 @@ var Schema = mongoose.Schema;
 var MarksSub = new Schema({
   exam:{ type: Schema.Types.ObjectId , ref: 'Exam'},
   subject:{ type: Schema.Types.ObjectId , ref: 'Subject'},
-  semester: {type: Number},
   mark: {type: Number},
   status: {type: Number, default:1}
 });

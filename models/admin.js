@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var timestamps = require('mongoose-timestamp');
 var Schema = mongoose.Schema;
 
-var Teacher = new Schema({
+var Admin = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
   password: { type: String, required: true},
   salt: String,
@@ -14,10 +14,10 @@ var Teacher = new Schema({
   gender:{type: String,default:"NULL"},
   nationality:{type: String,default:"NULL"},
   address:{type: String,default:"NULL"},
-  level:{type:Number, default:2},
+  level:{type:Number},
   status: {type: Number, default:1}
 });
 
-Teacher.plugin(timestamps);
-Teacher.index({ name: 'text'});
-exports.Teacher = mongoose.model('Teacher', Teacher);
+Admin.plugin(timestamps);
+Admin.index({ name: 'text'});
+exports.Admin = mongoose.model('Admin', Admin);
