@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var app = angular.module('school',[
+  var app = angular.module('adminSchool',[
     'ui.router', 
     'ui.bootstrap', 
     'oc.lazyLoad',  

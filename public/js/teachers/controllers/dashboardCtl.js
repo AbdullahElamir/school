@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('school').controller('homeCtl', function($rootScope, $scope, $http, $timeout) {
+  angular.module('teachersSchool').controller('DashboardCtl', function($rootScope, $scope, $http, $timeout) {
     $scope.$on('$viewContentLoaded', function() {   
         // initialize core components
         App.initAjax();

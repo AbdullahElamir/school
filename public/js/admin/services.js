@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-    var app = angular.module('school');
+    var app = angular.module('adminSchool');
     app.service('StudentServ',['$http',function($http){
     var self = {
       'addStudent': function(student){

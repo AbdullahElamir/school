@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var app = angular.module('school',[
+  var app = angular.module('teachersSchool',[
     'ui.router', 
     'ui.bootstrap', 
     'oc.lazyLoad',  
@@ -23,31 +23,31 @@
     $rootScope.settings = settings;
     return settings;
   }]);
-  /* Setup App Main Controller */
-  app.controller('AppController',['$scope','$rootScope',function($scope,$rootScope){
-    $scope.$on('$viewContentLoaded',function() {
-      App.initComponents(); // init core components
-      //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
-    });
-  }]);
-  /* Setup Layout Part - Header */
-  app.controller('HeaderController',['$scope',function($scope){
-    $scope.$on('$includeContentLoaded', function(){
-      Layout.initHeader(); // init header
-    });
-  }]);
-  /* Setup Layout Part - Sidebar */
-  app.controller('SidebarController',['$scope',function($scope){
-    $scope.$on('$includeContentLoaded', function(){
-      Layout.initSidebar(); // init sidebar
-    });
-  }]);
-  /* Setup Layout Part - Footer */
-  app.controller('FooterController',['$scope',function($scope){
-    $scope.$on('$includeContentLoaded',function(){
-      Layout.initFooter(); // init footer
-    });
-  }]);
+  // /* Setup App Main Controller */
+  // app.controller('AppController',['$scope','$rootScope',function($scope,$rootScope){
+  //   $scope.$on('$viewContentLoaded',function() {
+  //     App.initComponents(); // init core components
+  //     //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
+  //   });
+  // }]);
+  // /* Setup Layout Part - Header */
+  // app.controller('HeaderController',['$scope',function($scope){
+  //   $scope.$on('$includeContentLoaded', function(){
+  //     Layout.initHeader(); // init header
+  //   });
+  // }]);
+  // /* Setup Layout Part - Sidebar */
+  // app.controller('SidebarController',['$scope',function($scope){
+  //   $scope.$on('$includeContentLoaded', function(){
+  //     Layout.initSidebar(); // init sidebar
+  //   });
+  // }]);
+  // /* Setup Layout Part - Footer */
+  // app.controller('FooterController',['$scope',function($scope){
+  //   $scope.$on('$includeContentLoaded',function(){
+  //     Layout.initFooter(); // init footer
+  //   });
+  // }]);
   /* Init global settings and run the app */
   app.run(['$rootScope','settings','$state',function($rootScope,settings,$state){
     $rootScope.$state = $state; // state to be accessed from view
@@ -56,13 +56,13 @@
   /* Setup Rounting For All Pages */
   app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
     // Redirect any unmatched url
-    $urlRouterProvider.otherwise('/home');  
+    $urlRouterProvider.otherwise('/dashboard');  
     // Home
-    $stateProvider.state('home',{
-      url: '/home',
-      templateUrl: 'teachers/pages/home',            
+    $stateProvider.state('dashboard',{
+      url: '/dashboard',
+      templateUrl: '/teachers/pages/dashboard',            
       data: {pageTitle: 'لوحة التحكم'},
-      controller: 'homeCtl',
+      controller: 'DashboardCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({
@@ -71,7 +71,7 @@
               '/morris.js/morris.css',                            
               '/morris.js/morris.min.js',
               '/raphael/raphael.min.js',
-              '/js/teachers/controllers/homeCtl.js'
+              '/js/teachers/controllers/dashboardCtl.js'
             ] 
           });
         }]
@@ -79,7 +79,7 @@
     })
     .state('studentsProcesses',{
       url: '/studentsProcesses',
-      templateUrl: 'teachers/pages/studentsProcesses',            
+      templateUrl: '/teachers/pages/studentsProcesses',            
       data: {pageTitle: 'الصفوف الدراسية'},
       controller: 'StudentsProcessesCtl',
       resolve: {
@@ -95,7 +95,7 @@
     })
     .state('studentGrades',{
       url: '/studentGrades/:id',
-      templateUrl: 'teachers/pages/studentGrades',            
+      templateUrl: '/teachers/pages/studentGrades',            
       data: {pageTitle: 'درجات الطلبة'},
       controller: 'StudentGradesCtl',
       resolve: {
@@ -117,8 +117,6 @@
       errorMessages['repName'] = "الرجاء إدخال اسم المخول";
       errorMessages['emailType'] = "الرجاء إدخال بريد إلكتروني صالح";
       errorMessages['phone'] = "الرجاء إدخال رقم هاتف صالح";
-      
-      
     });
   }]);
 }());

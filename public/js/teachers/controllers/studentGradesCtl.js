@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  var app = angular.module('school');
+  var app = angular.module('teachersSchool');
 
   app.controller('StudentGradesCtl',['$scope','studentGradesServ',function($scope,studentsProcessesServ){
     // $scope.studentProcesses={};

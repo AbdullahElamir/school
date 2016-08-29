@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   // Route State Load Spinner(used on page or content load)
-  var app = angular.module('school');
+  var app = angular.module('adminSchool');
   app.directive('ngSpinnerBar', ['$rootScope',
     function($rootScope) {
       return {
