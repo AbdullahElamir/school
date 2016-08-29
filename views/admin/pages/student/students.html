@@ -1,14 +1,18 @@
 <div class="portlet light bordered ">
   <div class="portlet-title">
-    <div class="caption caption-md">
-      <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">عرض الطلبة</span>
-    </div>
-    <div class="col-xs-7">
-      <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getStudentBySearchValue(searchValue)" placeholder="بحث بواسطة إسم الطالب أو الرقم الوطني ..">
-    </div>
-    <div class="col-xs-3 text-left">
-      <a onclick="$('#newStudentId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة طالب جديد</a>
+    <div class="row">
+      <div class="col-xs-3 col-sm-3 col-md-3">
+        <div class="caption caption-xs">
+          <i class="icon-settings font-green"></i>
+          <span class="caption-subject font-green bold">عرض الطلبة</span>
+        </div>
+      </div>
+      <div class="col-xs-5 col-sm-6 col-md-6">
+        <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getStudentBySearchValue(searchValue)" placeholder="بحث بواسطة إسم الطالب أو الرقم الوطني ..">
+      </div>
+      <div class="col-xs-4 col-sm-3 col-md-3 text-left">
+        <a onclick="$('#newStudentId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة طالب جديد</a>
+      </div>
     </div>
     <div class="portlet-body" style="padding-top:5px;">
       <table class="table table-striped" ng-show="students.length">
