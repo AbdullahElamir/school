@@ -179,6 +179,23 @@
         }]
       }
     })
+
+    .state('system_setting',{
+      url: '/system_setting',
+      templateUrl: 'admin/pages/system/system_setting',            
+      data: {pageTitle: 'المدرسين'},
+      controller: 'TeachersCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/teachersCtl.js'
+            ] 
+          });
+        }]
+      }
+    })
     .state('newTeacher',{
       url: '/newTeacher',
       templateUrl: 'admin/pages/teacher/newTeacher',            
