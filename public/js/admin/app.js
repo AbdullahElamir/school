@@ -429,6 +429,55 @@
           });
         }]
       }
+    })
+    .state('years',{
+      url: '/years',
+      templateUrl: 'admin/pages/year/years',            
+      data: {pageTitle: 'السنوات الدراسية'},
+      controller: 'YearsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/yearCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+    .state('newYear',{
+      url: '/newYear',
+      templateUrl: 'admin/pages/year/newYear',            
+      data: {pageTitle: 'إضافة غرفة جديدة'},
+      controller: 'newYearCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/yearCtl.js',
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('editYear',{
+      url: '/editYear/edit/:id',
+      templateUrl: 'admin/pages/year/editYear',            
+      data: {pageTitle: 'تعديل غرفة دراسية'},
+      controller: 'editYearCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/yearCtl.js',
+            ] 
+          });
+        }]
+      }
     });
 
 
