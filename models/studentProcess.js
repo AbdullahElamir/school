@@ -3,7 +3,7 @@ var timestamps = require('mongoose-timestamp');
 var Schema = mongoose.Schema;
 
 var StuPro = new Schema({
-  system:{ type: Schema.Types.ObjectId , ref: 'System'},
+  // system:{ type: Schema.Types.ObjectId , ref: 'System'},
   student:{ type: Schema.Types.ObjectId , ref: 'Student'},
   year:{ type: Schema.Types.ObjectId , ref: 'Year'},
   classRoom:{ type: Schema.Types.ObjectId , ref: 'ClassRoom'},
