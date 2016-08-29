@@ -2,7 +2,7 @@
   'use strict';
   var app = angular.module('teachersSchool');
 
-  app.controller('StudentGradesCtl',['$scope','studentGradesServ',function($scope,studentsProcessesServ){
+  app.controller('StudentGradesCtl',['$scope',function($scope){
     // $scope.studentProcesses={};
     // //get student info
 

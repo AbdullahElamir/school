@@ -23,31 +23,31 @@
     $rootScope.settings = settings;
     return settings;
   }]);
-  // /* Setup App Main Controller */
-  // app.controller('AppController',['$scope','$rootScope',function($scope,$rootScope){
-  //   $scope.$on('$viewContentLoaded',function() {
-  //     App.initComponents(); // init core components
-  //     //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
-  //   });
-  // }]);
-  // /* Setup Layout Part - Header */
-  // app.controller('HeaderController',['$scope',function($scope){
-  //   $scope.$on('$includeContentLoaded', function(){
-  //     Layout.initHeader(); // init header
-  //   });
-  // }]);
-  // /* Setup Layout Part - Sidebar */
-  // app.controller('SidebarController',['$scope',function($scope){
-  //   $scope.$on('$includeContentLoaded', function(){
-  //     Layout.initSidebar(); // init sidebar
-  //   });
-  // }]);
-  // /* Setup Layout Part - Footer */
-  // app.controller('FooterController',['$scope',function($scope){
-  //   $scope.$on('$includeContentLoaded',function(){
-  //     Layout.initFooter(); // init footer
-  //   });
-  // }]);
+  /* Setup App Main Controller */
+  app.controller('AppController',['$scope','$rootScope',function($scope,$rootScope){
+    $scope.$on('$viewContentLoaded',function() {
+      App.initComponents(); // init core components
+      //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
+    });
+  }]);
+  /* Setup Layout Part - Header */
+  app.controller('HeaderController',['$scope',function($scope){
+    $scope.$on('$includeContentLoaded', function(){
+      Layout.initHeader(); // init header
+    });
+  }]);
+  /* Setup Layout Part - Sidebar */
+  app.controller('SidebarController',['$scope',function($scope){
+    $scope.$on('$includeContentLoaded', function(){
+      Layout.initSidebar(); // init sidebar
+    });
+  }]);
+  /* Setup Layout Part - Footer */
+  app.controller('FooterController',['$scope',function($scope){
+    $scope.$on('$includeContentLoaded',function(){
+      Layout.initFooter(); // init footer
+    });
+  }]);
   /* Init global settings and run the app */
   app.run(['$rootScope','settings','$state',function($rootScope,settings,$state){
     $rootScope.$state = $state; // state to be accessed from view

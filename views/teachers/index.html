@@ -35,7 +35,7 @@
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-sidebar-closed-hide-logo page-on-load" ng-class="{'page-sidebar-closed': settings.layout.pageSidebarClosed}">
+<body ng-controller="AppController" class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-sidebar-closed-hide-logo page-on-load" ng-class="{'page-sidebar-closed': settings.layout.pageSidebarClosed}">
   <!-- BEGIN PAGE SPINNER -->
   <div ng-spinner-bar class="page-spinner-bar">
     <div class="bounce1"></div>
@@ -44,7 +44,7 @@
   </div>
   <!-- END PAGE SPINNER -->
   <!-- BEGIN HEADER -->
-  <div class="page-header navbar navbar-fixed-top">
+  <div data-ng-controller="HeaderController" class="page-header navbar navbar-fixed-top">
     <!-- BEGIN HEADER INNER -->
     <div class="page-header-inner">
       <!-- BEGIN LOGO -->
@@ -100,7 +100,7 @@
   <!-- BEGIN CONTAINER -->
   <div class="page-container">
     <!-- BEGIN SIDEBAR -->
-    <div data-ng-include="'tpl/teachers/sidebar.html'" class="page-sidebar-wrapper"> </div>
+    <div data-ng-include="'tpl/teachers/sidebar.html'" data-ng-controller="SidebarController" class="page-sidebar-wrapper"> </div>
     <!-- END SIDEBAR -->
     <div class="page-content-wrapper">
       <div class="page-content">
@@ -112,7 +112,7 @@
   </div>
   <!-- END CONTAINER -->
   <!-- BEGIN FOOTER -->
-  <div data-ng-include="'tpl/teachers/footer.html'" class="page-footer"> </div>
+  <div data-ng-include="'tpl/teachers/footer.html'" data-ng-controller="FooterController" class="page-footer"> </div>
   <!-- END FOOTER -->
   <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
   <!-- BEGIN CORE JQUERY PLUGINS -->
