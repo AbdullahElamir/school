@@ -60,9 +60,9 @@ module.exports = {
   },
   
   getClassName :function(name,cb){
-    model.Class.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
+    model.Class.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, classes){
       if(!err){
-        cb(custom);
+        cb(classes);
       }else{
         cb(null);
       }
@@ -70,9 +70,9 @@ module.exports = {
   },
 
   getClassId :function(id,cb){
-    model.Class.findOne({_id : id}, function(err, custom){
+    model.Class.findOne({_id : id}, function(err, classes){
       if(!err){
-        cb(custom);
+        cb(classes);
       }else{
         cb(null);
       }
