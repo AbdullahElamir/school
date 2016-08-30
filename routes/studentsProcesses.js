@@ -13,5 +13,16 @@ router.get('/stuPro', userHelpers.isLogin ,function(req, res) {
   
 });
 
+router.get('/studInfo', userHelpers.isLogin ,function(req, res) {
+	var info = [{
+		"name":"mohammed",
+		"subject":"math",
+		"classRoom":"four",
+		"id":"1"
+	}];
+	res.send(info);
+  
+});
+
 
 module.exports = router;

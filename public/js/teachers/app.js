@@ -108,7 +108,23 @@
           });
         }]
       }
-    });
+    })
+    .state('studentInformation',{
+          url: '/studentInformation/:id',
+          templateUrl: '/teachers/pages/studentInformation',            
+          data: {pageTitle: 'درجات الطلبة'},
+          controller: 'StudentInformationCtl',
+          resolve: {
+            deps: ['$ocLazyLoad',function($ocLazyLoad){
+              return $ocLazyLoad.load({
+                insertBefore: '#ngLoadControllerAfter',
+                files: [
+                  '/js/teachers/controllers/studentInformationCtl.js'
+                ] 
+              });
+            }]
+          }
+        });
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){
     defaultErrorMessageResolver.setI18nFileRootPath('/lang');
