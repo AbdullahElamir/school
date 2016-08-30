@@ -124,6 +124,22 @@
               });
             }]
           }
+        })
+    .state('studentsEvaluate',{
+          url: '/studentsEvaluate/:id',
+          templateUrl: '/teachers/pages/studentsEvaluate',            
+          data: {pageTitle: 'درجات الطلبة'},
+          controller: 'StudentsEvaluateCtl',
+          resolve: {
+            deps: ['$ocLazyLoad',function($ocLazyLoad){
+              return $ocLazyLoad.load({
+                insertBefore: '#ngLoadControllerAfter',
+                files: [
+                  '/js/teachers/controllers/studentsEvaluateCtl.js'
+                ] 
+              });
+            }]
+          }
         });
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){
