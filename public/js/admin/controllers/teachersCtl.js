@@ -23,7 +23,7 @@
     $scope.getTeachersBySearchValue = function (searchValue){
       $scope.currentPage = 1;
       $scope.init(searchValue);
-    };   
+    };
    
    $scope.deleteTeacher = function(id){
     $scope.idTeacher = id;

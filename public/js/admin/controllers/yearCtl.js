@@ -88,7 +88,7 @@
     $scope.newYear = function(){
       YearServ.addYear($scope.newYearForm).then(function(response){
         if(response.data){
-          $state.go('years');
+          $('#yearsId').click();
           toastr.success('تم الإضافة بنجاح');
         } else {
           toastr.error('خطأ في عملية الادخال');

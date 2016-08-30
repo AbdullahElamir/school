@@ -290,7 +290,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/subjectsCtl.js',
+              '/js/admin/controllers/subjectsCtl.js'
             ] 
           });
         }]
@@ -306,7 +306,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/subjectsCtl.js',
+              '/js/admin/controllers/subjectsCtl.js'
             ] 
           });
         }]
@@ -323,7 +323,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/subjectsCtl.js',
+              '/js/admin/controllers/subjectsCtl.js'
             ] 
           });
         }]
@@ -340,7 +340,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/roomsCtl.js',
+              '/js/admin/controllers/roomsCtl.js'
             ] 
           });
         }]
@@ -356,7 +356,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/roomsCtl.js',
+              '/js/admin/controllers/roomsCtl.js'
             ] 
           });
         }]
@@ -373,7 +373,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/roomsCtl.js',
+              '/js/admin/controllers/roomsCtl.js'
             ] 
           });
         }]
@@ -440,7 +440,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/yearCtl.js',
+              '/js/admin/controllers/yearCtl.js'
             ] 
           });
         }]
@@ -456,7 +456,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/yearCtl.js',
+              '/js/admin/controllers/yearCtl.js'
             ] 
           });
         }]
@@ -473,7 +473,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/yearCtl.js',
+              '/js/admin/controllers/yearCtl.js'
             ] 
           });
         }]
