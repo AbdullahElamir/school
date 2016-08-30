@@ -33,7 +33,7 @@
         }
       };
     }
-  ])
+  ]);
   // Handle global LINK click
   app.directive('a', function() {
     return {

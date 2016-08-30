@@ -1,14 +1,18 @@
 <div class="portlet light bordered ">
   <div class="portlet-title">
-    <div class="caption caption-md">
-      <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">السنوات الدراسية</span>
-    </div>
-    <div class="col-xs-7">
-      <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getYearsBySearchValue(searchValue)" placeholder="بحث ..">
-    </div>
-    <div class="col-xs-3 text-left">
-      <a ui-sref="newYear" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة سنة دراسية</a>
+    <div class="row">
+      <div class="col-xs-3 col-sm-3 col-md-3">
+        <div class="caption caption-xs">
+          <i class="icon-settings font-green"></i>
+          <span class="caption-subject font-green bold">السنوات الدراسية</span>
+        </div>
+      </div>
+      <div class="col-xs-5 col-sm-6 col-md-6">
+        <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getYearsBySearchValue(searchValue)" placeholder="بحث ..">
+      </div>
+      <div class="col-xs-4 col-sm-3 col-md-3 text-left">
+        <a onclick="$('#newYearId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة سنة دراسية</a>
+      </div>
     </div>
   </div>
   <div class="portlet-body" style="padding-top:0px;">
@@ -47,10 +51,10 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">مســح الغرفة</h4>
+            <h4 class="modal-title" id="myModalLabel">مســح السنة</h4>
           </div>
           <div class="modal-body">
-            هل حقا تريد مسح هذه الغرفة الدراسية ؟
+            هل حقا تريد مسح هذه السنة الدراسية ؟
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>

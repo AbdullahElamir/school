@@ -94,7 +94,7 @@
         return $http.get('/room/'+id.id);
       },
       'editRoom': function(id,obj){
-        return $http.put('/room/edit/'+id,obj)
+        return $http.put('/room/edit/'+id,obj);
       },
       'getAllRooms': function(){
         return $http.get('/room/all');
@@ -171,7 +171,7 @@
         return $http.get('/year/'+id.id);
       },
       'editYear': function(id,obj){
-        return $http.put('/year/edit/'+id,obj)
+        return $http.put('/year/edit/'+id,obj);
       },
       'getAllYears': function(){
         return $http.get('/year/all');
