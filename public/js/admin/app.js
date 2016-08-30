@@ -184,13 +184,13 @@
       url: '/system_setting',
       templateUrl: 'admin/pages/system/system_setting',            
       data: {pageTitle: 'المدرسين'},
-      controller: 'TeachersCtl',
+      controller: 'system_settings',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/teachersCtl.js'
+              '/js/admin/controllers/system_settings.js'
             ] 
           });
         }]
