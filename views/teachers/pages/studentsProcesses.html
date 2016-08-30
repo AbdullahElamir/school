@@ -9,26 +9,24 @@
     </div>
   </div>
   <div class="portlet-body" style="padding-top:0px;">
-    <table class="table table-striped" ng-show="studentProcesses.length">
+    <table class="table table-striped" ng-show="allClasses.length">
       <thead>
         <tr>
           <th>الصف</th>
-          <th>السنة</th>
-          <th><i class="fa fa-cog"></th>
-          <th><i class="fa fa-cog"></th>
-          <th><i class="fa fa-cog"></th>
+          <th>الوصف</th>
+          <th>تاريخ الإنشاء</th>
+        
+          <td align="center"><i class="fa fa-cog"></th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="stuPro in studentProcesses">
-          <td>{{ stuPro.name }}</td>
-          <td>{{ studentProcesses.length }}</td>
-          <td><a class="btn btn-success btn-xs" ui-sref="studentGrades({id:stuPro.id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;الطلبة</a>
-          </td>
-          <td>
+        <tr ng-repeat="stuPro in allClasses">
+          <td>{{stuPro.name}}</td>
+          <td>{{stuPro.description}}</td>
+          <td ng-bind="stuPro.createdAt | date:'dd/MM/yyyy'"></td>
+          
+          <td align="center"><a class="btn btn-success btn-xs" ui-sref="studentGrades({id:stuPro.id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;الطلبة</a>
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash fa-fw"></i>&nbsp;رصد الدرجات</a>
-          </td>
-          <td>
             <a class="btn btn-success btn-xs"><i class="fa fa-pencil fa-fw"></i>&nbsp;التقييم</a>
           </td>
         </tr>
