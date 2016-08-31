@@ -380,6 +380,23 @@
       }
     })
 
+    .state('newClassRooms',{
+      url: '/newClassRooms',
+      templateUrl: 'admin/pages/classRoom/newClassRooms',            
+      data: {pageTitle: 'إضافة غرفة جديدة'},
+      controller: 'newClassRoomCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/newClassRoomsCtl.js'
+            ] 
+          });
+        }]
+      }
+    })
+
     .state('newParent',{
       url: '/newParent',
       templateUrl: 'admin/pages/parent/newParent',            
