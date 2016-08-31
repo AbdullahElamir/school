@@ -9,7 +9,15 @@
     };
     return self;
   }]); 
-
+  
+  app.service('studentInformationServ',['$http',function($http){
+    var self = {
+      'getStudentsInfo': function(){
+        return $http.get('/studentsProcesses/studInfo');
+      }
+    };
+    return self;
+  }]); 
 
   app.service('ClassServ',['$http',function($http){
     var self = {

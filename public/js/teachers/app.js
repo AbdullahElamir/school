@@ -108,7 +108,39 @@
           });
         }]
       }
-    });
+    })
+    .state('studentInformation',{
+          url: '/studentInformation/:id',
+          templateUrl: '/teachers/pages/studentInformation',            
+          data: {pageTitle: 'درجات الطلبة'},
+          controller: 'StudentInformationCtl',
+          resolve: {
+            deps: ['$ocLazyLoad',function($ocLazyLoad){
+              return $ocLazyLoad.load({
+                insertBefore: '#ngLoadControllerAfter',
+                files: [
+                  '/js/teachers/controllers/studentInformationCtl.js'
+                ] 
+              });
+            }]
+          }
+        })
+    .state('studentsEvaluate',{
+          url: '/studentsEvaluate/:id',
+          templateUrl: '/teachers/pages/studentsEvaluate',            
+          data: {pageTitle: 'درجات الطلبة'},
+          controller: 'StudentsEvaluateCtl',
+          resolve: {
+            deps: ['$ocLazyLoad',function($ocLazyLoad){
+              return $ocLazyLoad.load({
+                insertBefore: '#ngLoadControllerAfter',
+                files: [
+                  '/js/teachers/controllers/studentsEvaluateCtl.js'
+                ] 
+              });
+            }]
+          }
+        });
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){
     defaultErrorMessageResolver.setI18nFileRootPath('/lang');
