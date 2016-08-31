@@ -7,7 +7,8 @@
     'ngSanitize',
     'jcs-autoValidate',
     'toastr',
-    'mgcrea.ngStrap'
+    'mgcrea.ngStrap',
+    'nya.bootstrap.select'
   ]);
   /* Setup global settings */
   app.factory('settings',['$rootScope',function($rootScope){
@@ -60,7 +61,9 @@
       startWeek: 1,
       dateType: 'string',
       iconLeft: 'glyphicon glyphicon-chevron-right',
-      iconRight: 'glyphicon glyphicon-chevron-left'
+      iconRight: 'glyphicon glyphicon-chevron-left',
+      animation: 'animated fadeIn',
+      placement: 'auto bottom'
     });
     // Redirect any unmatched url
     $urlRouterProvider.otherwise('/dashboard');  
