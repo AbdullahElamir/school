@@ -14,7 +14,12 @@ router.get('/stuPro', userHelpers.isLogin ,function(req, res) {
 });
 
 router.get('/studInfo', userHelpers.isLogin ,function(req, res) {
-	var info = [{}];
+	var info = [{
+		"name":"mohammed",
+		"subject":"tripoli",
+		"classRoom":"tripoli",
+		"id":"1"
+	}];
 	res.send(info);
   
 });
