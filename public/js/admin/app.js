@@ -5,9 +5,10 @@
     'ui.bootstrap', 
     'oc.lazyLoad',  
     'ngSanitize',
-    'AngularPrint',
     'jcs-autoValidate',
-    'toastr'
+    'toastr',
+    'mgcrea.ngStrap',
+    'nya.bootstrap.select'
   ]);
   /* Setup global settings */
   app.factory('settings',['$rootScope',function($rootScope){
@@ -54,7 +55,16 @@
     $rootScope.$settings = settings; // state to be accessed from view
   }]);
   /* Setup Rounting For All Pages */
-  app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+  app.config(['$stateProvider','$urlRouterProvider','$datepickerProvider',function($stateProvider,$urlRouterProvider,$datepickerProvider){
+    angular.extend($datepickerProvider.defaults, {
+      dateFormat: 'yyyy-MM-dd',
+      startWeek: 1,
+      dateType: 'string',
+      iconLeft: 'glyphicon glyphicon-chevron-right',
+      iconRight: 'glyphicon glyphicon-chevron-left',
+      animation: 'animated fadeIn',
+      placement: 'auto bottom'
+    });
     // Redirect any unmatched url
     $urlRouterProvider.otherwise('/dashboard');  
     // Dashboard
@@ -184,13 +194,13 @@
       url: '/system_setting',
       templateUrl: 'admin/pages/system/system_setting',            
       data: {pageTitle: 'المدرسين'},
-      controller: 'TeachersCtl',
+      controller: 'system_settings',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/teachersCtl.js'
+              '/js/admin/controllers/system_settings.js'
             ] 
           });
         }]
@@ -374,6 +384,23 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/roomsCtl.js'
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('newClassRooms',{
+      url: '/newClassRooms',
+      templateUrl: 'admin/pages/classRoom/newClassRooms',            
+      data: {pageTitle: 'إضافة غرفة جديدة'},
+      controller: 'newClassRoomCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/classRoomsCtl.js'
             ] 
           });
         }]
