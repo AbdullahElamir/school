@@ -390,7 +390,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/newClassRoomsCtl.js'
+              '/js/admin/controllers/classRoomsCtl.js'
             ] 
           });
         }]

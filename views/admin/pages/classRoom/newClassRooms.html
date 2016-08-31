@@ -7,7 +7,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-md-12 col-lg-12">
-      <form novalidate ng-submit="newClass()">
+      <form novalidate ng-submit="newClassRooms()">
         <div class="row">
 
           <div class="col-xs-12 col-md-3">
@@ -21,7 +21,7 @@
           
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">الفصل الدراسي</label>
+              <label class="control-label">الصف الدراسي</label>
               <select class="form-control input-sm" ng-model="newClassRoomForm.class" required ng-options="class._id as class.name for class in allClasses">
                 <option value="" disabled selected>الرجاء الاختيار</option>
               </select>
@@ -30,15 +30,15 @@
 
             <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">الصف</label>
-              <input class="form-control input-sm" type="text" ng-model="newStudentForm.nationality" placeholder="الصف 1/2 , 2/3 .." required>
+              <label class="control-label">الفصل الدراسي</label>
+              <input class="form-control input-sm" type="text" ng-model="newClassRoomForm.name" placeholder="الصف 1/2 , 2/3 .." required>
             </div>
           </div>
 
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">الفترة الدراسية</label>
-              <select class="form-control input-sm" ng-model="newStudentForm.bloodType" required>
+              <select class="form-control input-sm" ng-model="newClassRoomForm.sheft" required>
                 <option value="" disabled selected>الرجاء الاختيار</option>
                 <option value="1">الصباحية</option>
                 <option value="2">المسائية</option>
@@ -52,7 +52,7 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">الغرفة الدراسية</label>
-              <select class="form-control input-sm" ng-model="newClassRoomForm.class" required ng-options="class._id as class.name for class in allClasses">
+              <select class="form-control input-sm" ng-model="newClassRoomForm.room" required ng-options="room._id as room.name for room in allRooms">
                 <option value="" disabled selected>الرجاء الاختيار</option>
               </select>
             </div>
@@ -60,7 +60,7 @@
            <div class="col-md-9">
               <div class="form-group">
                 <label class="control-label">الوصف</label>
-                <textarea class="form-control input-sm" rows="6" cols="12" ng-model="newInStockForm.description" ng-required-err-type="notes" placeholder="ملاحظات" ></textarea>
+                <textarea class="form-control input-sm" rows="6" cols="12" ng-model="newClassRoomForm.description" ng-required-err-type="notes" placeholder="ملاحظات" ></textarea>
               </div>
             </div>
 
