@@ -1,0 +1,83 @@
+<div class="portlet light bordered">
+  <div class="portlet-title">
+    <div class="caption caption-md">
+      <i class="icon-settings font-green"></i>
+      <span class="caption-subject font-green bold">إضافة فصل دراسي</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-12 col-lg-12">
+      <form novalidate ng-submit="newClassRooms()">
+        <div class="row">
+
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">السنة الدراسية</label>
+              <select class="form-control input-sm" ng-model="newClassRoomForm.year" ng-options="year._id as year.name for year in allYears" required>
+                <option value="" disabled selected>الرجاء الاختيار</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">الصف الدراسي</label>
+              <select class="form-control input-sm" ng-model="newClassRoomForm.class" required ng-options="class._id as class.name for class in allClasses">
+                <option value="" disabled selected>الرجاء الاختيار</option>
+              </select>
+            </div>
+          </div>
+
+            <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">الفصل الدراسي</label>
+              <input class="form-control input-sm" type="text" ng-model="newClassRoomForm.name" placeholder="الصف 1/2 , 2/3 .." required>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">الفترة الدراسية</label>
+              <select class="form-control input-sm" ng-model="newClassRoomForm.sheft" required>
+                <option value="" disabled selected>الرجاء الاختيار</option>
+                <option value="1">الصباحية</option>
+                <option value="2">المسائية</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">الغرفة الدراسية</label>
+              <select class="form-control input-sm" ng-model="newClassRoomForm.room" required ng-options="room._id as room.name for room in allRooms">
+                <option value="" disabled selected>الرجاء الاختيار</option>
+              </select>
+            </div>
+          </div>
+           <div class="col-md-9">
+              <div class="form-group">
+                <label class="control-label">الوصف</label>
+                <textarea class="form-control input-sm" rows="6" cols="12" ng-model="newClassRoomForm.description" ng-required-err-type="notes" placeholder="ملاحظات" ></textarea>
+              </div>
+            </div>
+
+        </div>
+
+
+
+        <hr>
+        <div class="row">
+          <div class="col-xs-6 col-md-2 col-md-offset-4">
+            <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
+          </div>
+          <div class="col-xs-6 col-md-2">
+            <a class="btn btn-success btn-sm btn-block" onclick="$('#ClassesId').click();"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

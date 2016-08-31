@@ -191,13 +191,13 @@
       url: '/system_setting',
       templateUrl: 'admin/pages/system/system_setting',            
       data: {pageTitle: 'المدرسين'},
-      controller: 'TeachersCtl',
+      controller: 'system_settings',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/teachersCtl.js'
+              '/js/admin/controllers/system_settings.js'
             ] 
           });
         }]
@@ -381,6 +381,23 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/roomsCtl.js'
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('newClassRooms',{
+      url: '/newClassRooms',
+      templateUrl: 'admin/pages/classRoom/newClassRooms',            
+      data: {pageTitle: 'إضافة غرفة جديدة'},
+      controller: 'newClassRoomCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/classRoomsCtl.js'
             ] 
           });
         }]
