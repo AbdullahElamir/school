@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var timestamps = require('mongoose-timestamp');
 var Schema = mongoose.Schema;
 
-var StuPro = new Schema({
+var Stupro = new Schema({
   // system:{ type: Schema.Types.ObjectId , ref: 'System'},
   student:{ type: Schema.Types.ObjectId , ref: 'Student'},
   year:{ type: Schema.Types.ObjectId , ref: 'Year'},
@@ -11,5 +11,5 @@ var StuPro = new Schema({
   status: {type: Number, default:1}
 });
 
-StuPro.plugin(timestamps);
-exports.StuPro = mongoose.model('StuPro', StuPro);
+Stupro.plugin(timestamps);
+exports.Stupro = mongoose.model('Stupro', Stupro);

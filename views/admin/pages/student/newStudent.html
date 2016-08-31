@@ -86,12 +86,7 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">تاريخ الميلاد</label>
-              <div class="input-group">
-                <input type="text" required class="form-control input-sm" uib-datepicker-popup ng-model="newStudentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-default btn-sm" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-              </div>
+              <input type="text" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="newStudentForm.birth_day" placeholder="تاريخ الميلاد"/>
             </div>
           </div>
         </div>
