@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var app = angular.module('school',[
+  var app = angular.module('adminSchool',[
     'ui.router', 
     'ui.bootstrap', 
     'oc.lazyLoad',  
@@ -179,6 +179,23 @@
         }]
       }
     })
+
+    .state('system_setting',{
+      url: '/system_setting',
+      templateUrl: 'admin/pages/system/system_setting',            
+      data: {pageTitle: 'المدرسين'},
+      controller: 'TeachersCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/teachersCtl.js'
+            ] 
+          });
+        }]
+      }
+    })
     .state('newTeacher',{
       url: '/newTeacher',
       templateUrl: 'admin/pages/teacher/newTeacher',            
@@ -273,7 +290,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/subjectsCtl.js',
+              '/js/admin/controllers/subjectsCtl.js'
             ] 
           });
         }]
@@ -289,7 +306,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/subjectsCtl.js',
+              '/js/admin/controllers/subjectsCtl.js'
             ] 
           });
         }]
@@ -306,7 +323,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/subjectsCtl.js',
+              '/js/admin/controllers/subjectsCtl.js'
             ] 
           });
         }]
@@ -323,7 +340,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/roomsCtl.js',
+              '/js/admin/controllers/roomsCtl.js'
             ] 
           });
         }]
@@ -339,7 +356,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/roomsCtl.js',
+              '/js/admin/controllers/roomsCtl.js'
             ] 
           });
         }]
@@ -356,7 +373,7 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/roomsCtl.js',
+              '/js/admin/controllers/roomsCtl.js'
             ] 
           });
         }]
@@ -408,6 +425,55 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/parentsCtl.js'
+            ] 
+          });
+        }]
+      }
+    })
+    .state('years',{
+      url: '/years',
+      templateUrl: 'admin/pages/year/years',            
+      data: {pageTitle: 'السنوات الدراسية'},
+      controller: 'YearsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/yearCtl.js'
+            ] 
+          });
+        }]
+      }
+    })
+    .state('newYear',{
+      url: '/newYear',
+      templateUrl: 'admin/pages/year/newYear',            
+      data: {pageTitle: 'إضافة غرفة جديدة'},
+      controller: 'newYearCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/yearCtl.js'
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('editYear',{
+      url: '/editYear/edit/:id',
+      templateUrl: 'admin/pages/year/editYear',            
+      data: {pageTitle: 'تعديل غرفة دراسية'},
+      controller: 'editYearCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/yearCtl.js'
             ] 
           });
         }]

@@ -1,0 +1,54 @@
+@font-face {
+  font-family: 'JFFlat';
+  src : url("../../fonts/JF-Flat-regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: 'DroidKufi';
+  src : url("../../fonts/DroidKufi-Regular.ttf") format("truetype");
+}
+body, h1, h2, h3, h4, h5, h6, a {
+  font-family: 'JFFlat', sans-serif;
+}
+
+.dashboard-stat .details {
+  position: absolute;
+  right: 15px;
+  left: auto;
+  padding-right: 15px;
+}
+.dashboard-stat .details .number {
+  text-align: right;
+}
+.dashboard-stat .visual {
+  float: left;
+  padding-left: 15px;
+  padding-right: 0;
+}
+.table {
+  margin-bottom: 0px; 
+}
+.panel-title{
+  padding-top: 8px;
+}
+table.jambo_table {
+  border: 1px solid rgba(221, 221, 221, 0.78);
+}
+table.jambo_table thead {
+    background: rgba(52, 73, 94, 0.94);
+    color: #ECF0F1;
+}
+
+.full button span {
+  background-color: limegreen;
+  border-radius: 32px;
+  color: black;
+}
+.partially button span {
+  background-color: orange;
+  border-radius: 32px;
+  color: black;
+}
+.label-success{
+  
+} 
+

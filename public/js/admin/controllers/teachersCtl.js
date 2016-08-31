@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  var app = angular.module('school');
+  var app = angular.module('adminSchool');
 
   app.controller('TeachersCtl',['$scope','$state','TeacherServ','toastr',function($scope,state,TeacherServ,toastr){
     $scope.pageSize = 10;
@@ -23,7 +23,7 @@
     $scope.getTeachersBySearchValue = function (searchValue){
       $scope.currentPage = 1;
       $scope.init(searchValue);
-    };   
+    };
    
    $scope.deleteTeacher = function(id){
     $scope.idTeacher = id;

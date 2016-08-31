@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  var app = angular.module('school');
+  var app = angular.module('adminSchool');
 
   app.controller('StudentsCtl',['$scope','$state','StudentServ','toastr',function($scope,state,StudentServ,toastr){
     $scope.pageSize = 10;

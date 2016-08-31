@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-    var app = angular.module('school');
+    var app = angular.module('adminSchool');
     app.service('StudentServ',['$http',function($http){
     var self = {
       'addStudent': function(student){
@@ -94,7 +94,7 @@
         return $http.get('/room/'+id.id);
       },
       'editRoom': function(id,obj){
-        return $http.put('/room/edit/'+id,obj)
+        return $http.put('/room/edit/'+id,obj);
       },
       'getAllRooms': function(){
         return $http.get('/room/all');
@@ -149,6 +149,32 @@
       },
       'getAllParents': function(){
         return $http.get('/parent/all');
+      }
+    };
+    return self;
+  }]);
+  app.service('YearServ',['$http',function($http){
+    var self = {
+      'addYear': function(year){
+        return $http.post('/year/add',year);
+      },
+      'getYears': function(limit,page){
+        return $http.get('/year/'+limit+'/'+page);
+      },
+      'getYearsBySearchValue': function(searchValue,limit,page){
+        return $http.get('/year/'+searchValue+'/'+limit+'/'+page);
+      },
+      'deleteYear': function(id){
+        return $http.delete('/year/delete/'+id);
+      },
+      'getYearById': function(id){
+        return $http.get('/year/'+id.id);
+      },
+      'editYear': function(id,obj){
+        return $http.put('/year/edit/'+id,obj);
+      },
+      'getAllYears': function(){
+        return $http.get('/year/all');
       }
     };
     return self;

@@ -14,7 +14,7 @@ var Teacher = new Schema({
   gender:{type: String,default:"NULL"},
   nationality:{type: String,default:"NULL"},
   address:{type: String,default:"NULL"},
-  level:{type:Number},
+  level:{type:Number, default:2},
   status: {type: Number, default:1}
 });
 

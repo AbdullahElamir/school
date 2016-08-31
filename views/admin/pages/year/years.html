@@ -1,0 +1,73 @@
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <div class="row">
+      <div class="col-xs-3 col-sm-3 col-md-3">
+        <div class="caption caption-xs">
+          <i class="icon-settings font-green"></i>
+          <span class="caption-subject font-green bold">السنوات الدراسية</span>
+        </div>
+      </div>
+      <div class="col-xs-5 col-sm-6 col-md-6">
+        <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getYearsBySearchValue(searchValue)" placeholder="بحث ..">
+      </div>
+      <div class="col-xs-4 col-sm-3 col-md-3 text-left">
+        <a onclick="$('#newYearId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة سنة دراسية</a>
+      </div>
+    </div>
+  </div>
+  <div class="portlet-body" style="padding-top:0px;">
+    <table class="table table-striped" ng-show="years.length">
+      <thead>
+        <tr>
+          <th>اسم السنة</th>
+          <th>الحالة</th>
+          <th><i class="fa fa-cog"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="year in years">
+          <td>{{year.name}}</td>
+          <td>
+            <span class="label label-{{(year.status)?'success':'danger'}}">{{(year.status)?'مفعلة':'غير مفعلة'}}</span>
+          </td>
+          <td>
+            <a class="btn btn-success btn-xs" ui-sref="editYear({id:year._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل</a>
+            <!-- <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteYear(year._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div ng-show="years.length == 0">
+      <div class="alert alert-info">
+        <p class="text-center">
+          عفوا لاتوجد بيانات
+        </p>
+      </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">مســح السنة</h4>
+          </div>
+          <div class="modal-body">
+            هل حقا تريد مسح هذه السنة الدراسية ؟
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            <button ng-click="deleteConfirm(idYear)" value="idRoom" type="button" class="btn btn-danger">مسح</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-show="years.length">
+      <div class="col-xs-12 col-md-12 text-center">
+        <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
+        <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
+      </div>
+    </div>
+  </div>
+</div>

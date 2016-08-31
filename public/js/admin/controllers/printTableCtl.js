@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var app = angular.module('school');
+  var app = angular.module('adminSchool');
   app.controller('PrintTableCtl', function($scope) {
     $scope.obj = [
     {'id':'1','fruit':"Apple",'quantity':'100 grams','calories':'52','price':'43$'},
