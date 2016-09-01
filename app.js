@@ -28,6 +28,7 @@ var paid= require('./routes/paid');
 var teachers= require('./routes/teachers');
 var studentsProcesses= require('./routes/studentsProcesses');
 var year= require('./routes/year');
+var system= require('./routes/system');
 var app = express();
 
 var store = new MongoDBStore({
@@ -85,6 +86,7 @@ app.use('/paid',paid);
 app.use('/teachers',teachers);
 app.use('/studentsProcesses',studentsProcesses);
 app.use('/year',year);
+app.use('/system',system);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -103,6 +103,7 @@
     return self;
   }]);
 
+
   app.service('SubjectServ',['$http',function($http){
     var self = {
       'addSubject': function(subject){
@@ -191,6 +192,18 @@
     };
     return self;
   }]);
+
+
+  app.service('SystemServ',['$http',function($http){
+    var self = {
+      'getAllSystem': function(){
+        return $http.get('/system/all');
+      }
+     
+    };
+    return self;
+  }]);
+
 
 
 }());

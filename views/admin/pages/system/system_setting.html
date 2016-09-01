@@ -11,7 +11,7 @@
      <div class="portlet-body" style="padding-top:0px;">
 
     <div class="row">
-
+      allYear
      <div class="col-xs-12 col-md-3 col-md-offset-3">
         <div class="form-group">
           <label class="control-label">الســنة</label>
@@ -26,10 +26,8 @@
        <div class="col-xs-12 col-md-3">
         <div class="form-group">
           <label class="control-label">النظام الدراسي</label>
-          <select class="form-control input-sm" ng-model="newStudentForm.gender" required>
+          <select class="form-control input-sm" ng-model="newSystemForm.system" required ng-options="system._id as system.name for system in allSystem">
             <option value="" disabled selected>الرجاء الاختيار</option>
-            <option value="1">دكر</option>
-            <option value="2">انثي</option>
           </select>
         </div>
       </div>
