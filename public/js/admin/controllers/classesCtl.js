@@ -71,8 +71,8 @@
   
       ClassServ.editClass($stateParams.id,$scope.editClassForm).then(function(response) {
         if(response.data){
-          $('#ClassesId').click();
           toastr.info('تم التعديل بنجاح');
+          $('#ClassesId').click();
         } else {
           toastr.error('عملية التعديل فشلت');
         }
@@ -89,8 +89,8 @@
     $scope.newClass = function(){
       ClassServ.addClass($scope.newClassForm).then(function(response){
         if(response.data){
-          $('#ClassesId').click();
           toastr.success('تم الإضافة بنجاح');
+          $('#ClassesId').click();
         } else {
           toastr.error('خطأ في عملية الادخال');
         }

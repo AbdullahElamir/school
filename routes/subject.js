@@ -17,6 +17,13 @@ router.get('/:clas/:limit/:page',userHelpers.isLogin , function(req, res) {
   });
 });
 
+// GET subjects by class
+router.get('/class/:id',userHelpers.isLogin , function(req, res) {
+  subjectMgr.getSubjectsByClass(req.params.id,function(subject){
+    res.send(subject);
+  });
+});
+
 // GET all subject
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   subjectMgr.getAllSubjectCount(req.params.limit,req.params.page,function(subject){

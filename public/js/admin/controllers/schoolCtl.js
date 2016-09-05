@@ -34,8 +34,8 @@
     
       SchoolServ.editSchool($scope.school).then(function(response) {
         if(response.data){
-          $state.go('school');
           toastr.info('تم التعديل بنجاح');
+          $state.go('school');
         } else {
           toastr.error('عملية التعديل فشلت');
         }

@@ -1,0 +1,64 @@
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <div class="caption caption-md">
+      <i class="icon-settings font-green"></i>
+      <span class="caption-subject font-green bold">انظمة الدراسة</span>
+    </div>
+    <div class="col-xs-3 text-left">
+      <a onclick="$('#newSystemId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة نظام دراسي</a>
+    </div>
+  </div>
+  <div class="portlet-body" style="padding-top:0px;">
+    <table class="table table-striped" ng-show="systems.length">
+      <thead>
+        <tr>
+          <th>اسم النظام</th>
+          <th>الوصف</th>
+          <th><i class="fa fa-cog"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="system in systems">
+          <td>{{system.name}}</td>
+          <td>{{system.description}}</td>
+          <td>
+            <a class="btn btn-success btn-xs" ui-sref="editSystem({id:system._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteSystem(system._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div ng-show="systems.length == 0">
+      <div class="alert alert-info">
+        <p class="text-center">
+          عفوا لاتوجد بيانات
+        </p>
+      </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">مســح النظام</h4>
+          </div>
+          <div class="modal-body">
+            هل حقا تريد مسح هذا النظام الدراسي ؟
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            <button ng-click="deleteConfirm(idSystem)" value="idSystem" type="button" class="btn btn-danger">مسح</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-show="systems.length">
+      <div class="col-xs-12 col-md-12 text-center">
+        <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
+        <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
+      </div>
+    </div>
+  </div>
+</div>

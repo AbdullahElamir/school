@@ -80,8 +80,8 @@
   
       SubjectServ.editSubject($stateParams.id,$scope.editSubjectForm).then(function(response) {
         if(response.data){
-          $('#SubjectsId').click();
           toastr.info('تم التعديل بنجاح');
+          $('#SubjectsId').click();
         } else {
           toastr.error('عملية التعديل فشلت');
         }
@@ -104,8 +104,8 @@
     $scope.newSubject = function(){
       SubjectServ.addSubject($scope.newSubjectForm).then(function(response){
         if(response.data){
-          $('#SubjectsId').click();
           toastr.success('تم الإضافة بنجاح');
+          $('#SubjectsId').click();
         } else {
           toastr.error('خطأ في عملية الادخال');
         }

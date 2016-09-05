@@ -1,0 +1,158 @@
+<div class="portlet light bordered">
+  <div class="portlet-title">
+    <div class="caption caption-md">
+      <i class="icon-settings font-green"></i>
+      <span class="caption-subject font-green bold">إضافة نظام دراسي</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-12 col-lg-12">
+      <form novalidate ng-submit="newSystem()">
+        <div class="row clearfix">
+          <div class="col-xs-12 col-md-3 col-md-offset-3">
+            <div class="form-group">
+              <label class="control-label">اسم النظام</label>
+              <input class="form-control input-sm" type="text" ng-model="newSystemForm.name" placeholder="أسم النظام" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">الوصف</label>
+              <input class="form-control input-sm" type="text" ng-model="newSystemForm.description" placeholder="الوصف" required>
+            </div>
+          </div>
+          <div class="col-md-12 column">
+            <table class="table table-bordered table-hover" id="tab_logic">
+              <thead>
+                <tr >
+                  <th class="text-center">
+                    #
+                  </th>
+                  <th class="text-center">
+                    الصف الدراسي
+                  </th>
+                  <th class="text-center">
+                    المواد
+                  </th>
+                  <th class="text-center">
+                    الامتحانات
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id='addr0'>
+                  <td>
+                  1
+                  </td>
+                  <td>
+                  <div class="form-group">
+                    <select ng-change= 'setClassSubjects(0)' required class="form-control input-sm" ng-model="newSystemForm.sys_class[0].id_class" ng-options='clas._id as clas.name for clas in getAllClasses'>
+                      <option value="" disabled selected>الرجاء الاختيار</option>
+                    </select>
+                  </div>
+                  </td>
+                  <td>
+                    <div class="dual-list0 list">
+                      <div class="con text-right">
+                        <a ng-disabled='!newSystemForm.sys_class[0].allSubjects || newSystemForm.sys_class[0].allSubjects.length==0' class="btn btn-default btn-sm selector0" title="تحديد الكل"><i class="glyphicon glyphicon-unchecked"></i> تحديد الكل</a>
+                        <ul style='max-height:120px;overflow:scroll;overflow-x:hidden;padding:0px' class="list-group0 btn-block" >
+                          <li style="cursor: pointer;padding:3px" value='{{sub}}' ng-repeat="sub in newSystemForm.sys_class[0].allSubjects" class="list-group-item">{{sub.name}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class='controls0'>
+                    <div class='entry'>
+                    <div class='input-group input-group-sm'>
+                    <div class='form-group'>
+                    <input required disable-validation-message="" class='form-control name' ng-model='newSystemForm.sys_class[0].exams["0"].name' s='0' type='text' placeholder='اسم الامتحان' />
+                    </div>
+                    <div class='form-group'>
+                    <input required disable-validation-message="" type='number' class='form-control semester' ng-model='newSystemForm.sys_class[0].exams["0"].semester' placeholder='الفترة'>
+                    </div>
+                    <div class='form-group'>
+                    <select ng-options='type.value as type.name for type in types' required disable-validation-message="" class='form-control' ng-model='newSystemForm.sys_class[0].exams["0"].type'>
+                        <option selected disabled value=''>اختر نوع</option>
+                    </select>
+                    </div>
+                    <span class='input-group-btn'>
+                        <button class='btn btn-success btn-add0' type='button'>
+                        <span class='glyphicon glyphicona glyphicon-plus'></span>
+                        </button>
+                    </span>
+                    </div>
+                    <hr></div></div>
+                    <a class='btn btn-info btn-xs' ng-click='setSubjects(0)'><i class='fa fa-pencil fa-fw'></i>&nbsp;تعديل الدرجات</a>
+                    </td>
+                </tr>
+                <tr id='addr1'></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <a id="add_row" class="btn btn-default pull-left">اضف صف</a>
+        <a id='delete_row' class="pull-right btn btn-default">الغي صف</a>
+        <hr>
+        <div class="row">
+          <div class="col-xs-6 col-md-2 col-md-offset-4">
+            <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
+          </div>
+          <div class="col-xs-6 col-md-2">
+            <a class="btn btn-success btn-sm btn-block" onclick="$('#SystemsId').click();"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
+  <div style="overflow-y: initial !important" class="modal-dialog modal-lg">
+  
+    <div class="modal-content">
+      <form novalidate ng-submit="save()">
+        <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal"> &times;</button>
+          <h3 class="text-center">درجات الامتحانات</h3>
+        </div>
+        <div style="max-height: calc(80vh - 100px);overflow-y: auto;" class="modal-body">
+          <div class="row">
+              <div class="col-xs-10 col-xs-push-1">
+              
+               
+              <ul class="nav nav-tabs">
+                <li ng-repeat="exam in exams">
+                  <a  data-toggle="tab" ng-class="($index == 0)?'firstTab':''"  showtab="" href="#{{exam.x}}">{{exam.name}}</a>
+                </li>
+              </ul>
+                
+                <div class="tab-content">
+                  <div ng-repeat="exam in exams" id="{{exam.x}}" class="tab-pane fade">
+                    <table class="table table-bordered">
+                      <thead>
+                          <tr><th>الامواد</th><th>الدرجات</th></tr>
+                      </thead>
+                      <tbody>
+                         <tr ng-repeat="subject in exam.subjects">
+                            <td>{{ subject.name }}</td>
+                            <td>
+                               <div class="form-group">
+                                <input type="number" required="required" placeholder="الدرجة" ng-model="subject.mark" class="form-control text-center">
+                              </div>
+                            </td>
+                         </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">حفظ</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">الغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

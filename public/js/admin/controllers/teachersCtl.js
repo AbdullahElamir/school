@@ -69,8 +69,8 @@
     
       TeacherServ.editTeacher($stateParams.id,$scope.editTeacherForm).then(function(response) {
         if(response.data){
-          $('#TeachersId').click();
           toastr.info('تم التعديل بنجاح');
+          $('#TeachersId').click();
         } else {
           toastr.error('عملية التعديل فشلت');
         }
@@ -180,8 +180,8 @@
     $scope.newTeacher = function(){
       TeacherServ.addTeacher($scope.newTeacherForm).then(function(response){
         if(response.data){
-          $('#TeachersId').click();
           toastr.success('تم الإضافة بنجاح');
+          $('#TeachersId').click();
         } else {
           console.log($scope.newTeacherForm);
           toastr.error('خطأ في عملية الادخال');

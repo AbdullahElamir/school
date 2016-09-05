@@ -15,6 +15,18 @@ module.exports = {
       }
     });
   },
+
+  getSubjectsByClass :function(clas,cb){
+    model.Subject.find({clas:clas})
+    .exec(function(err, Subjects){
+      if(!err){
+        cb(Subjects);
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
   
   //getAllStudentsBySearchValue
   getSubjectsBySearchValueAndClass :function(searchValue,clas,limit,page,cb){

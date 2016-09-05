@@ -71,8 +71,8 @@
   
       RoomServ.editRoom($stateParams.id,$scope.editRoomForm).then(function(response) {
         if(response.data){
-          $('#RoomsId').click();
           toastr.info('تم التعديل بنجاح');
+          $('#RoomsId').click();
         } else {
           toastr.error('عملية التعديل فشلت');
         }
@@ -89,8 +89,8 @@
     $scope.newRoom = function(){
       RoomServ.addRoom($scope.newRoomForm).then(function(response){
         if(response.data){
-          $('#RoomsId').click();
           toastr.success('تم الإضافة بنجاح');
+          $('#RoomsId').click();
         } else {
           toastr.error('خطأ في عملية الادخال');
         }

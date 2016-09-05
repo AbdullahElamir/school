@@ -9,8 +9,8 @@
       console.log($scope.newParentForm);
       ParentServ.addParent($scope.newParentForm).then(function(response){
          if(response.data){
-          $('#ParentsId').click();
           toastr.success('تم الإضافة بنجاح');
+          $('#ParentsId').click();
         } else {
           toastr.error('خطأ في عملية الادخال');
         }
@@ -133,8 +133,8 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
     
       ParentServ.editParent($stateParams.id,$scope.editParentForm).then(function(response) {
         if(response.data){
-          $('#ParentsId').click();
           toastr.info('تم التعديل بنجاح');
+          $('#ParentsId').click();
         } else {
           console.log(response.data);
         }

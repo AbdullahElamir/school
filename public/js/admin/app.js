@@ -406,6 +406,56 @@
         }]
       }
     })
+    .state('systems',{
+      url: '/systems',
+      templateUrl: 'admin/pages/system/systems',            
+      data: {pageTitle: 'الانظمة الدراسية'},
+      controller: 'SystemsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/systemsCtl.js'
+            ] 
+          });
+        }]
+      }
+    })
+    .state('newSystem',{
+      url: '/newSystem',
+      templateUrl: 'admin/pages/system/newSystem',            
+      data: {pageTitle: 'إضافة نظام جديد'},
+      controller: 'newSystemCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/systemsCtl.js'
+              
+            ] 
+          });
+        }]
+      }
+    })
+
+    .state('editSystem',{
+      url: '/editSystem/edit/:id',
+      templateUrl: 'admin/pages/system/editSystem',            
+      data: {pageTitle: 'تعديل نظام دراسي'},
+      controller: 'editSystemCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/systemsCtl.js'
+            ] 
+          });
+        }]
+      }
+    })
 
     .state('newParent',{
       url: '/newParent',

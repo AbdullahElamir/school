@@ -8,9 +8,9 @@ var System = new Schema({
   sys_class:{ 
     type: [{
       id_class:{type: Schema.Types.ObjectId , ref: 'Class'},
-      subjects:{
+      selected:{
         type:[{
-          id_subjects:{type:Schema.Types.ObjectId , ref: 'Subject'}
+          id_subject:{type:Schema.Types.ObjectId , ref: 'Subject'}
         }]
       }
     }],

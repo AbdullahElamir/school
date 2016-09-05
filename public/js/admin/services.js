@@ -1,6 +1,7 @@
 (function() {
   'use strict';
     var app = angular.module('adminSchool');
+
     app.service('StudentServ',['$http',function($http){
     var self = {
       'addStudent': function(student){
@@ -123,10 +124,41 @@
       },
       'editSubject': function(id,obj){
         return $http.put('/subject/edit/'+id,obj);
+      },
+      'getSubjectsByClass': function(id,obj){
+        return $http.get('/subject/class/'+id,obj);
       }
     };
     return self;
   }]);
+
+  app.service('SystemServ',['$http',function($http){
+    var self = {
+      'addSystem': function(system){
+        return $http.post('/system/add',system);
+      },
+      'getSystems': function(limit,page){
+        return $http.get('/system/'+limit+'/'+page);
+      },
+      'deleteSystem': function(id){
+        return $http.delete('/system/delete/'+id);
+      },
+      'getSystemById': function(id){
+        return $http.get('/system/'+id.id);
+      },
+      'editSystem': function(id,obj){
+        return $http.put('/system/edit/'+id,obj);
+      },
+      'getAllSystem': function(){
+        return $http.get('/system/all');
+      },
+      'getSubjectsByClass':function(){
+
+      }
+    };
+    return self;
+  }]);
+
 
   app.service('ParentServ',['$http',function($http){
       var self = {
@@ -192,18 +224,5 @@
     };
     return self;
   }]);
-
-
-  app.service('SystemServ',['$http',function($http){
-    var self = {
-      'getAllSystem': function(){
-        return $http.get('/system/all');
-      }
-     
-    };
-    return self;
-  }]);
-
-
 
 }());
