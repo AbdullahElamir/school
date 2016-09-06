@@ -80,6 +80,17 @@
               toastr.error('قم بتحديد درجات الامتحانات في كل مادة بشكل صحيح');
               return;
             }
+            var found =false;
+            for(var selsbj in $scope.newSystemForm.sys_class[f].selected){
+              if($scope.newSystemForm.sys_class[f].selected[selsbj].id_subject == $scope.newSystemForm.sys_class[f].exams[exm].subjects[sbj].subject){
+                found = true;
+                break;
+              }
+            }
+            if(!found){
+              toastr.error('قم بتحديد درجات الامتحانات في بعد التغيير');
+              return;
+            }
           }
         }
       }
@@ -164,7 +175,7 @@
         i--;
         //clear its data
         if($scope.newSystemForm.sys_class[i]){
-          delete $scope.newSystemForm.sys_class[i];
+          $scope.newSystemForm.sys_class.splice(i,1);
         }
       }
     });
@@ -335,6 +346,17 @@
               toastr.error('قم بتحديد درجات الامتحانات في كل مادة بشكل صحيح');
               return;
             }
+            var found =false;
+            for(var selsbj in $scope.newSystemForm.sys_class[f].selected){
+              if($scope.newSystemForm.sys_class[f].selected[selsbj].id_subject == $scope.newSystemForm.sys_class[f].exams[exm].subjects[sbj].subject){
+                found = true;
+                break;
+              }
+            }
+            if(!found){
+              toastr.error('قم بتحديد درجات الامتحانات في بعد التغيير');
+              return;
+            }
           }
         }
       }
@@ -425,7 +447,7 @@
         i--;
         //clear its data
         if($scope.newSystemForm.sys_class[i]){
-          delete $scope.newSystemForm.sys_class[i];
+          $scope.newSystemForm.sys_class.splice(i,1);
         }
       }
     });
