@@ -16,6 +16,18 @@
       console.log("Somthing went wrong");
     })
 
+ /*   $('body').on('click', '#class', function(){
+      $("#formD").append('<br><br><label class="col-md-1 offset-md-2" for="name[]">الفصــل</label>\
+            <input  type=\'text\'  name="name[]" id="name[]" >\
+          <button type="button" class="btn add-more"  id="class">+</button> 
+          <button type="button" class="btn add-more"  id="class">-</button>'); 
+    });
+*/
+
+
+
+
+
 
 
 
