@@ -1,0 +1,64 @@
+<div class="portlet light bordered">
+  <div class="portlet-title">
+    <div class="caption caption-md">
+      <i class="icon-settings font-green"></i>
+      <span class="caption-subject font-green bold">المجموعات الدراسية</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-12 col-lg-12">
+      <div class="row clearfix">
+        <div class="col-xs-12 col-md-4 col-md-offset-4">
+          <div class="form-group">
+            <label class="control-label">السنة</label>
+            <select ng-change= 'refresh()' required class="form-control" ng-model="year" ng-options='year._id as year.name for year in years'>
+              <option value="" disabled selected>الرجاء الاختيار</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12 column">
+          <table class="table table-bordered table-hover" id="tab_logic">
+            <thead>
+              <tr >
+                <th class="text-center">
+                  #
+                </th>
+                <th class="text-center">
+                  الصف الدراسي
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="class in classes">
+                <td>
+                {{($index+1)}}
+                </td>
+                <td>
+                  <h2>{{class.name}}</h2>
+                  <table class='table table-bordered table-hover'>
+                    <thead>
+                      <tr>
+                      <th>المجموعات</th>
+                      <th><i class="fa fa-cog"></i></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="classRoom in class.classRooms">
+                        <td>{{classRoom.name}}</td>
+                        <td>
+                          <a class="btn btn-success btn-xs" ui-sref="classRoomStudents({id:classRoom._id,year:year})"><i class="fa fa-users fa-fw"></i>&nbsp;الطلبة</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>

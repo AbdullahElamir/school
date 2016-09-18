@@ -3,6 +3,25 @@ var router = express.Router();
 var studentMgr = require("../controller/student");
 var userHelpers = require("../controller/userHelpers");
 
+router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res) {
+  // get real data with search text
+  res.send([
+    {_id:745645645,name:"abdo"},
+    {_id:845613541,name:"taha"},
+    {_id:754874856,name:"salem"},
+    {_id:812674577,name:"hitam"}
+  ]);
+});
+router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
+  // get real data without search text
+  res.send([
+    {_id:745645645,name:"abdo"},
+    {_id:845613541,name:"taha"},
+    {_id:754874856,name:"salem"},
+    {_id:812674577,name:"hitam"}
+  ]);
+});
+
 /*GET all Student By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
   studentMgr.getAllStudentsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(student){

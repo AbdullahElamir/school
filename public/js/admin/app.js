@@ -555,6 +555,36 @@
           });
         }]
       }
+    }).state('classRooms',{
+      url: '/classRooms/:year',
+      templateUrl: 'admin/pages/classRoom/classRooms',            
+      data: {pageTitle: 'المجموعات الدراسية'},
+      controller: 'ClassRoomsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/classRoomsCtl.js'
+            ] 
+          });
+        }]
+      }
+    }).state('classRoomStudents',{
+      url: '/classRoomStudents/:id/:year',
+      templateUrl: 'admin/pages/classRoom/classRoomStudents',            
+      data: {pageTitle: 'الطلبة'},
+      controller: 'ClassRoomStudentsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/classRoomsCtl.js'
+            ] 
+          });
+        }]
+      }
     });
 
 

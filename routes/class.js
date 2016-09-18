@@ -10,6 +10,28 @@ router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res)
   });
 });
 
+router.get('/classRooms/:year', userHelpers.isLogin ,function(req, res) {
+  // classMgr.getAllClassesAndClassRoomsByYear(function(classes){
+  //   res.send(classes);
+  // });
+  res.send([
+    {_id:56154115,name:"الصف الاول"
+      ,classRooms:[
+      {_id:7451486496,name:"1/1"},
+      {_id:8754748787,name:"1/2"},
+      {_id:6484541888,name:"1/3"},
+      ]
+    },
+    {_id:824968488,name:"الصف الثاني"
+      ,classRooms:[
+      {_id:2415841638,name:"2/1"},
+      {_id:5147574554,name:"2/2"},
+      {_id:1551258512,name:"2/3"},
+      ]
+    }
+  ]);
+});
+
 // GET all class
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   classMgr.getAllClassCount(req.params.limit,req.params.page,function(_class){
@@ -22,7 +44,6 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
     res.send(_class);
   });
 });
-
 // Add new class
 router.post('/add', userHelpers.isLogin ,function(req, res) {
   classMgr.addClass(req.body,function(_class){

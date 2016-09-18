@@ -21,6 +21,9 @@
       },
       'editStudent': function(id,obj){
         return $http.put('/student/edit/'+id,obj);
+      },
+      'getStudentsByLastYearClass': function(searchText,_class){
+        return $http.get('/student/class/'+searchText+'/'+_class);
       }
     };
     return self;
@@ -72,6 +75,9 @@
       },
       'getAllClasses': function(){
         return $http.get('/class/all');
+      },
+      'getAllClassesByYear': function(year){
+        return $http.get('/class/classRooms/'+year);
       }
     };
     return self;
@@ -220,6 +226,18 @@
       },
       'editSchool': function(obj){
         return $http.put('/school/edit',obj);
+      }
+    };
+    return self;
+  }]);
+
+  app.service('ClassRoomsServ',['$http',function($http){
+    var self = {
+      'getStudents': function(classRoom,year){
+        return $http.get('/classRoom/students/'+classRoom+'/'+year);
+      },
+      'update': function(classRoom,students){
+        return $http.put('/classRoom/students/'+classRoom,students);
       }
     };
     return self;

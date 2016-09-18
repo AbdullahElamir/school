@@ -28,6 +28,12 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   });
 });
 
+// edit class room students
+router.put('/students/:id', userHelpers.isLogin ,function(req, res) {
+  //update students of this classroom
+  res.send(true);
+});
+
 // delete room by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   classRoomMgr.updateClassRoom(req.params.id,{status:0},function(Croom){
@@ -45,6 +51,18 @@ router.get('/name/:name',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomName(req.params.name,function(Croom){
     res.send(Croom);
   });
+});
+//get all claas Rooms By Search Value
+router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
+  // classRoomMgr.getAllClassRoomeStudentsByYear(req.params.classRoom,req.params.year,function(Crooms){
+  //   res.send(Crooms);
+  // });
+  res.send([
+    {_id:745645645,name:"abdo"},
+    {_id:845613541,name:"taha"},
+    {_id:874515717,name:"omar"},
+    {_id:812674577,name:"hitam"}
+  ]);
 });
 //get all claas Rooms By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
