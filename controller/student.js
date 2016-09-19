@@ -16,6 +16,8 @@ module.exports = {
     });
   },
 
+
+
   //getAllStudentsBySearchValue
   getAllStudentsBySearchValue :function(searchValue,limit,page,cb){
     page = parseInt(page);
