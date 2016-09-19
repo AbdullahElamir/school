@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var classRoomMgr = require("../controller/classRoom");
+var stuproMgr = require("../controller/studentProcess");
 var userHelpers = require("../controller/userHelpers");
 
 
@@ -54,15 +55,21 @@ router.get('/name/:name',userHelpers.isLogin , function(req, res) {
 });
 //get all claas Rooms By Search Value
 router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
-  // classRoomMgr.getAllClassRoomeStudentsByYear(req.params.classRoom,req.params.year,function(Crooms){
-  //   res.send(Crooms);
-  // });
-  res.send([
-    {_id:745645645,name:"abdo"},
-    {_id:845613541,name:"taha"},
-    {_id:874515717,name:"omar"},
-    {_id:812674577,name:"hitam"}
-  ]);
+  stuproMgr.getAllClassRoomeStudentsByYear(req.params.classRoom,req.params.year,function(Crooms){
+    var _room=[];
+    for (i in Crooms){
+      _room.push(Crooms[i].student);
+      if(i == Crooms.length-1){
+        res.send(_room);
+      }
+    }
+  });
+  // res.send([
+  //   {_id:745645645,name:"a"},
+  //   {_id:845613541,name:"b"},
+  //   {_id:874515717,name:"c"},
+  //   {_id:812674577,name:"d"}
+  // ]);
 });
 //get all claas Rooms By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {

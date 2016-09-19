@@ -104,10 +104,9 @@ module.exports = {
     });
   },
   getAllClassesAndClassRoomsByYear : function(year,cb){
-    console.log(year);
-    model.ClassRoom.find({year:year},function(err, ClassRoomes){
+    model.ClassRoom.find({year:year}).populate('class')
+    .exec(function(err, ClassRoomes){
       if(!err){
-        console.log(ClassRoomes);
         cb(ClassRoomes);
       }else{
         console.log(err);
@@ -115,6 +114,7 @@ module.exports = {
       }
     });
   },
+
   // deleteClassRoom : function(id,cb){
   //   model.Study.find({customer:id}, function(err,resul) {
   //     if(resul.length > 0){
