@@ -243,4 +243,16 @@
     return self;
   }]);
 
+  app.service('AttendanceServ',['$http',function($http){
+    var self = {
+      'getStudentsByDateAndClassRoom': function(classRoom,date){
+        return $http.get('/attendance/students/'+classRoom+'/'+date);
+      },
+      'setStuProAttend': function(StuPro,attend){
+        return $http.put('/attendance/stupro/'+StuPro+'/'+attend);
+      }
+    };
+    return self;
+  }]);
+
 }());
