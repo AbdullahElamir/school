@@ -18,7 +18,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   feesMgr.addFees(req.body,function(fees){
     res.send(fees);
   });
-  
+
 });
 
 // edit fees by id
@@ -46,6 +46,12 @@ router.get('/name/:name',userHelpers.isLogin , function(req, res) {
     res.send(fees);
   });
 });
+
+//get total fees of a class in specific year
+router.get('/total/:classRoom/:year',userHelpers.isLogin , function(req, res) {
+  res.send({amount:1000});
+});
+
 //get all fees By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
   feesMgr.getAllFeesesBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(feess){

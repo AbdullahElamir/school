@@ -286,4 +286,30 @@
 
   }]);
 
+
+  app.controller('ClassRoomPaymentCtl',['$scope','$stateParams','$state','toastr','PaymentServ',function($scope,$stateParams,$state,toastr,PaymentServ){
+    $scope.year = $stateParams.year;
+    PaymentServ.getClassFeesByYear($stateParams.id,$stateParams.year).then(function(result){
+      $scope.total=result.data.amount;
+    });
+    PaymentServ.getStudentsByYearAndClassRoom($stateParams.id,$stateParams.year).then(function(students){
+      $scope.students=students.data;
+    });
+
+    $scope.payBefore = function(StuProId){
+      $scope.idStudent = StuProId;
+    };
+    $scope.pay = function(StuProId,amount){
+      PaymentServ.payAmount(StuProId,amount).then(function(result){
+        if(result.data){
+          $scope.amount = "";
+          $('#myModal').modal('hide');
+          toastr.success('تمت عملية الدفع');
+        }else{
+          toastr.error('عملية الدفع فشلت');
+        }
+      });
+    };
+  }]);
+
 }());

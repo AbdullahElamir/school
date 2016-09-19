@@ -18,7 +18,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   paid.addPaid(req.body,function(paids){
     res.send(paids);
   });
-  
+
 });
 
 // edit paids by id
@@ -32,6 +32,12 @@ router.put('/fees/:fees', userHelpers.isLogin ,function(req, res) {
     res.send(paids);
   });
 });
+//pay for a specific stuPro
+router.put('/student/:stupro', userHelpers.isLogin ,function(req, res) {
+  //##########################
+  res.send(true);
+});
+
 router.put('/stuPro/:stuPro', userHelpers.isLogin ,function(req, res) {
   paid.getPaidStu(req.params.stuPro,function(paids){
     res.send(paids);
@@ -53,6 +59,17 @@ router.get('/status/:status',userHelpers.isLogin , function(req, res) {
   paid.getAllPaidStatus(req.params.status,function(paids){
     res.send(paids);
   });
+});
+
+// get paids and stupro
+router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
+  //####################
+  res.send([
+    {_id:1456165,name:"abdo",paidUp:500},
+    {_id:8745175,name:"ahmed",paidUp:300},
+    {_id:5214565,name:"taha",paidUp:1000},
+    {_id:5489665,name:"salem",paidUp:0}
+  ]);
 });
 
 //get all paids By Search Value

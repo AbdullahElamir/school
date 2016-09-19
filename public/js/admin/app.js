@@ -192,7 +192,7 @@
 
     .state('systemSetting',{
       url: '/system_setting',
-      templateUrl: 'admin/pages/system/systemSetting',            
+      templateUrl: 'admin/pages/system/systemSetting',
       data: {pageTitle: 'المدرسين'},
       controller: 'system_settings',
       resolve: {
@@ -208,7 +208,7 @@
     })
     .state('assigningTeacher',{
       url: '/assigning_teacher',
-      templateUrl: 'admin/pages/system/assigningTeacher',            
+      templateUrl: 'admin/pages/system/assigningTeacher',
       data: {pageTitle: 'تعيين المعلم'},
       controller: 'assigningTeacherCtl',
       resolve: {
@@ -217,7 +217,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/assigningTeacherCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -591,6 +591,21 @@
       templateUrl: 'admin/pages/classRoom/classRoomStudents',
       data: {pageTitle: 'الطلبة'},
       controller: 'ClassRoomStudentsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/classRoomsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('classRoomPayment',{
+      url: '/classRoomPayment/:id/:year',
+      templateUrl: 'admin/pages/classRoom/classRoomPayment',
+      data: {pageTitle: 'المستحقات'},
+      controller: 'ClassRoomPaymentCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({
