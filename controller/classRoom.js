@@ -103,7 +103,18 @@ module.exports = {
       }
     });
   },
-  
+  getAllClassesAndClassRoomsByYear : function(year,cb){
+    model.ClassRoom.find({year:year}).populate('class')
+    .exec(function(err, ClassRoomes){
+      if(!err){
+        cb(ClassRoomes);
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+
   // deleteClassRoom : function(id,cb){
   //   model.Study.find({customer:id}, function(err,resul) {
   //     if(resul.length > 0){

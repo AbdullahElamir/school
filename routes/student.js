@@ -48,7 +48,7 @@ router.post('/add',function(req, res) {
   studentMgr.addStudent(req.body,function(student){
     res.send(student);
   });
-  
+
 });
 
 /* Edit student by id  */
