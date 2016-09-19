@@ -190,9 +190,9 @@
       }
     })
 
-    .state('system_setting',{
+    .state('systemSetting',{
       url: '/system_setting',
-      templateUrl: 'admin/pages/system/system_setting',            
+      templateUrl: 'admin/pages/system/systemSetting',            
       data: {pageTitle: 'المدرسين'},
       controller: 'system_settings',
       resolve: {
@@ -201,6 +201,22 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/system_settings.js'
+            ] 
+          });
+        }]
+      }
+    })
+    .state('assigningTeacher',{
+      url: '/assigning_teacher',
+      templateUrl: 'admin/pages/system/assigningTeacher',            
+      data: {pageTitle: 'تعيين المعلم'},
+      controller: 'assigningTeacherCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/assigningTeacherCtl.js'
             ] 
           });
         }]
