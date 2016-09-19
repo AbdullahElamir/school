@@ -1,9 +1,9 @@
 (function() {
   'use strict';
   var app = angular.module('adminSchool',[
-    'ui.router', 
-    'ui.bootstrap', 
-    'oc.lazyLoad',  
+    'ui.router',
+    'ui.bootstrap',
+    'oc.lazyLoad',
     'ngSanitize',
     'jcs-autoValidate',
     'toastr',
@@ -28,7 +28,7 @@
   app.controller('AppController',['$scope','$rootScope',function($scope,$rootScope){
     $scope.$on('$viewContentLoaded',function() {
       App.initComponents(); // init core components
-      //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
+      //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
     });
   }]);
   /* Setup Layout Part - Header */
@@ -66,11 +66,11 @@
       placement: 'auto bottom'
     });
     // Redirect any unmatched url
-    $urlRouterProvider.otherwise('/dashboard');  
+    $urlRouterProvider.otherwise('/dashboard');
     // Dashboard
     $stateProvider.state('dashboard',{
       url: '/dashboard',
-      templateUrl: 'admin/pages/dashboard',            
+      templateUrl: 'admin/pages/dashboard',
       data: {pageTitle: 'لوحة التحكم'},
       controller: 'DashboardCtl',
       resolve: {
@@ -78,19 +78,19 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadPluginsBefore', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
-              '/morris.js/morris.css',                            
+              '/morris.js/morris.css',
               '/morris.js/morris.min.js',
               '/raphael/raphael.min.js',
               '/assets/js/dashboard.min.js',
               '/js/admin/controllers/dashboardCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('school',{
       url: '/school',
-      templateUrl: 'admin/pages/school/info',            
+      templateUrl: 'admin/pages/school/info',
       data: {pageTitle: 'معلومات المدرسة'},
       controller: 'SchoolCtl',
       resolve: {
@@ -100,7 +100,7 @@
             files: [
               '/js/admin/controllers/schoolCtl.js',
               '/css/admin/timeline.css'
-            ] 
+            ]
           });
         }]
       }
@@ -108,7 +108,7 @@
 
     .state('editSchool',{
       url: '/editSchool/edit/:id',
-      templateUrl: 'admin/pages/school/editSchool',            
+      templateUrl: 'admin/pages/school/editSchool',
       data: {pageTitle: 'تعديل معلومات المدرسة'},
       controller: 'EditSchoolCtl',
       resolve: {
@@ -117,7 +117,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/schoolCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -125,7 +125,7 @@
 
     .state('students',{
       url: '/students',
-      templateUrl: 'admin/pages/student/students',            
+      templateUrl: 'admin/pages/student/students',
       data: {pageTitle: 'طباعة الجدول'},
       controller: 'StudentsCtl',
       resolve: {
@@ -134,14 +134,14 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/studentsCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('newStudent',{
       url: '/newStudent',
-      templateUrl: 'admin/pages/student/newStudent',            
+      templateUrl: 'admin/pages/student/newStudent',
       data: {pageTitle: 'طباعة الجدول'},
       controller: 'newStudentCtl',
       resolve: {
@@ -150,7 +150,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/studentsCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -158,7 +158,7 @@
 
     .state('editStudent',{
       url: '/editStudent/edit/:id',
-      templateUrl: 'admin/pages/student/editStudent',            
+      templateUrl: 'admin/pages/student/editStudent',
       data: {pageTitle: 'طباعة الجدول'},
       controller: 'editStudentCtl',
       resolve: {
@@ -167,7 +167,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/studentsCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -175,7 +175,7 @@
 
     .state('teachers',{
       url: '/teachers',
-      templateUrl: 'admin/pages/teacher/teachers',            
+      templateUrl: 'admin/pages/teacher/teachers',
       data: {pageTitle: 'المدرسين'},
       controller: 'TeachersCtl',
       resolve: {
@@ -184,7 +184,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/teachersCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -192,7 +192,7 @@
 
     .state('system_setting',{
       url: '/system_setting',
-      templateUrl: 'admin/pages/system/system_setting',            
+      templateUrl: 'admin/pages/system/system_setting',
       data: {pageTitle: 'المدرسين'},
       controller: 'system_settings',
       resolve: {
@@ -201,14 +201,14 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/system_settings.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('newTeacher',{
       url: '/newTeacher',
-      templateUrl: 'admin/pages/teacher/newTeacher',            
+      templateUrl: 'admin/pages/teacher/newTeacher',
       data: {pageTitle: 'إضافة مدرس'},
       controller: 'newTeacherCtl',
       resolve: {
@@ -217,7 +217,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/teachersCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -225,7 +225,7 @@
 
     .state('editTeacher',{
       url: '/editTeacher/edit/:id',
-      templateUrl: 'admin/pages/teacher/editTeacher',            
+      templateUrl: 'admin/pages/teacher/editTeacher',
       data: {pageTitle: 'تعديل مدرس'},
       controller: 'editTeacherCtl',
       resolve: {
@@ -234,7 +234,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/teachersCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -242,7 +242,7 @@
 
     .state('classes',{
       url: '/classes',
-      templateUrl: 'admin/pages/class/classes',            
+      templateUrl: 'admin/pages/class/classes',
       data: {pageTitle: 'الصفوف الدراسية'},
       controller: 'ClassesCtl',
       resolve: {
@@ -251,14 +251,14 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/classesCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('newClass',{
       url: '/newClass',
-      templateUrl: 'admin/pages/class/newClass',            
+      templateUrl: 'admin/pages/class/newClass',
       data: {pageTitle: 'إضافة صف دراسي'},
       controller: 'newClassCtl',
       resolve: {
@@ -267,7 +267,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/classesCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -275,7 +275,7 @@
 
     .state('editClass',{
       url: '/editClass/edit/:id',
-      templateUrl: 'admin/pages/class/editClass',            
+      templateUrl: 'admin/pages/class/editClass',
       data: {pageTitle: 'تعديل الصف'},
       controller: 'editClassCtl',
       resolve: {
@@ -284,7 +284,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/classesCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -292,7 +292,7 @@
 
     .state('subjects',{
       url: '/subjects',
-      templateUrl: 'admin/pages/subject/subjects',            
+      templateUrl: 'admin/pages/subject/subjects',
       data: {pageTitle: 'المواد الدراسية'},
       controller: 'SubjectsCtl',
       resolve: {
@@ -301,14 +301,14 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/subjectsCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('newSubject',{
       url: '/newSubject',
-      templateUrl: 'admin/pages/subject/newSubject',            
+      templateUrl: 'admin/pages/subject/newSubject',
       data: {pageTitle: 'إضافة مادة جديدة'},
       controller: 'newSubjectCtl',
       resolve: {
@@ -317,7 +317,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/subjectsCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -325,7 +325,7 @@
 
     .state('editSubject',{
       url: '/editSubject/edit/:id',
-      templateUrl: 'admin/pages/subject/editSubject',            
+      templateUrl: 'admin/pages/subject/editSubject',
       data: {pageTitle: 'تعديل مادة دراسية'},
       controller: 'editSubjectCtl',
       resolve: {
@@ -334,7 +334,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/subjectsCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -342,7 +342,7 @@
 
     .state('rooms',{
       url: '/rooms',
-      templateUrl: 'admin/pages/room/rooms',            
+      templateUrl: 'admin/pages/room/rooms',
       data: {pageTitle: 'الغرف الدراسية'},
       controller: 'RoomsCtl',
       resolve: {
@@ -351,14 +351,14 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/roomsCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('newRoom',{
       url: '/newRoom',
-      templateUrl: 'admin/pages/room/newRoom',            
+      templateUrl: 'admin/pages/room/newRoom',
       data: {pageTitle: 'إضافة غرفة جديدة'},
       controller: 'newRoomCtl',
       resolve: {
@@ -367,7 +367,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/roomsCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -375,7 +375,7 @@
 
     .state('editRoom',{
       url: '/editRoom/edit/:id',
-      templateUrl: 'admin/pages/room/editRoom',            
+      templateUrl: 'admin/pages/room/editRoom',
       data: {pageTitle: 'تعديل غرفة دراسية'},
       controller: 'editRoomCtl',
       resolve: {
@@ -384,7 +384,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/roomsCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -392,7 +392,7 @@
 
     .state('newClassRooms',{
       url: '/newClassRooms',
-      templateUrl: 'admin/pages/classRoom/newClassRooms',            
+      templateUrl: 'admin/pages/classRoom/newClassRooms',
       data: {pageTitle: 'إضافة غرفة جديدة'},
       controller: 'newClassRoomCtl',
       resolve: {
@@ -401,14 +401,14 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/classRoomsCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('systems',{
       url: '/systems',
-      templateUrl: 'admin/pages/system/systems',            
+      templateUrl: 'admin/pages/system/systems',
       data: {pageTitle: 'الانظمة الدراسية'},
       controller: 'SystemsCtl',
       resolve: {
@@ -417,14 +417,14 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/systemsCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('newSystem',{
       url: '/newSystem',
-      templateUrl: 'admin/pages/system/newSystem',            
+      templateUrl: 'admin/pages/system/newSystem',
       data: {pageTitle: 'إضافة نظام جديد'},
       controller: 'newSystemCtl',
       resolve: {
@@ -433,8 +433,8 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/systemsCtl.js'
-              
-            ] 
+
+            ]
           });
         }]
       }
@@ -442,7 +442,7 @@
 
     .state('editSystem',{
       url: '/editSystem/edit/:id',
-      templateUrl: 'admin/pages/system/editSystem',            
+      templateUrl: 'admin/pages/system/editSystem',
       data: {pageTitle: 'تعديل نظام دراسي'},
       controller: 'editSystemCtl',
       resolve: {
@@ -451,7 +451,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/systemsCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -459,7 +459,7 @@
 
     .state('newParent',{
       url: '/newParent',
-      templateUrl: 'admin/pages/parent/newParent',            
+      templateUrl: 'admin/pages/parent/newParent',
       data: {pageTitle: 'طباعة الجدول'},
       controller: 'newParenttCtl',
       resolve: {
@@ -468,7 +468,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/parentsCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -476,7 +476,7 @@
 
     .state('parents',{
       url: '/parents',
-      templateUrl: 'admin/pages/parent/parents',            
+      templateUrl: 'admin/pages/parent/parents',
       data: {pageTitle: 'طباعة الجدول'},
       controller: 'ParenttCtl',
       resolve: {
@@ -485,7 +485,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/parentsCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -493,7 +493,7 @@
 
     .state('editParent',{
       url: '/editParent/edit/:id',
-      templateUrl: 'admin/pages/parent/editParent',            
+      templateUrl: 'admin/pages/parent/editParent',
       data: {pageTitle: 'طباعة الجدول'},
       controller: 'editParentCtl',
       resolve: {
@@ -502,14 +502,14 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/parentsCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('years',{
       url: '/years',
-      templateUrl: 'admin/pages/year/years',            
+      templateUrl: 'admin/pages/year/years',
       data: {pageTitle: 'السنوات الدراسية'},
       controller: 'YearsCtl',
       resolve: {
@@ -518,14 +518,14 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/yearCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('newYear',{
       url: '/newYear',
-      templateUrl: 'admin/pages/year/newYear',            
+      templateUrl: 'admin/pages/year/newYear',
       data: {pageTitle: 'إضافة غرفة جديدة'},
       controller: 'newYearCtl',
       resolve: {
@@ -534,7 +534,7 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/yearCtl.js'
-            ] 
+            ]
           });
         }]
       }
@@ -542,7 +542,7 @@
 
     .state('editYear',{
       url: '/editYear/edit/:id',
-      templateUrl: 'admin/pages/year/editYear',            
+      templateUrl: 'admin/pages/year/editYear',
       data: {pageTitle: 'تعديل غرفة دراسية'},
       controller: 'editYearCtl',
       resolve: {
@@ -551,13 +551,13 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/yearCtl.js'
-            ] 
+            ]
           });
         }]
       }
     }).state('classRooms',{
       url: '/classRooms/:year',
-      templateUrl: 'admin/pages/classRoom/classRooms',            
+      templateUrl: 'admin/pages/classRoom/classRooms',
       data: {pageTitle: 'المجموعات الدراسية'},
       controller: 'ClassRoomsCtl',
       resolve: {
@@ -566,13 +566,13 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/classRoomsCtl.js'
-            ] 
+            ]
           });
         }]
       }
     }).state('classRoomStudents',{
       url: '/classRoomStudents/:id/:year',
-      templateUrl: 'admin/pages/classRoom/classRoomStudents',            
+      templateUrl: 'admin/pages/classRoom/classRoomStudents',
       data: {pageTitle: 'الطلبة'},
       controller: 'ClassRoomStudentsCtl',
       resolve: {
@@ -581,7 +581,22 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/classRoomsCtl.js'
-            ] 
+            ]
+          });
+        }]
+      }
+    }).state('classRoomAttendance',{
+      url: '/classRoomAttendance/:id/:year',
+      templateUrl: 'admin/pages/classRoom/classRoomAttendance',
+      data: {pageTitle: 'الحضور'},
+      controller: 'ClassRoomAttendanceCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/classRoomsCtl.js'
+            ]
           });
         }]
       }
@@ -597,8 +612,8 @@
       errorMessages['repName'] = "الرجاء إدخال اسم المخول";
       errorMessages['emailType'] = "الرجاء إدخال بريد إلكتروني صالح";
       errorMessages['phone'] = "الرجاء إدخال رقم هاتف صالح";
-      
-      
+
+
     });
   }]);
 }());
