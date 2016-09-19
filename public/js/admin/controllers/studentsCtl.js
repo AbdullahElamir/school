@@ -47,7 +47,24 @@
       console.log("Somthing went wrong");
     });
    };
-
+   
+   $scope.openSendMessageDialog = function(id) {
+      $scope.idStudent = id;
+   };
+   
+   $scope.sendMessageToParentOfStudent = function() {
+      StudentServ.sendMessageToParentOfStudent($scope.idStudent,$scope.message).then(function(response){
+        if(response.data === true){
+          $scope.message.title = "";
+          $scope.message.description = "";
+          $('#messageModal').modal('hide');
+          toastr.success('تم إرسال الرسالة بنجاح');
+        }
+      },function(response){
+        console.log("Somthing went wrong");
+      });
+   };
+   
   }]);
   //editStudentCtl
   app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,StudentServ,$state,toastr){
