@@ -255,4 +255,19 @@
     return self;
   }]);
 
+  app.service('PaymentServ',['$http',function($http){
+    var self = {
+      'getClassFeesByYear': function(classRoom,year){
+        return $http.get('/fees/total/'+classRoom+'/'+year);
+      },
+      'getStudentsByYearAndClassRoom': function(classRoom,year){
+        return $http.get('/paid/students/'+classRoom+'/'+year);
+      },
+      'payAmount': function(StuPro,amount){
+        return $http.put('/paid/student/'+StuPro,{amount:amount});
+      }
+    };
+    return self;
+  }]);
+
 }());
