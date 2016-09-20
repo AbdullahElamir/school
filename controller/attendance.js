@@ -81,7 +81,49 @@ module.exports = {
       }
     });
   },
-  
+  getAttendanceDate :function(date,stupro,cb){
+    var d1 = new Date(date);
+    var d2 = new Date(date);
+    d1.setHours(0);
+    // d1.setMilliseconds(0);
+    d1.setMinutes(0);
+    d1.setSeconds(0);
+    d2.setHours(23);
+    // d2.setMilliseconds(999);
+    d2.setMinutes(59);
+    d2.setSeconds(59);
+    model.Attendance.find({$and:[{StuPro:{$in:stupro}}]}).populate('StuPro').exec(function(err, Attendancees){
+      if(!err){
+        
+        var options = {
+          path: 'StuPro.student',
+          model: 'Student'
+        };
+        model.Attendance.populate(Attendancees, options, function (err, result3) {
+          if(!err){
+            cb(result3);
+          }else{
+            console.log(err);
+            cb(null);
+          }
+        });
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+  setAttendance : function(stupro,attend,cb){
+    model.Attendance.findOneAndUpdate({_id:stupro}, {attend,attend}, function(err,result) {
+      if (!err) {
+        cb(true);
+      } else {
+        console.log(err);
+        cb(false);
+      }
+    });
+
+  },
   // deleteAttendance : function(id,cb){
   //   model.Attendance.remove({_id:id}, function(err,result) {
   //     if (!err) {

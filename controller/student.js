@@ -118,6 +118,15 @@ module.exports = {
         cb(3);
       }
     });
-  }
+  },
+  getStudentStupro : function(name,stupro,cb){
+    model.Student.find({$and:[{name :{ $regex:name, $options: 'i' }},{_id:{$in:stupro}}]},function(err, custom){
+      if(!err){
+        cb(custom);
+      }else{
+        cb(null);
+      }
+    });
+  },
   
 };
