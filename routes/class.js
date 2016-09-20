@@ -25,10 +25,10 @@ router.get('/classRooms/:year', userHelpers.isLogin ,function(req, res) {
       }
       _class[obj[classes[i].class._id]].classRooms.push(classes[i]);
       if(i == classes.length-1){
-        res.send(_class);       
+        res.send(_class);
       }
     }
- 
+
   });
 });
 
@@ -49,7 +49,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   classMgr.addClass(req.body,function(_class){
     res.send(_class);
   });
-  
+
 });
 
 // Edit class by id
