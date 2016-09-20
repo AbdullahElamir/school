@@ -12,26 +12,24 @@ router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res)
 });
 
 router.get('/classRooms/:year', userHelpers.isLogin ,function(req, res) {
-  console.log(req.params.year);
   classRoomMgr.getAllClassesAndClassRoomsByYear(req.params.year, function(classes){
-    res.send(classes);
+    var _class = [];
+    var obj=[];
+    var k = 0;
+    console.log(classes.length);
+    for( var i in  classes){
+      if(obj[classes[i].class._id]==undefined){
+        obj[classes[i].class._id]=k;
+        k+=1;
+        _class.push({_id:classes[i].class._id,name:classes[i].class.name,classRooms:[]})
+      }
+      _class[obj[classes[i].class._id]].classRooms.push(classes[i]);
+      if(i == classes.length-1){
+        res.send(_class);       
+      }
+    }
+ 
   });
-  // res.send([
-  //   {_id:56154115,name:"الصف الاول"
-  //     ,classRooms:[
-  //     {_id:7451486496,name:"1/1"},
-  //     {_id:8754748787,name:"1/2"},
-  //     {_id:6484541888,name:"1/3"},
-  //     ]
-  //   },
-  //   {_id:824968488,name:"الصف الثاني"
-  //     ,classRooms:[
-  //     {_id:2415841638,name:"2/1"},
-  //     {_id:5147574554,name:"2/2"},
-  //     {_id:1551258512,name:"2/3"},
-  //     ]
-  //   }
-  // ]);
 });
 
 // GET all class
