@@ -11,6 +11,14 @@ router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res)
   });
 });
 
+/* Send Message to Parent by parentID */
+router.put('/message/:parentId',function(req, res) {
+  //  console.log("#1 : " + req.params.parentId);  // parent id
+  //  console.log("#2 : " + req.body.title);       // message title 
+  //  console.log("#3 : " + req.body.description); // message description
+  res.send(true);
+});
+
 /* GET all parent */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   parentMgr.getAllParentCount(req.params.limit,req.params.page,function(parents){

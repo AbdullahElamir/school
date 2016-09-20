@@ -2,18 +2,18 @@
   <div class="portlet-title">
     <div class="caption caption-md">
       <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">إضافة سنة دراسية</span>
+      <span class="caption-subject font-green bold">إضافة لباس جديد</span>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-md-12 col-lg-12">
-      <form novalidate ng-submit="newYear()">
+      <form novalidate ng-submit="newClothes()">
         <div class="row">
           <div class="col-xs-12 col-md-4 col-md-offset-4">
             <div class="form-group">
-              <label class="control-label">السنة الدراسية</label>
-              <div class="input-group">
-                <input type="text" class="form-control input-sm" ng-model="newYearForm.name" placeholder="السنة" required />
+              <label class="control-label">إسم اللباس</label>
+              <div class='input-group date' id='datetimepicker9'>
+                <input type="text" class="form-control input-sm" ng-model="newClothesForm.name" placeholder="اللباس" required >
               </div>
             </div>
           </div>
@@ -22,7 +22,7 @@
               <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
             </div>
             <div class="col-xs-6 col-md-2">
-              <a class="btn btn-success btn-sm btn-block" onclick="$('#yearsId').click();"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+              <a class="btn btn-success btn-sm btn-block" onclick="$('#clothesId').click();"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
             </div>
           </div>
         </div>

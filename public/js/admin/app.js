@@ -555,7 +555,6 @@
         }]
       }
     })
-
     .state('editYear',{
       url: '/editYear/edit/:id',
       templateUrl: 'admin/pages/year/editYear',
@@ -631,9 +630,54 @@
           });
         }]
       }
+    }).state('clothes',{
+      url: '/clothes',
+      templateUrl: 'admin/pages/clothes/clothes',
+      data: {pageTitle: 'الملابس'},
+      controller: 'ClothesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/clothesCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+    .state('newClothes',{
+      url: '/newClothes',
+      templateUrl: 'admin/pages/clothes/newClothes',
+      data: {pageTitle: 'إضافة لباس جديد'},
+      controller: 'newClothesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/clothesCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+    .state('editClothes',{
+      url: '/editClothes/edit/:id',
+      templateUrl: 'admin/pages/clothes/editClothes',
+      data: {pageTitle: 'تعديل لباس'},
+      controller: 'editClothesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/clothesCtl.js'
+            ]
+          });
+        }]
+      }
     });
-
-
 
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){

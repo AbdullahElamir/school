@@ -26,7 +26,7 @@ router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
 router.put('/message/:studentId',function(req, res) {
   // console.log("#1 : " + req.params.studentId); // student id
   // console.log("#2 : " + req.body.title);       // message title 
-  // console.log("#2 : " + req.body.description); // message description
+  // console.log("#3 : " + req.body.description); // message description
   res.send(true);
 });
 

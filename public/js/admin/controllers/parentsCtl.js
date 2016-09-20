@@ -241,7 +241,6 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
  }]);
 
   //ParenttCtl
-
   app.controller('ParenttCtl',['$scope','$state','ParentServ','toastr',function($scope,state,ParentServ,toastr){
     $scope.pageSize = 10;
     $scope.currentPage = 1;
@@ -256,41 +255,54 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
       }, function(response) {
         console.log("Something went wrong");
       });
-     };
-     $scope.init("");
+    };
+    $scope.init("");
      
-      $scope.getParentsBySearchValue = function (searchValue){
-        $scope.currentPage = 1;
-        $scope.init(searchValue);
-      };
+    $scope.getParentsBySearchValue = function (searchValue){
+      $scope.currentPage = 1;
+      $scope.init(searchValue);
+    };
    
     $scope.deleteParent = function(id) {
-    $scope.idParent = id;
-   };
-   $scope.deleteConfirm = function(id) {
-    ParentServ.deleteParent(id).then(function(response){
-      if(response.data.result == 1){
+      $scope.idParent = id;
+    };
+    $scope.deleteConfirm = function(id) {
+      ParentServ.deleteParent(id).then(function(response){
+        if(response.data.result == 1){
           toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
         } else if (response.data.result == 2){
-   
           $('#myModal').modal('hide');
-          toastr.success('تم الحذف بنجاح');
-          
+          toastr.success('تم الحذف بنجاح');  
           $scope.init($scope.searchValue);
           var count = $scope.parents.filter(function(obj){return obj._id != id;}).length;
           if( $scope.currentPage > 1 && count == 0 ){
             $scope.currentPage -= 1;
             $scope.init($scope.searchValue);
           }
-          
         } else if (response.data.result == 3){
           toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
         }
-
-    },function(response){
-      console.log("Somthing went wrong");
-    });
-   };
+      },function(response){
+        console.log("Somthing went wrong");
+      });
+    };
+  
+    $scope.openSendMessageDialog = function(id) {
+      $scope.idParent = id;
+    };
+   
+    $scope.sendMessageToParent = function() {      
+      ParentServ.sendMessageToParent($scope.idParent,$scope.message).then(function(response){
+        if(response.data === true){
+          $scope.message.title = "";
+          $scope.message.description = "";
+          $('#messageModal').modal('hide');
+          toastr.success('تم إرسال الرسالة بنجاح');
+        }
+      },function(response) {
+        console.log("Somthing went wrong");
+      });
+    };
 
   }]);
 

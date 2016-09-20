@@ -4,9 +4,13 @@ var classRoomMgr = require("../controller/classRoom");
 var stuproMgr = require("../controller/studentProcess");
 var userHelpers = require("../controller/userHelpers");
 
-
-
-
+/* Send Message to Parent of Students of ClassRoom By classRoomID */
+router.put('/message/:classRoomID',function(req, res) {
+  console.log("#1 : " + req.params.classRoomID);  // class room id
+  console.log("#2 : " + req.body.title);          // message title 
+  console.log("#3 : " + req.body.description);    // message description
+  res.send(true);
+});
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   classRoomMgr.getAllClassRoom(function(Croom){
@@ -89,6 +93,5 @@ router.get('/:id',userHelpers.isLogin , function(req, res) {
     res.send(Croom);
   });
 });
-
 
 module.exports = router;
