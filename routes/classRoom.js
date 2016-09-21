@@ -7,7 +7,7 @@ var userHelpers = require("../controller/userHelpers");
 /* Send Message to Parent of Students of ClassRoom By classRoomID */
 router.put('/message/:classRoomID',function(req, res) {
   console.log("#1 : " + req.params.classRoomID);  // class room id
-  console.log("#2 : " + req.body.title);          // message title 
+  console.log("#2 : " + req.body.title);          // message title
   console.log("#3 : " + req.body.description);    // message description
   res.send(true);
 });
@@ -23,7 +23,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   classRoomMgr.addClassRoom(req.body,function(Croom){
     res.send(Croom);
   });
-  
+
 });
 
 // edit class room by id
@@ -56,6 +56,14 @@ router.get('/name/:name',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomName(req.params.name,function(Croom){
     res.send(Croom);
   });
+});
+// get class room by name
+router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
+  res.send([
+    {_id:84515641,name:"3/1",course:"الفيزياء",courseId:651356},
+    {_id:87458458,name:"3/2",course:"الفيزياء",courseId:651356},
+    {_id:85648866,name:"4/1",course:"كيمياء",courseId:653156}
+  ]);
 });
 //get all claas Rooms By Search Value
 router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
