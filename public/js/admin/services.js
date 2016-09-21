@@ -246,7 +246,7 @@
         return $http.put('/classRoom/students/'+classRoom,students);
       },
       'sendMessageToParentsOfClassRoom': function(idClassRoom,message){
-        return $http.put('/student/message/'+idClassRoom,message);
+        return $http.put('/classRoom/message/'+idClassRoom,message);
       }
     };
     return self;
