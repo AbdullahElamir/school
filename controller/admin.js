@@ -14,6 +14,23 @@ module.exports = {
     });
   },
 
+  //getAlladminsBySearchValue
+  getAllAdminsBySearchValue :function(searchValue,limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.Admin.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]},function(err, count){
+      model.Admin.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,admins){
+        if(!err){
+          cb({result:admins,count:count});
+        }else{
+          console.log(err);
+          cb(null);
+        }
+      });
+    });
+  },
+
   //getAdminsBySearchValue
   getAdminsBySearchValue :function(searchValue,limit,page,cb){
     page = parseInt(page);
@@ -57,7 +74,7 @@ module.exports = {
       }
     });
   },
-  
+
   getAdminName :function(name,cb){
     model.Admin.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, Admins){
       if(!err){
@@ -71,6 +88,7 @@ module.exports = {
   getAdminId :function(id,cb){
     model.Admin.findOne({_id : id}, function(err, Admins){
       if(!err){
+      console.log("Admins");
         cb(Admins);
       }else{
         cb(null);
@@ -105,7 +123,7 @@ module.exports = {
 
   updateAdmin : function(id,body,cb){
     obj = body;
-    
+
     model.Admin.findOneAndUpdate({_id:id}, obj, function(err,Admins) {
       if (!err) {
         cb(true);
@@ -115,16 +133,16 @@ module.exports = {
       }
     });
   },
-  
-  // deleteAdmin : function(id,cb){
-  //   model.Admin.remove({_id:id}, function(err,result) {
-  //     if (!err) {
-  //       cb(2);
-  //     } else {
-  //       console.log(err);
-  //       cb(3);
-  //     }
-  //   });
-  // }
-  
+
+  deleteAdmin : function(id,cb){
+    model.Admin.remove({_id:id}, function(err,result) {
+      if (!err) {
+        cb(2);
+      } else {
+        console.log(err);
+        cb(3);
+      }
+    });
+  },
+
 };

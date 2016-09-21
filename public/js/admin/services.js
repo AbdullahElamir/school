@@ -270,4 +270,31 @@
     return self;
   }]);
 
+  app.service('AdminServ',['$http',function($http){
+      var self = {
+      'addAdmin': function(admin){
+        return $http.post('/admins/add',admin);
+      },
+      'getAdmins': function(limit,page){
+        return $http.get('/admins/'+limit+'/'+page);
+      },
+      'getAdminsBySearchValue': function(searchValue,limit,page){
+        return $http.get('/admins/'+searchValue+'/'+limit+'/'+page);
+      },
+      'deleteAdmin': function(id){
+        return $http.delete('/admins/delete/'+id);
+      },
+      'getAdminById': function(id) {
+        return $http.get('/admins/'+id.id);
+      },
+      'editAdmin': function(id,obj) {
+        return $http.put('/admins/edit/'+id,obj);
+      },
+      'getAllAdmins': function(){
+        return $http.get('/admins/all');
+      }
+    };
+    return self;
+  }]);
+
 }());
