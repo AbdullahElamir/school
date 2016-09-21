@@ -114,7 +114,7 @@ module.exports = {
     });
   },
   setAttendance : function(stupro,attend,cb){
-    model.Attendance.findOneAndUpdate({_id:stupro}, {attend,attend}, function(err,result) {
+    model.Attendance.findOneAndUpdate({_id:stupro}, {attend:attend}, function(err,result) {
       if (!err) {
         cb(true);
       } else {

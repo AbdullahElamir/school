@@ -1,45 +1,76 @@
 <div class="portlet light bordered ">
-  <div class="portlet-title">
-    <div class="caption caption-md">
-      <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">بيانات الطلبة بالفصل </span>
-    </div>
-    <div class="col-xs-7">
-      <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="" placeholder="بحث ..">
-    </div>
-  </div>
   <div class="portlet-body" style="padding-top:0px;">
     <table class="table table-striped">
       <thead>
         <tr>
+          <th>#</th>
           <th>الاسم</th>
-          <th>المادة الدراسية</th>
-          <th>الفصل الدراسي</th>
-          <td align="center"><i class="fa fa-cog"></th>
+          <th align="center"><i class="fa fa-cog"></i></th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="studentinfo in studentinformtion">
+          <td>{{$index+1}}</td>
           <td>{{studentinfo.name}}</td>
-          <td>{{studentinfo.subject}}</td>
-          <td>{{studentinfo.classRoom}}</td>
-          <td align="center">
-            <a class="btn btn-success btn-xs" ui-sref="studentsEvaluate({id:studentinfo.id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;التقييم الشهري</a>
+          <td>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#gradesModal" ng-click="openGradesDialog(studentinfo._id)"><i class="fa fa-envelope fa-fw"></i>&nbsp; رصد الدرجات</a>
+            <a class="btn btn-success btn-xs" ui-sref="studentsEvaluate({id:studentinfo._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;التقييم الشهري</a>
           </td>
         </tr>
       </tbody>
     </table>
+    <div class="modal fade" id="gradesModal" tabindex="-1" role="dialog" aria-labelledby="myModalGradesLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalGradesLabel">رصد الدرجات</h4>
+          </div>
+          <form novalidate ng-submit="saveGrades()">
+            <div style="max-height: calc(80vh - 100px);overflow-y: auto;" class="modal-body">
+              <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>إسم الإمتحان</th>
+                        <th>الدرجة</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="ex in examsGrades">
+                        <td>{{ ex.name }}</td>
+                        <td>
+                          <div class="form-group">
+                            <div class="input-group">
+                                <span ng-if="ex.type!=2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
+                                <input  ng-if="ex.type!=2" aria-describedby="basic-addon1" type="number" required="required" placeholder="الدرجة" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" ng-change="calculateAvg(ex.semester)" >
+                                <span ng-if="ex.type==2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
+                                <input  ng-if="ex.type==2"  disabled="disabled" readonly="readonly" aria-describedby="basic-addon1" type="number" required="required" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" >
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button value="idStudent" type="submit" class="btn btn-success" >حفظ</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <div ng-show="studentinformtion.length == 0">
       <div class="alert alert-info">
         <p class="text-center">
           عفوا لاتوجد بيانات
         </p>
-      </div>
-    </div>
-    <div class="row" ng-show="classes.length">
-      <div class="col-xs-12 col-md-12 text-center">
-        <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
-        <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
       </div>
     </div>
   </div>

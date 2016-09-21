@@ -12,8 +12,14 @@
   
   app.service('studentInformationServ',['$http',function($http){
     var self = {
-      'getStudentsInfo': function(){
-        return $http.get('/studentsProcesses/studInfo');
+      'getStudentsInfoBySubjectAndClassRoom': function(subjectId,classRoomId){
+        return $http.get('/studentsProcesses/studInfo/'+subjectId+'/'+classRoomId);
+      },
+      'getExamsGradesByStudentBySubjectAndClassRoom': function(idStudent,subjectID,classRoomID){
+        return $http.get('/studentsProcesses/grades/'+idStudent+'/'+subjectID+'/'+classRoomID);
+      },
+      'saveGradesOfStudent': function(idStudent,subjectID,classRoomID,examsGrades){
+        return $http.put('/studentsProcesses/grades/edit/'+idStudent+'/'+subjectID+'/'+classRoomID,examsGrades);
       }
     };
     return self;
