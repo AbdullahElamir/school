@@ -630,6 +630,51 @@
           });
         }]
       }
+    }).state('admins',{
+      url: '/admins',
+      templateUrl: 'admin/pages/admin/admins',
+      data: {pageTitle: 'الموظفيين'},
+      controller: 'AdminsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/adminsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('newAdmin',{
+      url: '/newAdmin',
+      templateUrl: 'admin/pages/admin/newAdmin',
+      data: {pageTitle: 'موظف جديد'},
+      controller: 'NewAdminCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/adminsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('editAdmin',{
+      url: '/editAdmin/edit/:id',
+      templateUrl: 'admin/pages/admin/editAdmin',
+      data: {pageTitle: 'تعديل موظف'},
+      controller: 'EditAdminCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/adminsCtl.js'
+            ]
+          });
+        }]
+      }
     }).state('clothes',{
       url: '/clothes',
       templateUrl: 'admin/pages/clothes/clothes',
@@ -645,8 +690,7 @@
           });
         }]
       }
-    })
-    .state('newClothes',{
+    }).state('newClothes',{
       url: '/newClothes',
       templateUrl: 'admin/pages/clothes/newClothes',
       data: {pageTitle: 'إضافة لباس جديد'},
@@ -661,8 +705,7 @@
           });
         }]
       }
-    })
-    .state('editClothes',{
+    }).state('editClothes',{
       url: '/editClothes/edit/:id',
       templateUrl: 'admin/pages/clothes/editClothes',
       data: {pageTitle: 'تعديل لباس'},

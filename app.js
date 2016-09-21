@@ -29,6 +29,7 @@ var teachers= require('./routes/teachers');
 var studentsProcesses= require('./routes/studentsProcesses');
 var year= require('./routes/year');
 var system= require('./routes/system');
+var admins = require('./routes/admins');
 var clothes= require('./routes/clothes');
 var app = express();
 
@@ -56,13 +57,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use(session(
-  { store: store, 
+  { store: store,
     secret: 'SEKR37',
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
     },
     resave: true,
-    saveUninitialized: true 
+    saveUninitialized: true
   }
 ));
 app.use(passport.initialize());
@@ -88,6 +89,7 @@ app.use('/teachers',teachers);
 app.use('/studentsProcesses',studentsProcesses);
 app.use('/year',year);
 app.use('/system',system);
+app.use('/admins', admins);
 app.use('/clothes',clothes);
 
 // catch 404 and forward to error handler
