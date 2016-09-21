@@ -105,4 +105,14 @@ module.exports = {
     }
    });
   },
+  getStuproRoom : function(classRoom,cb){
+   model.Stupro.find({classRoom:{$in:classRoom}}).distinct('student',function(err, Stupros){
+    if(!err){
+      cb(Stupros);
+    }else{
+      console.log(err);
+      cb(null);
+    }
+   });
+  },
 };

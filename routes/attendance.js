@@ -32,7 +32,9 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 
 //use this to change the value of attend from StuPro
 router.put('/stupro/:stupro/:attend', userHelpers.isLogin ,function(req, res) {
-  res.send(true);
+  attendMgr.setAttendance(req.params.stupro,req.params.attend,function(attend){
+    res.send(true);
+  });
 });
 
 // delete attend by id
@@ -60,12 +62,23 @@ router.get('/students/:classRoom/:date',userHelpers.isLogin , function(req, res)
     console.log(req.params.date);
     attendMgr.getAttendanceDate(new Date(req.params.date),stupro,function(attend){
       console.log(attend);
-      res.send([
-    {_id:745645645,name:"abdo",attend:1},
-    {_id:845613541,name:"taha",attend:0},
-    {_id:754874856,name:"salem",attend:1},
-    {_id:812674577,name:"hitam",attend:0}
-  ]);
+      var _attend=[];
+      for(i in attend){
+        _attend.push({
+          _id:attend[i]._id,
+          name:attend[i].StuPro.student.name,
+          attend:attend[i].attend
+        });
+        if(i == attend.length-1){
+          res.send(_attend);
+        }
+      }
+  //     res.send([
+  //   {_id:745645645,name:"abdo",attend:1},
+  //   {_id:845613541,name:"taha",attend:0},
+  //   {_id:754874856,name:"salem",attend:1},
+  //   {_id:812674577,name:"hitam",attend:0}
+  // ]);
     });
   });
   

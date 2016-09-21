@@ -82,8 +82,6 @@ module.exports = {
     });
   },
   getAttendanceDate :function(date,stupro,cb){
-    console.log(date);
-
     var d1 = new Date(date);
     var d2 = new Date(date);
     d1.setHours(0);
@@ -94,17 +92,20 @@ module.exports = {
     // d2.setMilliseconds(999);
     d2.setMinutes(59);
     d2.setSeconds(59);
-    console.log("sssssssssssssssssssssssssss");
-    console.log(d1);
-    console.log(d2);
-    model.Attendance.find({$and:[{StuPro:{$in:stupro}},{date: {$gte: d1, $lt: d2}}]}).populate('StuPro').exec(function(err, Attendancees){
+    model.Attendance.find({$and:[{StuPro:{$in:stupro}}]}).populate('StuPro').exec(function(err, Attendancees){
       if(!err){
+        
         var options = {
           path: 'StuPro.student',
           model: 'Student'
         };
         model.Attendance.populate(Attendancees, options, function (err, result3) {
-          cb(result3);
+          if(!err){
+            cb(result3);
+          }else{
+            console.log(err);
+            cb(null);
+          }
         });
       }else{
         console.log(err);
@@ -112,7 +113,17 @@ module.exports = {
       }
     });
   },
-  
+  setAttendance : function(stupro,attend,cb){
+    model.Attendance.findOneAndUpdate({_id:stupro}, {attend,attend}, function(err,result) {
+      if (!err) {
+        cb(true);
+      } else {
+        console.log(err);
+        cb(false);
+      }
+    });
+
+  },
   // deleteAttendance : function(id,cb){
   //   model.Attendance.remove({_id:id}, function(err,result) {
   //     if (!err) {
