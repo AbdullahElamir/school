@@ -22,6 +22,14 @@ router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
   ]);
 });
 
+/* Send Message to Parent of Student by studentID */
+router.put('/message/:studentId',function(req, res) {
+  // console.log("#1 : " + req.params.studentId); // student id
+  // console.log("#2 : " + req.body.title);       // message title 
+  // console.log("#2 : " + req.body.description); // message description
+  res.send(true);
+});
+
 /*GET all Student By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
   studentMgr.getAllStudentsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(student){
@@ -36,8 +44,7 @@ router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   });
 });
 
-
-router.get('/all', userHelpers.isLogin ,function(req, res) {
+router.get('/all', userHelpers.isLogin ,function(req, res){
   studentMgr.getAllStudent(function(student){
     res.send(student);
   });

@@ -24,6 +24,9 @@
       },
       'getStudentsByLastYearClass': function(searchText,_class){
         return $http.get('/student/class/'+searchText+'/'+_class);
+      },
+      'sendMessageToParentOfStudent': function(idStudent,message){
+        return $http.put('/student/message/'+idStudent,message);
       }
     };
     return self;
