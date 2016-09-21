@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var attendMgr = require("../controller/attendance");
+var stuproMgr = require("../controller/studentProcess");
 var userHelpers = require("../controller/userHelpers");
+
 
 
 
@@ -54,12 +56,19 @@ router.get('/status/:status',userHelpers.isLogin , function(req, res) {
 // get attend by date and classRoom
 router.get('/students/:classRoom/:date',userHelpers.isLogin , function(req, res) {
   // get real data _id  id is the id of the stuPro to let you make edits
-  res.send([
+  stuproMgr.getStudentClassRoom(req.params.classRoom,function(stupro){
+    console.log(req.params.date);
+    attendMgr.getAttendanceDate(new Date(req.params.date),stupro,function(attend){
+      console.log(attend);
+      res.send([
     {_id:745645645,name:"abdo",attend:1},
     {_id:845613541,name:"taha",attend:0},
     {_id:754874856,name:"salem",attend:1},
     {_id:812674577,name:"hitam",attend:0}
   ]);
+    });
+  });
+  
 });
 
 // get attend by id

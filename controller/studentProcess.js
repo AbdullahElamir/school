@@ -84,7 +84,7 @@ module.exports = {
       }
     });
   },
-getAllClassRoomeStudentsByYear : function(classRoom,year,cb){
+  getAllClassRoomeStudentsByYear : function(classRoom,year,cb){
     model.Stupro.find({classRoom:classRoom,year:year}).populate('student')
     .exec(function(err,Stupros) {
       if(!err){
@@ -95,5 +95,14 @@ getAllClassRoomeStudentsByYear : function(classRoom,year,cb){
       }
     });
   },
-  
+  getStudentClassRoom : function(classRoom,cb){
+   model.Stupro.find({classRoom:classRoom}).distinct('_id',function(err, Stupros){
+    if(!err){
+      cb(Stupros);
+    }else{
+      console.log(err);
+      cb(null);
+    }
+   });
+  },
 };

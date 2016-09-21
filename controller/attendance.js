@@ -81,6 +81,37 @@ module.exports = {
       }
     });
   },
+  getAttendanceDate :function(date,stupro,cb){
+    console.log(date);
+
+    var d1 = new Date(date);
+    var d2 = new Date(date);
+    d1.setHours(0);
+    // d1.setMilliseconds(0);
+    d1.setMinutes(0);
+    d1.setSeconds(0);
+    d2.setHours(23);
+    // d2.setMilliseconds(999);
+    d2.setMinutes(59);
+    d2.setSeconds(59);
+    console.log("sssssssssssssssssssssssssss");
+    console.log(d1);
+    console.log(d2);
+    model.Attendance.find({$and:[{StuPro:{$in:stupro}},{date: {$gte: d1, $lt: d2}}]}).populate('StuPro').exec(function(err, Attendancees){
+      if(!err){
+        var options = {
+          path: 'StuPro.student',
+          model: 'Student'
+        };
+        model.Attendance.populate(Attendancees, options, function (err, result3) {
+          cb(result3);
+        });
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
   
   // deleteAttendance : function(id,cb){
   //   model.Attendance.remove({_id:id}, function(err,result) {
