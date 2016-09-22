@@ -1,25 +1,37 @@
 var express = require('express');
 var router = express.Router();
 var studentMgr = require("../controller/student");
+var classRoomMgr = require("../controller/classRoom");
+var stuproMgr = require("../controller/studentProcess");
 var userHelpers = require("../controller/userHelpers");
 
 router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res) {
-  // get real data with search text
-  res.send([
-    {_id:745645645,name:"abdo"},
-    {_id:845613541,name:"taha"},
-    {_id:754874856,name:"salem"},
-    {_id:812674577,name:"hitam"}
-  ]);
+  classRoomMgr.getClassRoomClass(req.params._class,function(clas){
+    stuproMgr.getStuproRoom(clas,function(stupro){
+      studentMgr.getStudentStupro(req.params.searchValue,stupro,function(student){
+        res.send(student);
+      });
+    });
+  });
 });
 router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
   // get real data without search text
-  res.send([
-    {_id:745645645,name:"abdo"},
-    {_id:845613541,name:"taha"},
-    {_id:754874856,name:"salem"},
-    {_id:812674577,name:"hitam"}
-  ]);
+  classRoomMgr.getClassRoomClass(req.params._class,function(clas){
+    stuproMgr.getStuproRoom(clas,function(stupro){
+      studentMgr.getStudentStupro('',stupro,function(student){
+        res.send(student);
+      });
+      
+    });
+  });
+});
+
+/* Send Message to Parent of Student by studentID */
+router.put('/message/:studentId',function(req, res) {
+  // console.log("#1 : " + req.params.studentId); // student id
+  // console.log("#2 : " + req.body.title);       // message title 
+  // console.log("#3 : " + req.body.description); // message description
+  res.send(true);
 });
 
 /*GET all Student By Search Value*/
@@ -36,8 +48,7 @@ router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   });
 });
 
-
-router.get('/all', userHelpers.isLogin ,function(req, res) {
+router.get('/all', userHelpers.isLogin ,function(req, res){
   studentMgr.getAllStudent(function(student){
     res.send(student);
   });

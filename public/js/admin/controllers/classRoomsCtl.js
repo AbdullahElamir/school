@@ -2,7 +2,7 @@
   'use strict';
   var app = angular.module('adminSchool');
 
-   app.controller('newClassRoomCtl',['$scope','$state','YearServ','RoomServ','ClassServ','ParentServ','toastr',function($scope,$state,YearServ,RoomServ,ClassServ,ParentServ,toastr){
+  app.controller('newClassRoomCtl',['$scope','$state','YearServ','RoomServ','ClassServ','ParentServ','toastr',function($scope,$state,YearServ,RoomServ,ClassServ,ParentServ,toastr){
     YearServ.getAllYears().then(function(response){
       $scope.allYears = response.data;
     },function(response){
@@ -25,18 +25,11 @@
     $scope.newClassRooms = function(){
       console.log($scope.newClassRoomForm);
 
+    };
 
-    }
+  }]);
 
-
-
-
-
-
-
-   }]);
-
-  app.controller('ClassRoomsCtl',['$scope','$stateParams','$state','ClassServ','YearServ',function($scope,$stateParams,$state,ClassServ,YearServ){
+  app.controller('ClassRoomsCtl',['$scope','$stateParams','$state','ClassServ','YearServ','ClassRoomsServ','toastr',function($scope,$stateParams,$state,ClassServ,YearServ,ClassRoomsServ,toastr){
     YearServ.getAllYears().then(function(response){
       $scope.years = response.data;
       if($stateParams.year){
@@ -58,6 +51,24 @@
         console.log("Somthing went wrong");
       });
     };
+    
+    $scope.openSendMessageDialog = function(id) {
+      $scope.idClassRoom = id;
+    };
+   
+    $scope.sendMessageToParentsOfClassRoom = function() {      
+      ClassRoomsServ.sendMessageToParentsOfClassRoom($scope.idClassRoom,$scope.message).then(function(response){
+        if(response.data === true){
+          $scope.message.title = "";
+          $scope.message.description = "";
+          $('#messageModal').modal('hide');
+          toastr.success('تم إرسال الرسالة إلى جميع أولياء طلبة المجموعة بنجاح');
+        }
+      },function(response) {
+        console.log("Somthing went wrong");
+      });
+    };
+    
   }]);
 
   app.controller('ClassRoomStudentsCtl',['$scope','$stateParams','$state','StudentServ','ClassRoomsServ','ClassServ','toastr',function($scope,$stateParams,$state,StudentServ,ClassRoomsServ,ClassServ,toastr){

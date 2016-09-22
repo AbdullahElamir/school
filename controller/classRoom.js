@@ -114,7 +114,16 @@ module.exports = {
       }
     });
   },
-
+  getClassRoomClass : function(clas,cb){
+    model.ClassRoom.find({class:clas}).distinct('_id',function(err, ClassRoomes){
+      if(!err){
+        cb(ClassRoomes);
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
   // deleteClassRoom : function(id,cb){
   //   model.Study.find({customer:id}, function(err,resul) {
   //     if(resul.length > 0){

@@ -24,6 +24,9 @@
       },
       'getStudentsByLastYearClass': function(searchText,_class){
         return $http.get('/student/class/'+searchText+'/'+_class);
+      },
+      'sendMessageToParentOfStudent': function(idStudent,message){
+        return $http.put('/student/message/'+idStudent,message);
       }
     };
     return self;
@@ -188,6 +191,9 @@
       },
       'getAllParents': function(){
         return $http.get('/parent/all');
+      },
+      'sendMessageToParent': function(idParent,message){
+        return $http.put('/parent/message/'+idParent,message);
       }
     };
     return self;
@@ -238,6 +244,9 @@
       },
       'update': function(classRoom,students){
         return $http.put('/classRoom/students/'+classRoom,students);
+      },
+      'sendMessageToParentsOfClassRoom': function(idClassRoom,message){
+        return $http.put('/student/message/'+idClassRoom,message);
       }
     };
     return self;
@@ -292,6 +301,33 @@
       },
       'getAllAdmins': function(){
         return $http.get('/admins/all');
+      }
+    };
+    return self;
+  }]);
+
+  app.service('ClothesServ',['$http',function($http){
+    var self = {
+      'addClothes': function(year){
+        return $http.post('/clothes/add',year);
+      },
+      'getClothes': function(limit,page){
+        return $http.get('/clothes/'+limit+'/'+page);
+      },
+      'getClothesBySearchValue': function(searchValue,limit,page){
+        return $http.get('/clothes/'+searchValue+'/'+limit+'/'+page);
+      },
+      'deleteClothes': function(id){
+        return $http.delete('/clothes/delete/'+id);
+      },
+      'getClothesById': function(id){
+        return $http.get('/clothes/'+id.id);
+      },
+      'editClothes': function(id,obj){
+        return $http.put('/clothes/edit/'+id,obj);
+      },
+      'getAllClothes': function(){
+        return $http.get('/clothes/all');
       }
     };
     return self;
