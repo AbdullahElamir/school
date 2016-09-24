@@ -13,7 +13,7 @@
           <td>{{$index+1}}</td>
           <td>{{studentinfo.name}}</td>
           <td>
-            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#gradesModal" ng-click="openGradesDialog(studentinfo._id)"><i class="fa fa-envelope fa-fw"></i>&nbsp; رصد الدرجات</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#gradesModal" ng-click="openGradesDialog(studentinfo._id)"><i class="fa fa-file-text-o fa-fw"></i>&nbsp; الدرجات</a>
             <a class="btn btn-success btn-xs" ui-sref="studentsEvaluate({id:studentinfo._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;التقييم الشهري</a>
           </td>
         </tr>
@@ -26,7 +26,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="myModalGradesLabel">رصد الدرجات</h4>
+            <h4 class="modal-title" id="myModalGradesLabel">الدرجات</h4>
           </div>
           <form novalidate ng-submit="saveGrades()">
             <div style="max-height: calc(80vh - 100px);overflow-y: auto;" class="modal-body">

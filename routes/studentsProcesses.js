@@ -14,13 +14,14 @@ router.get('/stuPro', userHelpers.isLogin ,function(req, res) {
   
 });
 
-// update grades of exams student in subject on classRoom
+// update grades of exams student in subject on classRoom for a current year (where year is Active)
 router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
+ //console.log(req.body);
   
   res.send(true);
 });
 
-// get grades of exams for student in subject on classRoom
+// get grades of exams for student in subject on classRoom for a current year (where year is Active)
 router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
   //console.log(req.params.idStudent);
   //console.log(req.params.subjectId);
