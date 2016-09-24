@@ -6,7 +6,6 @@ module.exports = {
 
   getAllStudent :function(cb){
     model.Student.find({},function(err, students){
-      console.log("fff");
       if(!err){
         cb(students);
       }else{
@@ -128,5 +127,14 @@ module.exports = {
       }
     });
   },
-  
+  getStudentAllID:function(id,cb){
+    model.Student.find({_id:{$in:id}},function(err, students){
+      if(!err){
+        cb(students);
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
 };

@@ -19,6 +19,7 @@ router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   roomMgr.getAllRoom(function(room){
+    console.log(room);
     res.send(room);
   });
 });

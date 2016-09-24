@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var feesMgr = require("../controller/fees");
+var classRoomMgr = require("../controller/classRoom");
 var userHelpers = require("../controller/userHelpers");
 
 
@@ -49,7 +50,16 @@ router.get('/name/:name',userHelpers.isLogin , function(req, res) {
 
 //get total fees of a class in specific year
 router.get('/total/:classRoom/:year',userHelpers.isLogin , function(req, res) {
-  res.send({amount:1000});
+  classRoomMgr.getClassRoomId(req.params.classRoom,function(Croom){
+    feesMgr.getSumFees(Croom.class,function(fees){
+      if(fees){
+        res.send({amount:fees[0].sum});
+      }else{
+        res.send({amount:0});
+      }
+    });
+  });
+  
 });
 
 //get all fees By Search Value

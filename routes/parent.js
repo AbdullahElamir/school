@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var parentMgr = require("../controller/parent");
+var MessageMgr = require("../controller/message");
+var parentMsg = require("../controller/parentMsg");
 var userHelpers = require("../controller/userHelpers");
 
 
@@ -13,10 +15,11 @@ router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res)
 
 /* Send Message to Parent by parentID */
 router.put('/message/:parentId',function(req, res) {
-  //  console.log("#1 : " + req.params.parentId);  // parent id
-  //  console.log("#2 : " + req.body.title);       // message title 
-  //  console.log("#3 : " + req.body.description); // message description
-  res.send(true);
+  MessageMgr.addMsgParent(req.body,function(msg){
+    parentMsg.addParentMsg({parent:req.params.parentId,msg:msg._id},function(send){
+      res.send(send);
+    });
+  });
 });
 
 /* GET all parent */

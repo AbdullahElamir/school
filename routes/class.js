@@ -16,7 +16,6 @@ router.get('/classRooms/:year', userHelpers.isLogin ,function(req, res) {
     var _class = [];
     var obj=[];
     var k = 0;
-    console.log(classes.length);
     for( var i in  classes){
       if(obj[classes[i].class._id]==undefined){
         obj[classes[i].class._id]=k;

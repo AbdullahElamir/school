@@ -31,8 +31,8 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 });
 
 //use this to change the value of attend from StuPro
-router.put('/stupro/:stupro/:attend', userHelpers.isLogin ,function(req, res) {
-  attendMgr.setAttendance(req.params.stupro,req.params.attend,function(attend){
+router.put('/stupro/:stupro/:attend/:date', userHelpers.isLogin ,function(req, res) {
+  attendMgr.setAttendance(req.params.stupro,req.params.attend,req.params.date,function(attend){
     res.send(true);
   });
 });
@@ -59,26 +59,23 @@ router.get('/status/:status',userHelpers.isLogin , function(req, res) {
 router.get('/students/:classRoom/:date',userHelpers.isLogin , function(req, res) {
   // get real data _id  id is the id of the stuPro to let you make edits
   stuproMgr.getStudentClassRoom(req.params.classRoom,function(stupro){
-    console.log(req.params.date);
-    attendMgr.getAttendanceDate(new Date(req.params.date),stupro,function(attend){
-      console.log(attend);
+    attendMgr.getAttendanceDate(new Date(req.params.date),stupro.StuP,function(attends){
       var _attend=[];
-      for(i in attend){
-        _attend.push({
-          _id:attend[i]._id,
-          name:attend[i].StuPro.student.name,
-          attend:attend[i].attend
-        });
-        if(i == attend.length-1){
+      for(i in stupro.stu){
+        var att = {
+          _id:stupro.stu[i]._id,
+          name:stupro.stu[i].student.name,
+        }
+        if(attends[stupro.stu[i]._id]==null){
+          att.attend=0;
+        }else{
+          att.attend=attends[stupro.stu[i]._id];
+        }
+        _attend.push(att);
+        if(i == stupro.stu.length-1){
           res.send(_attend);
         }
       }
-  //     res.send([
-  //   {_id:745645645,name:"abdo",attend:1},
-  //   {_id:845613541,name:"taha",attend:0},
-  //   {_id:754874856,name:"salem",attend:1},
-  //   {_id:812674577,name:"hitam",attend:0}
-  // ]);
     });
   });
   

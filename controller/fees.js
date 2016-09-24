@@ -103,7 +103,23 @@ module.exports = {
       }
     });
   },
-  
+  getSumFees :function(id,cb){
+    model.Fees.aggregate([
+      {$match:{id_class:id}},
+      { $group: {
+        _id: '$id_class',
+        sum: { $sum :'$amount'}
+        }
+      }
+    ], function (err, results) {
+      if (!err) {
+          cb(results);
+      } else {
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
   // deleteFees : function(id,cb){
   //   model.Fees.remove({_id:id}, function(err,result) {
   //     if (!err) {

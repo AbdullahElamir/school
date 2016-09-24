@@ -98,11 +98,20 @@ module.exports = {
   getStudentClassRoom : function(classRoom,cb){
    model.Stupro.find({classRoom:classRoom}).distinct('_id',function(err, Stupros){
     if(!err){
-      cb(Stupros);
+      model.Stupro.find({classRoom:classRoom}).populate('student')
+      .exec(function(err,Stu) {
+        if(!err){
+          cb({StuP:Stupros,stu:Stu});
+        }else{
+          console.log(err);
+          cb(null);
+        }
+      });
     }else{
       console.log(err);
       cb(null);
     }
+    
    });
   },
   getStuproRoom : function(classRoom,cb){
@@ -113,6 +122,25 @@ module.exports = {
       console.log(err);
       cb(null);
     }
+   });
+  },
+  getStudentClassRoomYear : function(classRoom,year,cb){
+   model.Stupro.find({classRoom:classRoom,year:year}).distinct('_id',function(err, Stupros){
+    if(!err){
+      model.Stupro.find({classRoom:classRoom,year:year}).populate('student')
+      .exec(function(err,Stu) {
+        if(!err){
+          cb({StuP:Stupros,stu:Stu});
+        }else{
+          console.log(err);
+          cb(null);
+        }
+      });
+    }else{
+      console.log(err);
+      cb(null);
+    }
+    
    });
   },
 };

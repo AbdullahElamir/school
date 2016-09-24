@@ -2,14 +2,23 @@ var express = require('express');
 var router = express.Router();
 var classRoomMgr = require("../controller/classRoom");
 var stuproMgr = require("../controller/studentProcess");
+var studentMgr = require("../controller/student");
+var MessageMgr = require("../controller/message");
+var parentMsg = require("../controller/parentMsg");
 var userHelpers = require("../controller/userHelpers");
 
 /* Send Message to Parent of Students of ClassRoom By classRoomID */
 router.put('/message/:classRoomID',function(req, res) {
-  console.log("#1 : " + req.params.classRoomID);  // class room id
-  console.log("#2 : " + req.body.title);          // message title 
-  console.log("#3 : " + req.body.description);    // message description
-  res.send(true);
+  stuproMgr.getStuproRoom([req.params.classRoomID],function(stupro){
+    studentMgr.getStudentAllID(stupro,function(students){
+      MessageMgr.addMsgParent(req.body,function(msg){
+        parentMsg.addParentMsgBulk(students,msg._id,function(send){
+          res.send(send);
+        });
+      });
+    });
+  });
+ 
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
