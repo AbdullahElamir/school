@@ -2,35 +2,35 @@
   <div class="portlet-title">
     <div class="caption caption-md">
       <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">تعديل ولي الأمر</span>
+      <span class="caption-subject font-green bold">تعديل الموظف</span>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-md-12 col-lg-12">
-      <form novalidate ng-submit="editParent()">
+      <form novalidate ng-submit="editAdmin()">
         <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">اسم ولي الامر</label>
-              <input class="form-control input-sm" type="text" ng-model="editParentForm.name" placeholder="اسم ولي الامر" required>
+              <label class="control-label">اسم الموظف</label>
+              <input class="form-control input-sm" type="text" ng-model="editAdminForm.name" placeholder="اسم الموظف" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">البريد الالكتروني</label>
-              <input class="form-control input-sm" type="text" ng-model="editParentForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
+              <input class="form-control input-sm" type="text" ng-model="editAdminForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">رقم الهاتف</label>
-              <input class="form-control input-sm" type="text" ng-model="editParentForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
+              <input class="form-control input-sm" type="text" ng-model="editAdminForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">الجنسية</label>
-              <input class="form-control input-sm" type="text" ng-model="editParentForm.nationality" placeholder="الجنسية" required>
+              <input class="form-control input-sm" type="text" ng-model="editAdminForm.nationality" placeholder="الجنسية" required>
             </div>
           </div>
         </div>
@@ -38,19 +38,19 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">العنوان</label>
-              <input class="form-control input-sm" type="text" ng-model="editParentForm.address" placeholder="العنوان" required>
+              <input class="form-control input-sm" type="text" ng-model="editAdminForm.address" placeholder="العنوان" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">الرقم الوطني</label>
-              <input class="form-control input-sm" type="text" ng-model="editParentForm.nid" placeholder="الرقم الوطني" required>
+              <input class="form-control input-sm" type="text" ng-model="editAdminForm.nid" placeholder="الرقم الوطني" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">الجنس</label>
-              <select class="form-control input-sm" ng-model="editParentForm.gender" required>
+              <select class="form-control input-sm" ng-model="editAdminForm.gender" required>
                 <option value="" disabled selected>الرجاء الاختيار</option>
                 <option value="1">دكر</option>
                 <option value="2">انثي</option>
@@ -61,7 +61,7 @@
             <div class="form-group">
               <label class="control-label">تاريخ الميلاد</label>
               <div class="input-group">
-                <input type="text" required class="form-control input-sm" uib-datepicker-popup ng-model="editParentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />
+                <input type="text" required class="form-control input-sm" uib-datepicker-popup ng-model="editAdminForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
@@ -75,7 +75,7 @@
             <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;تعديل</button>
           </div>
           <div class="col-xs-6 col-md-2">
-            <a class="btn btn-success btn-sm btn-block" ui-sref="parents"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+            <a class="btn btn-success btn-sm btn-block" ui-sref="admins"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
           </div>
         </div>
       </form>

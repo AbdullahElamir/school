@@ -93,24 +93,8 @@
         }]
       }
     })
-    .state('studentGrades',{
-      url: '/studentGrades/:id',
-      templateUrl: '/teachers/pages/studentGrades',            
-      data: {pageTitle: 'درجات الطلبة'},
-      controller: 'StudentGradesCtl',
-      resolve: {
-        deps: ['$ocLazyLoad',function($ocLazyLoad){
-          return $ocLazyLoad.load({
-            insertBefore: '#ngLoadControllerAfter',
-            files: [
-              '/js/teachers/controllers/studentGradesCtl.js'
-            ] 
-          });
-        }]
-      }
-    })
     .state('studentInformation',{
-          url: '/studentInformation/:id',
+          url: '/studentInformation/:cID/:crID',
           templateUrl: '/teachers/pages/studentInformation',            
           data: {pageTitle: 'درجات الطلبة'},
           controller: 'StudentInformationCtl',

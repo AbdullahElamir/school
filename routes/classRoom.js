@@ -5,6 +5,7 @@ var stuproMgr = require("../controller/studentProcess");
 var studentMgr = require("../controller/student");
 var MessageMgr = require("../controller/message");
 var parentMsg = require("../controller/parentMsg");
+var TSCMgr = require("../controller/teacherSubjectClass");
 var userHelpers = require("../controller/userHelpers");
 
 /* Send Message to Parent of Students of ClassRoom By classRoomID */
@@ -18,7 +19,7 @@ router.put('/message/:classRoomID',function(req, res) {
       });
     });
   });
- 
+
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
@@ -32,7 +33,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   classRoomMgr.addClassRoom(req.body,function(Croom){
     res.send(Croom);
   });
-  
+
 });
 
 // edit class room by id
@@ -65,6 +66,29 @@ router.get('/name/:name',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomName(req.params.name,function(Croom){
     res.send(Croom);
   });
+});
+// get class room by name
+router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
+  TSCMgr.getTeacherClassSubject(req.params.id,function(result){
+    console.log(result);
+    var tsc = [];
+    for( i in result){
+      tsc.push({
+        _id:result[i].classRoom._id,
+        name:result[i].classRoom.name,
+        course:result[i].subject.name,
+        courseId:result[i].subject._id
+      });
+      if(i == result.length-1){
+        res.send(tsc);
+      }
+    }
+  })
+  // res.send([
+  //   {_id:84515641,name:"3/1",course:"الفيزياء",courseId:651356},
+  //   {_id:87458458,name:"3/2",course:"الفيزياء",courseId:651356},
+  //   {_id:85648866,name:"4/1",course:"كيمياء",courseId:653156}
+  // ]);
 });
 //get all claas Rooms By Search Value
 router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
