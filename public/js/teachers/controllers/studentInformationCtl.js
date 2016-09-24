@@ -6,8 +6,8 @@
     $scope.studentinformtion={};
     //get student info by subject and class room
     
-    $scope.subjectID = $stateParams.subjectID;
-    $scope.classRoomID = $stateParams.classRoomID;
+    $scope.subjectID = $stateParams.course;
+    $scope.classRoomID = $stateParams.id;
     
     studentInformationServ.getStudentsInfoBySubjectAndClassRoom($scope.subjectID,$scope.classRoomID).then(function(response){
       $scope.studentinformtion=response.data;

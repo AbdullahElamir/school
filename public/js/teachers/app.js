@@ -94,7 +94,7 @@
       }
     })
     .state('studentInformation',{
-          url: '/studentInformation/:cID/:crID',
+          url: '/studentInformation/:id/:course',
           templateUrl: '/teachers/pages/studentInformation',            
           data: {pageTitle: 'درجات الطلبة'},
           controller: 'StudentInformationCtl',
