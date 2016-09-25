@@ -101,6 +101,7 @@ router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin ,function(re
   //console.log(req.params.subjectId);
   //console.log(req.params.classRoomId);
   stuproMgr.getStudentClassRoom(req.params.classRoomId,function(Crooms){
+    console.log(Crooms);
     var _room=[];
     for (i in Crooms.stu){
       _room.push(Crooms.stu[i].student);
