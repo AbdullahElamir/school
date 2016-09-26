@@ -97,7 +97,15 @@ module.exports = {
       }
     });
   },
-
+  getMarksSubSubject :function(subject,semester,cb){
+    model.MarksSub.find({status:1,semester:semester,subject:subject}).populate('exam').populate('subject').exec(function(err, MarksSubes){
+      if(!err){
+        cb(MarksSubes);
+      }else{
+        cb(null);
+      }
+    });
+  },
   getMarksSubId :function(id,cb){
     model.MarksSub.findOne({_id : id,status:1}).populate('exam').populate('subject').exec(function(err, MarksSubes){
       if(!err){

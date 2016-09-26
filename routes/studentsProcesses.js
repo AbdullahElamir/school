@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var userHelpers = require("../controller/userHelpers");
+var classRoomMgr = require("../controller/classRoom");
+var sysYearMgr = require("../controller/systemYear");
+var marksSubMgr = require("../controller/marksSubject");
 var stuproMgr = require("../controller/studentProcess");
 
 //get student information
@@ -23,10 +26,21 @@ router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogi
 
 // get grades of exams for student in subject on classRoom for a current year (where year is Active)
 router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
-  //console.log(req.params.idStudent);
-  //console.log(req.params.subjectId);
+  console.log('req.params.idStudent');
+  console.log(req.params.subjectId);
   //console.log(req.params.classRoomId);
-  
+  classRoomMgr.getClassRoomId(req.params.classRoomId,function(classR){
+    // console.log(classR);
+    var clssY=classR.class;
+    sysYearMgr.getSystemYear(classR.year,function(sysyear){
+      // console.log(sysyear);
+      system=sysyear.system;
+      marksSubMgr.getMarksSubSubject(req.params.subjectId,system,function(examssub){
+        console.log(examssub);
+      });
+
+    });
+  });
   var examsGrades = [
     {
       _id : "6a5s1d" ,
@@ -101,7 +115,6 @@ router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin ,function(re
   //console.log(req.params.subjectId);
   //console.log(req.params.classRoomId);
   stuproMgr.getStudentClassRoom(req.params.classRoomId,function(Crooms){
-    console.log(Crooms);
     var _room=[];
     for (i in Crooms.stu){
       _room.push(Crooms.stu[i].student);

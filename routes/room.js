@@ -1,9 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var roomMgr = require("../controller/room");
+var sysYearMgr = require("../controller/systemYear");
 var userHelpers = require("../controller/userHelpers");
 
 //get all Rooms By Search Value
+router.post('/addY', userHelpers.isLogin ,function(req, res) {
+  sysYearMgr.addSystemYear(req.body,function(room){
+    res.send(room);
+  });
+  
+});
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
   roomMgr.getAllRoomsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(rooms){
     res.send(rooms);
