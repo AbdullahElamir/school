@@ -114,7 +114,7 @@ module.exports = {
     });
   },
   activate: function (id,cb) {
-    model.Year.update({}, {active:0}, function(err,result) {
+    model.Year.update({}, {active:0},{multi: true}, function(err,result) {
       if (!err) {
         model.Year.findOneAndUpdate({_id:id}, {active:1}, function(err,result) {
           if (!err) {
@@ -131,7 +131,7 @@ module.exports = {
     });
   },
   disActivate: function (id,cb) {
-    model.Year.findOneAndUpdate({_id:id}, {active:0}, function(err,result) {
+    model.Year.update({_id:id}, {active:0},{multi: true}, function(err,result) {
       if (!err) {
         cb(true);
       } else {

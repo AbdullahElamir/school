@@ -5,7 +5,7 @@
   app.controller('TeachersCtl',['$scope','$state','TeacherServ','toastr',function($scope,state,TeacherServ,toastr){
     $scope.pageSize = 10;
     $scope.currentPage = 1;
-    $scope.total = 0;  
+    $scope.total = 0;
 
     $scope.init = function (searchValue) {
       if( searchValue === 'undefined' || !searchValue ){
@@ -24,7 +24,7 @@
       $scope.currentPage = 1;
       $scope.init(searchValue);
     };
-   
+
    $scope.deleteTeacher = function(id){
     $scope.idTeacher = id;
    };
@@ -33,12 +33,12 @@
       if(response.data.result == 1){
           toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
         } else if (response.data.result == 2){
-   
+
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
           $scope.init($scope.searchValue);
           var count = $scope.teachers.filter(function(obj){return obj._id != id;}).length;
-          if( $scope.currentPage > 1 && count == 0 ){
+          if( $scope.currentPage > 1 && count === 0 ){
             $scope.currentPage -= 1;
             $scope.init($scope.searchValue);
           }
@@ -56,17 +56,17 @@
 //editTeacherCtl
   app.controller('editTeacherCtl',['$scope','$stateParams','TeacherServ','$state','toastr',function($scope,$stateParams,TeacherServ,$state,toastr){
     $scope.editTeacherForm={};
-   
+
     TeacherServ.getTeacherById($stateParams).then(function(response) {
       response.data.birth_day = new Date(response.data.birth_day);
         $scope.editTeacherForm = response.data;
       }, function(response) {
         console.log("Something went wrong");
       });
-    
+
 
      $scope.editTeacher = function(){
-    
+
       TeacherServ.editTeacher($stateParams.id,$scope.editTeacherForm).then(function(response) {
         if(response.data){
           toastr.info('تم التعديل بنجاح');
@@ -171,11 +171,11 @@
           }
         }
         return '';
-      }  
+      }
   }]);
 
   app.controller('newTeacherCtl',['$scope','TeacherServ','$state','toastr',function($scope,TeacherServ,$state,toastr){
-    
+
     $scope.newTeacherForm={};
     $scope.newTeacher = function(){
       TeacherServ.addTeacher($scope.newTeacherForm).then(function(response){
@@ -189,12 +189,12 @@
       },function(response){
         console.log("Somthing went wrong");
       });
-        
+
     };
 
 
 
-      
+
       $scope.today = function() {
       $scope.newTeacherForm.birth_day = new Date();
       };
@@ -285,7 +285,7 @@
           }
         }
         return '';
-      }  
+      }
   }]);
 
 }());

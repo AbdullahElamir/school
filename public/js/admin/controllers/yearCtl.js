@@ -57,7 +57,14 @@
    $scope.activate = function(year){
      YearServ.activate(year._id,(year.active?0:1)).then(function(response){
        if(response){
-         year.active = (year.active?0:1);
+         if(year.active === 0){
+           for(var y in $scope.years){
+             $scope.years[y].active = 0;
+           }
+           year.active = 1;
+         }else{
+           year.active = 0;
+         }
        }else{
          toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
        }

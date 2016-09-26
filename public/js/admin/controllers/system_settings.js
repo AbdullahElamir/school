@@ -16,7 +16,7 @@
       console.log("Somthing went wrong");
     });
     YearServ.getAllYears().then(function(response){
-      $scope.allYear = response.data
+      $scope.allYear = response.data;
     },function(response){
       console.log("Somthing went wrong");
     });

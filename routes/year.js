@@ -10,6 +10,12 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
     res.send(years);
   });
 });
+//get the activated year
+router.get('/active', userHelpers.isLogin ,function(req, res) {
+  yearMgr.getActiveYear(function(year){
+    res.send(year);
+  });
+});
 
 router.get('/status/:status', userHelpers.isLogin ,function(req, res) {
   yearMgr.getAllYearStatus(req.params.status,function(years){
@@ -37,13 +43,13 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 });
 //activate or disactivate
 router.put('/active/:id', userHelpers.isLogin ,function(req, res) {
-  if(req.params.id){
-    yearMgr.activate(req.params.id,function(years){
-      res.send(years);
+  if(req.body.active){
+    yearMgr.activate(req.params.id,function(result){
+      res.send(result);
     });
   }else{
-    yearMgr.disActivate(req.params.id,function(years){
-      res.send(years);
+    yearMgr.disActivate(req.params.id,function(result){
+      res.send(result);
     });
   }
 });
