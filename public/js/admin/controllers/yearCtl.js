@@ -19,55 +19,67 @@
       });
      };
      $scope.init("");
-     
+
     $scope.getYearsBySearchValue = function (searchValue){
       $scope.currentPage = 1;
       $scope.init(searchValue);
     };
-   
-   // $scope.deleteYear = function(id) {
-   //  $scope.idYear = id;
-   // };
-   
-   // $scope.deleteConfirm = function(id) {
-   //  YearServ.deleteYear(id).then(function(response){
-   //      if(response.data.result == 1){
-   //        toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
-   //      } else if (response.data.result == 2){
-   
-   //        $('#myModal').modal('hide');
-   //        toastr.success('تم الحذف بنجاح');
-          
-   //        $scope.init($scope.searchValue);
-   //        var count = $scope.years.filter(function(obj){return obj._id != id;}).length;
-   //        if( $scope.currentPage > 1 && count == 0 ){
-   //          $scope.currentPage -= 1;
-   //          $scope.init($scope.searchValue);
-   //        }
-          
-   //      } else if (response.data.result == 3){
-   //        toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
-   //      }
 
-   //  },function(response){
-   //    console.log("Somthing went wrong");
-   //  });
-   // };
+   $scope.deleteYear = function(id) {
+    $scope.idYear = id;
+   };
+
+   $scope.deleteConfirm = function(id) {
+    YearServ.deleteYear(id).then(function(response){
+        if(response.data.result == 1){
+          toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
+        } else if (response.data.result == 2){
+
+          $('#myModal').modal('hide');
+          toastr.success('تم الحذف بنجاح');
+
+          $scope.init($scope.searchValue);
+          var count = $scope.years.filter(function(obj){return obj._id != id;}).length;
+          if( $scope.currentPage > 1 && count === 0 ){
+            $scope.currentPage -= 1;
+            $scope.init($scope.searchValue);
+          }
+
+        } else if (response.data.result == 3){
+          toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
+        }
+
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+   };
+
+   $scope.activate = function(year){
+     YearServ.activate(year._id,(year.active?0:1)).then(function(response){
+       if(response){
+         year.active = (year.active?0:1);
+       }else{
+         toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
+       }
+     },function(response){
+       console.log("Somthing went wrong");
+     });
+     };
 
   }]);
 
   app.controller('editYearCtl',['$scope','$stateParams','YearServ','$state','toastr',function($scope,$stateParams,YearServ,$state,toastr){
     $scope.editYearForm={};
-   
+
     YearServ.getYearById($stateParams).then(function(response) {
       $scope.editYearForm = response.data;
     }, function(response) {
       console.log("Something went wrong");
     });
-    
+
 
     $scope.editYear = function(){
-  
+
       YearServ.editYear($stateParams.id,$scope.editYearForm).then(function(response) {
         if(response.data){
           $state.go('years');
@@ -82,8 +94,8 @@
 
   }]);
 
-  app.controller('newYearCtl',['$scope','YearServ','$state','toastr',function($scope,YearServ,$state,toastr){
-    
+  app.controller('newYearCtl',['$scope','YearServ','SystemServ','$state','toastr',function($scope,YearServ,SystemServ,$state,toastr){
+
     $scope.newYearForm={};
     $scope.newYear = function(){
       YearServ.addYear($scope.newYearForm).then(function(response){
@@ -96,8 +108,13 @@
       },function(response){
         console.log("Somthing went wrong");
       });
-        
+
     };
+    SystemServ.getAllSystem().then(function(response){
+      $scope.allSystem = response.data;
+    },function(response){
+      console.log("Somthing went wrong");
+    });
 
   }]);
 

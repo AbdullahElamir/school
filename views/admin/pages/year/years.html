@@ -28,11 +28,12 @@
         <tr ng-repeat="year in years">
           <td>{{year.name}}</td>
           <td>
-            <span class="label label-{{(year.status)?'success':'danger'}}">{{(year.status)?'مفعلة':'غير مفعلة'}}</span>
+            <span class="label label-{{(year.active)?'success':'danger'}}">{{(year.active)?'مفعلة':'غير مفعلة'}}</span>
           </td>
           <td>
             <a class="btn btn-success btn-xs" ui-sref="editYear({id:year._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل</a>
-            <!-- <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteYear(year._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a> -->
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteYear(year._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+            <a ng-class="{'btn-info':!year.active,'btn-danger':year.active}" class="btn btn-xs" ng-click="activate(year)"><i class="fa fa-exchange fa-fw"></i>&nbsp;{{year.active?"الغاء تفعيل":"تفعيل"}}</a>
           </td>
         </tr>
       </tbody>

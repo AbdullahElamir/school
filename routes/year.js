@@ -26,7 +26,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   yearMgr.addYear(req.body,function(years){
     res.send(years);
   });
-  
+
 });
 
 // edit years by id
@@ -35,11 +35,23 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
     res.send(years);
   });
 });
+//activate or disactivate
+router.put('/active/:id', userHelpers.isLogin ,function(req, res) {
+  if(req.params.id){
+    yearMgr.activate(req.params.id,function(years){
+      res.send(years);
+    });
+  }else{
+    yearMgr.disActivate(req.params.id,function(years){
+      res.send(years);
+    });
+  }
+});
 
 // delete years by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
-  yearMgr.updateYear(req.params.id,{status:0},function(years){
-    res.send(years);
+  yearMgr.deleteYear(req.params.id,function(result){
+    res.send({result:result});
   });
 });
 //get all years By Search Value

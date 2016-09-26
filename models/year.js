@@ -4,6 +4,8 @@ var Schema = mongoose.Schema;
 
 var Year = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
+  system:{ type: Schema.Types.ObjectId , ref: 'System'},
+  active: {type: Number, default:0},
   status: {type: Number, default:1}
 });
 
