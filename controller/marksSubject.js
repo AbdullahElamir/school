@@ -97,11 +97,12 @@ module.exports = {
       }
     });
   },
-  getMarksSubSubject :function(subject,semester,cb){
-    model.MarksSub.find({status:1,semester:semester,subject:subject}).populate('exam').populate('subject').exec(function(err, MarksSubes){
+  getMarksSubSubject :function(subject,system,cb){
+    model.MarksSub.find({system:system,subject:subject}).populate('exam').populate('subject').sort({'exam.semester':1,'exam.type':1}).exec(function(err, MarksSubes){
       if(!err){
         cb(MarksSubes);
       }else{
+        console.log(err);
         cb(null);
       }
     });

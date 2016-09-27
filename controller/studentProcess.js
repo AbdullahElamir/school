@@ -143,4 +143,15 @@ module.exports = {
     
    });
   },
+  getStudentsSto : function(classRoom,student,cb){
+    model.Stupro.findOne({classRoom:classRoom,student:student})
+    .exec(function(err,Stupros) {
+      if(!err){
+        cb(Stupros._id);
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
 };

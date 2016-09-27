@@ -92,11 +92,9 @@ module.exports = {
   },
   addParent : function(body,cb){
     obj = body;
-    console.log(body);
     userHelpers.Hash(body.password,function(hash){
       obj.password=hash.password;
       obj.salt=hash.salt;
-      console.log(obj);
       parent = new model.Parent(obj);
       parent.save(function(err,result){
         if (!err) {
@@ -111,8 +109,6 @@ module.exports = {
 
   updateParent : function(id,body,cb){
     obj = body;
-    console.log(body);
-    console.log(id);
     model.Parent.findOneAndUpdate({_id:id}, obj, function(err,parents) {
       if (!err) {
         cb(true);

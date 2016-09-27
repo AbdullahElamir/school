@@ -74,8 +74,6 @@ function saveExam(examI,cb){
     if(!err){
       var subjects = examI.subjects;
       var subIndex = 0 ;
-      console.log("sssssssssssssssssss");
-      console.log(subjects);
       for(var sub in subjects){
         var subjectsI = subjects[subIndex];
         subjectsI.exam = examResult._id;
@@ -91,7 +89,6 @@ function saveExam(examI,cb){
   });
 }
 function saveMark(subjectsI,cb){
-  console.log(subjectsI);
   var marksSubject = new model.MarksSub(subjectsI);
   marksSubject.save(function(err,marksResult){
     if(err){
