@@ -23,8 +23,7 @@
           <th>البريد الالكتروني</th>
           <th>الهاتف</th>
           <th>الجنسية</th>
-          <th>العنوان</th>
-          <th>رقم الوطني</th>
+          <th>المهنة</th>
           <th><i class="fa fa-cog"></i></th>
         </tr>
       </thead>
@@ -34,8 +33,7 @@
           <td>{{parent.email}}</td>
           <td>{{parent.phone}}</td>
           <td>{{parent.nationality}}</td>
-          <td>{{parent.address}}</td>
-          <td>{{parent.nid}}</td>
+          <td>{{parent.job}}</td>
           <td>
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#messageModal" ng-click="openSendMessageDialog(parent._id)"><i class="fa fa-envelope fa-fw"></i>&nbsp; إرسال رسالة</a>
             <a class="btn btn-success btn-xs" ui-sref="editParent({id:parent._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل / عرض</a>

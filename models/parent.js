@@ -8,12 +8,12 @@ var Parent = new Schema({
   salt: String,
   email: { type: String, required : true},
   phone: {type: String,default:"NULL"},
-  nid: {type: String, index: true},
-  birth_day:{ type:Date, required: [true, 'start date required']},
+  phone2: {type: String,default:"NULL"},
   /*last_login:{ type:Date, required: [true, 'start date required']},*/
   gender:{type: String,default:"NULL"},
   nationality:{type: String,default:"NULL"},
-  address:{type: String,default:"NULL"},
+  job:{type: String,default:"NULL"},
+  workPlace:{type: String,default:"NULL"},
   level:{type:Number,default:3},
   status: {type: Number, default:1}
 });

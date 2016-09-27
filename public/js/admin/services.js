@@ -220,6 +220,9 @@
       },
       'getAllYears': function(){
         return $http.get('/year/all');
+      },
+      'activate': function(id,active){
+        return $http.put('/year/active/'+id,{active:active});
       }
     };
     return self;

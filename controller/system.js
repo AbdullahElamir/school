@@ -138,7 +138,7 @@ var addSystem = function(body,cb){
     if (!err) {
       var classIndex = 0;
       for(var clss in body.sys_class){
-        
+
         var classI = body.sys_class[classIndex];
         var exams = classI.exams;
         var examsIndex = 0;
@@ -206,7 +206,7 @@ module.exports = {
       }
     });
   },
-  
+
   getSystemName :function(name,cb){
     model.System.find({name :{ $regex:name, $options: 'i' }}).limit(30)
     .populate('sys_class')
@@ -219,7 +219,7 @@ module.exports = {
       }
     });
   },
-  
+
   getSystemId :function(id,cb){
     model.System.findOne({_id : id})
     .populate('sys_class')

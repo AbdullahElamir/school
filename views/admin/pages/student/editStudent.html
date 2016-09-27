@@ -11,22 +11,22 @@
         <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">اسم الطالب</label>
+              <label class="control-label">اسم الطالب الرباعي</label>
               <input class="form-control input-sm" type="text" ng-model="editStudentForm.name" placeholder="اسم الطالب" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">اسم ولي الامر</label>
-              <select class="form-control input-sm" ng-model="editStudentForm.parent[0]" ng-options="parent._id as parent.name for parent in getAllParents">
-                <option value="" disabled selected>الرجاء الاختيار</option>
-              </select>
+              <label class="control-label">اسم الام الثلاتي</label>
+              <input class="form-control input-sm" type="text" ng-model="editStudentForm.motherName" placeholder="اسم الام" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">رقم الهاتف</label>
-              <input class="form-control input-sm" type="text" ng-model="editStudentForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
+              <label class="control-label">ولي الامر</label>
+              <select class="form-control input-sm" ng-model="editStudentForm.parent" ng-options="parent._id as parent.name for parent in getAllParents" required>
+                <option value="" disabled selected>الرجاء الاختيار</option>
+              </select>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
@@ -49,12 +49,6 @@
         <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">البريد الالكتروني</label>
-              <input class="form-control input-sm" type="text" ng-model="editStudentForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
-            </div>
-          </div>
-          <div class="col-xs-12 col-md-3">
-            <div class="form-group">
               <label class="control-label">الرقم الوطني</label>
               <input class="form-control input-sm" type="text" ng-model="editStudentForm.nid" placeholder="الرقم الوطني" required>
             </div>
@@ -64,7 +58,7 @@
               <label class="control-label">الجنس</label>
               <select class="form-control input-sm" ng-model="editStudentForm.gender" required>
                 <option value="" disabled selected>الرجاء الاختيار</option>
-                <option value="1">دكر</option>
+                <option value="1">ذكر</option>
                 <option value="2">انثي</option>
               </select>
             </div>
@@ -75,23 +69,44 @@
               <input class="form-control input-sm" type="text" ng-model="editStudentForm.nationality" placeholder="الجنسية" required>
             </div>
           </div>
-        </div>
-        <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">العنوان</label>
               <input class="form-control input-sm" type="text" ng-model="editStudentForm.address" placeholder="العنوان" required>
             </div>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">اقرب نقطة دالة</label>
+              <input class="form-control input-sm" type="text" ng-model="editStudentForm.closestPoint" placeholder="اقرب نقطة دالة" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">اقرب الاقارب</label>
+              <input class="form-control input-sm" type="text" ng-model="editStudentForm.closestPerson" placeholder="اقرب الاقارب" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">رقم هاتف اقرب الاقارب</label>
+              <input class="form-control input-sm" type="text" ng-model="editStudentForm.closestPersonPhone" placeholder="رقم هاتف اقرب الاقارب" required>
+            </div>
+          </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">تاريخ الميلاد</label>
-              <div class="input-group">
-                <input required type="text" class="form-control input-sm" uib-datepicker-popup ng-model="editStudentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-              </div>
+              <input type="text" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="editStudentForm.birth_day" placeholder="تاريخ الميلاد"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">مكان الميلاد</label>
+              <input class="form-control input-sm" type="text" ng-model="editStudentForm.birth_place" placeholder="مكان الميلاد" required>
             </div>
           </div>
         </div>
