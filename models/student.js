@@ -4,8 +4,7 @@ var Schema = mongoose.Schema;
 
 var Student = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
-  /*password: { type: String, required: true},*/
-  salt: String,
+  motherName: { type: String, default:"NULL"},
   nid: {type: String, index: true},
   birth_day:{ type:Date, required: [true, 'birth date required']},
   birth_place:{ type:String, default:"NULL"},

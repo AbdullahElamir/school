@@ -17,14 +17,32 @@
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">البريد الالكتروني</label>
-              <input class="form-control input-sm" type="text" ng-model="editParentForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
+              <label class="control-label">رقم الهاتف</label>
+              <input class="form-control input-sm" type="text" ng-model="editParentForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">رقم الهاتف</label>
-              <input class="form-control input-sm" type="text" ng-model="editParentForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
+              <label class="control-label">رقم الهاتف 2</label>
+              <input class="form-control input-sm" type="text" ng-model="editParentForm.phone2" ng-required-err-type="phone" placeholder="رقم الهاتف 2" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">الجنس</label>
+              <select class="form-control input-sm" ng-model="editParentForm.gender" required>
+                <option value="" disabled selected>الرجاء الاختيار</option>
+                <option value="1">ذكر</option>
+                <option value="2">انثي</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">البريد الالكتروني</label>
+              <input class="form-control input-sm" type="text" ng-model="editParentForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
@@ -33,39 +51,16 @@
               <input class="form-control input-sm" type="text" ng-model="editParentForm.nationality" placeholder="الجنسية" required>
             </div>
           </div>
-        </div>
-        <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">العنوان</label>
-              <input class="form-control input-sm" type="text" ng-model="editParentForm.address" placeholder="العنوان" required>
+              <label class="control-label">المهنة</label>
+              <input class="form-control input-sm" type="text" ng-model="editParentForm.job" placeholder="المهنة" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">الرقم الوطني</label>
-              <input class="form-control input-sm" type="text" ng-model="editParentForm.nid" placeholder="الرقم الوطني" required>
-            </div>
-          </div>
-          <div class="col-xs-12 col-md-3">
-            <div class="form-group">
-              <label class="control-label">الجنس</label>
-              <select class="form-control input-sm" ng-model="editParentForm.gender" required>
-                <option value="" disabled selected>الرجاء الاختيار</option>
-                <option value="1">دكر</option>
-                <option value="2">انثي</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-xs-12 col-md-3">
-            <div class="form-group">
-              <label class="control-label">تاريخ الميلاد</label>
-              <div class="input-group">
-                <input type="text" required class="form-control input-sm" uib-datepicker-popup ng-model="editParentForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-              </div>
+              <label class="control-label">مكان العمل</label>
+              <input class="form-control input-sm" type="text" ng-model="editParentForm.workPlace" placeholder="مكان العمل" required>
             </div>
           </div>
         </div>
