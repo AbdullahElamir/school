@@ -103,7 +103,21 @@ module.exports = {
       }
     });
   },
-  
+  addMsgParent : function(body,cb){
+    var obj ={
+      name:body.title,
+      description:body.description
+    };
+    Message = new model.Message(obj);
+    Message.save(function(err,result){
+      if (!err) {
+        cb(result);
+      } else {
+        console.log(err);
+        cb(false);
+      }
+    });
+  },
   // deleteMessage : function(id,cb){
   //   model.Message.remove({_id:id}, function(err,result) {
   //     if (!err) {

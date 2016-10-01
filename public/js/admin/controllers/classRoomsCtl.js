@@ -280,7 +280,7 @@
     $scope.setAttendance = function($event,StuPro,attend){
       var element = angular.element($event.currentTarget);
       if(!element.hasClass('active')){
-        AttendanceServ.setStuProAttend(StuPro._id,attend).then(function(result){
+        AttendanceServ.setStuProAttend(StuPro._id,attend,$scope.date).then(function(result){
           if(!result.data){
             toastr.error('عملية التعديل فشلت');
           }
@@ -300,7 +300,9 @@
 
   app.controller('ClassRoomPaymentCtl',['$scope','$stateParams','$state','toastr','PaymentServ',function($scope,$stateParams,$state,toastr,PaymentServ){
     $scope.year = $stateParams.year;
+    $scope.paid={};
     PaymentServ.getClassFeesByYear($stateParams.id,$stateParams.year).then(function(result){
+      console.log(result.data.amount);
       $scope.total=result.data.amount;
     });
     PaymentServ.getStudentsByYearAndClassRoom($stateParams.id,$stateParams.year).then(function(students){
@@ -311,9 +313,11 @@
       $scope.idStudent = StuProId;
     };
     $scope.pay = function(StuProId,amount){
-      PaymentServ.payAmount(StuProId,amount).then(function(result){
+      PaymentServ.payAmount(StuProId,$scope.paid).then(function(result){
         if(result.data){
-          $scope.amount = "";
+          $scope.paid.paidUp = "";
+          $scope.paid.name = "";
+          $scope.paid.description = "";
           $('#myModal').modal('hide');
           toastr.success('تمت عملية الدفع');
         }else{

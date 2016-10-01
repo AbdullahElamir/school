@@ -103,7 +103,27 @@ module.exports = {
       }
     });
   },
-
+  addParentMsgBulk : function(stu,msg,cb){
+    for( k in stu){
+      var obj ={
+      parent:stu[k].parent[0],
+      msg:msg
+      };
+      ParentMsg1 = new model.ParentMsg(obj);
+      ParentMsg1.save(function(err,result){
+        // if (!err) {
+        //   cb(true);
+        // } else {
+        //   console.log(err);
+        //   cb(false);
+        // }
+        if(k == stu.length-1){
+          cb(true);
+        }
+      });  
+    }
+    
+  },
   updateParentMsg : function(id,body,cb){
     obj = body;
     model.ParentMsg.findOneAndUpdate({_id:id}, obj, function(err,result) {

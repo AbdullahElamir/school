@@ -260,8 +260,8 @@
       'getStudentsByDateAndClassRoom': function(classRoom,date){
         return $http.get('/attendance/students/'+classRoom+'/'+date);
       },
-      'setStuProAttend': function(StuPro,attend){
-        return $http.put('/attendance/stupro/'+StuPro+'/'+attend);
+      'setStuProAttend': function(StuPro,attend,date){
+        return $http.put('/attendance/stupro/'+StuPro+'/'+attend+'/'+date);
       }
     };
     return self;
@@ -276,7 +276,7 @@
         return $http.get('/paid/students/'+classRoom+'/'+year);
       },
       'payAmount': function(StuPro,amount){
-        return $http.put('/paid/student/'+StuPro,{amount:amount});
+        return $http.put('/paid/student/'+StuPro,amount);
       }
     };
     return self;
