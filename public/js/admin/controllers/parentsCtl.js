@@ -53,7 +53,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
  }]);
 
   //ParenttCtl
-  app.controller('ParenttCtl',['$scope','$state','ParentServ','toastr',function($scope,state,ParentServ,toastr){
+  app.controller('ParenttCtl',['$scope','$state','ParentServ','toastr','Upload',function($scope,state,ParentServ,toastr,Upload){
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
@@ -97,6 +97,30 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
       },function(response){
         console.log("Somthing went wrong");
       });
+    };
+    $scope.imagePicker = function(parent){
+      $(".image-preview-filename").val("");
+      $scope.file= false;
+      $scope.parent = parent;
+      //set image of selected parent to dialog
+    };
+
+    // upload on file select or drop
+    $scope.upload = function (file) {
+      if($scope.file){
+        Upload.upload({
+            url: ('/parent/upload/'+$scope.parent._id),
+            method: 'POST',
+            data: {file: file, 'username': $scope.username}
+        }).success(function (data, status, headers, config) {
+            if(data){
+              $('#picModal').modal('hide');
+              toastr.success('تم تغيير الصورة بنجاح');
+            }else{
+              toastr.info('فشل تحميل الصورة');
+            }
+        });
+      }
     };
 
     $scope.openSendMessageDialog = function(id) {

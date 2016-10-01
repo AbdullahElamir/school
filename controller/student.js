@@ -62,7 +62,7 @@ module.exports = {
       }
     });
   },
-  
+
   getStudentName :function(name,cb){
     model.Student.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
       if(!err){
@@ -108,7 +108,7 @@ module.exports = {
       }
     });
   },
-  
+
   deleteStudent : function(id,cb){
     model.Student.remove({_id:id}, function(err,result) {
       if (!err) {
@@ -128,5 +128,5 @@ module.exports = {
       }
     });
   },
-  
+
 };

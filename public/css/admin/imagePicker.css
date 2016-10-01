@@ -1,0 +1,33 @@
+.outer-container{
+    margin-top:20px;
+}
+.image-preview-input {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.image-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}
+.preview img{
+  display:block;
+  margin:auto;
+  margin-bottom: 15px;
+  max-width:400px;
+  max-height:500px;
+  border-radius: 25px;
+}

@@ -39,6 +39,7 @@
             <td>
               <a class="btn btn-success btn-xs" ui-sref="editTeacher({id:teacher._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل / عرض</a>
               <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteTeacher(teacher._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+              <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#picModal" ng-click="imagePicker(teacher)"><i class="fa fa-image fa-fw"></i>&nbsp;الصورة</a>
             </td>
           </tr>
         </tbody>
@@ -58,6 +59,50 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
               <button ng-click="deleteConfirm(idTeacher)" value="idTeacher" type="button" class="btn btn-danger">مسح</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="picModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">الصورة الشخصية</h4>
+            </div>
+            <div class="modal-body">
+              <div class="outer-container">
+                <div class="row">
+                  <div class="col-xs-12 col-md-10 col-md-offset-1 col-sm-8 col-sm-offset-2">
+                    <!-- image-preview-filename input [CUT FROM HERE]-->
+                    <div class="preview">
+                      <img ng-show="!file" onError="this.error=null;this.src='img/noimage';" src="img/teachers/{{teacher._id}}">
+                      <img ng-show="file" id="dynamic">
+                      <div class = "previewMsg">
+
+                      </div>
+                    </div>
+                    <div class="input-group image-preview">
+                      <input required type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                      <span class="input-group-btn">
+
+                        <!-- image-preview-input -->
+                        <div class="btn btn-default image-preview-input">
+                          <span class="glyphicon glyphicon-folder-open"></span>
+                          <span class="image-preview-input-title">اختر صورة</span>
+                          <input ngf-select ng-model="file" type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
+                        </div>
+                      </span>
+                    </div><!-- /input-group image-preview [TO HERE]-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+              <button ng-click="upload(file)" value="teacher" type="button" class="btn btn-success">حفظ</button>
             </div>
           </div>
         </div>

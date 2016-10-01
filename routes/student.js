@@ -4,6 +4,8 @@ var studentMgr = require("../controller/student");
 var classRoomMgr = require("../controller/classRoom");
 var stuproMgr = require("../controller/studentProcess");
 var userHelpers = require("../controller/userHelpers");
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
@@ -21,7 +23,7 @@ router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
       studentMgr.getStudentStupro('',stupro,function(student){
         res.send(student);
       });
-      
+
     });
   });
 });
@@ -29,7 +31,7 @@ router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
 /* Send Message to Parent of Student by studentID */
 router.put('/message/:studentId',function(req, res) {
   // console.log("#1 : " + req.params.studentId); // student id
-  // console.log("#2 : " + req.body.title);       // message title 
+  // console.log("#2 : " + req.body.title);       // message title
   // console.log("#3 : " + req.body.description); // message description
   res.send(true);
 });
@@ -60,6 +62,13 @@ router.post('/add',function(req, res) {
     res.send(student);
   });
 
+});
+
+router.post('/upload/:id', multipartMiddleware, function(req, res) {
+  console.log(req.files.file);
+  //save image to public/img/students with a name of "student's id" without extention
+  // don't forget to delete all req.files when done
+  res.send(true);
 });
 
 /* Edit student by id  */
