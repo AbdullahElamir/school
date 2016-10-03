@@ -3,8 +3,8 @@ var system = null;
 
 function addExams(custom,cb){
   var allExams=[],index=0;
-  var counter=0;
-  var sum=0;
+  var counter={value:0};
+  var sum={value:0};
   for(var cls=0; cls<custom.sys_class.length ; cls++){
     var classI = custom.sys_class[cls];
     model.Exam.find({system:custom._id,clas:classI.id_class})
@@ -12,7 +12,7 @@ function addExams(custom,cb){
       if(!err){
         var exams = examsResult;
         custom.sys_class[index].exams = exams;
-        sum+=exams.length;
+        sum.value+=exams.length;
         index++;
         for(var ex=0;ex<exams.length;ex++){
           var examI = exams[ex];
@@ -31,8 +31,8 @@ function addMarks(examI,custom,cb,counter,sum){
   .exec(function(err,marks){
     if(!err){
       examI.subjects=marks;
-      counter++;
-      if(counter == sum){
+      counter.value++;
+      if(counter.value == sum.value){
         var final =  {};
         final._id = custom._id;
         final.name = custom.name;
@@ -134,21 +134,17 @@ var addSystem = function(body,cb){
   system = new model.System(obj);
   system.save(function(err,sysResult){
     if (!err) {
-      var classIndex = 0;
       for(var clss in body.sys_class){
 
-        var classI = body.sys_class[classIndex];
+        var classI = body.sys_class[clss];
         var exams = classI.exams;
-        var examsIndex = 0;
         for(var ex in exams){
 
-          var examI=exams[examsIndex];
+          var examI=exams[ex];
           examI.system = sysResult._id;
           examI.clas = classI.id_class;
           saveExam(examI,cb);
-          examsIndex++;
         }
-        classIndex++;
       }
       cb(true);
     } else {
