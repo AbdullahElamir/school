@@ -31,7 +31,7 @@ router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
 });
 
 /* Send Message to Parent of Student by studentID */
-router.put('/message/:studentId',function(req, res) {
+router.put('/message/:studentId',userHelpers.isLogin,function(req, res) {
   MessageMgr.addMsgParent(req.body,function(msg){
     studentMgr.getStudentId(req.params.studentId,function(stu){
       parentMsg.addParentMsg({parent:stu.parent[0],msg:msg._id},function(send){
@@ -72,7 +72,7 @@ router.post('/add',function(req, res) {
 
 });
 
-router.post('/upload/:id', multipartMiddleware, function(req, res) {
+router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {
   console.log(req.files.file);
   //save image to public/img/students with a name of "student's id" without extention
   // don't forget to delete all req.files when done
@@ -80,7 +80,7 @@ router.post('/upload/:id', multipartMiddleware, function(req, res) {
 });
 
 /* Edit student by id  */
-router.put('/edit/:id',function(req, res) {
+router.put('/edit/:id',userHelpers.isLogin,function(req, res) {
   studentMgr.updateStudent(req.params.id,req.body,function(student){
     res.send(student);
   });
