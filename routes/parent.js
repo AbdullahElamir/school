@@ -16,7 +16,7 @@ router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res)
 });
 
 /* Send Message to Parent by parentID */
-router.put('/message/:parentId',function(req, res) {
+router.put('/message/:parentId',userHelpers.isLogin,function(req, res) {
 
   MessageMgr.addMsgParent(req.body,function(msg){
     parentMsg.addParentMsg({parent:req.params.parentId,msg:msg._id},function(send){
@@ -45,7 +45,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
 
 });
 
-router.post('/upload/:id', multipartMiddleware, function(req, res) {
+router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {
   console.log(req.files.file);
   //save image to public/img/students with a name of "student's id" without extention
   // don't forget to delete all req.files when done
