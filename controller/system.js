@@ -1,12 +1,10 @@
 var model = require("../models");
 var system = null;
-var counter,sum,customResult;
 
 function addExams(custom,cb){
-  customResult = custom;
   var allExams=[],index=0;
-  counter=0;
-  sum=0;
+  var counter=0;
+  var sum=0;
   for(var cls=0; cls<custom.sys_class.length ; cls++){
     var classI = custom.sys_class[cls];
     model.Exam.find({system:custom._id,clas:classI.id_class})
@@ -18,7 +16,7 @@ function addExams(custom,cb){
         index++;
         for(var ex=0;ex<exams.length;ex++){
           var examI = exams[ex];
-          addMarks(examI,custom,cb);
+          addMarks(examI,custom,cb,counter,sum);
         }
       }else{
         cb(null);
@@ -28,7 +26,7 @@ function addExams(custom,cb){
   }
 }
 
-function addMarks(examI,custom,cb){
+function addMarks(examI,custom,cb,counter,sum){
   model.MarksSub.find({exam:examI._id})
   .exec(function(err,marks){
     if(!err){
