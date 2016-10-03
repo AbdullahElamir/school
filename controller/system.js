@@ -129,7 +129,7 @@ var deleteSystem = function (id,cb){
       }
     }
   });
-}
+};
 
 var addSystem = function(body,cb){
   var obj=body;
@@ -158,7 +158,7 @@ var addSystem = function(body,cb){
       cb(false);
     }
   });
-}
+};
 
 module.exports = {
 
