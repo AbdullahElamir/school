@@ -8,6 +8,17 @@ var marksSubMgr = require("../controller/marksSubject");
 var stuproMgr = require("../controller/studentProcess");
 var resultMgr = require("../controller/result");
 //get student information
+router.get('/rate/:student/:course/:month/:half', userHelpers.isLogin ,function(req, res) {
+  res.send([
+      {_id:1,name:"المستوى",rating:0},
+      {_id:2,name:"المشاركة",rating:5},
+      {_id:3,name:"الواجبات",rating:3},
+      {_id:4,name:"السلوك",rating:4}
+    ]
+  );
+
+});
+
 router.get('/stuPro', userHelpers.isLogin ,function(req, res) {
   var info = [{
     "name":"mohammed",
@@ -15,7 +26,7 @@ router.get('/stuPro', userHelpers.isLogin ,function(req, res) {
     "id":"1"
   }];
   res.send(info);
-  
+
 });
 
 // update grades of exams student in subject on classRoom for a current year (where year is Active)
@@ -37,9 +48,13 @@ router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogi
     }
 
   });
-  
+
 });
 
+router.put('/rate/:student/:course/:month/:half', userHelpers.isLogin ,function(req, res) {
+  //req.body
+  res.send(true);
+});
 // get grades of exams for student in subject on classRoom for a current year (where year is Active)
 router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
   // console.log('req.params.idStudent');
@@ -70,7 +85,7 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,fu
                 // console.log(marksS[examssub[i].exam._id]);
                 if(marksS[examssub[i].exam._id]){
                   obj.studentMark=marksS[examssub[i].exam._id];
-                  
+
                 }else{
                   obj.studentMark=0;
                 }
@@ -93,14 +108,14 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,fu
   //     mark : 30 ,
   //     studentMark : 14,
   //     type : 1 ,
-  //     semester : 2          
+  //     semester : 2
   //   },{
   //     _id : "6as54ddf" ,
   //     name : "إمتحان شهر 4" ,
   //     mark : 30 ,
   //     studentMark : 26.5,
   //     type : 1 ,
-  //     semester : 2          
+  //     semester : 2
   //   },{
   //     _id : "spokdf" ,
   //     name : "إمتحان شهر 1" ,
@@ -121,7 +136,7 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,fu
   //     mark : 30 ,
   //     studentMark : 10,
   //     type : 1 ,
-  //     semester : 1          
+  //     semester : 1
   //   },{
   //     _id : "6235dfdh" ,
   //     name : "إمتحان شهر 3" ,
@@ -142,14 +157,14 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,fu
   //     mark : 30 ,
   //     studentMark : 0,
   //     type : 2 ,
-  //     semester : 1 
+  //     semester : 1
   //   },{
   //     _id : "68234d1" ,
   //     name : "إمتحان النصفي الأول" ,
   //     mark : 40 ,
   //     studentMark : 33,
   //     type : 3 ,
-  //     semester : 1          
+  //     semester : 1
   //   }
   // ];
   // res.send(examsGrades);
@@ -174,15 +189,15 @@ router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin ,function(re
  //      },
  //      {
  //        _id : "77s6a1sd",
- //        name : "رضوان خليفة علي عبد الرحمن" 
+ //        name : "رضوان خليفة علي عبد الرحمن"
  //      },
  //      {
  //        _id : "pp5oew1sd",
- //        name : "رامي عبد السلام عبد الله" 
+ //        name : "رامي عبد السلام عبد الله"
  //      },
  //      {
  //        _id : "mjkjmwrrp",
- //        name : "فاطمة علي محمد سالم" 
+ //        name : "فاطمة علي محمد سالم"
  //      }
  //  ];
   // res.send(info);
@@ -193,6 +208,6 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   stuproMgr.addStupro(req.body,function(Stupro){
     res.send(Stupro);
   });
-  
+
 });
 module.exports = router;

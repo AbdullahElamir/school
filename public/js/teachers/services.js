@@ -34,6 +34,18 @@
     return self;
   }]);
 
+  app.service('StudentsEvaluateServ',['$http',function($http){
+    var self = {
+      'setRatings': function(student,course,month,half,ratings){
+        return $http.put('/studentsProcesses/rate/'+student+'/'+course+'/'+month+'/'+half,ratings);
+      },
+      'getRatings': function(student,course,month,half){
+        return $http.get('/studentsProcesses/rate/'+student+'/'+course+'/'+month+'/'+half);
+      }
+    };
+    return self;
+  }]);
+
 
 
 
