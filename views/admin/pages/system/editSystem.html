@@ -62,7 +62,7 @@
 </div>
 <div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
   <div style="overflow-y: initial !important" class="modal-dialog modal-lg">
-  
+
     <div class="modal-content">
       <form novalidate ng-submit="save()">
         <div class="modal-header">
@@ -72,14 +72,14 @@
         <div style="max-height: calc(80vh - 100px);overflow-y: auto;" class="modal-body">
           <div class="row">
               <div class="col-xs-10 col-xs-push-1">
-              
-               
+
+
               <ul class="nav nav-tabs">
                 <li ng-repeat="exam in exams">
                   <a  data-toggle="tab" ng-class="($index == 0)?'firstTab':''"  showtab="" href="#{{exam.x}}">{{exam.name}}</a>
                 </li>
               </ul>
-                
+
                 <div class="tab-content">
                   <div ng-repeat="exam in exams" id="{{exam.x}}" class="tab-pane fade">
                     <table class="table table-bordered">
@@ -91,7 +91,7 @@
                             <td>{{ subject.name }}</td>
                             <td>
                                <div class="form-group">
-                                <input type="number" required="required" placeholder="الدرجة" ng-model="subject.mark" class="form-control text-center">
+                                <input type="text" pattern="[0-9]*\.?[0-9]+" ng-pattern-err-type="mark" required="required" placeholder="الدرجة" ng-model="subject.mark" class="form-control text-center">
                               </div>
                             </td>
                          </tr>

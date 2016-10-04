@@ -50,7 +50,7 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">الرقم الوطني</label>
-              <input class="form-control input-sm" type="text" ng-model="editStudentForm.nid" placeholder="الرقم الوطني" required>
+              <input class="form-control input-sm" type="text" pattern="[0-9]+" ng-pattern-err-type="nId" ng-model="editStudentForm.nid" placeholder="الرقم الوطني" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
@@ -92,7 +92,7 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">رقم هاتف اقرب الاقارب</label>
-              <input class="form-control input-sm" type="text" ng-model="editStudentForm.closestPersonPhone" placeholder="رقم هاتف اقرب الاقارب" required>
+              <input class="form-control input-sm" type="text" pattern="[+]?[0-9]+" ng-pattern-err-type="phone" ng-model="editStudentForm.closestPersonPhone" placeholder="رقم هاتف اقرب الاقارب" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
