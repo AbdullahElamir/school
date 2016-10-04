@@ -20,7 +20,7 @@
               // auto scorll to page top
             setTimeout(function () {
               App.scrollTop(); // scroll to the top on content load
-            }, $rootScope.settings.layout.pageAutoScrollOnLoad);     
+            }, $rootScope.settings.layout.pageAutoScrollOnLoad);
           });
           // handle errors
           $rootScope.$on('$stateNotFound', function() {
@@ -53,6 +53,6 @@
       link: function (scope, elem) {
         elem.dropdownHover();
       }
-    };  
+    };
   });
 }());

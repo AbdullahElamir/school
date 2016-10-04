@@ -23,22 +23,28 @@
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
+              <label class="control-label">رقم الهاتف 2</label>
+              <input class="form-control input-sm" type="text" ng-model="newAdminForm.phone2" ng-required-err-type="phone" placeholder="رقم الهاتف 2" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
               <label class="control-label">الجنس</label>
               <select class="form-control input-sm" ng-model="newAdminForm.gender" required>
                 <option value="" disabled selected>الرجاء الاختيار</option>
-                <option value="1">دكر</option>
+                <option value="1">ذكر</option>
                 <option value="2">انثي</option>
               </select>
             </div>
           </div>
+        </div>
+        <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">البريد الالكتروني</label>
               <input class="form-control input-sm" type="text" ng-model="newAdminForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
             </div>
           </div>
-        </div>
-        <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">الرمز السري</label>
@@ -53,6 +59,40 @@
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
+              <label class="control-label">رقم البطاقة الشخصية</label>
+              <input class="form-control input-sm" type="text" ng-model="newAdminForm.personalId" placeholder="رقم البطاقة الشخصية" required>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">المؤهل العلمي</label>
+              <input class="form-control input-sm" type="text" ng-model="newAdminForm.qualification" placeholder="المؤهل العلمي" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">تاريخ الحصول عليه</label>
+              <input class="form-control input-sm" type="text" ng-model="newAdminForm.qualificationDate" placeholder="تاريخ الحصول عليه" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">التخصص</label>
+              <input class="form-control input-sm" type="text" ng-model="newAdminForm.specialization" placeholder="التخصص" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">تاريخ البدء في العمل</label>
+              <input class="form-control input-sm" type="text" ng-model="newAdminForm.startDate" placeholder="تاريخ البدء في العمل" required>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
               <label class="control-label">الجنسية</label>
               <input class="form-control input-sm" type="text" ng-model="newAdminForm.nationality" placeholder="الجنسية" required>
             </div>
@@ -63,8 +103,12 @@
               <input class="form-control input-sm" type="text" ng-model="newAdminForm.address" placeholder="العنوان" required>
             </div>
           </div>
-        </div>
-        <div class="row">
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">اقرب نقطة دالة</label>
+              <input class="form-control input-sm" type="text" ng-model="newAdminForm.closestPoint" placeholder="اقرب نقطة دالة" required>
+            </div>
+          </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">تاريخ الميلاد</label>

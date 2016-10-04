@@ -11,4 +11,4 @@ var Fees = new Schema({
 
 Fees.plugin(timestamps);
 Fees.index({ name: 'text'});
-exports.Fees = mongoose.model('Fees', Fees); 
+exports.Fees = mongoose.model('Fees', Fees);

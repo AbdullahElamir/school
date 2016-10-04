@@ -8,6 +8,7 @@ var passport = require('passport');
 var session = require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(session);
 
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
@@ -31,6 +32,7 @@ var year= require('./routes/year');
 var system= require('./routes/system');
 var admins = require('./routes/admins');
 var clothes= require('./routes/clothes');
+var TSC= require('./routes/teacherSubjectClass');
 var app = express();
 
 var store = new MongoDBStore({
@@ -91,6 +93,7 @@ app.use('/year',year);
 app.use('/system',system);
 app.use('/admins', admins);
 app.use('/clothes',clothes);
+app.use('/TSC',TSC);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var adminMgr = require("../controller/admin");
 var userHelpers = require("../controller/userHelpers");
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 
 /*GET all ADmins By Search Value*/
@@ -29,6 +31,12 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
     res.send(admins);
   });
 
+});
+router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {
+  console.log(req.files.file);
+  //save image to public/img/students with a name of "student's id" without extention
+  // don't forget to delete all req.files when done
+  res.send(true);
 });
 
 /* Edit admin by id  */

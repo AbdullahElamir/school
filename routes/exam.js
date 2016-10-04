@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var examMgr = require("../controller/exam");
 var userHelpers = require("../controller/userHelpers");
-
+var resultMgr = require("../controller/result");
 
 
 
@@ -20,7 +20,12 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   });
   
 });
-
+router.post('/addR', userHelpers.isLogin ,function(req, res) {
+  resultMgr.addResult(req.body,function(exam){
+    res.send(exam);
+  });
+  
+});
 // edit class room by id
 router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   examMgr.updateExam(req.params.id,req.body,function(exam){

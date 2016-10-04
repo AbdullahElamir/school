@@ -11,22 +11,22 @@
         <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">اسم الطالب</label>
+              <label class="control-label">اسم الطالب الرباعي</label>
               <input class="form-control input-sm" type="text" ng-model="newStudentForm.name" placeholder="اسم الطالب" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">اسم ولي الامر</label>
-              <select class="form-control input-sm" ng-model="newStudentForm.parent" ng-options="parent._id as parent.name for parent in getAllParents" required>
-                <option value="" disabled selected>الرجاء الاختيار</option>
-              </select>
+              <label class="control-label">اسم الام الثلاتي</label>
+              <input class="form-control input-sm" type="text" ng-model="newStudentForm.motherName" placeholder="اسم الام" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">رقم الهاتف</label>
-              <input class="form-control input-sm" type="text" ng-model="newStudentForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
+              <label class="control-label">ولي الامر</label>
+              <select class="form-control input-sm" ng-model="newStudentForm.parent" ng-options="parent._id as parent.name for parent in getAllParents" required>
+                <option value="" disabled selected>الرجاء الاختيار</option>
+              </select>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
@@ -49,12 +49,6 @@
         <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
-              <label class="control-label">البريد الالكتروني</label>
-              <input class="form-control input-sm" type="text" ng-model="newStudentForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
-            </div>
-          </div>
-          <div class="col-xs-12 col-md-3">
-            <div class="form-group">
               <label class="control-label">الرقم الوطني</label>
               <input class="form-control input-sm" type="text" ng-model="newStudentForm.nid" placeholder="الرقم الوطني" required>
             </div>
@@ -75,18 +69,44 @@
               <input class="form-control input-sm" type="text" ng-model="newStudentForm.nationality" placeholder="الجنسية" required>
             </div>
           </div>
-        </div>
-        <div class="row">
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">العنوان</label>
               <input class="form-control input-sm" type="text" ng-model="newStudentForm.address" placeholder="العنوان" required>
             </div>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">اقرب نقطة دالة</label>
+              <input class="form-control input-sm" type="text" ng-model="newStudentForm.closestPoint" placeholder="اقرب نقطة دالة" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">اقرب الاقارب</label>
+              <input class="form-control input-sm" type="text" ng-model="newStudentForm.closestPerson" placeholder="اقرب الاقارب" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">رقم هاتف اقرب الاقارب</label>
+              <input class="form-control input-sm" type="text" ng-model="newStudentForm.closestPersonPhone" placeholder="رقم هاتف اقرب الاقارب" required>
+            </div>
+          </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">تاريخ الميلاد</label>
               <input type="text" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="newStudentForm.birth_day" placeholder="تاريخ الميلاد"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">مكان الميلاد</label>
+              <input class="form-control input-sm" type="text" ng-model="newStudentForm.birth_place" placeholder="مكان الميلاد" required>
             </div>
           </div>
         </div>

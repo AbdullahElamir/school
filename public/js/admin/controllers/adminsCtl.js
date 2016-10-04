@@ -241,7 +241,7 @@ app.controller('EditAdminCtl',['$scope','$state','AdminServ','toastr','$statePar
 
   //AdminCtl
 
-  app.controller('AdminsCtl',['$scope','$state','AdminServ','toastr',function($scope,state,AdminServ,toastr){
+  app.controller('AdminsCtl',['$scope','$state','AdminServ','toastr','Upload',function($scope,state,AdminServ,toastr,Upload){
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
@@ -289,6 +289,30 @@ app.controller('EditAdminCtl',['$scope','$state','AdminServ','toastr','$statePar
     },function(response){
       console.log("Somthing went wrong");
     });
+   };
+   $scope.imagePicker = function(admin){
+     $(".image-preview-filename").val("");
+     $scope.file= false;
+     $scope.admin = admin;
+     //set image of selected admin to dialog
+   };
+
+   // upload on file select or drop
+   $scope.upload = function (file) {
+     if($scope.file){
+       Upload.upload({
+           url: ('/admins/upload/'+$scope.admin._id),
+           method: 'POST',
+           data: {file: file, 'username': $scope.username}
+       }).success(function (data, status, headers, config) {
+           if(data){
+             $('#picModal').modal('hide');
+             toastr.success('تم تغيير الصورة بنجاح');
+           }else{
+             toastr.info('فشل تحميل الصورة');
+           }
+       });
+     }
    };
 
   }]);

@@ -1,9 +1,9 @@
 (function() {
   'use strict';
   var app = angular.module('teachersSchool',[
-    'ui.router', 
-    'ui.bootstrap', 
-    'oc.lazyLoad',  
+    'ui.router',
+    'ui.bootstrap',
+    'oc.lazyLoad',
     'ngSanitize',
     'AngularPrint',
     'jcs-autoValidate',
@@ -27,7 +27,7 @@
   app.controller('AppController',['$scope','$rootScope',function($scope,$rootScope){
     $scope.$on('$viewContentLoaded',function() {
       App.initComponents(); // init core components
-      //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
+      //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
     });
   }]);
   /* Setup Layout Part - Header */
@@ -56,11 +56,11 @@
   /* Setup Rounting For All Pages */
   app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
     // Redirect any unmatched url
-    $urlRouterProvider.otherwise('/dashboard');  
+    $urlRouterProvider.otherwise('/dashboard');
     // Home
     $stateProvider.state('dashboard',{
       url: '/dashboard',
-      templateUrl: '/teachers/pages/dashboard',            
+      templateUrl: '/teachers/pages/dashboard',
       data: {pageTitle: 'لوحة التحكم'},
       controller: 'DashboardCtl',
       resolve: {
@@ -68,18 +68,18 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadPluginsBefore', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
-              '/morris.js/morris.css',                            
+              '/morris.js/morris.css',
               '/morris.js/morris.min.js',
               '/raphael/raphael.min.js',
               '/js/teachers/controllers/dashboardCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('studentsProcesses',{
       url: '/studentsProcesses',
-      templateUrl: '/teachers/pages/studentsProcesses',            
+      templateUrl: '/teachers/pages/studentsProcesses',
       data: {pageTitle: 'الصفوف الدراسية'},
       controller: 'StudentsProcessesCtl',
       resolve: {
@@ -88,14 +88,14 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/teachers/controllers/studentsProcessesCtl.js'
-            ] 
+            ]
           });
         }]
       }
     })
     .state('studentInformation',{
           url: '/studentInformation/:id/:course',
-          templateUrl: '/teachers/pages/studentInformation',            
+          templateUrl: '/teachers/pages/studentInformation',
           data: {pageTitle: 'درجات الطلبة'},
           controller: 'StudentInformationCtl',
           resolve: {
@@ -104,14 +104,14 @@
                 insertBefore: '#ngLoadControllerAfter',
                 files: [
                   '/js/teachers/controllers/studentInformationCtl.js'
-                ] 
+                ]
               });
             }]
           }
         })
     .state('studentsEvaluate',{
-          url: '/studentsEvaluate/:id',
-          templateUrl: '/teachers/pages/studentsEvaluate',            
+          url: '/studentsEvaluate/:id/:course/:student',
+          templateUrl: '/teachers/pages/studentsEvaluate',
           data: {pageTitle: 'درجات الطلبة'},
           controller: 'StudentsEvaluateCtl',
           resolve: {
@@ -120,7 +120,7 @@
                 insertBefore: '#ngLoadControllerAfter',
                 files: [
                   '/js/teachers/controllers/studentsEvaluateCtl.js'
-                ] 
+                ]
               });
             }]
           }

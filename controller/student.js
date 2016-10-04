@@ -6,7 +6,6 @@ module.exports = {
 
   getAllStudent :function(cb){
     model.Student.find({},function(err, students){
-      console.log("fff");
       if(!err){
         cb(students);
       }else{
@@ -62,7 +61,7 @@ module.exports = {
       }
     });
   },
-  
+
   getStudentName :function(name,cb){
     model.Student.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
       if(!err){
@@ -108,7 +107,7 @@ module.exports = {
       }
     });
   },
-  
+
   deleteStudent : function(id,cb){
     model.Student.remove({_id:id}, function(err,result) {
       if (!err) {
@@ -128,5 +127,14 @@ module.exports = {
       }
     });
   },
-  
+  getStudentAllID:function(id,cb){
+    model.Student.find({_id:{$in:id}},function(err, students){
+      if(!err){
+        cb(students);
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
 };

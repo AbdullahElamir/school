@@ -13,7 +13,7 @@ module.exports = {
       }
     });
   },
-  
+
   //getAllYearsBySearchValue
   getAllYearsBySearchValue :function(searchValue,limit,page,cb){
     page = parseInt(page);
@@ -58,7 +58,7 @@ module.exports = {
       }
     });
   },
-  
+
   getYearName :function(name,cb){
     model.Year.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
       if(!err){
@@ -103,16 +103,59 @@ module.exports = {
       }
     });
   },
-  
-  // deleteYear : function(id,cb){
-  //   model.Year.remove({_id:id}, function(err,result) {
-  //     if (!err) {
-  //       cb(2);
-  //     } else {
-  //       console.log(err);
-  //       cb(3);
-  //     }
-  //   });
-  // }
-  
+
+  getActiveYear : function(cb){
+    model.Year.findOne({active : 1}, function(err, custom){
+      if(!err){
+        cb(custom);
+      }else{
+        cb(null);
+      }
+    });
+  },
+  activate: function (id,cb) {
+    model.Year.update({}, {active:0},{multi: true}, function(err,result) {
+      if (!err) {
+        model.Year.findOneAndUpdate({_id:id}, {active:1}, function(err,result) {
+          if (!err) {
+            cb(true);
+          } else {
+            console.log(err);
+            cb(false);
+          }
+        });
+      } else {
+        console.log(err);
+        cb(false);
+      }
+    });
+  },
+  disActivate: function (id,cb) {
+    model.Year.update({_id:id}, {active:0},{multi: true}, function(err,result) {
+      if (!err) {
+        cb(true);
+      } else {
+        console.log(err);
+        cb(false);
+      }
+    });
+  },
+
+  deleteYear : function(id,cb){
+    model.Fees.find({year:id}, function(err,result) {
+      if(result.length > 0){
+        cb(1);
+      } else{
+        model.Year.remove({_id:id}, function(err,result) {
+          if (!err) {
+            cb(2);
+          } else {
+            console.log(err);
+            cb(3);
+          }
+        });
+      }
+    });
+  }
+
 };

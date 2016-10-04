@@ -8,100 +8,113 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-md-12 col-lg-12">
-      <form action="">
+      <form novalidate ng-submit="submitRating(classRoom,course,month,half)">
         <div class="col-xs-6 col-sm-3"></div>
-    <div class="col-xs-6 col-sm-3">
-      <div class="form-group">
-        <label class="control-label">الشهر</label>
-        <select class="form-control input-sm" ng-model="" required>
-          <option value="" disabled selected>الرجاء الاختيار</option>
-          <option value="1">مايو</option>
-          <option value="2">ابري</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      <div class="form-group">
-        <label class="control-label">النصف الشهري</label>
-        <select class="form-control input-sm" ng-model="" required>
-          <option value="" disabled selected>الرجاء الاختيار</option>
-          <option value="1">النصف الاول</option>
-          <option value="2">النصف التاني</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-xs-12 col-md-12 col-lg-12 text-center">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th class="text-center">#</th>
-            <th class="text-center">ممتاز</th>
-            <th class="text-center">جيد جدا</th>
-            <th class="text-center">جيد</th>
-            <th class="text-center">مقبول</th>
-            <th class="text-center">ضعيف</th>
-          </tr>
-        </thead>
-        <tbody align="center">
-          <tr>
-            <td class="text-center">المستوى</td>
-            <td class="text-center">
-              <div class="radio">
-                <label style="font-size: 1em">
-                  <input type="radio" name="o5" value="">
-                  <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-                </label>
-              </div>
-            </td>
-            <td class="text-center">
-              <div class="radio">
-                <label style="font-size: 1em">
-                  <input type="radio" name="o5" value="">
-                  <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-                </label>
-              </div>
-            </td>
-            <td class="text-center">
-              <div class="radio">
-                <label style="font-size: 1em">
-                  <input type="radio" name="o5" value="">
-                  <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-                </label>
-              </div>
-            </td>
-            <td class="text-center">
-              <div class="radio">
-                <label style="font-size: 1em">
-                  <input type="radio" name="o5" value="">
-                  <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-                </label>
-              </div>
-            </td>
-            <td class="text-center">
-              <div class="radio">
-                <label style="font-size: 1em">
-                  <input type="radio" name="o5" value="">
-                  <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-                </label>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-    </table>
-    </div>  
-    <div ng-show="studentProcesses.length == 0">
-      <div class="alert alert-info">
-        <p class="text-center">
-          عفوا لاتوجد بيانات
-        </p>
-      </div>
-    </div>
-    <div class="row" ng-show="classes.length">
-      <div class="col-xs-12 col-md-12 text-center">
-        <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
-        <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
-      </div>
-    </div>
+        <div class="col-xs-6 col-sm-3">
+          <div class="form-group">
+            <label class="control-label">الشهر</label>
+            <select ng-change="refresh(classRoom,course,month,half)" class="form-control input-sm" ng-model="month" required>
+              <option value="" disabled selected>الرجاء الاختيار</option>
+              <option value="1">يناير</option>
+              <option value="2">فبراير</option>
+              <option value="3">مارس</option>
+              <option value="4">ابريل</option>
+              <option value="5">مايو</option>
+              <option value="6">يونيو</option>
+              <option value="7">يوليو</option>
+              <option value="8">اغسطس</option>
+              <option value="9">سبتمبر</option>
+              <option value="10">اكتوبر</option>
+              <option value="11">نوفمبر</option>
+              <option value="12">ديسمبر</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-3">
+          <div class="form-group">
+            <label class="control-label">النصف</label>
+            <select ng-change="refresh(classRoom,course,month,half)" class="form-control input-sm" ng-model="half" required>
+              <option value="" disabled selected>الرجاء الاختيار</option>
+              <option value="1">النصف الاول</option>
+              <option value="2">النصف التاني</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-12 col-lg-12 text-center">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">ممتاز</th>
+                <th class="text-center">جيد جدا</th>
+                <th class="text-center">جيد</th>
+                <th class="text-center">مقبول</th>
+                <th class="text-center">ضعيف</th>
+              </tr>
+            </thead>
+            <tbody align="center">
+              <tr ng-repeat="rateType in rateTypes">
+                <td class="text-center">{{rateType.name}}</td>
+                <td class="text-center">
+                  <div class="radio form-group">
+                    <label style="font-size: 1em">
+                      <input type="radio" name="{{rateType.name}}" ng-model="rateType.rating" value="1">
+                      <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    </label>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="radio form-group">
+                    <label style="font-size: 1em">
+                      <input type="radio" name="{{rateType.name}}" ng-model="rateType.rating" value="2">
+                      <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    </label>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="radio form-group">
+                    <label style="font-size: 1em">
+                      <input type="radio" name="{{rateType.name}}" ng-model="rateType.rating" value="3">
+                      <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    </label>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="radio form-group">
+                    <label style="font-size: 1em">
+                      <input type="radio" name="{{rateType.name}}" ng-model="rateType.rating" value="4">
+                      <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    </label>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="radio form-group">
+                    <label style="font-size: 1em">
+                      <input type="radio" name="{{rateType.name}}" ng-model="rateType.rating" value="5">
+                      <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    </label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div ng-show="!rateTypes || rateTypes.length == 0">
+            <div class="alert alert-info">
+              <p class="text-center">
+                عفوا لاتوجد بيانات
+              </p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-xs-6 col-md-2 col-md-offset-4">
+              <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;حفظ</button>
+            </div>
+            <div class="col-xs-6 col-md-2">
+              <a id="cancel" class="btn btn-success btn-sm btn-block" ui-sref="studentInformation({id:classRoom,course:course})"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   </div>

@@ -1,15 +1,14 @@
 var model = require("../models");
 var system = null;
-var counter,sum,customResult,counterFinalClassRooms,sumFinalClassRooms,counterOfClassRooms,sumOfClassRooms;
 
-function setTS(system,sys_class,classRoom_id,yearId,cb){
+function setTS(system,sys_class,classRoom_id,yearId,counterOfClassRooms,sumOfClassRooms,cb){
   model.TSC.find({classRoom : classRoom_id,year:yearId})
   .populate('subject')
   .exec(function(err, ts){
     if(!err){
-      counterOfClassRooms++;
+      counterOfClassRooms.value++;
       sys_class.ts.push(ts);
-      if( counterOfClassRooms == sumOfClassRooms ){
+      if( counterOfClassRooms.value == sumOfClassRooms.value ){
         cb(system);
         return;
       }
@@ -17,7 +16,7 @@ function setTS(system,sys_class,classRoom_id,yearId,cb){
   });
 }
 
-function systemSetting(system,sys_class,yearId,cb){
+function systemSetting(system,sys_class,yearId,counterOfClassRooms,sumOfClassRooms,cb){
   if( system.flag != 1 ){
     model.Fees.findOne({year:yearId,id_class:sys_class.id_class._id}).exec(function(err,fessResult){
       if(!err){
@@ -32,9 +31,9 @@ function systemSetting(system,sys_class,yearId,cb){
             if(!err){
               sys_class.classRooms = classRoomsResult;
               sys_class.ts = [];
-              sumOfClassRooms += sys_class.classRooms.length;
+              sumOfClassRooms.value += sys_class.classRooms.length;
               for(var i in sys_class.classRooms){
-                setTS(system,sys_class,sys_class.classRooms[i]._id,yearId,cb);
+                setTS(system,sys_class,sys_class.classRooms[i]._id,yearId,counterOfClassRooms,sumOfClassRooms,cb);
               }
             }
           });
@@ -45,10 +44,9 @@ function systemSetting(system,sys_class,yearId,cb){
 }
 
 function addExams(custom,cb){
-  customResult = custom;
-  var index=0;
-  counter=0;
-  sum=0;
+  var allExams=[],index=0;
+  var counter={value:0};
+  var sum={value:0};
   for(var cls=0; cls<custom.sys_class.length ; cls++){
     var classI = custom.sys_class[cls];
     model.Exam.find({system:custom._id,clas:classI.id_class})
@@ -56,11 +54,11 @@ function addExams(custom,cb){
       if(!err){
         var exams = examsResult;
         custom.sys_class[index].exams = exams;
-        sum+=exams.length;
+        sum.value+=exams.length;
         index++;
         for(var ex=0;ex<exams.length;ex++){
           var examI = exams[ex];
-          addMarks(examI,custom,cb);
+          addMarks(examI,custom,cb,counter,sum);
         }
       }else{
         cb(null);
@@ -70,13 +68,13 @@ function addExams(custom,cb){
   }
 }
 
-function addMarks(examI,custom,cb){
+function addMarks(examI,custom,cb,counter,sum){
   model.MarksSub.find({exam:examI._id})
   .exec(function(err,marks){
     if(!err){
       examI.subjects=marks;
-      counter++;
-      if(counter == sum){
+      counter.value++;
+      if(counter.value == sum.value){
         var final =  {};
         final._id = custom._id;
         final.name = custom.name;
@@ -178,19 +176,15 @@ var addSystem = function(body,cb){
   system = new model.System(obj);
   system.save(function(err,sysResult){
     if (!err) {
-      var classIndex = 0;
       for(var clss in body.sys_class){
-        var classI = body.sys_class[classIndex];
+        var classI = body.sys_class[clss];
         var exams = classI.exams;
-        var examsIndex = 0;
         for(var ex in exams){
-          var examI=exams[examsIndex];
+          var examI=exams[ex];
           examI.system = sysResult._id;
           examI.clas = classI.id_class;
           saveExam(examI,cb);
-          examsIndex++;
         }
-        classIndex++;
       }
       cb(true);
     } else {
@@ -200,49 +194,52 @@ var addSystem = function(body,cb){
   });
 };
 
-function saveTS(tsObject,classRoom_id,cb){
+function saveTS(tsObject,classRoom_id,counterFinalClassRooms,sumFinalClassRooms,cb){
   var obj = {year:tsObject.year , classRoom:classRoom_id , teacher:tsObject.teacher, subject:tsObject.subject._id };
   tsObjectSaved = new model.TSC(obj);
   tsObjectSaved.save(function(err,result){
     if (!err) {
-      counterFinalClassRooms++;
-      if( counterFinalClassRooms == sumFinalClassRooms ){
+      counterFinalClassRooms.value++;
+      if( counterFinalClassRooms.value == sumFinalClassRooms.value ){
         cb(true);
         return;
       }
     } else {
       console.log(err);
+      cb(false);
     }
   });
 }
 
-function saveClassRoom(classRoom,ts,cb){
+function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb){
   var obj = {year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft };
   classRoomSaved = new model.ClassRoom(obj);
   classRoomSaved.save(function(err,result){
     if (!err) {
-      counterFinalClassRooms++;
-      sumFinalClassRooms += ts.length;
+      counterFinalClassRooms.value++;
+      sumFinalClassRooms.value += ts.length;
       for(var i in ts){
-        saveTS(ts[i],result._id,cb);
+        saveTS(ts[i],result._id,counterFinalClassRooms,sumFinalClassRooms,cb);
       }
     } else {
       console.log(err);
+      cb(false);
     }
   });
 }
 
-function saveFees(fees,classRooms,tss,cb){
+function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,cb){
   feesSaved = new model.Fees(fees);
   feesSaved.save(function(err,result){
     if (!err) {
-      counterFinalClassRooms++;
-      sumFinalClassRooms += classRooms.length;
+      counterFinalClassRooms.value++;
+      sumFinalClassRooms.value += classRooms.length;
       for(var i in classRooms){
-        saveClassRoom(classRooms[i],tss[i],cb);
+        saveClassRoom(classRooms[i],tss[i],counterFinalClassRooms,sumFinalClassRooms,cb);
       }
     } else {
       console.log(err);
+      cb(false);
     }
   });
 }
@@ -286,11 +283,11 @@ function updateFees(fees,system,cb){
 }
 
 function addNewSystemSetting (system,cb){
-    counterFinalClassRooms = 0;
-    sumFinalClassRooms = 0;
+    var counterFinalClassRooms = {value : 0};
+    var sumFinalClassRooms = {value : 0};
     if( system.flag == 1 ){
       for(var i in system.sys_class){
-        saveFees(system.sys_class[i].fees,system.sys_class[i].classRooms,system.sys_class[i].ts,cb);
+        saveFees(system.sys_class[i].fees,system.sys_class[i].classRooms,system.sys_class[i].ts,counterFinalClassRooms,sumFinalClassRooms,cb);
       }
     }else{
       cb(false);
@@ -352,7 +349,7 @@ module.exports = {
       }
     });
   },
-  
+
   getSystemName :function(name,cb){
     model.System.find({name :{ $regex:name, $options: 'i' }}).limit(30)
     .populate('sys_class')
@@ -365,7 +362,7 @@ module.exports = {
       }
     });
   },
-  
+
   getSystemId :function(id,cb){
     model.System.findOne({_id : id})
     .populate('sys_class')
@@ -387,10 +384,10 @@ module.exports = {
       if(!err){
         var system = JSON.parse(JSON.stringify(system1));
         system.flag = 0;
-        counterOfClassRooms = 0;
-        sumOfClassRooms = 0;
+        var counterOfClassRooms = {value : 0};
+        var sumOfClassRooms = {value : 0};
         for(var i in system.sys_class){
-          systemSetting(system,system.sys_class[i],year,cb);
+          systemSetting(system,system.sys_class[i],year,counterOfClassRooms,sumOfClassRooms,cb);
         }
       }else{
         cb(null);

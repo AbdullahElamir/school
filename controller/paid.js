@@ -140,7 +140,24 @@ module.exports = {
       }
     });
   },
-  
+  getPaidStuPro:function(id,cb){
+    model.Paid.aggregate([
+      {$match:{StuPro:id}},
+      { $group: {
+        _id: '$StuPro',
+        paidUp: { $sum :'$paidUp'}
+        }
+      }
+    ], function (err, results) {
+      if (!err) {
+          cb(results);
+      } else {
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+
   // deletePaid : function(id,cb){
   //   model.Paid.remove({_id:id}, function(err,result) {
   //     if (!err) {

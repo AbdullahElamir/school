@@ -126,14 +126,17 @@
     .state('students',{
       url: '/students',
       templateUrl: 'admin/pages/student/students',
-      data: {pageTitle: 'طباعة الجدول'},
+      data: {pageTitle: 'الطلبة'},
       controller: 'StudentsCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/studentsCtl.js'
+              '/js/admin/controllers/studentsCtl.js',
+              '/js/admin/imagePicker.js',
+              '/css/admin/imagePicker.css',
+              '/ng-file-upload/ng-file-upload.min.js'
             ]
           });
         }]
@@ -183,7 +186,10 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/teachersCtl.js'
+              '/js/admin/controllers/teachersCtl.js',
+              '/js/admin/imagePicker.js',
+              '/css/admin/imagePicker.css',
+              '/ng-file-upload/ng-file-upload.min.js'
             ]
           });
         }]
@@ -500,7 +506,10 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/parentsCtl.js'
+              '/js/admin/controllers/parentsCtl.js',
+              '/js/admin/imagePicker.js',
+              '/css/admin/imagePicker.css',
+              '/ng-file-upload/ng-file-upload.min.js'
             ]
           });
         }]
@@ -640,7 +649,10 @@
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/adminsCtl.js'
+              '/js/admin/controllers/adminsCtl.js',
+              '/js/admin/imagePicker.js',
+              '/css/admin/imagePicker.css',
+              '/ng-file-upload/ng-file-upload.min.js'
             ]
           });
         }]

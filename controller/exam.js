@@ -103,6 +103,16 @@ module.exports = {
       }
     });
   },
+  getExamSClass:function(clas,system,cb){
+    model.Exam.find({system:system,clas:clas}).distinct('_id',function(err, exam){
+      if(!err){
+        cb(exam);
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
   
   // deleteExam : function(id,cb){
   //   model.Exam.remove({_id:id}, function(err,result) {

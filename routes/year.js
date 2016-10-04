@@ -10,6 +10,12 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
     res.send(years);
   });
 });
+//get the activated year
+router.get('/active', userHelpers.isLogin ,function(req, res) {
+  yearMgr.getActiveYear(function(year){
+    res.send(year);
+  });
+});
 
 router.get('/status/:status', userHelpers.isLogin ,function(req, res) {
   yearMgr.getAllYearStatus(req.params.status,function(years){
@@ -26,7 +32,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   yearMgr.addYear(req.body,function(years){
     res.send(years);
   });
-  
+
 });
 
 // edit years by id
@@ -35,11 +41,23 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
     res.send(years);
   });
 });
+//activate or disactivate
+router.put('/active/:id', userHelpers.isLogin ,function(req, res) {
+  if(req.body.active){
+    yearMgr.activate(req.params.id,function(result){
+      res.send(result);
+    });
+  }else{
+    yearMgr.disActivate(req.params.id,function(result){
+      res.send(result);
+    });
+  }
+});
 
 // delete years by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
-  yearMgr.updateYear(req.params.id,{status:0},function(years){
-    res.send(years);
+  yearMgr.deleteYear(req.params.id,function(result){
+    res.send({result:result});
   });
 });
 //get all years By Search Value

@@ -10,7 +10,7 @@
       <div class="col-md-3">
         <div class="form-group">
           <label class="control-label">الســنة</label>
-          <select class="form-control input-sm" ng-model="year" required ng-options="year._id as year.name for year in allYear" ng-change="refresh()" >
+          <select class="form-control input-sm" ng-model="year" required ng-options="year as year.name for year in allYear" ng-change="refresh()" >
             <option value="" disabled selected>الرجاء الاختيار</option>
           </select>
         </div>

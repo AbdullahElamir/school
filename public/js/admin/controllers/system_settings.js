@@ -2,13 +2,12 @@
   'use strict';
   var app = angular.module('adminSchool');
   app.controller('system_settings',['$scope','$state','SystemServ','YearServ','toastr','RoomServ','TeacherServ','ClassRoomsServ',function($scope,state,SystemServ,YearServ,toastr,RoomServ,TeacherServ,ClassRoomsServ){
-    $scope.addDataRow = function(index){
-                          //$scope.year.year
-      var obj = { year:$scope.year , name:"" , room:"" , class:$scope.data.sys_class[index].id_class._id , sheft:"" };
+    $scope.addDataRow = function(index){                    
+      var obj = { year:$scope.year._id , name:"" , room:"" , class:$scope.data.sys_class[index].id_class._id , sheft:"" };
       $scope.data.sys_class[index].classRooms.push(obj);
       var tsArray = [];
-      for(var i in $scope.data.sys_class[index].selected){                                                                                                                          //$scope.year.year
-        tsArray.push({ subject : { _id: $scope.data.sys_class[index].selected[i].id_subject._id , name : $scope.data.sys_class[index].selected[i].id_subject.name } , teacher:"" , year:$scope.year });
+      for(var i in $scope.data.sys_class[index].selected){
+        tsArray.push({ subject : { _id: $scope.data.sys_class[index].selected[i].id_subject._id , name : $scope.data.sys_class[index].selected[i].id_subject.name } , teacher:"" , year:$scope.year._id });
       }
       $scope.data.sys_class[index].ts.push(tsArray);
     };
@@ -23,6 +22,7 @@
     },function(response){
       console.log("Somthing went wrong");
     });
+    
     RoomServ.getAllRooms().then(function(response){
       $scope.allRooms = response.data;
     },function(response){
@@ -37,14 +37,13 @@
     
     $scope.refresh = function (){
       $scope.data = [];
-                                                    //$scope.year.system         $scope.year.year
-      SystemServ.getClassesAndClassRoomsBySystem("57e72fd2e920a11c40beb3ec","57e050a1611a8c0bb027282d").then(function(response){
+      SystemServ.getClassesAndClassRoomsBySystem($scope.year.system,$scope.year._id).then(function(response){
         $scope.data = response.data;
         if ($scope.data.flag == 1){
           for(var i in $scope.data.sys_class){
             $scope.data.sys_class[i].classRooms = [];
-            $scope.data.sys_class[i].ts = [];                                                               //$scope.year.year
-            $scope.data.sys_class[i].fees = {amount : 0 , id_class:$scope.data.sys_class[i].id_class._id , year:$scope.year};
+            $scope.data.sys_class[i].ts = [];
+            $scope.data.sys_class[i].fees = {amount : 0 , id_class:$scope.data.sys_class[i].id_class._id , year:$scope.year._id};
             $scope.addDataRow(i);
           }
         }
