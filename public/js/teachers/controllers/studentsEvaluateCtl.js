@@ -8,16 +8,16 @@
     $scope.course = $stateParams.course;
     $scope.student = $stateParams.student;
 
-    $scope.refresh = function(classRoom,course,month,half){
+    $scope.refresh = function(student,course,month,half){
       if($scope.month && $scope.half){
-        StudentsEvaluateServ.getRatings(classRoom,course,month,half).then(function(result){
+        StudentsEvaluateServ.getRatings(student,course,month,half).then(function(result){
           $scope.rateTypes = result.data;
         });
       }
     };
 
-    $scope.submitRating = function(classRoom,course,month,half){
-      StudentsEvaluateServ.setRatings(classRoom,course,month,half,$scope.rateTypes).then(function(result){
+    $scope.submitRating = function(student,course,month,half){
+      StudentsEvaluateServ.setRatings(student,course,month,half,$scope.rateTypes).then(function(result){
         if(result.data){
           toastr.success('تم الحفظ بنجاح');
           $('#cancel').click();
