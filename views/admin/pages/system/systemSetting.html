@@ -1,25 +1,16 @@
-<!DOCTYPE html>
 <div class="portlet light bordered">
   <div class="portlet-title">
     <div class="row">
       <div class="col-md-3">
         <div class="caption caption-md" style="padding-top:25px;">
           <i class="icon-settings font-green"></i>
-          <span class="caption-subject font-green bold">ضبط نظــام المدرسة</span>
+          <span class="caption-subject font-green bold">ضبط العملية الدراسية</span>
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
           <label class="control-label">الســنة</label>
-          <select class="form-control input-sm" ng-model="newSystemForm.year" required ng-options="year._id as year.name for year in allYear">
-            <option value="" disabled selected>الرجاء الاختيار</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group">
-          <label class="control-label">النظام الدراسي</label>
-          <select class="form-control input-sm" ng-model="newSystemForm.system" required ng-options="system._id as system.name for system in allSystem">
+          <select class="form-control input-sm" ng-model="year" required ng-options="year as year.name for year in allYear" ng-change="refresh()" >
             <option value="" disabled selected>الرجاء الاختيار</option>
           </select>
         </div>
@@ -27,66 +18,113 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12 col-md-12 col-lg-12">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-md-6">
-              الصف الاول
-            </div>
-            <div class="col-md-6 text-left">
-              <button type="button" class="btn btn-success btn-sm" ng-click="addSystemRow()"><i class="fa fa-plus fa-fw"></i>إضافة</button>
-            </div>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-              <div class="form-group">
-                <label class="control-label">التكلفة د.ل.</label>
-                <input class="form-control input-sm" type="text" ng-model="" placeholder="التكلفة د.ل." required>
+    <form novalidate ng-submit="save()">
+      <div ng-repeat="d in data.sys_class" ng-init="parentIndex = $index" class="col-xs-12 col-md-12 col-lg-12">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-6" style="padding-top: 5px;">
+                {{d.id_class.name}}
+              </div>
+              <div class="col-md-6 text-left">
+                <button type="button" class="btn btn-success btn-sm" ng-click="addDataRow($index)"><i class="fa fa-plus fa-fw"></i>إضافة مجموعة</button>
               </div>
             </div>
           </div>
-          <div class="row" ng-repeat="system in systems">
-            <div class="col-xs-8 col-md-11">
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label class="control-label"> المجموعة</label>
-                    <input class="form-control input-sm" type="text" ng-model="" placeholder="المجموعة" required>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label class="control-label">الفترة الدراسية</label>
-                    <select class="form-control input-sm" ng-model="" ng-required-err-type="type" required>
-                      <option value="" disabled selected>الرجاء الاختيار</option>
-                      <option value="1">الصباحية</option>
-                      <option value="2">المسائية</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label class="control-label">الغرفة الدراسية</label>
-                    <select class="form-control input-sm" ng-model="" ng-required-err-type="type" required>
-                      <option value="" disabled selected>الرجاء الاختيار</option>
-                      <option value="1">11</option>
-                      <option value="2">22</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-3" style="padding-top:25px;">
-                  <button class="btn btn-success btn-sm btn-block" type="button" id="class">اسناد الاستاذ</button>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4">
+                <div class="form-group">
+                  <label class="control-label">التكلفة د.ل.</label>
+                  <input class="form-control input-sm" type="number" ng-model="d.fees.amount" placeholder="التكلفة د.ل." required min="0">
                 </div>
               </div>
             </div>
-            <div class="col-xs-4 col-md-1" style="padding-top:25px;">
-              <button type="button" class="btn btn-danger btn-sm btn-block" ng-click="deleteSystemRow($index)"><i class="fa fa-remove fa-fw"></i>حذف</button>
+            <div class="row" ng-repeat="cr in d.classRooms">
+              <div class="col-xs-12 col-md-12">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="control-label">إسم المجموعة </label>
+                      <input class="form-control input-sm" type="text" ng-model="cr.name" placeholder="المجموعة" required>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="control-label">الفترة الدراسية</label>
+                      <select class="form-control input-sm" ng-model="cr.sheft" required ng-options="sheft.value as sheft.name for sheft in allShefts">
+                        <option value="" disabled selected>الرجاء الاختيار</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="control-label">الغرفة الدراسية</label>
+                      <select class="form-control input-sm" ng-model="cr.room" required ng-options="room._id as room.name for room in allRooms" >
+                        <option value="" disabled selected>الرجاء الاختيار</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-1" style="padding-top:25px;margin-left: 20px;">
+                    <button class="btn btn-success btn-sm" type="button" id="class" data-toggle="modal" data-target="#myModal" ng-click="openDialog(parentIndex,$index)">إسناد الاستاذ</button>
+                  </div>
+                  <div class="col-md-1" style="padding-top:25px;">
+                    <button ng-if="d.classRooms.length > 1" type="button" class="btn btn-danger btn-sm" ng-click="deleteDataRow(parentIndex,$index)"><i class="fa fa-remove fa-fw"></i>حذف</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+      <div ng-if="data.sys_class.length" class="col-md-2 col-md-offset-5">
+        <button class="btn btn-success btn-md btn-block" type="submit">حــفـظ</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">قم بتحديد أستاذ المادة</h4>
+        </div>
+        <form novalidate ng-submit="saveTeachersSubjects()">
+          <div style="max-height: calc(80vh - 100px);overflow-y: auto;" class="modal-body">
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>إسم المادة</th>
+                      <th>الأستاذ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="s in allSubjects">
+                      <td>{{ s.subject.name }}</td>
+                      <td>
+                        <div class="form-group">
+                          <div class="input-group" style="width: 100%;">
+                            <select class="form-control input-sm btn-block" ng-model="s.teacher" required ng-options="teacher._id as teacher.name for teacher in allTeachers">
+                              <option value="" disabled selected>الرجاء الاختيار</option>
+                            </select>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button value="idST" type="submit" class="btn btn-success" >حـفـظ</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">إلـغـاء</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
