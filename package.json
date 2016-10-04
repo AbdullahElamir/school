@@ -25,6 +25,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "password-generator": "^2.0.2",
+    "jsreport": "^0.13.4",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
