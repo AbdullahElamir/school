@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  var app = angular.module('adminSchool',['ngFileUpload']);
+  var app = angular.module('adminSchool');
 
   app.controller('StudentsCtl',['$scope','$state','StudentServ','toastr','Upload',function($scope,state,StudentServ,toastr,Upload){
     $scope.pageSize = 10;
@@ -91,7 +91,7 @@
 
   }]);
   //editStudentCtl
-  app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','StudentServ','$state','toastr','Upload',function($scope,$stateParams,ParentServ,StudentServ,$state,toastr,Upload){
+  app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,StudentServ,$state,toastr){
 
     ParentServ.getAllParents().then(function(response){
       $scope.getAllParents = response.data;
@@ -110,7 +110,6 @@
 
 
      $scope.editStudent = function(){
-       $scope.editStudentForm.image = $("#dynamic").attr('src');
       StudentServ.editStudent($stateParams.id,$scope.editStudentForm).then(function(response) {
         if(response.data){
           toastr.info('تم التعديل بنجاح');

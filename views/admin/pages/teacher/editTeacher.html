@@ -106,12 +106,13 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">تاريخ الميلاد</label>
-              <div class="input-group">
-                <input type="text" required class="form-control input-sm" uib-datepicker-popup ng-model="editTeacherForm.birth_day" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-              </div>
+              <input type="text" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="editTeacherForm.birth_day" />
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">الرمز السري</label>
+              <input class="form-control input-sm" type="password" ng-model="editTeacherForm.password" placeholder="الرمز السري" >
             </div>
           </div>
         </div>
