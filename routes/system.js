@@ -3,6 +3,27 @@ var router = express.Router();
 var systemMgr = require("../controller/system");
 var userHelpers = require("../controller/userHelpers");
 
+// edit system setting
+router.put('/data/edit', userHelpers.isLogin ,function(req, res) {
+  systemMgr.updateSystemSetting(req.body,function(system){
+    res.send(system);
+  });
+});
+
+// Add new system setting
+router.post('/data/add', userHelpers.isLogin ,function(req, res) {
+  systemMgr.addNewSystemSetting(req.body,function(system){
+    res.send(system);
+  }); 
+});
+
+// GET Classes And ClassRooms by System ID
+router.get('/data/:id/:year',userHelpers.isLogin , function(req, res) {
+  systemMgr.getClassesAndClassRoomsBySystem(req.params.id,req.params.year,function(data){
+    res.send(data);
+  });
+});
+
 // GET all systems
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   systemMgr.getAllSystemCount(req.params.limit,req.params.page,function(system){
@@ -20,8 +41,7 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
 router.post('/add', userHelpers.isLogin ,function(req, res) {
   systemMgr.addSystem(req.body,function(system){
     res.send(system);
-  });
-  
+  }); 
 });
 
 // Edit system by id

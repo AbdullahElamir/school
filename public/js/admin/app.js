@@ -142,7 +142,7 @@
     .state('newStudent',{
       url: '/newStudent',
       templateUrl: 'admin/pages/student/newStudent',
-      data: {pageTitle: 'طباعة الجدول'},
+      data: {pageTitle: 'إضافة طالب'},
       controller: 'newStudentCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
@@ -191,9 +191,9 @@
     })
 
     .state('systemSetting',{
-      url: '/system_setting',
+      url: '/studyProcess',
       templateUrl: 'admin/pages/system/systemSetting',
-      data: {pageTitle: 'المدرسين'},
+      data: {pageTitle: 'ضبط نظام المدرسة'},
       controller: 'system_settings',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){

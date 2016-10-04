@@ -1,10 +1,52 @@
 var model = require("../models");
 var system = null;
-var counter,sum,customResult;
+var counter,sum,customResult,counterFinalClassRooms,sumFinalClassRooms,counterOfClassRooms,sumOfClassRooms;
+
+function setTS(system,sys_class,classRoom_id,yearId,cb){
+  model.TSC.find({classRoom : classRoom_id,year:yearId})
+  .populate('subject')
+  .exec(function(err, ts){
+    if(!err){
+      counterOfClassRooms++;
+      sys_class.ts.push(ts);
+      if( counterOfClassRooms == sumOfClassRooms ){
+        cb(system);
+        return;
+      }
+    }
+  });
+}
+
+function systemSetting(system,sys_class,yearId,cb){
+  if( system.flag != 1 ){
+    model.Fees.findOne({year:yearId,id_class:sys_class.id_class._id}).exec(function(err,fessResult){
+      if(!err){
+        if( fessResult == null ){  // get new system setting
+          system.flag = 1;
+          cb(system);
+          return;
+        }else{                     // get edit system setting
+          system.flag = 2;
+          sys_class.fees = fessResult;
+          model.ClassRoom.find({year:yearId,class:sys_class.id_class._id}).exec(function(err,classRoomsResult){
+            if(!err){
+              sys_class.classRooms = classRoomsResult;
+              sys_class.ts = [];
+              sumOfClassRooms += sys_class.classRooms.length;
+              for(var i in sys_class.classRooms){
+                setTS(system,sys_class,sys_class.classRooms[i]._id,yearId,cb);
+              }
+            }
+          });
+        }
+      }
+    });
+  }
+}
 
 function addExams(custom,cb){
   customResult = custom;
-  var allExams=[],index=0;
+  var index=0;
   counter=0;
   sum=0;
   for(var cls=0; cls<custom.sys_class.length ; cls++){
@@ -129,7 +171,7 @@ var deleteSystem = function (id,cb){
       }
     }
   });
-}
+};
 
 var addSystem = function(body,cb){
   var obj=body;
@@ -138,12 +180,10 @@ var addSystem = function(body,cb){
     if (!err) {
       var classIndex = 0;
       for(var clss in body.sys_class){
-        
         var classI = body.sys_class[classIndex];
         var exams = classI.exams;
         var examsIndex = 0;
         for(var ex in exams){
-
           var examI=exams[examsIndex];
           examI.system = sysResult._id;
           examI.clas = classI.id_class;
@@ -158,10 +198,116 @@ var addSystem = function(body,cb){
       cb(false);
     }
   });
+};
+
+function saveTS(tsObject,classRoom_id,cb){
+  var obj = {year:tsObject.year , classRoom:classRoom_id , teacher:tsObject.teacher, subject:tsObject.subject._id };
+  tsObjectSaved = new model.TSC(obj);
+  tsObjectSaved.save(function(err,result){
+    if (!err) {
+      counterFinalClassRooms++;
+      if( counterFinalClassRooms == sumFinalClassRooms ){
+        cb(true);
+        return;
+      }
+    } else {
+      console.log(err);
+    }
+  });
+}
+
+function saveClassRoom(classRoom,ts,cb){
+  var obj = {year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft };
+  classRoomSaved = new model.ClassRoom(obj);
+  classRoomSaved.save(function(err,result){
+    if (!err) {
+      counterFinalClassRooms++;
+      sumFinalClassRooms += ts.length;
+      for(var i in ts){
+        saveTS(ts[i],result._id,cb);
+      }
+    } else {
+      console.log(err);
+    }
+  });
+}
+
+function saveFees(fees,classRooms,tss,cb){
+  feesSaved = new model.Fees(fees);
+  feesSaved.save(function(err,result){
+    if (!err) {
+      counterFinalClassRooms++;
+      sumFinalClassRooms += classRooms.length;
+      for(var i in classRooms){
+        saveClassRoom(classRooms[i],tss[i],cb);
+      }
+    } else {
+      console.log(err);
+    }
+  });
+}
+
+function updateFees(fees,system,cb){
+  model.Fees.remove({year:fees.year},function(err,result){
+    if (!err){
+      model.ClassRoom.find({year:fees.year})
+      .exec(function(err, classRoomsReturned){
+        if(!err){
+          model.ClassRoom.remove(classRoomsReturned, function(err,result){
+            if(!err){
+              model.TSC.remove({year:fees.year}, function(err,result){
+                if(!err){
+                  system.flag = 1 ;
+                  addNewSystemSetting(system,cb);
+                } else {
+                  console.log(err);
+                  cb(false);
+                  return;
+                }
+              });
+            } else {
+              console.log(err);
+              cb(false);
+              return;
+            }
+          });
+        } else {
+          console.log(err);
+          cb(false);
+          return;
+        }
+      });
+    } else {
+      console.log(err);
+      cb(false);
+      return;
+    }
+  });
+}
+
+function addNewSystemSetting (system,cb){
+    counterFinalClassRooms = 0;
+    sumFinalClassRooms = 0;
+    if( system.flag == 1 ){
+      for(var i in system.sys_class){
+        saveFees(system.sys_class[i].fees,system.sys_class[i].classRooms,system.sys_class[i].ts,cb);
+      }
+    }else{
+      cb(false);
+    }
 }
 
 module.exports = {
 
+  addNewSystemSetting :addNewSystemSetting,
+  updateSystemSetting : function(system,cb){
+    if( system.flag == 2 ){
+      updateFees(system.sys_class[0].fees,system,cb);
+    }else{
+      cb(false);
+    }
+  },
+  
   getAllSystem :function(cb){
     model.System.find({}, function(err, systems){
       if(!err){
@@ -227,6 +373,25 @@ module.exports = {
     .exec(function(err, custom){
       if(!err){
         addExams(custom,cb);
+      }else{
+        cb(null);
+      }
+    });
+  },
+
+  getClassesAndClassRoomsBySystem :function(id,year,cb){
+    model.System.findOne({_id : id})
+    .populate('sys_class.id_class')
+    .populate('sys_class.selected.id_subject')
+    .exec(function(err, system1){
+      if(!err){
+        var system = JSON.parse(JSON.stringify(system1));
+        system.flag = 0;
+        counterOfClassRooms = 0;
+        sumOfClassRooms = 0;
+        for(var i in system.sys_class){
+          systemSetting(system,system.sys_class[i],year,cb);
+        }
       }else{
         cb(null);
       }

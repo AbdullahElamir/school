@@ -51,6 +51,9 @@
       },
       'editTeacher': function(id,obj){
         return $http.put('/teacher/edit/'+id,obj);
+      },
+      'getAllTeacher': function(id){
+        return $http.get('/teacher/all/'+id);
       }
     };
     return self;
@@ -154,6 +157,15 @@
       },
       'getSystemById': function(id){
         return $http.get('/system/'+id.id);
+      },
+      'getClassesAndClassRoomsBySystem': function(id,year){
+        return $http.get('/system/data/'+id+'/'+year);
+      },
+      'addNewSystemSetting': function(system){
+        return $http.post('/system/data/add',system);
+      },
+      'editSystemSetting': function(system){
+        return $http.put('/system/data/edit',system);
       },
       'editSystem': function(id,obj){
         return $http.put('/system/edit/'+id,obj);
