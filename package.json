@@ -17,6 +17,7 @@
     "express-session": "^1.14.1",
     "ico": "^0.3.3",
     "jsonfile": "^2.3.1",
+    "jsreport": "^1.0.9",
     "lodash": "^4.13.1",
     "mongoose": "^4.5.0",
     "mongoose-timestamp": "^0.5.0",
