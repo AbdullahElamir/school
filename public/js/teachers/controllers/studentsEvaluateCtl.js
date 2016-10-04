@@ -17,7 +17,6 @@
     };
 
     $scope.submitRating = function(classRoom,course,month,half){
-      console.log($scope.rateTypes);
       StudentsEvaluateServ.setRatings(classRoom,course,month,half,$scope.rateTypes).then(function(result){
         if(result.data){
           toastr.success('تم الحفظ بنجاح');

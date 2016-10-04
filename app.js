@@ -33,6 +33,7 @@ var system= require('./routes/system');
 var admins = require('./routes/admins');
 var clothes= require('./routes/clothes');
 var TSC= require('./routes/teacherSubjectClass');
+var evaluation = require('./routes/evaluation');
 var app = express();
 
 var store = new MongoDBStore({
@@ -94,6 +95,7 @@ app.use('/system',system);
 app.use('/admins', admins);
 app.use('/clothes',clothes);
 app.use('/TSC',TSC);
+app.use('/evaluation',evaluation);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

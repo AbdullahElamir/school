@@ -5,7 +5,6 @@ var Schema = mongoose.Schema;
 var Message = new Schema({
   name: { type: String, index: true, default: "Unknown msg"},
   msg: { type: String,  default: "NULL "},
-  description: {type: String,default:"NULL"},
   status: {type: Number, default:1}
 });
 

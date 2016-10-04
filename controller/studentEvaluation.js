@@ -1,5 +1,5 @@
 var model = require('../models');
-var Stueva = null;
+var stueva = null;
 
 module.exports = {
 
@@ -53,18 +53,18 @@ module.exports = {
     });
   },
 
-  addStueva : function(body,cb){
-    var obj =body;
-    Stueva = new model.Stueva(obj);
-    Stueva.save(function(err,result){
-      if (!err) {
-        cb(true);
-      } else {
-        console.log(err);
-        cb(false);
-      }
-    });
-  },
+  // addStueva : function(body,cb){
+  //   var obj =body;
+  //   stueva = new model.Stueva(obj);
+  //   stueva.save(function(err,result){
+  //     if (!err) {
+  //       cb(true);
+  //     } else {
+  //       console.log(err);
+  //       cb(false);
+  //     }
+  //   });
+  // },
 
   updateStueva : function(id,body,cb){
     obj = body;
@@ -77,6 +77,56 @@ module.exports = {
       }
     });
   },
+  getStuEva : function(stupro,course,month,half,cb){
+    model.Stueva.find({$and:[{StuPro:stupro},{course:course},{month:month},{half:half} ]}, function(err, Stuevas){
+      if (!err) {
+        obj =[];
+        if( Stuevas.length==0){
+          cb(obj);
+        }
+        for( var k in Stuevas){
+          obj[Stuevas[k].evaluation]=Stuevas[k].level;
+          if(k == Stuevas.length-1){
+            cb(obj);
+          }
+        }
+      } else {
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+  addStuEva : function(stupro,course,month,half,body,cb){
+    model.Stueva.findOneAndUpdate({$and:[{StuPro:stupro},{course:course},{month:month},{half:half},{evaluation:body._id}]},{level:body.rating},function(err ,result){
+      if (!err) {
+        if(result){  
+          cb(true);  
+        }else{
+          var obj ={
+            StuPro:stupro,
+            evaluation:body._id,
+            course:course,
+            level:body.rating,
+            month:month,
+            half:half
+          };
+          stueva = new model.Stueva(obj);
+          stueva.save(function(err,result){
+            if (!err) {
+              cb(true);
+            } else {
+              console.log(err);
+              cb(false);
+            }
+          });
+        }
+        
+      } else {
+        console.log(err);
+        cb(false);  
+      }
+    });  
+  }
   
   
 };
