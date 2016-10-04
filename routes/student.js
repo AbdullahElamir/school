@@ -6,9 +6,25 @@ var stuproMgr = require("../controller/studentProcess");
 var MessageMgr = require("../controller/message");
 var parentMsg = require("../controller/parentMsg");
 var userHelpers = require("../controller/userHelpers");
+var jsreport = require("jsreport");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
+router.get('report',userHelpers.isLogin , function(req, res) {
+  jsreport.render({
+    template: { 
+      engine: "jsrender",
+      recipe: "phantom-pdf",
+      content: 'farok',
+      
+    },data:{result:null}
+  }).then(function(resp) {
+    resp.stream.pipe(res);
+  }).catch(function(e) {
+    res.end(e.message);
+  });
+});
+});
 router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
     stuproMgr.getStuproRoom(clas,function(stupro){
