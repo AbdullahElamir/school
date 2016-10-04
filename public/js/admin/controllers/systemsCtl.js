@@ -75,8 +75,8 @@
           }
           for(var sbj in $scope.newSystemForm.sys_class[f].exams[exm].subjects){
             var mark = $scope.newSystemForm.sys_class[f].exams[exm].subjects[sbj].mark;
-            
-            if(!mark || mark == "" || mark <=0){
+
+            if(!mark || mark === "" || mark <=0){
               toastr.error('قم بتحديد درجات الامتحانات في كل مادة بشكل صحيح');
               return;
             }
@@ -105,22 +105,22 @@
         console.log("Something went wrong");
       });
     };
-    
+
 
     //object to temperary hold exams with thier subjects's marks
     $scope.exams = [];
     //the class that is selected to be edited on its marks
     $scope.selectedClass = 0;
-    
+
     //show dialog to edit or set marks
     $scope.setSubjects = function (i){
       //subjects and exams should be selected before that
-      if($scope.newSystemForm.sys_class[i] && 
-        $scope.newSystemForm.sys_class[i].selected && 
-        $scope.newSystemForm.sys_class[i].exams && 
+      if($scope.newSystemForm.sys_class[i] &&
+        $scope.newSystemForm.sys_class[i].selected &&
+        $scope.newSystemForm.sys_class[i].exams &&
         $scope.newSystemForm.sys_class[i].selected.length>0){
 
-        $scope.selectedClass = i;        
+        $scope.selectedClass = i;
         var exams = $scope.newSystemForm.sys_class[i].exams;
         for(var e in exams){
           exams[e].x = e;
@@ -153,7 +153,7 @@
         $('#myModal').modal('show');
       }
     };
-    
+
     //dialog save button
     $scope.save = function (){
       $scope.newSystemForm.sys_class[$scope.selectedClass].exams = $scope.exams;
@@ -182,7 +182,7 @@
 
     //get the subjects of the selected class
     $scope.setClassSubjects = function(i,edit){
-      if($scope.newSystemForm.sys_class[i].id_class && $scope.newSystemForm.sys_class[i].id_class!=""){
+      if($scope.newSystemForm.sys_class[i].id_class && $scope.newSystemForm.sys_class[i].id_class!==""){
         SubjectServ.getSubjectsByClass($scope.newSystemForm.sys_class[i].id_class).then(function(response) {
           //all class subjects
           //mark the selected ones
@@ -201,13 +201,13 @@
           if(!edit){
             $scope.newSystemForm.sys_class[i].selected =[];
           }
-          
+
           subjectsSelect(i); //events of selecting subjects
         }, function(response){
           console.log("Something went wrong");
         });
       }
-    }
+    };
 
     //events of adding exams to the given class
     function addExam(cls){
@@ -228,7 +228,7 @@
         newEntry.find('input.semester').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].semester');
         newEntry.find('select').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].type');
         angular.element( document.querySelector('.controls'+cls)).append(angular.element($compile(newEntry)($scope)));
-        
+
         exi++;
 
         controlForm.find('.entry:not(:last) .btn-add'+cls)
@@ -250,7 +250,7 @@
     function subjectsSelect (i) {
       $('body').off('click', ('.list-group'+i+' .list-group-item'));
       $('body').on('click', '.list-group'+i+' .list-group-item', function (e) {
-        
+
         $(this).toggleClass('active');
 
         if(!$scope.newSystemForm.sys_class[i].selected){
@@ -276,7 +276,7 @@
 
       $('body').off('click', ('.dual-list'+i+' .selector'+i));
       $('body').on('click','.dual-list'+i+' .selector'+i,function (e) {
-        
+
         var $checkBox = $(this);
         if(!$checkBox.attr("disabled")){
           if (!$checkBox.hasClass('selected')) {
@@ -342,7 +342,7 @@
           }
           for(var sbj in $scope.newSystemForm.sys_class[f].exams[exm].subjects){
             var mark = $scope.newSystemForm.sys_class[f].exams[exm].subjects[sbj].mark;
-            if(!mark || mark == "" || mark <=0){
+            if(!mark || mark === "" || mark <=0){
               toastr.error('قم بتحديد درجات الامتحانات في كل مادة بشكل صحيح');
               return;
             }
@@ -370,23 +370,23 @@
       },function(response){
         console.log("Somthing went wrong");
       });
-        
+
     };
 
     //object to temperary hold exams with thier subjects's marks
     $scope.exams = [];
     //the class that is selected to be edited on its marks
     $scope.selectedClass = 0;
-    
+
     //show dialog to edit or set marks
     $scope.setSubjects = function (i){
       //subjects and exams should be selected before that
-      if($scope.newSystemForm.sys_class[i] && 
-        $scope.newSystemForm.sys_class[i].selected && 
-        $scope.newSystemForm.sys_class[i].exams && 
+      if($scope.newSystemForm.sys_class[i] &&
+        $scope.newSystemForm.sys_class[i].selected &&
+        $scope.newSystemForm.sys_class[i].exams &&
         $scope.newSystemForm.sys_class[i].selected.length>0){
 
-        $scope.selectedClass = i;        
+        $scope.selectedClass = i;
         var exams = $scope.newSystemForm.sys_class[i].exams;
         for(var e in exams){
           exams[e].x = e;
@@ -417,7 +417,7 @@
         $('#myModal').modal('show');
       }
     };
-    
+
     //dialog save button
     $scope.save = function (){
       $scope.newSystemForm.sys_class[$scope.selectedClass].exams = $scope.exams;
@@ -454,7 +454,7 @@
 
     //get the subjects of the selected class
     $scope.setClassSubjects = function(i){
-      if($scope.newSystemForm.sys_class[i].id_class && $scope.newSystemForm.sys_class[i].id_class!=""){
+      if($scope.newSystemForm.sys_class[i].id_class && $scope.newSystemForm.sys_class[i].id_class!==""){
         SubjectServ.getSubjectsByClass($scope.newSystemForm.sys_class[i].id_class).then(function(response) {
           //all class subjects
           $scope.newSystemForm.sys_class[i].allSubjects = response.data;
@@ -465,7 +465,7 @@
           console.log("Something went wrong");
         });
       }
-    }
+    };
 
     //events of adding exams to the given class
     function addExam(cls){
@@ -486,7 +486,7 @@
         newEntry.find('input.semester').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].semester');
         newEntry.find('select').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].type');
         angular.element( document.querySelector('.controls'+cls)).append(angular.element($compile(newEntry)($scope)));
-        
+
         exi++;
 
         controlForm.find('.entry:not(:last) .btn-add'+cls)
@@ -508,7 +508,7 @@
     function subjectsSelect (i) {
       $('body').off('click', ('.list-group'+i+' .list-group-item'));
       $('body').on('click', '.list-group'+i+' .list-group-item', function (e) {
-        
+
         $(this).toggleClass('active');
         var selected = $scope.newSystemForm.sys_class[i].selected;
         var selectedObject = JSON.parse($(this).attr('value'));
@@ -530,7 +530,7 @@
 
       $('body').off('click', ('.dual-list'+i+' .selector'+i));
       $('body').on('click','.dual-list'+i+' .selector'+i,function (e) {
-        
+
         var $checkBox = $(this);
         if(!$checkBox.attr("disabled")){
           if (!$checkBox.hasClass('selected')) {
@@ -548,7 +548,7 @@
 
   }]);
 
-  
+
   //html of created class row
   function newRow (i){
     return (
@@ -568,7 +568,7 @@
             "<li ng-class='{active: sub.selected}' style='cursor: pointer;padding:3px' value='{{sub}}' ng-repeat='sub in newSystemForm.sys_class["+i+"].allSubjects' class='list-group-item'>{{sub.name}}</li>"+
           "</ul>"+
         "</div>"+
-      "</div>"+ 
+      "</div>"+
       "</td>"+
       "<td>"+
       "<div class='controls"+i+"'>"+
@@ -578,7 +578,7 @@
         "<input required disable-validation-message='' class='form-control name' ng-model='newSystemForm.sys_class["+i+"].exams[\"0\"].name' s='0' type='text' placeholder='اسم الامتحان' />"+
         "</div>"+
         "<div class='form-group'>"+
-        "<input required disable-validation-message='' type='number' class='form-control semester' ng-model='newSystemForm.sys_class["+i+"].exams[\"0\"].semester' placeholder='الفترة'>"+
+        "<input required disable-validation-message='' min='0' pattern='[+]?[0-9]+' type='number' class='form-control semester' ng-model='newSystemForm.sys_class["+i+"].exams[\"0\"].semester' placeholder='الفترة'>"+
         "</div>"+
         "<div class='form-group'>"+
         "<select ng-options='type.value as type.name for type in types' required disable-validation-message='' class='form-control' ng-model='newSystemForm.sys_class["+i+"].exams[\"0\"].type'>"+

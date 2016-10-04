@@ -18,13 +18,13 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">رقم الهاتف</label>
-              <input class="form-control input-sm" type="text" ng-model="editAdminForm.phone" ng-required-err-type="phone" placeholder="رقم الهاتف" required>
+              <input class="form-control input-sm" type="text" pattern="[+]?[0-9]+" ng-pattern-err-type="phone" ng-model="editAdminForm.phone"  placeholder="رقم الهاتف" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">رقم الهاتف 2</label>
-              <input class="form-control input-sm" type="text" ng-model="editAdminForm.phone2" ng-required-err-type="phone" placeholder="رقم الهاتف 2" required>
+              <input class="form-control input-sm" type="text" ng-model="editAdminForm.phone2"  pattern="[+]?[0-9]+" ng-pattern-err-type="phone" placeholder="رقم الهاتف 2" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
@@ -42,19 +42,19 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">البريد الالكتروني</label>
-              <input class="form-control input-sm" type="text" ng-model="editAdminForm.email" ng-required-err-type="emailType" placeholder="البريد الالكتروني" required>
+              <input class="form-control input-sm" type="email" ng-model="editAdminForm.email" ng-pattern-err-type="emailType" placeholder="البريد الالكتروني" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">الرقم الوطني</label>
-              <input class="form-control input-sm" type="text" ng-model="editAdminForm.nid" placeholder="الرقم الوطني" required>
+              <input class="form-control input-sm" type="text" pattern="[0-9]+" ng-pattern-err-type="nId" ng-model="editAdminForm.nid" placeholder="الرقم الوطني" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">رقم البطاقة الشخصية</label>
-              <input class="form-control input-sm" type="text" ng-model="editAdminForm.personalId" placeholder="رقم البطاقة الشخصية" required>
+              <input class="form-control input-sm" type="text" pattern="[0-9]+" ng-pattern-err-type="personalId" ng-model="editAdminForm.personalId" placeholder="رقم البطاقة الشخصية" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">

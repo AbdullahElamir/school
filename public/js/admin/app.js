@@ -739,9 +739,12 @@
     defaultErrorMessageResolver.setI18nFileRootPath('/lang');
     defaultErrorMessageResolver.setCulture('ar-ly');
     defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
-      errorMessages['repName'] = "الرجاء إدخال اسم المخول";
-      errorMessages['emailType'] = "الرجاء إدخال بريد إلكتروني صالح";
-      errorMessages['phone'] = "الرجاء إدخال رقم هاتف صالح";
+      errorMessages.repName = "الرجاء إدخال اسم المخول";
+      errorMessages.emailType = "الرجاء إدخال بريد إلكتروني صالح";
+      errorMessages.phone = "الرجاء إدخال رقم هاتف صالح";
+      errorMessages.mark = "الرجاء ادخال درجة صالحة";
+      errorMessages.nId = "الرجاء ادخال رقم وطني صالح";
+      errorMessages.personalId = "الرجاء ادخال رقم بطاقة صالح";
 
 
     });
