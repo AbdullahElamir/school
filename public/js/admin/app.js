@@ -104,6 +104,22 @@
           });
         }]
       }
+    }).state('profile',{
+      url: '/profile',
+      templateUrl: 'admin/pages/profile/profile',
+      data: {pageTitle: 'الصفحة الشخصية'},
+      controller: 'ProfileCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/profileCtl.js',
+              '/assets/css/profile.css'
+            ]
+          });
+        }]
+      }
     })
 
     .state('editSchool',{

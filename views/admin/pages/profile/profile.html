@@ -1,0 +1,97 @@
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <div class="row">
+      <div class="col-xs-4 col-md-3">
+        <div class="caption caption-xs">
+          <i class="icon-settings font-green"></i>
+          <span class="caption-subject font-green bold">الملف الشخصي</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="portlet-body" style="padding-top:0px;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 toppad" >
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{user.name}}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
+
+                <div class=" col-md-9 col-lg-9 ">
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>رقم الهاتف:</td>
+                        <td>{{user.phone}}</td>
+                      </tr>
+                      <tr>
+                        <td>رقم الهاتف 2:</td>
+                        <td>{{user.phone2}}</td>
+                      </tr>
+                      <tr>
+                        <td>الجنس:</td>
+                        <td ng-if="user.gender==1">ذكر</td>
+                        <td ng-if="user.gender==2">انثى</td>
+                      </tr>
+                      <tr>
+                        <td>البريد الالكتروني:</td>
+                        <td>{{user.email}}</td>
+                      </tr>
+                      <tr>
+                        <td>الرقم الوطني:</td>
+                        <td>{{user.nid}}</td>
+                      </tr>
+                      <tr>
+                        <td>رقم البطاقة الشخصية:</td>
+                        <td>{{user.personalId}}</td>
+                      </tr>
+                      <tr>
+                        <td>المؤهل العلمي:</td>
+                        <td>{{user.qualification}}</td>
+                      </tr>
+                      <tr>
+                        <td>تاريخ الحصول عليه:</td>
+                        <td>{{user.qualificationDate}}</td>
+                      </tr>
+                      <tr>
+                        <td>التخصص:</td>
+                        <td>{{user.specialization}}</td>
+                      </tr>
+                      <tr>
+                        <td>تاريخ بدأ العمل:</td>
+                        <td>{{user.startDate}}</td>
+                      </tr>
+                      <tr>
+                        <td>الجنسبة:</td>
+                        <td>{{user.nationality}}</td>
+                      </tr>
+                      <tr>
+                        <td>العنوان:</td>
+                        <td>{{user.address}}</td>
+                      </tr>
+                      <tr>
+                        <td>اقرب نقطة دالة:</td>
+                        <td>{{user.closestPoint}}</td>
+                      </tr>
+                      <tr>
+                        <td>تاريخ الميلاد:</td>
+                        <td>{{user.birth_day.toISOString().slice(0,10)}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="btn-layout">
+                    <button class="btn btn-primary ">تعديل</button>
+                    <button class="btn btn-primary ">تغيير كلمة المرور</button>
+                  </div>
+                </div>
+                <hr>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
