@@ -14,6 +14,9 @@ router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(r
   evaMgr.getAllEvaluation(function(result){
     stuEvaMgr.getStuEva(req.params.stupro,req.params.course,req.params.month,req.params.half,function(evaluation){
       var obj=[];
+      if(result.length === 0){
+        res.send([]);
+      }
       for( var i in result){
         var eva={
           _id:result[i]._id,
@@ -24,7 +27,7 @@ router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(r
         }else{
           eva.rating=0;
         }
-        
+
         obj.push(eva);
         if(i == result.length-1){
           res.send(obj);
@@ -74,11 +77,11 @@ router.put('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(r
 
     });
     if(index == req.body.length-1){
-        res.send(true);  
+        res.send(true);
       }
-        
+
   }
-  
+
 });
 // get grades of exams for student in subject on classRoom for a current year (where year is Active)
 router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
@@ -123,6 +126,9 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,fu
 router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
   stuproMgr.getStudentClassRoom(req.params.classRoomId,function(Crooms){
     var _room=[];
+    if(Crooms.length === 0){
+      res.send([]);
+    }
     for (i in Crooms.stu){
       _room.push(Crooms.stu[i].student);
       if(i == Crooms.stu.length-1){
