@@ -72,6 +72,9 @@ router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
   TSCMgr.getTeacherClassSubject(req.params.id,function(result){
     console.log(result);
     var tsc = [];
+    if(result.length === 0){
+      res.send([]);
+    }
     for( i in result){
       tsc.push({
         _id:result[i].classRoom._id,
@@ -94,6 +97,9 @@ router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
 router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
   stuproMgr.getAllClassRoomeStudentsByYear(req.params.classRoom,req.params.year,function(Crooms){
     var _room=[];
+    if(Crooms.length === 0){
+      res.send([]);
+    }
     for (i in Crooms){
       _room.push(Crooms[i].student);
       if(i == Crooms.length-1){

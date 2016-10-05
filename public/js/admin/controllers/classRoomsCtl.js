@@ -51,12 +51,12 @@
         console.log("Somthing went wrong");
       });
     };
-    
+
     $scope.openSendMessageDialog = function(id) {
       $scope.idClassRoom = id;
     };
-   
-    $scope.sendMessageToParentsOfClassRoom = function() {      
+
+    $scope.sendMessageToParentsOfClassRoom = function() {
       ClassRoomsServ.sendMessageToParentsOfClassRoom($scope.idClassRoom,$scope.message).then(function(response){
         if(response.data === true){
           $scope.message.title = "";
@@ -68,7 +68,7 @@
         console.log("Somthing went wrong");
       });
     };
-    
+
   }]);
 
   app.controller('ClassRoomStudentsCtl',['$scope','$stateParams','$state','StudentServ','ClassRoomsServ','ClassServ','toastr',function($scope,$stateParams,$state,StudentServ,ClassRoomsServ,ClassServ,toastr){
@@ -82,7 +82,7 @@
       var $button = $(this), actives = '';
       if ($button.hasClass('move-left')) {
         actives = $('.list-right ul li.active');
-
+        
         for(var fst=0;fst<actives.length;fst++){
           var found = false;
           var std = JSON.parse(actives.eq(fst).attr('x'));
@@ -147,6 +147,7 @@
     $scope.idd = $stateParams.year;
     $scope.allStudents = 1;
     $scope.filteredStudents = [];
+    $scope.students = [];
     $scope.searchText = "";
 
     ClassRoomsServ.getStudents($stateParams.id,$stateParams.year).then(function(students){
@@ -154,6 +155,8 @@
       for(var st in $scope.students){
         $('.list-left ul').append("<li style='cursor: pointer;' x='"+JSON.stringify($scope.students[st])+"' class='list-group-item'>"+$scope.students[st].name+"</li>");
       }
+    },function(response) {
+      console.log("Something went wrong");
     });
 
     $scope.save = function(){
