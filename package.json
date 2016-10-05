@@ -17,6 +17,7 @@
     "express-session": "^1.14.1",
     "ico": "^0.3.3",
     "jsonfile": "^2.3.1",
+    "jsreport": "^1.0.9",
     "lodash": "^4.13.1",
     "mongoose": "^4.5.0",
     "mongoose-timestamp": "^0.5.0",
@@ -24,6 +25,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "password-generator": "^2.0.2",
+    "jsreport": "^0.13.4",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {

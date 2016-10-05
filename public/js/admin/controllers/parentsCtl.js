@@ -6,7 +6,7 @@
 
     $scope.newParentForm = {};
     $scope.newParent = function(){
-      console.log($scope.newParentForm);
+      $scope.newParentForm.password = $scope.newParentForm.email;
       ParentServ.addParent($scope.newParentForm).then(function(response){
          if(response.data){
           toastr.success('تم الإضافة بنجاح');
@@ -30,6 +30,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
 
     ParentServ.getParentById($stateParams).then(function(response) {
       response.data.birth_day=new Date(response.data.birth_day);
+      response.data.password="";
         $scope.editParentForm = response.data;
       }, function(response) {
         console.log("Something went wrong");
@@ -37,7 +38,9 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
 
 
      $scope.editParent = function(){
-
+       if($scope.editParentForm.password === ""){
+         delete $scope.editParentForm.password;
+       }
       ParentServ.editParent($stateParams.id,$scope.editParentForm).then(function(response) {
         if(response.data){
           toastr.info('تم التعديل بنجاح');

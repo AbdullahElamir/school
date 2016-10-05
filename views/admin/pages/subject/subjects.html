@@ -1,16 +1,18 @@
 <div class="portlet light bordered ">
   <div class="portlet-title">
     <div class="row">
-      <div class="col-xs-2 col-sm-2 col-md-2">
+      <div class="col-xs-6 col-sm-2 col-md-2">
         <div class="caption caption-xs">
           <i class="icon-settings font-green"></i>
           <span class="caption-subject font-green bold">المواد الدراسية </span>
         </div>
       </div>
-      <div class="col-xs-3 col-sm-4 col-md-3">
+      <div class="col-xs-6 col-md-3">
         <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getSubjectsBySearchValueAndClass(searchValue,clas)" placeholder="بحث ..">
       </div>
-      <div class="col-xs-3 col-sm-3 col-md-4">
+      <br class="visible-xs">
+      <br class="visible-xs">
+      <div class="col-xs-7 col-md-4">
         <select class="form-control input-sm" ng-model="clas" ng-options="clas._id as clas.name for clas in getAllClasses" ng-change="getSubjectsBySearchValueAndClass(searchValue,clas)">
         </select>
       </div>

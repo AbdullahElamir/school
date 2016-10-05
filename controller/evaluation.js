@@ -4,7 +4,7 @@ var Evaluation = null;
 module.exports = {
 
   getAllEvaluation :function(cb){
-    model.Evaluation.find({}, function(err, Evaluations){
+    model.Evaluation.find({status:1}, function(err, Evaluations){
       if(!err){
         cb(Evaluations);
       }else{
