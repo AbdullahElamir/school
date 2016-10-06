@@ -316,6 +316,9 @@
       },
       'getAllAdmins': function(){
         return $http.get('/admins/all');
+      },
+      'changePass': function(userId,passwords){
+        return $http.put('/admins/changePass/'+userId,passwords);
       }
     };
     return self;

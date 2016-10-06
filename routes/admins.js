@@ -34,7 +34,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
 });
 router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {
   console.log(req.files.file);
-  //save image to public/img/students with a name of "student's id" without extention
+  //save image to public/img/admins with a name of "admin's id" without extention
   // don't forget to delete all req.files when done
   res.send(true);
 });
@@ -43,6 +43,12 @@ router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req
 router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   adminMgr.updateAdmin(req.params.id,req.body,function(admins){
     res.send(admins);
+  });
+});
+/* Edit admin by id  */
+router.put('/changePass/:id', userHelpers.isLogin ,function(req, res) {
+  adminMgr.changePass(req.params.id,req.body,function(result){
+    res.send({result:result});
   });
 });
 
