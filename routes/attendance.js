@@ -30,10 +30,17 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   });
 });
 
+//use this to change the value of reason
+router.put('/reason/:stupro/:date', userHelpers.isLogin ,function(req, res) {
+  attendMgr.setReason(req.params.stupro,req.body,req.params.date,function(result){
+    res.send(result);
+  });
+});
+
 //use this to change the value of attend from StuPro
 router.put('/stupro/:stupro/:attend/:date', userHelpers.isLogin ,function(req, res) {
-  attendMgr.setAttendance(req.params.stupro,req.params.attend,req.params.date,function(attend){
-    res.send(true);
+  attendMgr.setAttendance(req.params.stupro,req.params.attend,req.params.date,function(result){
+    res.send(result);
   });
 });
 
@@ -78,7 +85,7 @@ router.get('/students/:classRoom/:date',userHelpers.isLogin , function(req, res)
       }
     });
   });
-  
+
 });
 
 // get attend by id

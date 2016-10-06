@@ -6,6 +6,7 @@ var Attendance = new Schema({
   StuPro:{type: Schema.Types.ObjectId , ref: 'Stupro'},
   date:{ type: Date},
   attend: {type: Number,default:1},
+  reason: {type: String,default:""},
   status: {type: Number, default:1}
 });
 

@@ -14,7 +14,7 @@ module.exports = {
       }
     });
   },
-  
+
 
 
   //getAllCustomerCount
@@ -44,7 +44,7 @@ module.exports = {
       }
     });
   },
-  
+
 
 
   getAttendanceId :function(id,cb){
@@ -121,7 +121,7 @@ module.exports = {
     // d2.setMilliseconds(999);
     d2.setMinutes(59);
     d2.setSeconds(59);
-    model.Attendance.findOneAndUpdate({$and:[{StuPro:stupro},{date:{$lte: new Date(d2)}},{date:{$gte: new Date(d1)}}]}, {attend,attend}, function(err,result) {
+    model.Attendance.findOneAndUpdate({$and:[{StuPro:stupro},{date:{$lte: new Date(d2)}},{date:{$gte: new Date(d1)}}]}, {attend:attend}, function(err,result) {
       if (!err) {
         if(result){
           cb(true);
@@ -141,7 +141,7 @@ module.exports = {
             }
           });
         }
-        
+
       } else {
         console.log(err);
         cb(false);
@@ -149,6 +149,16 @@ module.exports = {
     });
 
   },
+  setReason : function (id,reason,date,cb){
+    model.Attendance.findOneAndUpdate({_id:id,date:date}, {reason:reason.reason}, function(err,result) {
+      if (!err) {
+        cb(true);
+      } else {
+        console.log(err);
+        cb(false);
+      }
+    });
+  }
   // deleteAttendance : function(id,cb){
   //   model.Attendance.remove({_id:id}, function(err,result) {
   //     if (!err) {
@@ -159,5 +169,5 @@ module.exports = {
   //     }
   //   });
   // }
-  
+
 };
