@@ -46,7 +46,18 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 // edit class room students
 router.put('/students/:id', userHelpers.isLogin ,function(req, res) {
   //update students of this classroom
-  res.send(true);
+  classRoomMgr.getClassRoomId(req.params.id,function(Croom){
+    if(req.body.length==0){
+      res.send(true);  
+    }
+    for(var t in req.body){
+      stuproMgr.addStudentsProcess(Croom,req.body[t],function(pro){
+      }); 
+      if(t == req.body.length-1){
+        res.send(true);  
+      } 
+    }
+  });  
 });
 
 // delete room by id
