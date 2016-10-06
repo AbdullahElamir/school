@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost:3000/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost:3000/bootstrap-rtl/dist/css/bootstrap-rtl.min.css">
+    <style>
+      @font-face {
+        font-family: 'Droid Arabic Kufi';
+        src : url("http://localhost:3000/fonts/DroidKufi-Regular.ttf") format("truetype");
+      }
+      @font-face {
+        font-family: 'Droid Arabic Kufi Bold';
+        src : url("http://localhost:3000/fonts/DroidKufi-Bold.ttf") format("truetype");
+      }
+      .font-bold{
+        font-family: 'Droid Arabic Kufi Bold';
+        font-weight: 900;
+      }
+      body,h1,table {
+        font-family: 'Droid Arabic Kufi';
+        font-size: 12px;
+      }
+      .table,.table>thead>tr>th,.table>tbody>tr>td{
+        font-size: 10px;
+        border: 1px solid #000 !important;
+      }
+      .condensed>thead>tr>th, .condensed>tbody>tr>td {
+        padding: 5px;
+      }
+      th,tr{
+        text-align: center;
+      }
+      img{
+        position: absolute;
+        left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <img src="http://localhost:3000/img/schoolLogo.png" width="15%" class="img-responsive" alt="Responsive image">
+          <h4 class="text-center font-bold">تقرير شهري عن المستوى التعليمي للطالب</h4>
+          <h5 class="text-center" style="padding-top:10px;s">شهر<span>: ........................... </span></h5>
+          <br>
+          <div class="row">
+            <div class="col-xs-6">
+              <h5 class="text-center">اســــــــــــم الطالب<span>........................... </span></h5>
+            </div>
+            <div class="col-xs-6">
+              <h5 class="text-center">الفصل<span>........................... </span></h5>
+            </div>
+          </div>
+          <table class="table table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th width="2%"></th>
+                <th width="11%">
+                  <h5>المواد الدراسية</h5>
+                </th>
+                <th>
+                  <h5>النصف اﻷول من الشهر</h5>
+                  </th>
+                <th width="6.5%" style="padding-bottom:8px;">توقيع ولي اﻷمر</th>
+                <th>
+                  <h5>النصف الثاني من الشهر</h5>
+                  </th>
+                <th width="6.5%" style="padding-bottom:8px;">توقيع ولي اﻷمر</th>
+                <th width="12%">
+                  <h5>التوصيات</h5>
+                  </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <h5 style="padding-top:20px;">1</h5>
+                </td>
+                <td>
+                  <h6>التربية اﻹسلامية</h6>
+                  <h6>اسم المدرس</h6>
+                  <h6>.................</h6>
+                </td>
+                <td>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
