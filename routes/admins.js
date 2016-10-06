@@ -4,6 +4,8 @@ var adminMgr = require("../controller/admin");
 var userHelpers = require("../controller/userHelpers");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var fs = require("fs");
+var path = require("path");
 
 
 /*GET all ADmins By Search Value*/
@@ -33,10 +35,20 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
 
 });
 router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {
-  console.log(req.files.file);
-  //save image to public/img/admins with a name of "admin's id" without extention
-  // don't forget to delete all req.files when done
-  res.send(true);
+  var dir = './public/img/admins';
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
+
+  fs.readFile(req.files.file.path, function (err, data) {
+    var newPath =dir+'/'+req.params.id;
+    fs.writeFile(newPath, data, function (err) {
+      if(!err){  
+        res.send(true);       
+      }
+       
+    });
+  });
 });
 
 /* Edit admin by id  */
