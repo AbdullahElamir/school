@@ -106,10 +106,23 @@ router.post('/add',function(req, res) {
 });
 
 router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {
-  console.log(req.files.file);
   //save image to public/img/students with a name of "student's id" without extention
   // don't forget to delete all req.files when done
-  res.send(true);
+  var dir = './public/img/students';
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+    }
+
+    fs.readFile(req.files.file.path, function (err, data) {
+      var newPath =dir+'/'+req.params.id;
+      fs.writeFile(newPath, data, function (err) {
+        if(!err){  
+          res.send(true);       
+        }
+         
+      });
+    });
+
 });
 
 /* Edit student by id  */
