@@ -65,13 +65,20 @@ module.exports = {
   },
   
    getTeacherClassSubject : function(id,cb){
-    model.TSC.find({teacher:id,status:1}).populate('classRoom subject').exec(function(err, teachers){
+    model.Year.findOne({active : 1}, function(err, activeYear){
       if(!err){
-        cb(teachers);
+        model.TSC.find({teacher:id,status:1,year:activeYear._id}).populate('classRoom subject').exec(function(err, teachers){
+          if(!err){
+            cb(teachers);
+          }else{
+            console.log(err);
+            cb(null);
+          }
+        });
       }else{
         console.log(err);
         cb(null);
       }
     });
-  },
+  }
 };
