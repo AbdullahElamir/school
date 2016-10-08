@@ -52,6 +52,21 @@
     return self;
   }]);
 
+  app.service('TeacherServ',['$http',function($http){
+    var self = {
+      'getTeacherById': function(id) {
+        return $http.get('/teacher/'+id.id);
+      },
+      'editTeacher': function(id,obj) {
+        return $http.put('/teacher/edit/'+id,obj);
+      },
+      'changePass': function(userId,passwords){
+        return $http.put('/teacher/changePass/'+userId,passwords);
+      }
+    };
+    return self;
+  }]);
+
 
 
 
