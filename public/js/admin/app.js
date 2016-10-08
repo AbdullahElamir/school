@@ -763,8 +763,8 @@
           });
         }]
       }
-    }).state('teachersAttendance',{
-      url: '/teachersAttendance',
+    }).state('teacherAttendance',{
+      url: '/teacherAttendance',
       templateUrl: 'admin/pages/attendance/teachersAttendance',
       data: {pageTitle: 'ألحضور والغياب'},
       controller: 'teachersAttendanceCtl',
