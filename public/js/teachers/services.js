@@ -20,6 +20,9 @@
       },
       'saveGradesOfStudent': function(idStudent,subjectID,classRoomID,examsGrades){
         return $http.put('/studentsProcesses/grades/edit/'+idStudent+'/'+subjectID+'/'+classRoomID,examsGrades);
+      },
+      'sendMessageToParentOfStudent': function(idStudent,message){
+        return $http.put('/student/message/'+idStudent,message);
       }
     };
     return self;
@@ -29,6 +32,9 @@
     var self = {
       'getTeacherClassRooms': function(id){
         return $http.get('/classRoom/teacher/'+id);
+      },
+      'sendMessageToParentsOfClassRoom': function(idClassRoom,message){
+        return $http.put('/classRoom/message/'+idClassRoom,message);
       }
     };
     return self;

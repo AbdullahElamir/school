@@ -6,10 +6,6 @@ var classRoomMgr = require("../controller/classRoom");
 var feesMgr = require("../controller/fees");
 var userHelpers = require("../controller/userHelpers");
 
-
-
-
-
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   paid.getAllPaid(function(paids){
     res.send(paids);

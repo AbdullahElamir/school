@@ -216,8 +216,6 @@ function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb
   classRoomSaved = new model.ClassRoom(obj);
   classRoomSaved.save(function(err,result){
     if (!err) {
-      counterFinalClassRooms.value++;
-      sumFinalClassRooms.value += ts.length;
       for(var i in ts){
         saveTS(ts[i],result._id,counterFinalClassRooms,sumFinalClassRooms,cb);
       }
@@ -232,9 +230,8 @@ function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,
   feesSaved = new model.Fees(fees);
   feesSaved.save(function(err,result){
     if (!err) {
-      counterFinalClassRooms.value++;
-      sumFinalClassRooms.value += classRooms.length;
       for(var i in classRooms){
+        sumFinalClassRooms.value += tss[i].length;
         saveClassRoom(classRooms[i],tss[i],counterFinalClassRooms,sumFinalClassRooms,cb);
       }
     } else {
@@ -247,21 +244,12 @@ function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,
 function updateFees(fees,system,cb){
   model.Fees.remove({year:fees.year},function(err,result){
     if (!err){
-      model.ClassRoom.find({year:fees.year})
-      .exec(function(err, classRoomsReturned){
+      model.ClassRoom.remove({year:fees.year}, function(err,result){
         if(!err){
-          model.ClassRoom.remove(classRoomsReturned, function(err,result){
+          model.TSC.remove({year:fees.year}, function(err,result){
             if(!err){
-              model.TSC.remove({year:fees.year}, function(err,result){
-                if(!err){
-                  system.flag = 1 ;
-                  addNewSystemSetting(system,cb);
-                } else {
-                  console.log(err);
-                  cb(false);
-                  return;
-                }
-              });
+              system.flag = 1;
+              addNewSystemSetting(system,cb);
             } else {
               console.log(err);
               cb(false);

@@ -142,6 +142,19 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
         console.log("Somthing went wrong");
       });
     };
+    
+    $scope.sendMessageAllParentInSchoole = function(){
+      ParentServ.sendMessageAllParentInSchoole($scope.message).then(function(response){
+        if(response.data === true){
+          $scope.message.title = "";
+          $scope.message.description = "";
+          $('#messageAllModal').modal('hide');
+          toastr.success('تم إرسال الرسالة لجميع أولياء الأمور بنجاح');
+        }
+      },function(response){
+        console.log("Somthing went wrong");
+      });
+    };
 
   }]);
 

@@ -121,7 +121,7 @@ module.exports = {
     // d2.setMilliseconds(999);
     d2.setMinutes(59);
     d2.setSeconds(59);
-    model.Attendance.findOneAndUpdate({$and:[{StuPro:stupro},{date:{$lte: new Date(d2)}},{date:{$gte: new Date(d1)}}]}, {attend,attend}, function(err,result) {
+    model.Attendance.findOneAndUpdate({$and:[{StuPro:stupro},{date:{$lte: new Date(d2)}},{date:{$gte: new Date(d1)}}]}, {attend:attend}, function(err,result) {
       if (!err) {
         if(result){
           cb(true);
