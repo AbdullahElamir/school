@@ -34,7 +34,6 @@ router.put('/fees/:fees', userHelpers.isLogin ,function(req, res) {
 //pay for a specific stuPro
 router.put('/student/:stupro', userHelpers.isLogin ,function(req, res) {
   //##########################
-  console.log(req.body);
   req.body.StuPro=req.params.stupro;
   req.body.receip_num="123";
   paid.addPaid(req.body,function(paid){

@@ -277,6 +277,9 @@
       },
       'setStuProAttend': function(StuPro,attend,date){
         return $http.put('/attendance/stupro/'+StuPro+'/'+attend+'/'+date);
+      },
+      'setReason': function(StuPro,reason,date){
+        return $http.put('/attendance/reason/'+StuPro._id+'/'+date,{reason:reason});
       }
     };
     return self;
@@ -319,6 +322,9 @@
       },
       'getAllAdmins': function(){
         return $http.get('/admins/all');
+      },
+      'changePass': function(userId,passwords){
+        return $http.put('/admins/changePass/'+userId,passwords);
       }
     };
     return self;

@@ -1,0 +1,141 @@
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <div class="row">
+      <div class="col-xs-4 col-md-3">
+        <div class="caption caption-xs">
+          <i class="icon-settings font-green"></i>
+          <span class="caption-subject font-green bold">الملف الشخصي</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="portlet-body" style="padding-top:0px;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 toppad" >
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{user.name}}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="صورة المستخدم"  onError="this.error=null;this.src='img/noimage';" src="img/admins/{{user._id}}" class="img-circle img-responsive"> </div>
+
+                <div class=" col-md-9 col-lg-9 ">
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>رقم الهاتف:</td>
+                        <td>{{user.phone}}</td>
+                      </tr>
+                      <tr>
+                        <td>رقم الهاتف 2:</td>
+                        <td>{{user.phone2}}</td>
+                      </tr>
+                      <tr>
+                        <td>الجنس:</td>
+                        <td ng-if="user.gender==1">ذكر</td>
+                        <td ng-if="user.gender==2">انثى</td>
+                      </tr>
+                      <tr>
+                        <td>البريد الالكتروني:</td>
+                        <td>{{user.email}}</td>
+                      </tr>
+                      <tr>
+                        <td>الرقم الوطني:</td>
+                        <td>{{user.nid}}</td>
+                      </tr>
+                      <tr>
+                        <td>رقم البطاقة الشخصية:</td>
+                        <td>{{user.personalId}}</td>
+                      </tr>
+                      <tr>
+                        <td>المؤهل العلمي:</td>
+                        <td>{{user.qualification}}</td>
+                      </tr>
+                      <tr>
+                        <td>تاريخ الحصول عليه:</td>
+                        <td>{{user.qualificationDate}}</td>
+                      </tr>
+                      <tr>
+                        <td>التخصص:</td>
+                        <td>{{user.specialization}}</td>
+                      </tr>
+                      <tr>
+                        <td>تاريخ بدأ العمل:</td>
+                        <td>{{user.startDate}}</td>
+                      </tr>
+                      <tr>
+                        <td>الجنسبة:</td>
+                        <td>{{user.nationality}}</td>
+                      </tr>
+                      <tr>
+                        <td>العنوان:</td>
+                        <td>{{user.address}}</td>
+                      </tr>
+                      <tr>
+                        <td>اقرب نقطة دالة:</td>
+                        <td>{{user.closestPoint}}</td>
+                      </tr>
+                      <tr>
+                        <td>تاريخ الميلاد:</td>
+                        <td>{{user.birth_day.toISOString().slice(0,10)}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="btn-layout">
+                    <button ui-sref="editProfile" class="btn btn-primary ">تعديل</button>
+                    <button data-toggle="modal" data-target="#changePassModal" class="btn btn-primary ">تغيير كلمة المرور</button>
+                  </div>
+                </div>
+                <hr>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" id="changePassModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">تغيير كلمة المرور</h4>
+          </div>
+          <form novalidate ng-submit="changePassFun()">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                      <div class="form-group">
+                        <label class="control-label">كلمة المرور الحالية</label>
+                        <input class="form-control input-sm" type="password" ng-model="changePass.oldPass" placeholder="كلمة المرور الحالية" required>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12">
+                      <div class="form-group">
+                        <label class="control-label">كلمة المرور الجديدة</label>
+                        <input class="form-control input-sm" type="password" ng-model="changePass.newPass" placeholder="كلمة المرور الجديدة" required>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12">
+                      <div class="form-group">
+                        <label class="control-label">تأكيد كلمة المرور</label>
+                        <input class="form-control input-sm" equals-to="changePass.newPass" type="password" ng-model="changePass.confirmPass" placeholder="تأكيد كلمة المرور" required>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button value="idStudent" type="submit" class="btn btn-success" >حفظ</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

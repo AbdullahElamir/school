@@ -46,7 +46,18 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 // edit class room students
 router.put('/students/:id', userHelpers.isLogin ,function(req, res) {
   //update students of this classroom
-  res.send(true);
+  classRoomMgr.getClassRoomId(req.params.id,function(Croom){
+    if(req.body.length==0){
+      res.send(true);  
+    }
+    for(var t in req.body){
+      stuproMgr.addStudentsProcess(Croom,req.body[t],function(pro){
+      }); 
+      if(t == req.body.length-1){
+        res.send(true);  
+      } 
+    }
+  });  
 });
 
 // delete room by id
@@ -72,6 +83,9 @@ router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
   TSCMgr.getTeacherClassSubject(req.params.id,function(result){
     console.log(result);
     var tsc = [];
+    if(result.length === 0){
+      res.send([]);
+    }
     for( i in result){
       tsc.push({
         _id:result[i].classRoom._id,
@@ -94,6 +108,9 @@ router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
 router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
   stuproMgr.getAllClassRoomeStudentsByYear(req.params.classRoom,req.params.year,function(Crooms){
     var _room=[];
+    if(Crooms.length === 0){
+      res.send([]);
+    }
     for (i in Crooms){
       _room.push(Crooms[i].student);
       if(i == Crooms.length-1){

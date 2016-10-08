@@ -51,12 +51,12 @@
         console.log("Somthing went wrong");
       });
     };
-    
+
     $scope.openSendMessageDialog = function(id) {
       $scope.idClassRoom = id;
     };
-   
-    $scope.sendMessageToParentsOfClassRoom = function() {      
+
+    $scope.sendMessageToParentsOfClassRoom = function() {
       ClassRoomsServ.sendMessageToParentsOfClassRoom($scope.idClassRoom,$scope.message).then(function(response){
         if(response.data === true){
           $scope.message.title = "";
@@ -68,7 +68,7 @@
         console.log("Somthing went wrong");
       });
     };
-    
+
   }]);
 
   app.controller('ClassRoomStudentsCtl',['$scope','$stateParams','$state','StudentServ','ClassRoomsServ','ClassServ','toastr',function($scope,$stateParams,$state,StudentServ,ClassRoomsServ,ClassServ,toastr){
@@ -147,6 +147,7 @@
     $scope.idd = $stateParams.year;
     $scope.allStudents = 1;
     $scope.filteredStudents = [];
+    $scope.students = [];
     $scope.searchText = "";
 
     ClassRoomsServ.getStudents($stateParams.id,$stateParams.year).then(function(students){
@@ -154,6 +155,8 @@
       for(var st in $scope.students){
         $('.list-left ul').append("<li style='cursor: pointer;' x='"+JSON.stringify($scope.students[st])+"' class='list-group-item'>"+$scope.students[st].name+"</li>");
       }
+    },function(response) {
+      console.log("Something went wrong");
     });
 
     $scope.save = function(){
@@ -190,90 +193,7 @@
 
   }]);
 
-  app.controller('ClassRoomAttendanceCtl',['$scope','$stateParams','$state','AttendanceServ',function($scope,$stateParams,$state,AttendanceServ){
-    $scope.inlineOptions = {
-      customClass: getDayClass,
-      minDate: new Date(),
-      showWeeks: true
-    };
-
-    $scope.dateOptions = {
-      /*dateDisabled: disabled,*/
-      formatYear: 'yy',
-      maxDate: new Date(2020, 5, 22),
-      minDate: new Date(),
-      startingDay: 1
-    };
-
-    // Disable weekend selection
-    function disabled(data) {
-      var date = data.date,mode = data.mode;
-      return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-    }
-
-    $scope.toggleMin = function() {
-      $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-      $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
-    };
-
-    $scope.toggleMin();
-
-    $scope.open1 = function() {
-      $scope.popup1.opened = true;
-    };
-
-    $scope.open2 = function() {
-      $scope.popup2.opened = true;
-    };
-
-    $scope.setDate = function(year, month, day) {
-      $scope.dt = new Date(year, month, day);
-    };
-
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
-    $scope.altInputFormats = ['M!/d!/yyyy'];
-
-    $scope.popup1 = {
-      opened: false
-    };
-
-    $scope.popup2 = {
-      opened: false
-    };
-
-    var tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    var afterTomorrow = new Date();
-    afterTomorrow.setDate(tomorrow.getDate() + 1);
-    $scope.events = [
-      {
-        date: tomorrow,
-        status: 'full'
-      },
-      {
-        date: afterTomorrow,
-        status: 'partially'
-      }
-    ];
-
-    function getDayClass(data) {
-      var date = data.date,
-        mode = data.mode;
-      if (mode === 'day') {
-        var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-        for (var i = 0; i < $scope.events.length; i++) {
-          var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-          if (dayToCheck === currentDay) {
-            return $scope.events[i].status;
-          }
-        }
-      }
-      return '';
-    }
-
+  app.controller('ClassRoomAttendanceCtl',['$scope','$stateParams','$state','AttendanceServ','toastr',function($scope,$stateParams,$state,AttendanceServ,toastr){
     $scope.year = $stateParams.year;
     $scope.date = new Date();
 
@@ -283,14 +203,33 @@
         AttendanceServ.setStuProAttend(StuPro._id,attend,$scope.date).then(function(result){
           if(!result.data){
             toastr.error('عملية التعديل فشلت');
+          }else{
+            StuPro.attend = attend;
           }
         });
       }
     };
 
+    $scope.reason = function(StuPro){
+      AttendanceServ.setReason(StuPro,$scope.reasonVal,$scope.date).then(function(result){
+        if(result.data){
+          StuPro.reason = $scope.reasonVal;
+          toastr.success('تم اضافة السبب');
+          $('#myModal').modal('hide');
+        }else{
+          toastr.error('عملية التعديل فشلت');
+        }
+      });
+    };
+    $scope.reasonPre = function(obj){
+      $scope.reasonVal = "";
+      $scope.idStudent = obj;
+    };
+
     $scope.refresh = function(){
       AttendanceServ.getStudentsByDateAndClassRoom($stateParams.id,$scope.date).then(function(students){
         $scope.students=students.data;
+        console.log(students.data);
       });
     };
     $scope.refresh();

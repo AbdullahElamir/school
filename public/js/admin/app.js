@@ -104,6 +104,37 @@
           });
         }]
       }
+    }).state('profile',{
+      url: '/profile',
+      templateUrl: 'admin/pages/profile/profile',
+      data: {pageTitle: 'الصفحة الشخصية'},
+      controller: 'ProfileCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/profileCtl.js',
+              '/assets/css/profile.css'
+            ]
+          });
+        }]
+      }
+    }).state('editProfile',{
+      url: '/editProfile',
+      templateUrl: 'admin/pages/profile/editProfile',
+      data: {pageTitle: 'تعديل الصفحة الشخصية'},
+      controller: 'EditProfileCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/profileCtl.js'
+            ]
+          });
+        }]
+      }
     })
 
     .state('editSchool',{
@@ -745,7 +776,7 @@
       errorMessages.mark = "الرجاء ادخال درجة صالحة";
       errorMessages.nId = "الرجاء ادخال رقم وطني صالح";
       errorMessages.personalId = "الرجاء ادخال رقم بطاقة صالح";
-
+      errorMessages.equalsTo = "كلمتا المرور غير متطابقتان";
 
     });
   }]);

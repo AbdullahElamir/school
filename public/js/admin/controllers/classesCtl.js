@@ -19,32 +19,32 @@
       });
      };
      $scope.init("");
-     
+
       $scope.getClassesBySearchValue = function (searchValue){
         $scope.currentPage = 1;
         $scope.init(searchValue);
       };
-   
+
    $scope.deleteClass = function(id) {
     $scope.idClass = id;
    };
-   
+
    $scope.deleteConfirm = function(id) {
     ClassServ.deleteClass(id).then(function(response){
         if(response.data.result == 1){
           toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليه');
         } else if (response.data.result == 2){
-   
+
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
-          
+
           $scope.init($scope.searchValue);
           var count = $scope.classes.filter(function(obj){return obj._id != id;}).length;
           if( $scope.currentPage > 1 && count == 0 ){
             $scope.currentPage -= 1;
             $scope.init($scope.searchValue);
           }
-          
+
         } else if (response.data.result == 3){
           toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
         }
@@ -59,16 +59,21 @@
 //editClassCtl
   app.controller('editClassCtl',['$scope','$stateParams','ClassServ','$state','toastr',function($scope,$stateParams,ClassServ,$state,toastr){
     $scope.editClassForm={};
-   
+    $scope.allTypes = [
+      {_id:1,name:"ابتدائي"},
+      {_id:2,name:"اعدادي"},
+      {_id:3,name:"ثانوي"}
+    ];
+
     ClassServ.getClassById($stateParams).then(function(response) {
       $scope.editClassForm = response.data;
     }, function(response) {
       console.log("Something went wrong");
     });
-    
+
 
     $scope.editClass = function(){
-  
+
       ClassServ.editClass($stateParams.id,$scope.editClassForm).then(function(response) {
         if(response.data){
           toastr.info('تم التعديل بنجاح');
@@ -84,8 +89,14 @@
   }]);
 
   app.controller('newClassCtl',['$scope','ClassServ','$state','toastr',function($scope,ClassServ,$state,toastr){
-    
+
     $scope.newClassForm={};
+    $scope.allTypes = [
+      {_id:1,name:"ابتدائي"},
+      {_id:2,name:"اعدادي"},
+      {_id:3,name:"ثانوي"}
+    ];
+
     $scope.newClass = function(){
       ClassServ.addClass($scope.newClassForm).then(function(response){
         if(response.data){
@@ -96,7 +107,7 @@
         }
       },function(response){
         console.log("Somthing went wrong");
-      });    
+      });
     };
 
   }]);

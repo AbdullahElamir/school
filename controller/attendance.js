@@ -14,7 +14,7 @@ module.exports = {
       }
     });
   },
-  
+
 
 
   //getAllCustomerCount
@@ -44,7 +44,7 @@ module.exports = {
       }
     });
   },
-  
+
 
 
   getAttendanceId :function(id,cb){
@@ -141,7 +141,7 @@ module.exports = {
             }
           });
         }
-        
+
       } else {
         console.log(err);
         cb(false);
@@ -149,6 +149,38 @@ module.exports = {
     });
 
   },
+  setReason : function (id,reason,date,cb){
+    var d1 = new Date(date);
+    var d2 = new Date(date);
+    d1.setHours(0);
+    d1.setMinutes(0);
+    d1.setSeconds(0);
+    d2.setHours(23);
+    // d2.setMilliseconds(999);
+    d2.setMinutes(59);
+    d2.setSeconds(59);
+    model.Attendance.findOneAndUpdate({$and:[{StuPro:id},{date:{$lte: new Date(d2)}},{date:{$gte: new Date(d1)}}]}, {reason:reason.reason}, function(err,result) {
+      if (!err) {
+        if(result){
+          cb(true);
+        } else {
+          var obj = {"StuPro":id,"date":new Date(date),"attend":0,"reason":reason.reason};
+          var Attendance = new model.Attendance(obj);
+          Attendance.save(function(err,result){
+            if (!err) {
+              cb(true);
+            } else {
+              console.log(err);
+              cb(false);
+            }
+          });
+        }
+      } else {
+        console.log(err);
+        cb(false);
+      }
+    });
+  }
   // deleteAttendance : function(id,cb){
   //   model.Attendance.remove({_id:id}, function(err,result) {
   //     if (!err) {
@@ -159,5 +191,5 @@ module.exports = {
   //     }
   //   });
   // }
-  
+
 };

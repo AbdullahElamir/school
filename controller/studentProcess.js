@@ -154,4 +154,30 @@ module.exports = {
       }
     });
   },
+  addStudentsProcess : function(classRoom,students,cb){
+    var obj = {
+      student:students._id,
+      year:classRoom.year,
+      classRoom:classRoom._id
+    }
+    model.Stupro.findOneAndUpdate(obj,{description:"NULL"}, function(err, stup){
+      if(!err){
+        if(stup){
+           cb(true);
+        }else{
+          Stupro = new model.Stupro(obj);
+          Stupro.save(function(err,result){
+            if (!err) {
+              cb(true);  
+            } else {
+              console.log(err);
+              cb(false);
+            }
+          });
+        }
+      }else{
+        cb(null);
+      }
+    });
+  },
 };

@@ -25,6 +25,23 @@ router.get('/report',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
+router.get('/report1',userHelpers.isLogin , function(req, res) {
+  jsreport.render({
+    template: { 
+      engine: "jsrender",
+      recipe: "phantom-pdf",
+      phantom:{
+        format: 'A4',
+        orientation: "landscape"
+      },
+      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/printTest1.html"), "utf8")
+    },data:{result:null}
+  }).then(function(resp) {
+    resp.stream.pipe(res);
+  }).catch(function(e) {
+    res.end(e.message);
+  });
+});
 router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
     stuproMgr.getStuproRoom(clas,function(stupro){
@@ -89,10 +106,23 @@ router.post('/add',function(req, res) {
 });
 
 router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {
-  console.log(req.files.file);
   //save image to public/img/students with a name of "student's id" without extention
   // don't forget to delete all req.files when done
-  res.send(true);
+  var dir = './public/img/students';
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+    }
+
+    fs.readFile(req.files.file.path, function (err, data) {
+      var newPath =dir+'/'+req.params.id;
+      fs.writeFile(newPath, data, function (err) {
+        if(!err){  
+          res.send(true);       
+        }
+         
+      });
+    });
+
 });
 
 /* Edit student by id  */

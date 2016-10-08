@@ -145,4 +145,23 @@ module.exports = {
     });
   },
 
+  changePass : function(id,passwords,cb){
+    if(passwords.newPass === passwords.confirmPass){
+      model.Admin.findOneAndUpdate({_id:id,password:passwords.oldPass}, {password:passwords.newPass}, function(err,Admins) {
+        if (!err) {
+          if(Admins){
+            cb(1); // successfully changed
+          }else{
+            cb(2); //wrong password
+          }
+        } else {
+          console.log(err);
+          cb(3); //error
+        }
+      });
+    }else{
+      cb(4); //passwords are not match
+    }
+  }
+
 };
