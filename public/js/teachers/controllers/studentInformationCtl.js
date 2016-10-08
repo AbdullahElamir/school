@@ -109,6 +109,23 @@
         console.log("Somthing went wrong");
       });
     };
+    
+    $scope.openSendMessageDialog = function(id) {
+      $scope.idStudentMsg = id;
+   };
+
+    $scope.sendMessageToParentOfStudent = function() {
+       studentInformationServ.sendMessageToParentOfStudent($scope.idStudentMsg,$scope.message).then(function(response){
+         if(response.data === true){
+           $scope.message.title = "";
+           $scope.message.description = "";
+           $('#messageModal').modal('hide');
+           toastr.success('تم إرسال الرسالة بنجاح');
+         }
+       },function(response){
+         console.log("Somthing went wrong");
+       });
+    };
 
   }]);
 

@@ -212,6 +212,9 @@
       },
       'sendMessageToParent': function(idParent,message){
         return $http.put('/parent/message/'+idParent,message);
+      },
+      'sendMessageAllParentInSchoole' : function(message){
+        return $http.put('/parent/message/all',message);
       }
     };
     return self;

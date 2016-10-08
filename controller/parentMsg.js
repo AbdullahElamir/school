@@ -136,6 +136,32 @@ module.exports = {
     });
   },
   
+  sentMsgsAllParents: function(msg,cb){
+    var count = 0;
+    model.Parent.find({status:1}).exec(function(err,parents){
+      if(!err){
+        for(var i in parents){
+          ParentM = new model.ParentMsg({parent:parents[i]._id,msg:msg,seen:0,status:1});
+          ParentM.save(function(err,result){
+            if (!err) {
+              count++;
+              if( count == parents.length ){
+                cb(true);
+                return;
+              }
+            } else {
+              console.log(err);
+              cb(false);
+            }
+          });
+        }
+      }else{
+        console.log(err);
+        cb(false);
+      }
+    });
+  }
+  
   // deleteParentMsg : function(id,cb){
   //   model.ParentMsg.remove({_id:id}, function(err,result) {
   //     if (!err) {

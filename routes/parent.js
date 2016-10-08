@@ -9,7 +9,6 @@ var multipartMiddleware = multipart();
 var fs = require("fs");
 var path = require("path");
 
-
 /*GET all Student By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
   parentMgr.getAllParentsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(parents){
@@ -17,9 +16,17 @@ router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res)
   });
 });
 
+/* Send Message to all parents in schoole (where status = 1)*/
+router.put('/message/all',userHelpers.isLogin,function(req, res) {
+  MessageMgr.addMsgParent(req.body,function(msg){
+    parentMsg.sentMsgsAllParents(msg._id,function(send){
+      res.send(send);
+    });
+  });
+});
+
 /* Send Message to Parent by parentID */
 router.put('/message/:parentId',userHelpers.isLogin,function(req, res) {
-
   MessageMgr.addMsgParent(req.body,function(msg){
     parentMsg.addParentMsg({parent:req.params.parentId,msg:msg._id},function(send){
       res.send(send);

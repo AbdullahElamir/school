@@ -106,7 +106,7 @@ module.exports = {
   addMsgParent : function(body,cb){
     var obj ={
       name:body.title,
-      description:body.description
+      msg:body.description
     };
     Message = new model.Message(obj);
     Message.save(function(err,result){
@@ -118,6 +118,7 @@ module.exports = {
       }
     });
   },
+  
   // deleteMessage : function(id,cb){
   //   model.Message.remove({_id:id}, function(err,result) {
   //     if (!err) {

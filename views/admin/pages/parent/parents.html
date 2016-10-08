@@ -1,7 +1,7 @@
 <div class="portlet light bordered ">
   <div class="portlet-title">
     <div class="row">
-      <div class="col-xs-4 col-md-3">
+      <div class="col-xs-4 col-md-2">
         <div class="caption caption-xs">
           <i class="icon-settings font-green"></i>
           <span class="caption-subject font-green bold">عرض ولي الامر</span>
@@ -10,10 +10,15 @@
       <div class="col-xs-6 col-sm-6 col-md-6">
         <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getParentsBySearchValue(searchValue)" placeholder="بحث بواسطة إسم ولي الأمر أو الرقم الوطني ..">
       </div>
-      <div class="col-xs-2 col-sm-3 col-md-3 text-left">
+      <div class="col-xs-2 col-sm-3 col-md-2 text-left">
+        <a data-toggle="modal" data-target="#messageAllModal"  class="btn btn-sm btn-primary"><i class="fa fa-envelope fa-fw"></i>
+          <span class="hidden-xs">&nbsp; رسالة جماعية</span>
+        </a>
+      </div>
+      <div class="col-xs-2 col-sm-3 col-md-2 text-left">
         <a onclick="$('#newParentId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>
           <span class="hidden-xs">&nbsp;إضافة ولي الامر</span>
-          </a>
+        </a>
       </div>
     </div>
   </div>
@@ -79,6 +84,46 @@
             </div>
             <div class="modal-footer">
               <button value="idParent" type="submit" class="btn btn-success" >إرسال</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="messageAllModal" tabindex="-1" role="dialog" aria-labelledby="myModalMessageAllLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalMessageAllLabel">إرسال رسالة جماعية</h4>
+          </div>
+          <form novalidate ng-submit="sendMessageAllParentInSchoole()">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                      <div class="form-group">
+                        <label class="control-label">عنوان الرسالة</label>
+                        <input class="form-control input-sm" type="text" ng-model="message.title" placeholder="عنوان الرسالة" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                      <div class="form-group">
+                        <label class="control-label">محتوى الرسالة</label>
+                        <textarea class="form-control input-sm" rows="6" cols="12" ng-model="message.description" placeholder="محتوى الرسالة" required></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" >إرسال</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
             </div>
           </form>
