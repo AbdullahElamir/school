@@ -108,6 +108,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
       //set image of selected parent to dialog
     };
 
+    $scope.date = new Date().getTime();
     // upload on file select or drop
     $scope.upload = function (file) {
       if($scope.file){
@@ -118,6 +119,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
         }).success(function (data, status, headers, config) {
             if(data){
               $('#picModal').modal('hide');
+              $scope.date = new Date().getTime();
               toastr.success('تم تغيير الصورة بنجاح');
             }else{
               toastr.info('فشل تحميل الصورة');

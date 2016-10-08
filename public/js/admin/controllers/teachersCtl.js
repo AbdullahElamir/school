@@ -58,6 +58,7 @@
      //set image of selected teacher to dialog
    };
 
+   $scope.date = new Date().getTime();
    // upload on file select or drop
    $scope.upload = function (file) {
      if($scope.file){
@@ -68,6 +69,7 @@
        }).success(function (data, status, headers, config) {
            if(data){
              $('#picModal').modal('hide');
+             $scope.date = new Date().getTime();
              toastr.success('تم تغيير الصورة بنجاح');
            }else{
              toastr.info('فشل تحميل الصورة');

@@ -27,6 +27,12 @@
       },
       'sendMessageToParentOfStudent': function(idStudent,message){
         return $http.put('/student/message/'+idStudent,message);
+      },
+      'openFile': function(idStudent){
+        return $http.put('/student/openFile/'+idStudent);
+      },
+      'closeFile': function(idStudent){
+        return $http.put('/student/closeFile/'+idStudent);
       }
     };
     return self;
