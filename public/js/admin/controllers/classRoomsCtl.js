@@ -211,7 +211,7 @@
     };
 
     $scope.reason = function(StuPro){
-      AttendanceServ.setReason(StuPro,$scope.reason,$scope.date).then(function(result){
+      AttendanceServ.setReason(StuPro,$scope.reasonVal,$scope.date).then(function(result){
         if(result.data){
           StuPro.reason = $scope.reasonVal;
           toastr.success('تم اضافة السبب');
@@ -229,6 +229,7 @@
     $scope.refresh = function(){
       AttendanceServ.getStudentsByDateAndClassRoom($stateParams.id,$scope.date).then(function(students){
         $scope.students=students.data;
+        console.log(students.data);
       });
     };
     $scope.refresh();
