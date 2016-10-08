@@ -281,11 +281,29 @@
       'getStudentsByDateAndClassRoom': function(classRoom,date){
         return $http.get('/attendance/students/'+classRoom+'/'+date);
       },
+      'getTeachersByDateAndSearchValue': function(date,searchText,size,page){
+        return $http.get('/attendance/teachers/'+searchText+'/'+date+'/'+size+'/'+page);
+      },
+      'getAdminsByDateAndSearchValue': function(date,searchText,size,page){
+        return $http.get('/attendance/admins/'+searchText+'/'+date+'/'+size+'/'+page);
+      },
       'setStuProAttend': function(StuPro,attend,date){
         return $http.put('/attendance/stupro/'+StuPro+'/'+attend+'/'+date);
       },
+      'setTeacherAttend': function(teacher,attend,date){
+        return $http.put('/attendance/teacher/'+teacher+'/'+attend+'/'+date);
+      },
+      'setAdminAttend': function(admin,attend,date){
+        return $http.put('/attendance/admin/'+admin+'/'+attend+'/'+date);
+      },
       'setReason': function(StuPro,reason,date){
         return $http.put('/attendance/reason/'+StuPro._id+'/'+date,{reason:reason});
+      },
+      'setTeacherReason': function(teacher,reason,date){
+        return $http.put('/attendance/teacher/reason/'+teacher._id+'/'+date,{reason:reason});
+      },
+      'setAdminReason': function(admin,reason,date){
+        return $http.put('/attendance/admin/reason/'+admin._id+'/'+date,{reason:reason});
       }
     };
     return self;

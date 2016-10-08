@@ -763,6 +763,36 @@
           });
         }]
       }
+    }).state('teachersAttendance',{
+      url: '/teachersAttendance',
+      templateUrl: 'admin/pages/attendance/teachersAttendance',
+      data: {pageTitle: 'ألحضور والغياب'},
+      controller: 'teachersAttendanceCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/attendanceCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('adminsAttendance',{
+      url: '/adminsAttendance',
+      templateUrl: 'admin/pages/attendance/adminsAttendance',
+      data: {pageTitle: 'ألحضور والغياب'},
+      controller: 'adminsAttendanceCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/attendanceCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);

@@ -37,12 +37,31 @@ router.put('/reason/:stupro/:date', userHelpers.isLogin ,function(req, res) {
   });
 });
 
+//##################################################
+router.put('/teacher/reason/:id/:date', userHelpers.isLogin ,function(req, res) {
+  res.send(true);
+});
+
+router.put('/admin/reason/:id/:date', userHelpers.isLogin ,function(req, res) {
+  res.send(true);
+});
+//##################################################
+
 //use this to change the value of attend from StuPro
 router.put('/stupro/:stupro/:attend/:date', userHelpers.isLogin ,function(req, res) {
   attendMgr.setAttendance(req.params.stupro,req.params.attend,req.params.date,function(result){
     res.send(result);
   });
 });
+
+//################################################
+router.put('/teacher/:id/:attend/:date', userHelpers.isLogin ,function(req, res) {
+  res.send(true);
+});
+router.put('/admin/:id/:attend/:date', userHelpers.isLogin ,function(req, res) {
+  res.send(true);
+});
+//################################################
 
 // delete attend by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
@@ -62,6 +81,56 @@ router.get('/status/:status',userHelpers.isLogin , function(req, res) {
     res.send(attend);
   });
 });
+
+//################################################
+router.get('/teachers/:searchValue/:date/:limit/:page',userHelpers.isLogin , function(req, res) {
+  res.send({
+    result:[
+      {_id:1234,name:"ahmed",attend:1,reason:""},
+      {_id:1224,name:"mohammed",attend:1,reason:""},
+      {_id:1254,name:"salem",attend:1,reason:""},
+      {_id:1274,name:"abdo",attend:0,reason:"بلا سبب"}
+    ],
+    count:4
+  });
+});
+router.get('/teachers//:date/:limit/:page',userHelpers.isLogin , function(req, res) {
+  res.send({
+    result:[
+      {_id:1234,name:"ahmed",attend:1,reason:""},
+      {_id:1224,name:"mohammed",attend:1,reason:""},
+      {_id:1254,name:"salem",attend:1,reason:""},
+      {_id:1274,name:"abdo",attend:0,reason:"بلا سبب"}
+    ],
+    count:4
+  });
+});
+
+router.get('/admins/:searchValue/:date/:limit/:page',userHelpers.isLogin , function(req, res) {
+  res.send({
+    result:[
+      {_id:1234,name:"ahmed",attend:1,reason:""},
+      {_id:1224,name:"mohammed",attend:1,reason:""},
+      {_id:1254,name:"salem",attend:1,reason:""},
+      {_id:1274,name:"abdo",attend:0,reason:"بلا سبب"}
+    ],
+    count:3
+  });
+});
+router.get('/admins//:date/:limit/:page',userHelpers.isLogin , function(req, res) {
+  res.send({
+    result:[
+      {_id:1234,name:"ahmed",attend:1,reason:""},
+      {_id:1224,name:"mohammed",attend:1,reason:""},
+      {_id:1254,name:"salem",attend:1,reason:""},
+      {_id:1274,name:"abdo",attend:0,reason:"بلا سبب"}
+    ],
+    count:3
+  });
+});
+//#########################################
+
+
 // get attend by date and classRoom
 router.get('/students/:classRoom/:date',userHelpers.isLogin , function(req, res) {
   // get real data _id  id is the id of the stuPro to let you make edits
