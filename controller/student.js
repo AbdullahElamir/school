@@ -83,8 +83,8 @@ module.exports = {
   },
 
   addStudent : function(body,cb){
-    obj = body
-
+    obj = body;
+    obj.startDate = new Date();
     student = new model.Student(obj);
     student.save(function(err,result){
       if (!err) {
@@ -97,10 +97,10 @@ module.exports = {
   },
 
   updateStudent : function(id,body,cb){
-    obj = body
+    obj = body;
     model.Student.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
-        cb(true)
+        cb(true);
       } else {
         console.log(err);
         cb(false);

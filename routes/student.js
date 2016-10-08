@@ -14,7 +14,7 @@ var path = require("path");
 
 router.get('/report',userHelpers.isLogin , function(req, res) {
   jsreport.render({
-    template: { 
+    template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/testReport.html"), "utf8")
@@ -27,7 +27,7 @@ router.get('/report',userHelpers.isLogin , function(req, res) {
 });
 router.get('/report1',userHelpers.isLogin , function(req, res) {
   jsreport.render({
-    template: { 
+    template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
       phantom:{
@@ -116,13 +116,26 @@ router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req
     fs.readFile(req.files.file.path, function (err, data) {
       var newPath =dir+'/'+req.params.id;
       fs.writeFile(newPath, data, function (err) {
-        if(!err){  
-          res.send(true);       
+        if(!err){
+          res.send(true);
         }
-         
+
       });
     });
 
+});
+
+/* open student,s file by id  */
+router.put('/openFile/:id',userHelpers.isLogin,function(req, res) {
+  studentMgr.updateStudent(req.params.id,{finishDate:null,active:1},function(student){
+    res.send(student);
+  });
+});
+/* close student;s file by id  */
+router.put('/closeFile/:id',userHelpers.isLogin,function(req, res) {
+  studentMgr.updateStudent(req.params.id,{finishDate:new Date(),active:0},function(student){
+    res.send(student);
+  });
 });
 
 /* Edit student by id  */
@@ -131,6 +144,7 @@ router.put('/edit/:id',userHelpers.isLogin,function(req, res) {
     res.send(student);
   });
 });
+
 /* Delete student by id  */
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   studentMgr.deleteStudent(req.params.id,function(student){
