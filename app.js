@@ -36,6 +36,7 @@ var TSC= require('./routes/teacherSubjectClass');
 var evaluation = require('./routes/evaluation');
 var driver = require('./routes/driver');
 var bus = require('./routes/bus');
+var tasks = require('./routes/task');
 
 var app = express();
 
@@ -101,6 +102,7 @@ app.use('/TSC',TSC);
 app.use('/evaluation',evaluation);
 app.use('/driver',driver);
 app.use('/bus',bus);
+app.use('/tasks',tasks);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
