@@ -76,6 +76,7 @@
       TasksServ.addTasks($scope.newTasksForm).then(function(response){
         if(response.data){
           toastr.success('تم الإضافة بنجاح');
+          $scope.newTasksForm = {name:"",content:""};
           $scope.getTasksBySearchValue($scope.searchValue);
           $('#newTaskModal').modal('hide');
         } else {

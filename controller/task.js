@@ -60,6 +60,7 @@ module.exports = {
 
   addTask : function(body,cb){
     var obj =body;
+    obj.date = new Date();
     Task = new model.Task(obj);
     Task.save(function(err,result){
       if (!err) {

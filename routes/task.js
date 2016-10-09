@@ -32,7 +32,7 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 
 // delete task by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
-  TaskMgr.updateTask(req.params.id,{status:0},function(task){
+  TaskMgr.deleteTask(req.params.id,function(task){
     res.send({result:task});
   });
 });
