@@ -243,22 +243,6 @@
         }]
       }
     })
-    .state('assigningTeacher',{
-      url: '/assigning_teacher',
-      templateUrl: 'admin/pages/system/assigningTeacher',
-      data: {pageTitle: 'تعيين المعلم'},
-      controller: 'assigningTeacherCtl',
-      resolve: {
-        deps: ['$ocLazyLoad',function($ocLazyLoad){
-          return $ocLazyLoad.load({
-            insertBefore: '#ngLoadControllerAfter',
-            files: [
-              '/js/admin/controllers/assigningTeacherCtl.js'
-            ]
-          });
-        }]
-      }
-    })
     .state('newTeacher',{
       url: '/newTeacher',
       templateUrl: 'admin/pages/teacher/newTeacher',
@@ -437,23 +421,6 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/roomsCtl.js'
-            ]
-          });
-        }]
-      }
-    })
-
-    .state('newClassRooms',{
-      url: '/newClassRooms',
-      templateUrl: 'admin/pages/classRoom/newClassRooms',
-      data: {pageTitle: 'إضافة غرفة جديدة'},
-      controller: 'newClassRoomCtl',
-      resolve: {
-        deps: ['$ocLazyLoad',function($ocLazyLoad){
-          return $ocLazyLoad.load({
-            insertBefore: '#ngLoadControllerAfter',
-            files: [
-              '/js/admin/controllers/classRoomsCtl.js'
             ]
           });
         }]
