@@ -111,6 +111,27 @@
      }
    };
 
+   $scope.preLogin = function (student){
+     $scope.idStudent = student._id;
+     $scope.login = {email:student.email,password:""};
+   };
+
+   $scope.saveLogin = function(idStudent){
+     if($scope.login.password === ""){
+       delete $scope.login.password;
+     }
+     StudentServ.editStudent(idStudent,$scope.login).then(function(response) {
+       if(response.data){
+         toastr.info('تم التعديل بنجاح');
+         $('#loginModal').modal('hide');
+       } else {
+         console.log(response.data);
+       }
+     }, function(response) {
+       console.log("Something went wrong");
+     });
+   };
+
   }]);
   //editStudentCtl
   app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,StudentServ,$state,toastr){
