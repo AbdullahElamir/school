@@ -33,10 +33,10 @@ router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req
   fs.readFile(req.files.file.path, function (err, data) {
     var newPath =dir+'/'+req.params.id;
     fs.writeFile(newPath, data, function (err) {
-      if(!err){  
-        res.send(true);       
+      if(!err){
+        res.send(true);
       }
-       
+
     });
   });
 });
@@ -45,6 +45,12 @@ router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req
 router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   teacherMgr.updateTeacher(req.params.id,req.body,function(teacher){
     res.send(teacher);
+  });
+});
+
+router.put('/changePass/:id', userHelpers.isLogin ,function(req, res) {
+  teacherMgr.changePass(req.params.id,req.body,function(result){
+    res.send({result:result});
   });
 });
 /* Delete teacher by id  */

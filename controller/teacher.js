@@ -57,7 +57,7 @@ module.exports = {
       }
     });
   },
-  
+
   getTeacherName :function(name,cb){
     model.Teacher.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, teachers){
       if(!err){
@@ -105,7 +105,7 @@ module.exports = {
 
   updateTeacher : function(id,body,cb){
     obj = body;
-    
+
     model.Teacher.findOneAndUpdate({_id:id}, obj, function(err,teachers) {
       if (!err) {
         cb(true);
@@ -115,7 +115,7 @@ module.exports = {
       }
     });
   },
-  
+
   deleteTeacher : function(id,cb){
     model.Teacher.remove({_id:id}, function(err,result) {
       if (!err) {
@@ -126,4 +126,22 @@ module.exports = {
       }
     });
   },
+  changePass : function(id,passwords,cb){
+    if(passwords.newPass === passwords.confirmPass){
+      model.Teacher.findOneAndUpdate({_id:id,password:passwords.oldPass}, {password:passwords.newPass}, function(err,Teachers) {
+        if (!err) {
+          if(Teachers){
+            cb(1); // successfully changed
+          }else{
+            cb(2); //wrong password
+          }
+        } else {
+          console.log(err);
+          cb(3); //error
+        }
+      });
+    }else{
+      cb(4); //passwords are not match
+    }
+  }
 };

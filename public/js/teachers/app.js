@@ -7,7 +7,8 @@
     'ngSanitize',
     'AngularPrint',
     'jcs-autoValidate',
-    'toastr'
+    'toastr',
+    'mgcrea.ngStrap'
   ]);
   /* Setup global settings */
   app.factory('settings',['$rootScope',function($rootScope){
@@ -96,7 +97,7 @@
     .state('studentInformation',{
           url: '/studentInformation/:id/:course',
           templateUrl: '/teachers/pages/studentInformation',
-          data: {pageTitle: 'درجات الطلبة'},
+          data: {pageTitle: 'الطلبة'},
           controller: 'StudentInformationCtl',
           resolve: {
             deps: ['$ocLazyLoad',function($ocLazyLoad){
@@ -112,7 +113,7 @@
     .state('studentsEvaluate',{
           url: '/studentsEvaluate/:id/:course/:student',
           templateUrl: '/teachers/pages/studentsEvaluate',
-          data: {pageTitle: 'درجات الطلبة'},
+          data: {pageTitle: 'تقييم الطلبة'},
           controller: 'StudentsEvaluateCtl',
           resolve: {
             deps: ['$ocLazyLoad',function($ocLazyLoad){
@@ -124,15 +125,46 @@
               });
             }]
           }
+        }).state('profile',{
+          url: '/profile',
+          templateUrl: '/teachers/pages/profile',
+          data: {pageTitle: 'الصفحة الشخصية'},
+          controller: 'ProfileCtl',
+          resolve: {
+            deps: ['$ocLazyLoad',function($ocLazyLoad){
+              return $ocLazyLoad.load({
+                insertBefore: '#ngLoadControllerAfter',
+                files: [
+                  '/js/teachers/controllers/profileCtl.js',
+                  '/assets/css/profile.css'
+                ]
+              });
+            }]
+          }
+        }).state('editProfile',{
+          url: '/editProfile',
+          templateUrl: '/teachers/pages/editProfile',
+          data: {pageTitle: 'تعديل الصفحة الشخصية'},
+          controller: 'EditProfileCtl',
+          resolve: {
+            deps: ['$ocLazyLoad',function($ocLazyLoad){
+              return $ocLazyLoad.load({
+                insertBefore: '#ngLoadControllerAfter',
+                files: [
+                  '/js/teachers/controllers/profileCtl.js'
+                ]
+              });
+            }]
+          }
         });
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){
     defaultErrorMessageResolver.setI18nFileRootPath('/lang');
     defaultErrorMessageResolver.setCulture('ar-ly');
     defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
-      errorMessages['repName'] = "الرجاء إدخال اسم المخول";
-      errorMessages['emailType'] = "الرجاء إدخال بريد إلكتروني صالح";
-      errorMessages['phone'] = "الرجاء إدخال رقم هاتف صالح";
+      errorMessages.repName = "الرجاء إدخال اسم المخول";
+      errorMessages.emailType = "الرجاء إدخال بريد إلكتروني صالح";
+      errorMessages.phone = "الرجاء إدخال رقم هاتف صالح";
     });
   }]);
 }());
