@@ -55,6 +55,23 @@ router.get('/report2',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
+router.get('/report3',userHelpers.isLogin , function(req, res) {
+  jsreport.render({
+    template: {
+      engine: "jsrender",
+      recipe: "phantom-pdf",
+      phantom:{
+        format: 'A4',
+        orientation: "landscape"
+      },
+      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/printTest3.html"), "utf8")
+    },data:{result:null}
+  }).then(function(resp) {
+    resp.stream.pipe(res);
+  }).catch(function(e) {
+    res.end(e.message);
+  });
+});
 router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
     stuproMgr.getStuproRoom(clas,function(stupro){
