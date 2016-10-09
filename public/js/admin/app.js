@@ -760,6 +760,54 @@
           });
         }]
       }
+    })
+    .state('drivers',{
+      url: '/drivers',
+      templateUrl: 'admin/pages/driver/drivers',
+      data: {pageTitle: 'السائقين'},
+      controller: 'DriversCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/driversCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+    .state('newDriver',{
+      url: '/newDriver',
+      templateUrl: 'admin/pages/driver/newDriver',
+      data: {pageTitle: 'إضافة سائق'},
+      controller: 'newDriverCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/driversCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+     .state('editDriver',{
+      url: '/editDriver/edit/:id',
+      templateUrl: 'admin/pages/driver/editDriver',
+      data: {pageTitle: 'تعديل سائق'},
+      controller: 'editDriverCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/driversCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);

@@ -380,5 +380,53 @@
     };
     return self;
   }]);
+  
+  app.service('DriverServ',['$http',function($http){
+    var self = {
+      'addDriver': function(driver){
+        return $http.post('/driver/add',driver);
+      },
+      'getDrivers': function(limit,page){
+        return $http.get('/driver/'+limit+'/'+page);
+      },
+      'getDriversBySearchValue': function(searchValue,limit,page){
+        return $http.get('/driver/'+searchValue+'/'+limit+'/'+page);
+      },
+      'deleteDriver': function(id){
+        return $http.delete('/driver/delete/'+id);
+      },
+      'getDriverById': function(id){
+        return $http.get('/driver/'+id.id);
+      },
+      'editDriver': function(id,obj){
+        return $http.put('/driver/edit/'+id,obj);
+      }
+    };
+    return self;
+  }]);
+
+  app.service('BusServ',['$http',function($http){
+    var self = {
+      'addBus': function(bus){
+        return $http.post('/bus/add',bus);
+      },
+      'getBuses': function(limit,page){
+        return $http.get('/bus/'+limit+'/'+page);
+      },
+      'getBusesBySearchValue': function(searchValue,limit,page){
+        return $http.get('/bus/'+searchValue+'/'+limit+'/'+page);
+      },
+      'deleteBus': function(id){
+        return $http.delete('/bus/delete/'+id);
+      },
+      'getBusById': function(id){
+        return $http.get('/bus/'+id.id);
+      },
+      'editBus': function(id,obj){
+        return $http.put('/bus/edit/'+id,obj);
+      }
+    };
+    return self;
+  }]);
 
 }());
