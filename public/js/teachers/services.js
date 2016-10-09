@@ -67,7 +67,32 @@
     return self;
   }]);
 
-
+  app.service('TasksServ',['$http',function($http){
+    var self = {
+      'addTasks': function(year){
+        return $http.post('/tasks/add',year);
+      },
+      'getTasks': function(limit,page){
+        return $http.get('/tasks/'+limit+'/'+page);
+      },
+      'getTasksBySearchValue': function(searchValue,limit,page,classRoom,subject){
+        return $http.get('/tasks/'+searchValue+'/'+limit+'/'+page+'/'+classRoom+'/'+subject);
+      },
+      'deleteTasks': function(id){
+        return $http.delete('/tasks/delete/'+id);
+      },
+      'getTasksById': function(id){
+        return $http.get('/tasks/'+id.id);
+      },
+      'editTasks': function(id,obj){
+        return $http.put('/tasks/edit/'+id,obj);
+      },
+      'getAllTasks': function(){
+        return $http.get('/tasks/all');
+      }
+    };
+    return self;
+  }]);
 
 
 

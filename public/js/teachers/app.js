@@ -156,6 +156,21 @@
               });
             }]
           }
+        }).state('tasks',{
+          url: '/tasks/:id/:course',
+          templateUrl: '/teachers/pages/tasks',
+          data: {pageTitle: 'المهام'},
+          controller: 'TasksCtl',
+          resolve: {
+            deps: ['$ocLazyLoad',function($ocLazyLoad){
+              return $ocLazyLoad.load({
+                insertBefore: '#ngLoadControllerAfter',
+                files: [
+                  '/js/teachers/controllers/tasksCtl.js'
+                ]
+              });
+            }]
+          }
         });
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){
