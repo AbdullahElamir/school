@@ -808,7 +808,55 @@
           });
         }]
       }
-    });
+    })
+    .state('buses',{
+      url: '/buses',
+      templateUrl: 'admin/pages/bus/buses',
+      data: {pageTitle: 'الحافلات'},
+      controller: 'BusesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/busesCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+    .state('newBus',{
+      url: '/newBus',
+      templateUrl: 'admin/pages/bus/newBus',
+      data: {pageTitle: 'إضافة حافلة'},
+      controller: 'newBusCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/busesCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+     .state('editBus',{
+      url: '/editBus/edit/:id',
+      templateUrl: 'admin/pages/bus/editBus',
+      data: {pageTitle: 'تعديل حافلة'},
+      controller: 'editBusCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/busesCtl.js'
+            ]
+          });
+        }]
+      }
+    });;
 
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){
