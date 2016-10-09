@@ -99,9 +99,8 @@ module.exports = {
           cb(att);
         }
         for(j in Attendancees){
-          att[Attendancees[j].StuPro.id]=Attendancees[j].attend;
+          att[Attendancees[j].StuPro.id]={attend:Attendancees[j].attend,reson:Attendancees[j].reason};
           if(j == Attendancees.length-1){
-            console.log(att);
             cb(att);
           }
         }
@@ -150,6 +149,7 @@ module.exports = {
 
   },
   setReason : function (id,reason,date,cb){
+    console.log(reason);
     model.Attendance.findOneAndUpdate({_id:id,date:date}, {reason:reason.reason}, function(err,result) {
       if (!err) {
         cb(true);

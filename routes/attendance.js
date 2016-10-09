@@ -32,6 +32,7 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 
 //use this to change the value of reason
 router.put('/reason/:stupro/:date', userHelpers.isLogin ,function(req, res) {
+  console.log(req.body);
   attendMgr.setReason(req.params.stupro,req.body,req.params.date,function(result){
     res.send(result);
   });
@@ -76,7 +77,8 @@ router.get('/students/:classRoom/:date',userHelpers.isLogin , function(req, res)
         if(attends[stupro.stu[i]._id]==null){
           att.attend=0;
         }else{
-          att.attend=attends[stupro.stu[i]._id];
+          att.attend=attends[stupro.stu[i]._id].attend;
+          att.reason=attends[stupro.stu[i]._id].reson;
         }
         _attend.push(att);
         if(i == stupro.stu.length-1){
