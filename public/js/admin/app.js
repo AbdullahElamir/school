@@ -901,6 +901,51 @@
           });
         }]
       }
+    }).state('incomes',{
+      url: '/incomes',
+      templateUrl: 'admin/pages/income/incomes',
+      data: {pageTitle: 'المدخولات'},
+      controller: 'IncomesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/incomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('newIncome',{
+      url: '/newIncome',
+      templateUrl: 'admin/pages/income/newIncome',
+      data: {pageTitle: 'إضافة دخل جديد'},
+      controller: 'newIncomeCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/incomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('editIncome',{
+      url: '/editIncome/edit/:id',
+      templateUrl: 'admin/pages/income/editIncome',
+      data: {pageTitle: 'تعديل دخل'},
+      controller: 'editIncomeCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/incomesCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);

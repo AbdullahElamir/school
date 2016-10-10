@@ -457,4 +457,28 @@
       return self;
     }]);
 
+    app.service('IncomesServ',['$http',function($http){
+      var self = {
+        'addIncome': function(inOutcomeType){
+          return $http.post('/inOutcomes/add',inOutcomeType);
+        },
+        'getIncomesBySearchValue': function(searchValue,startDate,finishDate,limit,page){
+          return $http.get('/inOutcomes/'+searchValue+'/'+startDate+'/'+finishDate+'/'+limit+'/'+page);
+        },
+        'deleteIncome': function(id){
+          return $http.delete('/inOutcomes/delete/'+id);
+        },
+        'getIncomeById': function(id){
+          return $http.get('/inOutcomes/'+id.id);
+        },
+        'editIncome': function(id,obj){
+          return $http.put('/inOutcomes/edit/'+id,obj);
+        },
+        'getAllIncomes': function(){
+          return $http.get('/inOutcomes/all');
+        }
+      };
+      return self;
+    }]);
+
 }());
