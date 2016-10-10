@@ -856,7 +856,52 @@
           });
         }]
       }
-    });;
+    }).state('inOutcomeTypes',{
+      url: '/inOutcomeTypes',
+      templateUrl: 'admin/pages/inOutcomeType/inOutcomeTypes',
+      data: {pageTitle: 'الفئات'},
+      controller: 'InOutcomeTypesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/inOutcomeTypesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('newInOutcomeTypes',{
+      url: '/newInOutcomeTypes',
+      templateUrl: 'admin/pages/inOutcomeType/newInOutcomeTypes',
+      data: {pageTitle: 'إضافة فئة جديد'},
+      controller: 'newInOutcomeTypesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/inOutcomeTypesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('editInOutcomeTypes',{
+      url: '/editInOutcomeTypes/edit/:id',
+      templateUrl: 'admin/pages/inOutcomeType/editInOutcomeTypes',
+      data: {pageTitle: 'تعديل فئة'},
+      controller: 'editInOutcomeTypesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/inOutcomeTypesCtl.js'
+            ]
+          });
+        }]
+      }
+    });
 
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){

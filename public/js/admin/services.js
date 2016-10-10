@@ -380,7 +380,7 @@
     };
     return self;
   }]);
-  
+
   app.service('DriverServ',['$http',function($http){
     var self = {
       'addDriver': function(driver){
@@ -428,5 +428,33 @@
     };
     return self;
   }]);
+
+
+    app.service('InOutcomeTypesServ',['$http',function($http){
+      var self = {
+        'addInOutcomeTypes': function(inOutcomeType){
+          return $http.post('/inOutcomeTypes/add',inOutcomeType);
+        },
+        'getInOutcomeTypes': function(limit,page){
+          return $http.get('/inOutcomeTypes/'+limit+'/'+page);
+        },
+        'getInOutcomeTypesBySearchValue': function(searchValue,limit,page){
+          return $http.get('/inOutcomeTypes/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteInOutcomeTypes': function(id){
+          return $http.delete('/inOutcomeTypes/delete/'+id);
+        },
+        'getInOutcomeTypesById': function(id){
+          return $http.get('/inOutcomeTypes/'+id.id);
+        },
+        'editInOutcomeTypes': function(id,obj){
+          return $http.put('/inOutcomeTypes/edit/'+id,obj);
+        },
+        'getAllInOutcomeTypes': function(){
+          return $http.get('/inOutcomeTypes/all');
+        }
+      };
+      return self;
+    }]);
 
 }());

@@ -3,17 +3,6 @@ var task = null;
 
 module.exports = {
 
-  getAllTask :function(cb){
-    model.Task.find({status:1}, function(err, Tasks){
-      if(!err){
-        cb(Tasks);
-      }else{
-        console.log(err);
-        cb(null);
-      }
-    });
-  },
-
   //getAllTasksBySearchValue
   getAllTasksBySearchValue :function(searchValue,limit,page,classRoom,subject,cb){
     page = parseInt(page);
