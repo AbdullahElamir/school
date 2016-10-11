@@ -37,6 +37,7 @@ var evaluation = require('./routes/evaluation');
 var driver = require('./routes/driver');
 var bus = require('./routes/bus');
 var tasks = require('./routes/task');
+var transferProcess = require('./routes/transferProcess');
 
 var app = express();
 
@@ -103,6 +104,7 @@ app.use('/evaluation',evaluation);
 app.use('/driver',driver);
 app.use('/bus',bus);
 app.use('/tasks',tasks);
+app.use('/transferProcess',transferProcess);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

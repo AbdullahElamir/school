@@ -1,0 +1,229 @@
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <div class="row">
+      <div class="col-xs-6 col-sm-2 col-md-2">
+        <div class="caption caption-xs">
+          <i class="icon-settings font-green"></i>
+          <span class="caption-subject font-green bold">عمليات النقل </span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4">
+        <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getTransferProcessesBySearchValueAndYear(searchValue,year)" placeholder="بحث بواسطة خط السير ..">
+      </div>
+      <br class="visible-xs">
+      <br class="visible-xs">
+      <div class="col-xs-7 col-md-3">
+        <select class="form-control input-sm" ng-model="year" ng-options="year._id as year.name for year in getAllYears" ng-change="getTransferProcessesBySearchValueAndYear(searchValue,year)">
+        </select>
+      </div>
+      <div class="col-xs-4 col-sm-3 col-md-3 text-left">
+        <a data-toggle="modal" data-target="#myAddTPModal" ng-click="openDialogAddTP()" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>&nbsp;إضافة عملية نقل </a>
+      </div>
+    </div>
+  </div>
+  <div class="portlet-body" style="padding-top:0px;">
+    <table class="table table-striped" ng-show="tps.length">
+      <thead>
+        <tr>
+          <th>اسم السائق</th>
+          <th>الرقم الوطني</th>
+          <th>اسم الحافلة</th>
+          <th>رقم اللوحة</th>
+          <th>خط السير</th>
+          <th>اسم المشرف</th>
+          <th><i class="fa fa-cog"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="tp in tps">
+          <td>{{tp.driver.name}}</td>
+          <td>{{tp.driver.nid}}</td>
+          <td>{{tp.bus.name}}</td>
+          <td>{{tp.bus.plateNumber}}</td>
+          <td>{{tp.path}}</td>
+          <td>{{tp.supervisor.name}}</td>
+          <td>                                                    <!-- مزال الأيقونات  -->
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myEditTPModal" ng-click="editTP(tp)"><i class="fa fa-pencil fa-fw"></i>&nbsp;عرض / تعديل</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteTP(tp._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myStudentsTPModal" ng-click="openDialogTPStudents(tp)"><i class="fa fa-child fa-fw"></i>&nbsp;الطلاب</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myTeachersTPModal" ng-click="openDialogTPTeachers(tp)"><i class="fa fa-briefcase fa-fw"></i>&nbsp;المدرسين</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div ng-show="tps.length == 0">
+      <div class="alert alert-info">
+        <p class="text-center">
+          عفوا لاتوجد بيانات
+        </p>
+      </div>
+    </div>
+    <div class="modal fade" id="myAddTPModal" tabindex="-1" role="dialog" aria-labelledby="myAddTPModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form novalidate ng-submit="addTransferProcess()">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="myAddTPModalLabel">إضافة عملية نقل</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">اختر السائق</label>
+                    <select ng-options="driver as driver.name for driver in AllDrivers" required class="form-control" ng-model="addTransferProcessForm.driver">
+                      <option selected disabled value="">الرجاء الإختيار</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">اختر الحافلة</label>
+                    <select ng-options="bus as bus.name for bus in AllBuses" required class="form-control" ng-model="addTransferProcessForm.bus">
+                      <option selected disabled value="">الرجاء الإختيار</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">اختر المشرف</label>
+                    <select ng-options="supervisor as supervisor.name for supervisor in AllSupervisors" required class="form-control" ng-model="addTransferProcessForm.supervisor">
+                      <option selected disabled value="">الرجاء الإختيار</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">أجر السائق</label>
+                    <input class="form-control input-sm" type="number" ng-model="addTransferProcessForm.fare" placeholder="أجر السائق" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">خط السير</label>
+                    <input class="form-control input-sm" type="text" ng-model="addTransferProcessForm.path" placeholder="خط السير" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">ملاحظات</label>
+                    <textarea class="form-control input-sm" rows="4" ng-model="addTransferProcessForm.notes" placeholder="ملاحظات" ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" >حـفـظ</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="myEditTPModal" tabindex="-1" role="dialog" aria-labelledby="myEditTPModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form novalidate ng-submit="editTransferProcess()">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="myEditTPModalLabel">تعديل عملية النقل</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">اختر السائق</label>
+                    <select ng-options="driver._id as driver.name for driver in AllDrivers" required class="form-control" ng-model="editTransferProcessForm.driver">
+                      <option selected disabled value="">الرجاء الإختيار</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">اختر الحافلة</label>
+                    <select ng-options="bus._id as bus.name for bus in AllBuses" required class="form-control" ng-model="editTransferProcessForm.bus">
+                      <option selected disabled value="">الرجاء الإختيار</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">اختر المشرف</label>
+                    <select ng-options="supervisor._id as supervisor.name for supervisor in AllSupervisors" required class="form-control" ng-model="editTransferProcessForm.supervisor">
+                      <option selected disabled value="">الرجاء الإختيار</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">أجر السائق</label>
+                    <input class="form-control input-sm" type="number" ng-model="editTransferProcessForm.fare" placeholder="أجر السائق" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">خط السير</label>
+                    <input class="form-control input-sm" type="text" ng-model="editTransferProcessForm.path" placeholder="خط السير" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-12">
+                  <div class="form-group">
+                    <label class="control-label">ملاحظات</label>
+                    <textarea class="form-control input-sm" rows="4" ng-model="editTransferProcessForm.notes" placeholder="ملاحظات" ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" >تعديل</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            <h4 class="modal-title" id="myModalLabel">مسح عملية النقل</h4>
+          </div>
+          <div class="modal-body">
+            هل حقا تريد مسح عملية النقل ؟
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            <button ng-click="deleteConfirm(idTP)" value="idTP" type="button" class="btn btn-danger">مسح</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" ng-show="tps.length">
+      <div class="col-xs-12 col-md-12 text-center">
+        <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue,year)" previous-text="السابق" next-text="التالي" first-text="الاول"
+          last-text="الاخير"></uib-pagination>
+        <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue,year)" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
+      </div>
+    </div>
+  </div>
+</div>

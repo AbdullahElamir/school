@@ -61,6 +61,9 @@
       'getAllTeacher': function(id){
         return $http.get('/teacher/all/'+id);
       }
+      ,'getAllTeahers': function(){
+        return $http.get('/teacher/all');
+      }
     };
     return self;
   }]);
@@ -400,6 +403,9 @@
       },
       'editDriver': function(id,obj){
         return $http.put('/driver/edit/'+id,obj);
+      },
+      'getAllDrivers': function(){
+        return $http.get('/driver/all');
       }
     };
     return self;
@@ -424,6 +430,24 @@
       },
       'editBus': function(id,obj){
         return $http.put('/bus/edit/'+id,obj);
+      },
+      'getAllBuses': function(){
+        return $http.get('/bus/all');
+      }
+    };
+    return self;
+  }]);
+
+  app.service('TransferProcessServ',['$http',function($http){
+    var self = {
+      'getTransferProcessesBySearchValueAndYear' : function(searchValue,year,limit,page){
+        return $http.get('/transferProcess/'+searchValue+'/'+year+'/'+limit+'/'+page);
+      },'addTransferProcess': function(tpo){
+        return $http.post('/transferProcess/add',tpo);
+      },'deleteTransferProcess': function(id){
+        return $http.delete('/transferProcess/delete/'+id);
+      },'editTransferProcess' : function(id,tpo){
+        return $http.put('/transferProcess/edit/'+id,tpo);
       }
     };
     return self;

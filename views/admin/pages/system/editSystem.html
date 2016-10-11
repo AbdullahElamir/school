@@ -72,14 +72,11 @@
         <div style="max-height: calc(80vh - 100px);overflow-y: auto;" class="modal-body">
           <div class="row">
               <div class="col-xs-10 col-xs-push-1">
-
-
               <ul class="nav nav-tabs">
                 <li ng-repeat="exam in exams">
                   <a  data-toggle="tab" ng-class="($index == 0)?'firstTab':''"  showtab="" href="#{{exam.x}}">{{exam.name}}</a>
                 </li>
               </ul>
-
                 <div class="tab-content">
                   <div ng-repeat="exam in exams" id="{{exam.x}}" class="tab-pane fade">
                     <table class="table table-bordered">
