@@ -793,7 +793,7 @@
         }]
       }
     })
-     .state('editDriver',{
+    .state('editDriver',{
       url: '/editDriver/edit/:id',
       templateUrl: 'admin/pages/driver/editDriver',
       data: {pageTitle: 'تعديل سائق'},
@@ -841,7 +841,7 @@
         }]
       }
     })
-     .state('editBus',{
+    .state('editBus',{
       url: '/editBus/edit/:id',
       templateUrl: 'admin/pages/bus/editBus',
       data: {pageTitle: 'تعديل حافلة'},
@@ -853,6 +853,22 @@
             files: [
               '/js/admin/controllers/busesCtl.js'
             ]
+          });
+        }]
+      }
+    })
+    .state('transferProcesses',{
+      url: '/transferProcesses',
+      templateUrl: 'admin/pages/transfer/transferProcesses',
+      data: {pageTitle: 'عمليات النقل'},
+      controller: 'transferProcessesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/transferProcessesCtl.js'
+              ]
           });
         }]
       }

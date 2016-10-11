@@ -10,6 +10,7 @@
       if( searchValue === 'undefined' || !searchValue ){
         searchValue = "";
       }
+      searchValue = encodeURIComponent(searchValue);
       StudentServ.getStudentsBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
         $scope.students = response.data.result;
         $scope.total = response.data.count;
