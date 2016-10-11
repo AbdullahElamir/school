@@ -60,8 +60,8 @@
       },
       'getAllTeacher': function(id){
         return $http.get('/teacher/all/'+id);
-      }
-      ,'getAllTeahers': function(){
+      },
+      'getAllTeahers': function(){
         return $http.get('/teacher/all');
       }
     };
@@ -524,6 +524,30 @@
         },
         'getAllOutcomes': function(){
           return $http.get('/inOutcomes/all');
+        }
+      };
+      return self;
+    }]);
+
+    app.service('EvaluationServ',['$http',function($http){
+      var self = {
+        'addEvaluation': function(evaluation){
+          return $http.post('/evaluation/add',evaluation);
+        },
+        'getEvaluations': function(limit,page){
+          return $http.get('/evaluation/'+limit+'/'+page);
+        },
+        'getEvaluationsBySearchValue' : function(searchValue,limit,page){
+          return $http.get('/evaluation/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteEvaluation': function(id){
+          return $http.delete('/evaluation/delete/'+id);
+        },
+        'getEvaluationById': function(id){
+          return $http.get('/evaluation/'+id.id);
+        },
+        'editEvaluation': function(id,obj){
+          return $http.put('/evaluation/edit/'+id,obj);
         }
       };
       return self;

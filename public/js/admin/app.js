@@ -1007,6 +1007,51 @@
           });
         }]
       }
+    }).state('evaluations',{
+      url: '/evaluations',
+      templateUrl: 'admin/pages/evaluation/evaluations',
+      data: {pageTitle: 'بنود التقييم'},
+      controller: 'EvaluationsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/evaluationsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('newEvaluation',{
+      url: '/newEvaluation',
+      templateUrl: 'admin/pages/evaluation/newEvaluation',
+      data: {pageTitle: 'إضافة بند جديد'},
+      controller: 'newEvaluationCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/evaluationsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('editEvaluation',{
+      url: '/editEvaluation/edit/:id',
+      templateUrl: 'admin/pages/evaluation/editEvaluation',
+      data: {pageTitle: 'تعديل بند'},
+      controller: 'editEvaluationCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/evaluationsCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);
