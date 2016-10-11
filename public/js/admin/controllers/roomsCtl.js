@@ -19,32 +19,30 @@
       });
      };
      $scope.init("");
-     
+
     $scope.getRoomsBySearchValue = function (searchValue){
       $scope.currentPage = 1;
       $scope.init(searchValue);
     };
-   
+
    $scope.deleteRoom = function(id) {
     $scope.idRoom = id;
    };
-   
+
    $scope.deleteConfirm = function(id) {
     RoomServ.deleteRoom(id).then(function(response){
         if(response.data.result == 1){
           toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
         } else if (response.data.result == 2){
-   
+
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
-          
-          $scope.init($scope.searchValue);
-          var count = $scope.rooms.filter(function(obj){return obj._id != id;}).length;
-          if( $scope.currentPage > 1 && count == 0 ){
+
+          var count = $scope.rooms.length;
+          if( $scope.currentPage > 1 && count === 1 ){
             $scope.currentPage -= 1;
-            $scope.init($scope.searchValue);
           }
-          
+          $scope.init($scope.searchValue);
         } else if (response.data.result == 3){
           toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
         }
@@ -59,16 +57,16 @@
 //editRoomCtl
   app.controller('editRoomCtl',['$scope','$stateParams','RoomServ','$state','toastr',function($scope,$stateParams,RoomServ,$state,toastr){
     $scope.editRoomForm={};
-   
+
     RoomServ.getRoomById($stateParams).then(function(response) {
       $scope.editRoomForm = response.data;
     }, function(response) {
       console.log("Something went wrong");
     });
-    
+
 
     $scope.editRoom = function(){
-  
+
       RoomServ.editRoom($stateParams.id,$scope.editRoomForm).then(function(response) {
         if(response.data){
           toastr.info('تم التعديل بنجاح');
@@ -84,7 +82,7 @@
   }]);
 
   app.controller('newRoomCtl',['$scope','RoomServ','$state','toastr',function($scope,RoomServ,$state,toastr){
-    
+
     $scope.newRoomForm={};
     $scope.newRoom = function(){
       RoomServ.addRoom($scope.newRoomForm).then(function(response){
@@ -97,7 +95,7 @@
       },function(response){
         console.log("Somthing went wrong");
       });
-        
+
     };
 
   }]);
