@@ -33,12 +33,11 @@
           } else if (response.data.result == 2){
             $('#myModal').modal('hide');
             toastr.success('تم الحذف بنجاح');
-            $scope.init($scope.searchValue);
-            var count = $scope.buses.filter(function(obj){return obj._id != id;}).length;
-            if( $scope.currentPage > 1 && count === 0 ){
+            var count = $scope.buses.length;
+            if( $scope.currentPage > 1 && count === 1 ){
               $scope.currentPage -= 1;
-              $scope.init($scope.searchValue);
             }
+            $scope.init($scope.searchValue);
           } else if (response.data.result == 3){
             toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
           }
@@ -77,9 +76,9 @@
 
 
   app.controller('newBusCtl',['$scope','BusServ','toastr',function($scope,BusServ,toastr){
-    
+
     $scope.newBusForm={};
-    
+
     $scope.newBus = function(){
       BusServ.addBus($scope.newBusForm).then(function(response){
         if(response.data){
@@ -96,4 +95,3 @@
   }]);
 
 }());
-

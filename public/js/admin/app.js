@@ -868,6 +868,141 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/transferProcessesCtl.js'
+              ]
+          });
+        }]
+      }
+    }).state('inOutcomeTypes',{
+      url: '/inOutcomeTypes',
+      templateUrl: 'admin/pages/inOutcomeType/inOutcomeTypes',
+      data: {pageTitle: 'الفئات'},
+      controller: 'InOutcomeTypesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/inOutcomeTypesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('newInOutcomeTypes',{
+      url: '/newInOutcomeTypes',
+      templateUrl: 'admin/pages/inOutcomeType/newInOutcomeTypes',
+      data: {pageTitle: 'إضافة فئة جديد'},
+      controller: 'newInOutcomeTypesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/inOutcomeTypesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('editInOutcomeTypes',{
+      url: '/editInOutcomeTypes/edit/:id',
+      templateUrl: 'admin/pages/inOutcomeType/editInOutcomeTypes',
+      data: {pageTitle: 'تعديل فئة'},
+      controller: 'editInOutcomeTypesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/inOutcomeTypesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('incomes',{
+      url: '/incomes',
+      templateUrl: 'admin/pages/income/incomes',
+      data: {pageTitle: 'المدخولات'},
+      controller: 'IncomesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/incomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('newIncome',{
+      url: '/newIncome',
+      templateUrl: 'admin/pages/income/newIncome',
+      data: {pageTitle: 'إضافة دخل جديد'},
+      controller: 'newIncomeCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/incomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('editIncome',{
+      url: '/editIncome/edit/:id',
+      templateUrl: 'admin/pages/income/editIncome',
+      data: {pageTitle: 'تعديل دخل'},
+      controller: 'editIncomeCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/incomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('outcomes',{
+      url: '/outcomes',
+      templateUrl: 'admin/pages/outcome/outcomes',
+      data: {pageTitle: 'المصروفات'},
+      controller: 'OutcomesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/outcomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('newOutcome',{
+      url: '/newOutcome',
+      templateUrl: 'admin/pages/outcome/newOutcome',
+      data: {pageTitle: 'إضافة صرف جديد'},
+      controller: 'newOutcomeCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/outcomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('editOutcome',{
+      url: '/editOutcome/edit/:id',
+      templateUrl: 'admin/pages/outcome/editOutcome',
+      data: {pageTitle: 'تعديل مصروف'},
+      controller: 'editOutcomeCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/outcomesCtl.js'
             ]
           });
         }]

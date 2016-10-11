@@ -383,7 +383,7 @@
     };
     return self;
   }]);
-  
+
   app.service('DriverServ',['$http',function($http){
     var self = {
       'addDriver': function(driver){
@@ -452,5 +452,81 @@
     };
     return self;
   }]);
+
+
+    app.service('InOutcomeTypesServ',['$http',function($http){
+      var self = {
+        'addInOutcomeTypes': function(inOutcomeType){
+          return $http.post('/inOutcomeTypes/add',inOutcomeType);
+        },
+        'getInOutcomeTypes': function(limit,page){
+          return $http.get('/inOutcomeTypes/'+limit+'/'+page);
+        },
+        'getInOutcomeTypesBySearchValue': function(searchValue,limit,page){
+          return $http.get('/inOutcomeTypes/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteInOutcomeTypes': function(id){
+          return $http.delete('/inOutcomeTypes/delete/'+id);
+        },
+        'getInOutcomeTypesById': function(id){
+          return $http.get('/inOutcomeTypes/'+id.id);
+        },
+        'editInOutcomeTypes': function(id,obj){
+          return $http.put('/inOutcomeTypes/edit/'+id,obj);
+        },
+        'getAllInOutcomeTypes': function(){
+          return $http.get('/inOutcomeTypes/all');
+        }
+      };
+      return self;
+    }]);
+
+    app.service('IncomesServ',['$http',function($http){
+      var self = {
+        'addIncome': function(inOutcomeType){
+          return $http.post('/inOutcomes/add',inOutcomeType);
+        },
+        'getIncomesBySearchValue': function(type,searchValue,startDate,finishDate,limit,page){
+          return $http.get('/inOutcomes/'+searchValue+'/'+startDate+'/'+finishDate+'/'+limit+'/'+page+'/'+type);
+        },
+        'deleteIncome': function(id){
+          return $http.delete('/inOutcomes/delete/'+id);
+        },
+        'getIncomeById': function(id){
+          return $http.get('/inOutcomes/'+id.id);
+        },
+        'editIncome': function(id,obj){
+          return $http.put('/inOutcomes/edit/'+id,obj);
+        },
+        'getAllIncomes': function(){
+          return $http.get('/inOutcomes/all');
+        }
+      };
+      return self;
+    }]);
+
+    app.service('OutcomesServ',['$http',function($http){
+      var self = {
+        'addOutcome': function(inOutcomeType){
+          return $http.post('/inOutcomes/add',inOutcomeType);
+        },
+        'getOutcomesBySearchValue': function(type,searchValue,startDate,finishDate,limit,page){
+          return $http.get('/inOutcomes/'+searchValue+'/'+startDate+'/'+finishDate+'/'+limit+'/'+page+'/'+type);
+        },
+        'deleteOutcome': function(id){
+          return $http.delete('/inOutcomes/delete/'+id);
+        },
+        'getOutcomeById': function(id){
+          return $http.get('/inOutcomes/'+id.id);
+        },
+        'editOutcome': function(id,obj){
+          return $http.put('/inOutcomes/edit/'+id,obj);
+        },
+        'getAllOutcomes': function(){
+          return $http.get('/inOutcomes/all');
+        }
+      };
+      return self;
+    }]);
 
 }());

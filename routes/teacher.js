@@ -6,9 +6,55 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
 var path = require("path");
+var jsreport = require("jsreport");
+
+router.get('/report1', function(req, res) {
+  jsreport.render({
+    template: {
+      engine: "jsrender",
+      recipe: "phantom-pdf",
+      content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report1.html"), "utf8")
+    },data:{result:null}
+  }).then(function(resp) {
+    resp.stream.pipe(res);
+  }).catch(function(e) {
+    res.end(e.message);
+  });
+});
+
+router.get('/report2', function(req, res) {
+  jsreport.render({
+    template: {
+      engine: "jsrender",
+      recipe: "phantom-pdf",
+      content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report2.html"), "utf8")
+    },data:{result:null}
+  }).then(function(resp) {
+    resp.stream.pipe(res);
+  }).catch(function(e) {
+    res.end(e.message);
+  });
+});
+
+router.get('/report3', function(req, res) {
+  jsreport.render({
+    template: {
+      engine: "jsrender",
+      recipe: "phantom-pdf",
+      phantom:{
+        format: 'A4',
+        orientation: "landscape"
+      },
+      content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report3.html"), "utf8")
+    },data:{result:null}
+  }).then(function(resp) {
+    resp.stream.pipe(res);
+  }).catch(function(e) {
+    res.end(e.message);
+  });
+});
 
 /*GET all Teachers By Search Value*/
-
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   teacherMgr.getAllTeacher(function(teacher){
     res.send(teacher);

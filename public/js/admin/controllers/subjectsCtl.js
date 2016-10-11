@@ -5,7 +5,7 @@
   app.controller('SubjectsCtl',['$scope','$state','ClassServ','SubjectServ','toastr',function($scope,state,ClassServ,SubjectServ,toastr){
     ClassServ.getAllClasses().then(function(response){
       $scope.getAllClasses = response.data;
-      $scope.getAllClasses.splice(0,0,{name:"جميع الصفوف الدراسية",des:"",status:"",_id:"all"}); 
+      $scope.getAllClasses.splice(0,0,{name:"جميع الصفوف الدراسية",des:"",status:"",_id:"all"});
       $scope.clas = "all";
     },function(response){
       console.log("Somthing went wrong");
@@ -43,12 +43,11 @@
         } else if (response.data.result == 2){
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
-          $scope.init($scope.searchValue,$scope.clas);
-          var count = $scope.subjects.filter(function(obj){return obj._id != id;}).length;
-          if( $scope.currentPage > 1 && count == 0 ){
+          var count = $scope.subjects.length;
+          if( $scope.currentPage > 1 && count === 1 ){
             $scope.currentPage -= 1;
-            $scope.init($scope.searchValue,$scope.clas);
           }
+          $scope.init($scope.searchValue,$scope.clas);
         } else if (response.data.result == 3){
           toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
         }
@@ -68,16 +67,16 @@
     });
 
     $scope.editSubjectForm={};
-   
+
     SubjectServ.getSubjectById($stateParams).then(function(response) {
       $scope.editSubjectForm = response.data;
     }, function(response) {
       console.log("Something went wrong");
     });
-    
+
 
     $scope.editSubject = function(){
-  
+
       SubjectServ.editSubject($stateParams.id,$scope.editSubjectForm).then(function(response) {
         if(response.data){
           toastr.info('تم التعديل بنجاح');
@@ -112,7 +111,7 @@
       },function(response){
         console.log("Somthing went wrong");
       });
-        
+
     };
 
   }]);

@@ -1,18 +1,18 @@
 (function(){
   'use strict';
   var app = angular.module('adminSchool');
-  app.controller('ClothesCtl',['$scope','$state','ClothesServ','toastr',function($scope,state,ClothesServ,toastr){
+  app.controller('InOutcomeTypesCtl',['$scope','$state','InOutcomeTypesServ','toastr',function($scope,state,InOutcomeTypesServ,toastr){
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
-    $scope.clothes=[];
+    $scope.inOutcomeTypes=[];
     $scope.total=0;
     $scope.init = function (searchValue) {
       if( searchValue === 'undefined' || !searchValue ){
         searchValue = "";
       }
-      ClothesServ.getClothesBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
-        $scope.clothes = response.data.result;
+      InOutcomeTypesServ.getInOutcomeTypesBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
+        $scope.inOutcomeTypes = response.data.result;
         $scope.total = response.data.count;
       }, function(response) {
         console.log("Something went wrong");
@@ -20,24 +20,23 @@
     };
     $scope.init("");
 
-    $scope.getClothesBySearchValue = function (searchValue){
+    $scope.getInOutcomeTypesBySearchValue = function (searchValue){
       $scope.currentPage = 1;
       $scope.init(searchValue);
     };
 
-    $scope.deleteClothes = function(id) {
-      $scope.idClothes = id;
+    $scope.deleteInOutcomeTypes = function(id) {
+      $scope.idInOutcomeTypes = id;
     };
 
     $scope.deleteConfirm = function(id) {
-      ClothesServ.deleteClothes(id).then(function(response){
+      InOutcomeTypesServ.deleteInOutcomeTypes(id).then(function(response){
         if(response.data.result == 1){
           toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
         } else if (response.data.result == 2){
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
-          
-          var count = $scope.clothes.length;
+          var count = $scope.inOutcomeTypes.length;
           if( $scope.currentPage > 1 && count === 1 ){
             $scope.currentPage -= 1;
           }
@@ -52,19 +51,19 @@
 
   }]);
 
-  app.controller('editClothesCtl',['$scope','$stateParams','ClothesServ','$state','toastr',function($scope,$stateParams,ClothesServ,$state,toastr){
+  app.controller('editInOutcomeTypesCtl',['$scope','$stateParams','InOutcomeTypesServ','$state','toastr',function($scope,$stateParams,InOutcomeTypesServ,$state,toastr){
 
-    $scope.editClothesForm={};
-    ClothesServ.getClothesById($stateParams).then(function(response) {
-      $scope.editClothesForm = response.data;
+    $scope.editInOutcomeTypesForm={};
+    InOutcomeTypesServ.getInOutcomeTypesById($stateParams).then(function(response) {
+      $scope.editInOutcomeTypesForm = response.data;
     }, function(response) {
       console.log("Something went wrong");
     });
 
-    $scope.editClothes = function(){
-      ClothesServ.editClothes($stateParams.id,$scope.editClothesForm).then(function(response) {
+    $scope.editInOutcomeTypes = function(){
+      InOutcomeTypesServ.editInOutcomeTypes($stateParams.id,$scope.editInOutcomeTypesForm).then(function(response) {
         if(response.data){
-          $state.go('clothes');
+          $state.go('inOutcomeTypes');
           toastr.info('تم التعديل بنجاح');
         } else {
           toastr.error('عملية التعديل فشلت');
@@ -76,13 +75,13 @@
 
   }]);
 
-  app.controller('newClothesCtl',['$scope','ClothesServ','$state','toastr',function($scope,ClothesServ,$state,toastr){
+  app.controller('newInOutcomeTypesCtl',['$scope','InOutcomeTypesServ','$state','toastr',function($scope,InOutcomeTypesServ,$state,toastr){
 
-    $scope.newClothesForm={};
-    $scope.newClothes = function(){
-      ClothesServ.addClothes($scope.newClothesForm).then(function(response){
+    $scope.newInOutcomeTypesForm={};
+    $scope.newInOutcomeTypes = function(){
+      InOutcomeTypesServ.addInOutcomeTypes($scope.newInOutcomeTypesForm).then(function(response){
         if(response.data){
-          $('#clothesId').click();
+          $('#inOutcomeTypesId').click();
           toastr.success('تم الإضافة بنجاح');
         } else {
           toastr.error('خطأ في عملية الادخال');
