@@ -1,19 +1,29 @@
 (function(){
   'use strict';
   var app = angular.module('adminSchool');
-  app.controller('IncomesCtl',['$scope','$state','IncomesServ','toastr',function($scope,state,IncomesServ,toastr){
+  app.controller('IncomesCtl',['$scope','$state','IncomesServ','InOutcomeTypesServ','toastr',function($scope,state,IncomesServ,InOutcomeTypesServ,toastr){
     $scope.startDate = $scope.finishDate = new Date();
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
     $scope.incomes=[];
-    $scope.total=0;
+
+    $scope.getAllTypes=[];
+    InOutcomeTypesServ.getAllInOutcomeTypes().then(function(response) {
+      $scope.getAllTypes = response.data;
+    }, function(response) {
+      console.log("Something went wrong");
+    });
+
     $scope.init = function (searchValue) {
       if( searchValue === 'undefined' || !searchValue ){
         searchValue = "";
       }
+      if(!$scope.cat || $scope.cat === ""){
+        $scope.cat = "all";
+      }
       if($scope.startDate && $scope.finishDate){
-        IncomesServ.getIncomesBySearchValue(1,searchValue,$scope.startDate,$scope.finishDate,$scope.pageSize,$scope.currentPage).then(function(response) {
+        IncomesServ.getIncomesBySearchValue(1,$scope.cat,searchValue,$scope.startDate,$scope.finishDate,$scope.pageSize,$scope.currentPage).then(function(response) {
           $scope.incomes = response.data.result;
           $scope.total = response.data.count;
         }, function(response) {

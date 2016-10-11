@@ -793,7 +793,7 @@
         }]
       }
     })
-     .state('editDriver',{
+    .state('editDriver',{
       url: '/editDriver/edit/:id',
       templateUrl: 'admin/pages/driver/editDriver',
       data: {pageTitle: 'تعديل سائق'},
@@ -841,7 +841,7 @@
         }]
       }
     })
-     .state('editBus',{
+    .state('editBus',{
       url: '/editBus/edit/:id',
       templateUrl: 'admin/pages/bus/editBus',
       data: {pageTitle: 'تعديل حافلة'},
@@ -853,6 +853,22 @@
             files: [
               '/js/admin/controllers/busesCtl.js'
             ]
+          });
+        }]
+      }
+    })
+    .state('transferProcesses',{
+      url: '/transferProcesses',
+      templateUrl: 'admin/pages/transfer/transferProcesses',
+      data: {pageTitle: 'عمليات النقل'},
+      controller: 'transferProcessesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/transferProcessesCtl.js'
+              ]
           });
         }]
       }
@@ -987,6 +1003,51 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/outcomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('evaluations',{
+      url: '/evaluations',
+      templateUrl: 'admin/pages/evaluation/evaluations',
+      data: {pageTitle: 'بنود التقييم'},
+      controller: 'EvaluationsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/evaluationsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('newEvaluation',{
+      url: '/newEvaluation',
+      templateUrl: 'admin/pages/evaluation/newEvaluation',
+      data: {pageTitle: 'إضافة بند جديد'},
+      controller: 'newEvaluationCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/evaluationsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('editEvaluation',{
+      url: '/editEvaluation/edit/:id',
+      templateUrl: 'admin/pages/evaluation/editEvaluation',
+      data: {pageTitle: 'تعديل بند'},
+      controller: 'editEvaluationCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/evaluationsCtl.js'
             ]
           });
         }]

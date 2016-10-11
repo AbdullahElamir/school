@@ -31,15 +31,15 @@ router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   });
 });
 //get all inOutcome By Search Value
-router.get('/:searchValue/:startDate/:finishDate/:limit/:page/:type',userHelpers.isLogin , function(req, res) {
-  InOutcomeMgr.getAllInOutcomesBySearchValue(req.params.type,req.params.searchValue,req.params.limit,req.params.page,req.params.startDate,req.params.finishDate,function(inOutcome){
+router.get('/:searchValue/:startDate/:finishDate/:limit/:page/:type/:cat',userHelpers.isLogin , function(req, res) {
+  InOutcomeMgr.getAllInOutcomesBySearchValue(req.params.cat,req.params.type,req.params.searchValue,req.params.limit,req.params.page,req.params.startDate,req.params.finishDate,function(inOutcome){
     res.send(inOutcome);
   });
 });
 
 // get all inOutcome
-router.get('/:startDate/:finishDate/:limit/:page/:type',userHelpers.isLogin , function(req, res) {
-  InOutcomeMgr.getAllInOutcomeCount(req.params.type,req.params.limit,req.params.page,req.params.startDate,req.params.finishDate,function(inOutcome){
+router.get('/:startDate/:finishDate/:limit/:page/:type/:cat',userHelpers.isLogin , function(req, res) {
+  InOutcomeMgr.getAllInOutcomeCount(req.params.cat,req.params.type,req.params.limit,req.params.page,req.params.startDate,req.params.finishDate,function(inOutcome){
     res.send(inOutcome);
   });
 });

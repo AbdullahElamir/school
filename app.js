@@ -37,6 +37,7 @@ var evaluation = require('./routes/evaluation');
 var driver = require('./routes/driver');
 var bus = require('./routes/bus');
 var tasks = require('./routes/task');
+var transferProcess = require('./routes/transferProcess');
 var inOutcomeTypes = require('./routes/inOutcomeType');
 var inOutcome = require('./routes/inOutcome');
 
@@ -105,6 +106,7 @@ app.use('/evaluation',evaluation);
 app.use('/driver',driver);
 app.use('/bus',bus);
 app.use('/tasks',tasks);
+app.use('/transferProcess',transferProcess);
 app.use('/inOutcomeTypes',inOutcomeTypes);
 app.use('/inOutcomes',inOutcome);
 

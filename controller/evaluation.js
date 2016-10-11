@@ -13,7 +13,7 @@ module.exports = {
       }
     });
   },
-  
+
   //getAllEvaluationsBySearchValue
   getAllEvaluationsBySearchValue :function(searchValue,limit,page,cb){
     page = parseInt(page);
@@ -58,7 +58,7 @@ module.exports = {
       }
     });
   },
-  
+
   getEvaluationName :function(name,cb){
     model.Evaluation.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
       if(!err){
