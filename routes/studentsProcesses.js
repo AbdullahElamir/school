@@ -21,7 +21,7 @@ router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(r
         var eva={
           _id:result[i]._id,
           name:result[i].name
-        }
+        };
         if(evaluation[result[i]._id]){
           eva.rating=evaluation[result[i]._id];
         }else{
@@ -52,13 +52,13 @@ router.get('/stuPro', userHelpers.isLogin ,function(req, res) {
 // update grades of exams student in subject on classRoom for a current year (where year is Active)
 router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
   stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
-    for( k in req.body){
+    for( var k in req.body){
       var obj={
         StuPro:sto,
         exam:req.body[k]._id,
         subject:req.params.subjectId,
         mark:req.body[k].studentMark
-      }
+      };
       resultMgr.addResultUpdate(obj,function(result){
         if(k==req.body.length-1){
           res.send(true);
@@ -94,14 +94,14 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,fu
           stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
             resultMgr.getResultSubject(sto,exams,req.params.subjectId,function(marksS){
               var examsGrades=[];
-              for( i in examssub){
+              for( var i in examssub){
                 var obj ={
                   _id:examssub[i].exam._id,
                   name:examssub[i].exam.name,
                   mark:examssub[i].mark,
                   type:examssub[i].exam.type,
                   semester:examssub[i].exam.semester
-                }
+                };
                 if(marksS[examssub[i].exam._id]){
                   obj.studentMark=marksS[examssub[i].exam._id];
 
@@ -129,7 +129,7 @@ router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin ,function(re
     if(Crooms.length === 0){
       res.send([]);
     }
-    for (i in Crooms.stu){
+    for (var i in Crooms.stu){
       _room.push(Crooms.stu[i].student);
       if(i == Crooms.stu.length-1){
         res.send(_room);
