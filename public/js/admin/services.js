@@ -462,8 +462,8 @@
         'addIncome': function(inOutcomeType){
           return $http.post('/inOutcomes/add',inOutcomeType);
         },
-        'getIncomesBySearchValue': function(type,searchValue,startDate,finishDate,limit,page){
-          return $http.get('/inOutcomes/'+searchValue+'/'+startDate+'/'+finishDate+'/'+limit+'/'+page+'/'+type);
+        'getIncomesBySearchValue': function(type,cat,searchValue,startDate,finishDate,limit,page){
+          return $http.get('/inOutcomes/'+searchValue+'/'+startDate+'/'+finishDate+'/'+limit+'/'+page+'/'+type+'/'+cat);
         },
         'deleteIncome': function(id){
           return $http.delete('/inOutcomes/delete/'+id);
@@ -486,8 +486,8 @@
         'addOutcome': function(inOutcomeType){
           return $http.post('/inOutcomes/add',inOutcomeType);
         },
-        'getOutcomesBySearchValue': function(type,searchValue,startDate,finishDate,limit,page){
-          return $http.get('/inOutcomes/'+searchValue+'/'+startDate+'/'+finishDate+'/'+limit+'/'+page+'/'+type);
+        'getOutcomesBySearchValue': function(type,cat,searchValue,startDate,finishDate,limit,page){
+          return $http.get('/inOutcomes/'+searchValue+'/'+startDate+'/'+finishDate+'/'+limit+'/'+page+'/'+type+'/'+cat);
         },
         'deleteOutcome': function(id){
           return $http.delete('/inOutcomes/delete/'+id);
