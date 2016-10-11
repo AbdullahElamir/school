@@ -12,6 +12,8 @@ var multipartMiddleware = multipart();
 var fs = require("fs");
 var path = require("path");
 
+
+
 router.get('/report1',userHelpers.isLogin , function(req, res) {
   jsreport.render({
     template: {
@@ -25,6 +27,9 @@ router.get('/report1',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
+
+
+
 router.get('/report2',userHelpers.isLogin , function(req, res) {
   jsreport.render({
     template: {
