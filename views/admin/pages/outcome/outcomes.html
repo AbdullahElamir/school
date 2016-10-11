@@ -4,15 +4,15 @@
       <div class="col-xs-3 col-md-3">
         <div class="caption caption-xs">
           <i class="icon-settings font-green"></i>
-          <span class="caption-subject font-green bold">المدخولات</span>
+          <span class="caption-subject font-green bold">المصروفات</span>
         </div>
       </div>
       <div class="col-xs-7 col-md-6">
-        <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getIncomesBySearchValue(searchValue)" placeholder="بحث ..">
+        <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getOutcomesBySearchValue(searchValue)" placeholder="بحث ..">
       </div>
       <div class="col-xs-2 col-md-3 text-left">
-        <a onclick="$('#newIncomeId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>
-          <span class="hidden-xs">&nbsp;إضافة دخل جديد</span>
+        <a onclick="$('#newOutcomeId').click();" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>
+          <span class="hidden-xs">&nbsp;إضافة صرف جديد</span>
         </a>
       </div>
     </div>
@@ -21,19 +21,19 @@
       <div class="col-xs-12 col-md-4 col-md-offset-2">
         <div class="form-group">
           <label class="control-label">من</label>
-          <input type="text" ng-change="getIncomesBySearchValue(searchValue)" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="startDate" placeholder="من تاريخ"/>
+          <input type="text" ng-change="getOutcomesBySearchValue(searchValue)" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="startDate" placeholder="من تاريخ"/>
         </div>
       </div>
       <div class="col-xs-12 col-md-4">
         <div class="form-group">
           <label class="control-label">الى</label>
-          <input type="text" ng-change="getIncomesBySearchValue(searchValue)" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="finishDate" placeholder="الى تاريخ"/>
+          <input type="text" ng-change="getOutcomesBySearchValue(searchValue)" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="finishDate" placeholder="الى تاريخ"/>
         </div>
       </div>
     </div>
   </div>
   <div class="portlet-body" style="padding-top:0px;">
-    <table class="table table-striped" ng-show="incomes.length">
+    <table class="table table-striped" ng-show="outcomes.length">
       <thead>
         <tr>
           <th>الوصف</th>
@@ -44,19 +44,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="income in incomes">
-          <td>{{income.title}}</td>
-          <td>{{income.amount}}</td>
-          <td>{{income.date.slice(0,10)}}</td>
-          <td>{{income.inOutcomeType.name}}</td>
+        <tr ng-repeat="outcome in outcomes">
+          <td>{{outcome.title}}</td>
+          <td>{{outcome.amount}}</td>
+          <td>{{outcome.date.slice(0,10)}}</td>
+          <td>{{outcome.inOutcomeType.name}}</td>
           <td>
-            <a class="btn btn-success btn-xs" ui-sref="editIncome({id:income._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل</a>
-            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteIncome(income._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+            <a class="btn btn-success btn-xs" ui-sref="editOutcome({id:outcome._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteOutcome(outcome._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
           </td>
         </tr>
       </tbody>
     </table>
-    <div ng-show="incomes.length == 0">
+    <div ng-show="outcomes.length == 0">
       <div class="alert alert-info">
         <p class="text-center">
           عفوا لاتوجد بيانات
@@ -70,19 +70,19 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">مســح المدخول</h4>
+            <h4 class="modal-title" id="myModalLabel">مســح المصروف</h4>
           </div>
           <div class="modal-body">
-            هل حقا تريد مسح هذا المدخول ؟
+            هل حقا تريد مسح هذا المصروف ؟
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-            <button ng-click="deleteConfirm(idIncome)" value="idIncome" type="button" class="btn btn-danger">مسح</button>
+            <button ng-click="deleteConfirm(idOutcome)" value="idOutcome" type="button" class="btn btn-danger">مسح</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="row" ng-show="incomes.length">
+    <div class="row" ng-show="outcomes.length">
       <div class="col-xs-12 col-md-12 text-center">
         <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
         <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>

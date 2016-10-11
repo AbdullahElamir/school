@@ -4,7 +4,7 @@ var inOutcome = null;
 module.exports = {
 
   //getAllInOutcomesBySearchValue
-  getAllInOutcomesBySearchValue :function(searchValue,limit,page,startDate,finishDate,cb){
+  getAllInOutcomesBySearchValue :function(type,searchValue,limit,page,startDate,finishDate,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
@@ -16,8 +16,8 @@ module.exports = {
     d2.setHours(23);
     d2.setMinutes(59);
     d2.setSeconds(59);
-    model.InOutcome.count({title:new RegExp(searchValue, 'i'),date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
-      model.InOutcome.find({title:new RegExp(searchValue, 'i'),date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
+    model.InOutcome.count({title:new RegExp(searchValue, 'i'),type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
+      model.InOutcome.find({title:new RegExp(searchValue, 'i'),type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
         if(!err){
           cb({result:InOutcomes,count:count});
         }else{
@@ -29,7 +29,7 @@ module.exports = {
   },
 
   //getAllInOutcomesCount
-  getAllInOutcomeCount :function(limit,page,startDate,finishDate,cb){
+  getAllInOutcomeCount :function(type,limit,page,startDate,finishDate,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
@@ -43,8 +43,8 @@ module.exports = {
     d2.setSeconds(59);
     console.log(d1);
     console.log(d2);
-    model.InOutcome.count({date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
-      model.InOutcome.find({date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
+    model.InOutcome.count({type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
+      model.InOutcome.find({type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
         if(!err){
           cb({result:InOutcomes,count:count});
         }else{

@@ -946,6 +946,51 @@
           });
         }]
       }
+    }).state('outcomes',{
+      url: '/outcomes',
+      templateUrl: 'admin/pages/outcome/outcomes',
+      data: {pageTitle: 'المصروفات'},
+      controller: 'OutcomesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/outcomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('newOutcome',{
+      url: '/newOutcome',
+      templateUrl: 'admin/pages/outcome/newOutcome',
+      data: {pageTitle: 'إضافة صرف جديد'},
+      controller: 'newOutcomeCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/outcomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('editOutcome',{
+      url: '/editOutcome/edit/:id',
+      templateUrl: 'admin/pages/outcome/editOutcome',
+      data: {pageTitle: 'تعديل مصروف'},
+      controller: 'editOutcomeCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/outcomesCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);

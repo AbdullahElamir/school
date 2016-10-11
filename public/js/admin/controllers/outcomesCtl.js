@@ -1,20 +1,19 @@
 (function(){
   'use strict';
   var app = angular.module('adminSchool');
-  app.controller('IncomesCtl',['$scope','$state','IncomesServ','toastr',function($scope,state,IncomesServ,toastr){
+  app.controller('OutcomesCtl',['$scope','$state','OutcomesServ','toastr',function($scope,state,OutcomesServ,toastr){
     $scope.startDate = $scope.finishDate = new Date();
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
-    $scope.incomes=[];
-    $scope.total=0;
+    $scope.outcomes=[];
     $scope.init = function (searchValue) {
       if( searchValue === 'undefined' || !searchValue ){
         searchValue = "";
       }
       if($scope.startDate && $scope.finishDate){
-        IncomesServ.getIncomesBySearchValue(1,searchValue,$scope.startDate,$scope.finishDate,$scope.pageSize,$scope.currentPage).then(function(response) {
-          $scope.incomes = response.data.result;
+        OutcomesServ.getOutcomesBySearchValue(2,searchValue,$scope.startDate,$scope.finishDate,$scope.pageSize,$scope.currentPage).then(function(response) {
+          $scope.outcomes = response.data.result;
           $scope.total = response.data.count;
         }, function(response) {
           console.log("Something went wrong");
@@ -23,24 +22,24 @@
     };
     $scope.init("");
 
-    $scope.getIncomesBySearchValue = function (searchValue){
+    $scope.getOutcomesBySearchValue = function (searchValue){
       $scope.currentPage = 1;
       $scope.init(searchValue);
     };
 
-    $scope.deleteIncome = function(id) {
-      $scope.idIncome = id;
+    $scope.deleteOutcome = function(id) {
+      $scope.idOutcome = id;
     };
 
     $scope.deleteConfirm = function(id) {
-      IncomesServ.deleteIncome(id).then(function(response){
+      OutcomesServ.deleteOutcome(id).then(function(response){
         if(response.data.result == 1){
           toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
         } else if (response.data.result == 2){
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
           $scope.init($scope.searchValue);
-          var count = $scope.incomes.filter(function(obj){return obj._id != id;}).length;
+          var count = $scope.outcomes.filter(function(obj){return obj._id != id;}).length;
           if( $scope.currentPage > 1 && count === 0 ){
             $scope.currentPage -= 1;
             $scope.init($scope.searchValue);
@@ -55,11 +54,11 @@
 
   }]);
 
-  app.controller('editIncomeCtl',['$scope','$stateParams','IncomesServ','InOutcomeTypesServ','$state','toastr',function($scope,$stateParams,IncomesServ,InOutcomeTypesServ,$state,toastr){
+  app.controller('editOutcomeCtl',['$scope','$stateParams','OutcomesServ','InOutcomeTypesServ','$state','toastr',function($scope,$stateParams,OutcomesServ,InOutcomeTypesServ,$state,toastr){
 
-    $scope.editIncomeForm={};
-    IncomesServ.getIncomeById($stateParams).then(function(response) {
-      $scope.editIncomeForm = response.data;
+    $scope.editOutcomeForm={};
+    OutcomesServ.getOutcomeById($stateParams).then(function(response) {
+      $scope.editOutcomeForm = response.data;
     }, function(response) {
       console.log("Something went wrong");
     });
@@ -70,10 +69,10 @@
       console.log("Something went wrong");
     });
 
-    $scope.editIncome = function(){
-      IncomesServ.editIncome($stateParams.id,$scope.editIncomeForm).then(function(response) {
+    $scope.editOutcome = function(){
+      OutcomesServ.editOutcome($stateParams.id,$scope.editOutcomeForm).then(function(response) {
         if(response.data){
-          $state.go('incomes');
+          $state.go('outcomes');
           toastr.info('تم التعديل بنجاح');
         } else {
           toastr.error('عملية التعديل فشلت');
@@ -85,7 +84,7 @@
 
   }]);
 
-  app.controller('newIncomeCtl',['$scope','IncomesServ','InOutcomeTypesServ','$state','toastr',function($scope,IncomesServ,InOutcomeTypesServ,$state,toastr){
+  app.controller('newOutcomeCtl',['$scope','OutcomesServ','InOutcomeTypesServ','$state','toastr',function($scope,OutcomesServ,InOutcomeTypesServ,$state,toastr){
     $scope.getAllTypes=[];
     InOutcomeTypesServ.getAllInOutcomeTypes().then(function(response) {
       $scope.getAllTypes = response.data;
@@ -93,12 +92,12 @@
       console.log("Something went wrong");
     });
 
-    $scope.newIncomeForm={};
-    $scope.newIncome = function(){
-      $scope.newIncomeForm.type = 1;
-      IncomesServ.addIncome($scope.newIncomeForm).then(function(response){
+    $scope.newOutcomeForm={};
+    $scope.newOutcome = function(){
+      $scope.newOutcomeForm.type = 2;
+      OutcomesServ.addOutcome($scope.newOutcomeForm).then(function(response){
         if(response.data){
-          $('#incomesId').click();
+          $('#outcomesId').click();
           toastr.success('تم الإضافة بنجاح');
         } else {
           toastr.error('خطأ في عملية الادخال');
