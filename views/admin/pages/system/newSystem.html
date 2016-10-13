@@ -1,13 +1,24 @@
-<div class="portlet light bordered">
-  <div class="portlet-title">
-    <div class="caption caption-md">
-      <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">إضافة نظام دراسي</span>
+<form novalidate ng-submit="newSystem()">
+  <div class="portlet light bordered">
+    <div class="portlet-title">
+      <div class="row">
+        <div class="col-xs-6 col-md-6">
+          <div class="caption caption-md">
+            <i class="icon-settings font-green"></i>
+            <span class="caption-subject font-green bold">إضافة نظام دراسي</span>
+          </div>
+        </div>
+        <div class="col-xs-6 col-md-3 col-md-offset-3 text-left" ng-if="superAdminStatus">
+          <div class="form-group">
+            <select class="form-control input-sm" ng-model="" ng-options="" required>
+              <option value="" disabled selected>الرجاء اختر المدرسة</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-md-12 col-lg-12">
-      <form novalidate ng-submit="newSystem()">
+    <div class="row">
+      <div class="col-xs-12 col-md-12 col-lg-12">
         <div class="row clearfix">
           <div class="col-xs-12 col-md-3 col-md-offset-3">
             <div class="form-group">
@@ -102,13 +113,12 @@
             <a class="btn btn-success btn-sm btn-block" onclick="$('#SystemsId').click();"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
-</div>
+</form>
 <div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
   <div style="overflow-y: initial !important" class="modal-dialog modal-lg">
-
     <div class="modal-content">
       <form novalidate ng-submit="save()">
         <div class="modal-header">

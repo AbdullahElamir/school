@@ -53,6 +53,7 @@
   app.run(['$rootScope','settings','$state',function($rootScope,settings,$state){
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
+    $rootScope.superAdminStatus = true;
   }]);
   /* Setup Rounting For All Pages */
   app.config(['$stateProvider','$urlRouterProvider','$datepickerProvider',function($stateProvider,$urlRouterProvider,$datepickerProvider){
@@ -1018,6 +1019,51 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/outcomesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('evaluations',{
+      url: '/evaluations',
+      templateUrl: 'admin/pages/evaluation/evaluations',
+      data: {pageTitle: 'بنود التقييم'},
+      controller: 'EvaluationsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/evaluationsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('newEvaluation',{
+      url: '/newEvaluation',
+      templateUrl: 'admin/pages/evaluation/newEvaluation',
+      data: {pageTitle: 'إضافة بند جديد'},
+      controller: 'newEvaluationCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/evaluationsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('editEvaluation',{
+      url: '/editEvaluation/edit/:id',
+      templateUrl: 'admin/pages/evaluation/editEvaluation',
+      data: {pageTitle: 'تعديل بند'},
+      controller: 'editEvaluationCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/evaluationsCtl.js'
             ]
           });
         }]
