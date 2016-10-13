@@ -872,6 +872,21 @@
           });
         }]
       }
+    }).state('transferProcessesStudents',{
+      url: '/transferProcessesStudents/:id',
+      templateUrl: 'admin/pages/transfer/transferProcessesStudents',
+      data: {pageTitle: 'الطلبة'},
+      controller: 'transferProcessesStudentsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/transferProcessesCtl.js'
+            ]
+          });
+        }]
+      }
     }).state('inOutcomeTypes',{
       url: '/inOutcomeTypes',
       templateUrl: 'admin/pages/inOutcomeType/inOutcomeTypes',

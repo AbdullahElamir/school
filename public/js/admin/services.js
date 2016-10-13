@@ -448,6 +448,12 @@
         return $http.delete('/transferProcess/delete/'+id);
       },'editTransferProcess' : function(id,tpo){
         return $http.put('/transferProcess/edit/'+id,tpo);
+      },'getTransferProcess' : function(id){
+        return $http.get('/transferProcess/get/'+id);
+      },'getStudents' : function(idTP){
+        return $http.get('/transferProcess/transferProcessStudents/all/'+idTP);
+      },'update' : function(idtp,tpss){
+        return $http.put('/transferProcess/transferProcessStudents/edit/'+idtp,tpss);
       }
     };
     return self;

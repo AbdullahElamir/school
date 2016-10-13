@@ -2,7 +2,7 @@
   'use strict';
   var app = angular.module('adminSchool');
 
-  app.controller('transferProcessesCtl',['$scope','$state','YearServ','TransferProcessServ','toastr','BusServ','DriverServ','TeacherServ','StudentServ','ClassRoomsServ','ClassServ',function($scope,state,YearServ,TransferProcessServ,toastr,BusServ,DriverServ,TeacherServ,StudentServ,ClassRoomsServ,ClassServ){
+  app.controller('transferProcessesCtl',['$scope','YearServ','TransferProcessServ','toastr','BusServ','DriverServ','TeacherServ',function($scope,YearServ,TransferProcessServ,toastr,BusServ,DriverServ,TeacherServ){
       
     YearServ.getAllYears().then(function(response){
       $scope.getAllYears = response.data;
@@ -57,13 +57,17 @@
     $scope.addTransferProcessForm = {};
     $scope.addTransferProcess = function(){
       TransferProcessServ.addTransferProcess($scope.addTransferProcessForm).then(function(response) {
-        if(response.data){
+        if(response.data.status == 1){
           toastr.success("تم الحفظ بنجاح");
           $scope.addTransferProcessForm = {};
           $('#myAddTPModal').modal('hide');
           $scope.init($scope.searchValue,$scope.year);
-        } else {
-          toastr.error('عملية الحفظ فشلت، حاول مرة أخرى !');
+        } else if ( response.data.status == 2 ) {
+          toastr.error('عملية الإضافة فشلت، حاول مرة أخرى !');
+        } else if ( response.data.status == 3 ) {
+          toastr.error('لا يمكن الإضافة وذلك لعدم وجود سنة مفعلة !');
+          $scope.addTransferProcessForm = {};
+          $('#myAddTPModal').modal('hide');
         }
       }, function(response) {
         console.log("Something went wrong");
@@ -115,10 +119,164 @@
         console.log("Somthing went wrong");
       });
     };
+
+  }]);
+
+  app.controller('transferProcessesStudentsCtl',['$scope','TransferProcessServ','toastr','$stateParams','ClassServ','StudentServ',function($scope,TransferProcessServ,toastr,$stateParams,ClassServ,StudentServ){
     
+    $scope.allStudents = 1;
+    $scope.filteredStudents = [];
+    $scope.students = [];
+    $scope.searchText = "";
     
+    $('body').off('click', '.list-group .list-group-item');
+    $('body').on('click', '.list-group .list-group-item', function () {
+      $(this).toggleClass('active');
+    });
+    $('body').off('click','.list-arrows button');
+
+    $('body').on('click','.list-arrows button',function () {
+      var $button = $(this), actives = '';
+      if ($button.hasClass('move-left')) {
+        actives = $('.list-right ul li.active');
+
+        for(var fst=0;fst<actives.length;fst++){
+          var found = false;
+          var std = JSON.parse(actives.eq(fst).attr('x'));
+          for(var st in $scope.students){
+            if(std._id == $scope.students[st]._id){
+              found = true;
+            }
+          }
+          if(!found){
+            actives.eq(fst).clone().appendTo('.list-left ul');
+            $scope.students.push(std);
+          }
+          if( fst == actives.length-1 && $scope.students.length > 0){
+            $('#cost').show();
+          }
+        }
+      } else if ($button.hasClass('move-right')) {
+        actives = $('.list-left ul li.active');
+        actives.remove();
+        for(var fst=0;fst<actives.length;fst++){
+          var std = JSON.parse(actives.eq(fst).attr('x'));
+          var index = -1;
+          for(var st in $scope.students){
+            if($scope.students[st]._id == std._id){
+              index = st;
+            }
+          }
+          if(index != -1){
+            $scope.students.splice(index,1);
+          }
+          if( fst == actives.length-1 && $scope.students.length <= 0){
+            $('#cost').hide();
+          }
+        }
+      }
+    });
+
+    $('body').off('click','.dual-list .selector');
+    $('body').on('click','.dual-list .selector',function () {
+      var $checkBox = $(this);
+      if (!$checkBox.hasClass('selected')) {
+        $checkBox.addClass('selected').closest('.well').find('ul li:not(.active)').addClass('active');
+        $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
+      } else {
+        $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
+        $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+      }
+    });
+    $('body').off('keyup','#input');
+    $('body').on('keyup','#input',function (e) {
+      var code = e.keyCode || e.which;
+      if (code == '9') return;
+      if (code == '27') $(this).val(null);
+      var $rows = $(this).closest('.dual-list').find('.list-group li');
+      var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+      $rows.show().filter(function () {
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+      }).hide();
+    });
+
+    ClassServ.getAllClasses().then(function(response){
+      $scope.getAllClasses = response.data;
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+
+    TransferProcessServ.getTransferProcess($stateParams.id).then(function(response){
+      $scope.transferProcess = response.data;
+    }, function(response){
+      console.log("Something went wrong");
+    });
+
+    TransferProcessServ.getStudents($stateParams.id).then(function(response){
+      $scope.students=response.data;
+      for(var st in $scope.students){
+        $('.list-left ul').append("<li style='cursor: pointer;' x='"+JSON.stringify($scope.students[st])+"' class='list-group-item'>"+$scope.students[st].name+"</li>");
+      }
+      if( $scope.students.length > 0){
+        $('#cost').show();
+      } else if( $scope.students.length <= 0){
+        $('#cost').hide();
+      }
+    },function(response) {
+      console.log("Something went wrong");
+    });
+
+    $scope.save = function(){
+      
+      for(var i in $scope.students){
+        if( $scope.students[i].amount == undefined ){
+          toastr.error('يجب تحديد التكلفة لجميع الطلاب !');
+          return;
+        }
+      }
+      
+      TransferProcessServ.update($stateParams.id,$scope.students).then(function(response){
+        if(response.data.status == 1){
+          toastr.info('تم التعديل بنجاح');
+          $("#back").click();
+        } else {
+          toastr.error('عملية التعديل فشلت');
+        }
+      }, function(response){
+        console.log("Something went wrong");
+      });
+    };
+
+    $scope.reset = function(){
+      $scope._class = "";
+      $scope.filteredStudents = [];
+    };
     
-    
+    $scope.getStudents = function(text){
+      if($scope.allStudents == 1){
+        StudentServ.getStudentsBySearchValue(text,50,1).then(function(response){
+          $scope.filteredStudents=response.data.result;
+        });
+      }else{
+        if($scope._class){
+          StudentServ.getStudentsByLastYearClass(text,$scope._class).then(function(response){
+            $scope.filteredStudents=response.data;
+          });
+        }
+      }
+    };
+    $scope.getStudents("");
+      
+    $scope.openDialogCostStudents = function(){
+      $scope.allStudentsDialog = JSON.parse(JSON.stringify($scope.students));
+    };
+      
+    $scope.saveCostDialogTransferProcessStudents = function(){
+      $scope.students = JSON.parse(JSON.stringify($scope.allStudentsDialog));
+      $('#myModal').modal('hide');
+    };
+      
   }]);
 
 }());

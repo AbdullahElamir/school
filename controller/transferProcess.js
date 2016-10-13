@@ -4,7 +4,7 @@ var transferProcess = null;
 module.exports = {
   
   //getAllStudentsBySearchValue
-  getTransferProcessesBySearchValueAndYear :function(searchValue,year,limit,page,cb){
+  "getTransferProcessesBySearchValueAndYear" :function(searchValue,year,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
@@ -52,10 +52,10 @@ module.exports = {
         });
     }
   } , 
-  
+
   "addTransferProcess" : function(tpo,cb){
     model.Year.findOne({active : 1}, function(err, custom){
-      if(!err){
+      if(!err && custom != null ){
         var obj = tpo;
         obj.supervisor = tpo.supervisor._id;
         obj.bus = tpo.bus._id;
@@ -64,22 +64,20 @@ module.exports = {
         transferProcess = new model.TransferProcess(obj);
         transferProcess.save(function(err,result){
           if (!err) {
-            cb(true);
+            cb({status : 1});
           } else {
             console.log(err);
-            cb(false);
+            cb({status : 2});
           }
         });
       }else{
         console.log(err);
-        cb(false);
+        cb({status : 3});
       }
     });
-  } ,
+  },
  
   "editTransferProcess" : function(id,tpo,cb){
-    console.log("Edit Object : ");
-    console.log(tpo);
     model.TransferProcess.findOneAndUpdate({_id:id}, tpo, function(err,result) {
       if (!err) {
         cb(true);
@@ -88,8 +86,84 @@ module.exports = {
         cb(false);
       }
     });
-  } ,
-          
+  },
+   
+  "getTransferProcess":function(id,cb){
+    model.TransferProcess.findOne({_id:id})
+    .populate('bus')
+    .populate('supervisor')
+    .populate('driver')
+    .exec(function(err,tp){
+      if(!err){
+        cb(tp);
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+  
+  "getTransferProcessStudents" : function(id,cb){
+    model.transferProcessStudents
+    .find({transferProcess:id})
+    .populate('student')
+    .exec(function(err,tpss){
+      if(!err){
+        if( tpss.length == 0 ){
+          cb([]);
+          return;
+        }
+        var tpss1 = JSON.parse(JSON.stringify(tpss));
+        var array = [];
+        for(var i in tpss1){
+          array.push(tpss1[i].student);
+          array[i].amount = tpss1[i].amount;
+          if( i == (tpss1.length-1) ){
+            cb(array);
+            return;
+          }
+        }
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+  
+  "update" : function(id,tpss,cb){
+    model.transferProcessStudents.remove({transferProcess:id}, function(err,result) {
+      if (!err) {
+        if( tpss.length == 0 ){
+          cb({status : 1});
+          return;
+        }
+        var counter = 0;
+        for(var i in tpss){
+          var obj = {
+            student : tpss[i]._id,
+            amount : tpss[i].amount,
+            transferProcess : id
+          };
+          var transferProcessStudents = new model.transferProcessStudents(obj);
+          transferProcessStudents.save(function(err,result){
+            if (!err) {
+              counter++;
+              if( counter == tpss.length ){
+                cb({status : 1});
+              }
+            } else {
+              console.log(err);
+              cb({status : 2});
+            }
+          });
+        }
+      } else {
+        console.log(err);
+        cb({status : 2});
+      }
+    });
+  },
+  
   "deleteTransferProcess" : function(id,cb){
     model.TransferProcess.remove({_id:id}, function(err,result) {
       if (!err) {
@@ -100,7 +174,5 @@ module.exports = {
       }
     });
   }
-  
-  
 
 };

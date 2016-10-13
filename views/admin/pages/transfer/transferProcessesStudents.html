@@ -1,0 +1,130 @@
+<div class="portlet light bordered">
+  <div class="portlet-title">
+    <div class="caption caption-md">
+      <i class="icon-settings font-green"></i>
+      <span class="caption-subject font-green bold">إختر الطلبة الذين تريد ربطهم مع عملية النقل</span>
+    </div>
+  </div>
+  <div class="portlet-body">
+    <hr>
+    <div class="row">
+      <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="row clearfix">
+         <div class="dual-list list-left col-md-5">
+          <div class="well text-right">
+              <h5 class="text-center">طلبة عملية النقل</h5>
+              <div class="row">
+                  <div class="col-md-10">
+                      <div class="input-group btn-block">
+                          <input type="text" id="input" name="SearchDualList" class="form-control" placeholder="بحث" />
+                      </div>
+                  </div>
+                  <div class="col-md-2">
+                      <div class="btn-group">
+                          <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                      </div>
+                  </div>
+              </div>
+              <ul style="max-height:300px;overflow:scroll;overflow-x:hidden;margin-top: 8px;" class="list-group">
+
+              </ul>
+              <button id="cost" ng-click="openDialogCostStudents()" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#myModal"><i class="fa fa-dollar"></i>&nbsp;التكاليف</button>
+          </div>
+      </div>
+
+      <div style="padding-top: 100px;" class="list-arrows col-md-1 text-center">
+          <button style="margin-bottom: 20px;" class="btn btn-default btn-sm move-left">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
+          <button style="margin-bottom: 20px;" class="btn btn-default btn-sm move-right">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+          </button>
+      </div>
+
+      <div class="dual-list list-right col-md-5">
+          <div class="well">
+            <h5 class="text-center">طلبة المدرسة</h5>
+              <div class="row">
+                  <div class="col-md-2">
+                      <div class="btn-group">
+                          <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                      </div>
+                  </div>
+                  <div class="col-md-10">
+                    <div class="form-group btn-block">
+                      <input ng-change="getStudents(searchText)" type="text" ng-model="searchText" class="form-control" placeholder="بحث" />
+                    </div>
+                  </div>
+              </div>
+              <div class="row" >
+                <div class="col-xs-12">
+                  <input id="all" value="1" ng-change="getStudents(searchText)" type="radio" name="filter" ng-model = "allStudents">
+                  <label for="all">جميع الطلبة</label>
+                </div>
+                <div class="col-xs-12">
+                  <input ng-change="reset()" id="classStudents" value="2" type="radio" name="filter"  ng-model = "allStudents">
+                  <label for="classStudents">طلبة صف دراسي</label>
+                  <select ng-disabled="allStudents==1" ng-change= 'getStudents(searchText)' required class="form-control input-sm" ng-model="_class" ng-options='clas._id as clas.name for clas in getAllClasses'>
+                  <option value="" disabled selected>اختر صف دراسي</option>
+                </select>
+                </div>
+
+              </div>
+              <ul style="max-height:300px;overflow:scroll;overflow-x:hidden;margin-top: 8px;" class="list-group">
+                <li style="cursor: pointer;" x='{{student}}' ng-repeat="student in filteredStudents" class="list-group-item">{{student.name}}</li> 
+              </ul>
+          </div>
+        </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-6 col-md-2 col-md-offset-4">
+            <button class="btn btn-primary btn-sm btn-block" ng-click="save()"><i class="fa fa-plus"></i>&nbsp;حفظ</button>
+          </div>
+          <div class="col-xs-6 col-md-2">
+            <a class="btn btn-success btn-sm btn-block" id="back" ui-sref="transferProcesses"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <form novalidate ng-submit="saveCostDialogTransferProcessStudents()">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">تكاليف الطلاب</h4>
+              </div>
+              <div style="max-height: calc(80vh - 100px);overflow-y: auto;" class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <table class="table table-bordered">
+                      <thead>
+                          <tr><th>إسم الطالب</th><th>التكلفة</th></tr>
+                      </thead>
+                      <tbody>
+                         <tr ng-repeat="st in allStudentsDialog">
+                            <td>{{ st.name }}</td>
+                            <td>
+                              <div class="form-group">
+                                <input type="number" required="required" placeholder="التكلفة" ng-model="st.amount" min="0" class="form-control text-center">
+                              </div>
+                            </td>
+                         </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success" >حفظ</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
