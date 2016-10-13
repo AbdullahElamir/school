@@ -128,6 +128,7 @@
     $scope.filteredStudents = [];
     $scope.students = [];
     $scope.searchText = "";
+    $("#studentsLength").html("0");
     
     $('body').off('click', '.list-group .list-group-item');
     $('body').on('click', '.list-group .list-group-item', function () {
@@ -156,6 +157,7 @@
             $('#cost').show();
           }
         }
+        $("#studentsLength").html($scope.students.length + "");
       } else if ($button.hasClass('move-right')) {
         actives = $('.list-left ul li.active');
         actives.remove();
@@ -174,6 +176,7 @@
             $('#cost').hide();
           }
         }
+        $("#studentsLength").html($scope.students.length + "");
       }
     });
 
@@ -215,6 +218,7 @@
 
     TransferProcessServ.getStudents($stateParams.id).then(function(response){
       $scope.students=response.data;
+      $("#studentsLength").html($scope.students.length + "");
       for(var st in $scope.students){
         $('.list-left ul').append("<li style='cursor: pointer;' x='"+JSON.stringify($scope.students[st])+"' class='list-group-item'>"+$scope.students[st].name+"</li>");
       }
@@ -284,6 +288,7 @@
     $scope.filteredTeachers = [];
     $scope.teachers = [];
     $scope.searchText = "";
+    $("#teachersLength").html("0");
     
     $('body').off('click', '.list-group .list-group-item');
     $('body').on('click', '.list-group .list-group-item', function () {
@@ -312,6 +317,7 @@
             $('#cost').show();
           }
         }
+        $("#teachersLength").html($scope.teachers.length + "");
       } else if ($button.hasClass('move-right')) {
         actives = $('.list-left ul li.active');
         actives.remove();
@@ -330,6 +336,7 @@
             $('#cost').hide();
           }
         }
+        $("#teachersLength").html($scope.teachers.length + "");
       }
     });
 
@@ -365,6 +372,7 @@
 
     TransferProcessServ.getTeachers($stateParams.id).then(function(response){
       $scope.teachers=response.data;
+      $("#teachersLength").html($scope.teachers.length + "");
       for(var st in $scope.teachers){
         $('.list-left ul').append("<li style='cursor: pointer;' x='"+JSON.stringify($scope.teachers[st])+"' class='list-group-item'>"+$scope.teachers[st].name+"</li>");
       }
