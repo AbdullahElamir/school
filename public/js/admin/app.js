@@ -53,6 +53,7 @@
   app.run(['$rootScope','settings','$state',function($rootScope,settings,$state){
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
+    $rootScope.superAdminStatus = true;
   }]);
   /* Setup Rounting For All Pages */
   app.config(['$stateProvider','$urlRouterProvider','$datepickerProvider',function($stateProvider,$urlRouterProvider,$datepickerProvider){
