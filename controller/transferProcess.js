@@ -130,7 +130,7 @@ module.exports = {
     });
   },
   
-  "update" : function(id,tpss,cb){
+  "updateStudents" : function(id,tpss,cb){
     model.transferProcessStudents.remove({transferProcess:id}, function(err,result) {
       if (!err) {
         if( tpss.length == 0 ){
@@ -171,6 +171,67 @@ module.exports = {
       } else {
         console.log(err);
         cb(3);
+      }
+    });
+  },
+  
+  "getTransferProcessTeachers" : function(id,cb){
+    model.transferProcessTeachers
+    .find({transferProcess:id})
+    .populate('teacher')
+    .exec(function(err,tpss){
+      if(!err){
+        if( tpss.length == 0 ){
+          cb([]);
+          return;
+        }
+        var tpss1 = JSON.parse(JSON.stringify(tpss));
+        var array = [];
+        for(var i in tpss1){
+          array.push(tpss1[i].teacher);
+          array[i].amount = tpss1[i].amount;
+          if( i == (tpss1.length-1) ){
+            cb(array);
+            return;
+          }
+        }
+      }else{
+        console.log(err);
+        cb(null);
+      }
+    });
+  },
+  
+  "updateTeachers" : function(id,tpss,cb){
+    model.transferProcessTeachers.remove({transferProcess:id}, function(err,result) {
+      if (!err) {
+        if( tpss.length == 0 ){
+          cb({status : 1});
+          return;
+        }
+        var counter = 0;
+        for(var i in tpss){
+          var obj = {
+            teacher : tpss[i]._id,
+            amount : tpss[i].amount,
+            transferProcess : id
+          };
+          var transferProcessTeachers = new model.transferProcessTeachers(obj);
+          transferProcessTeachers.save(function(err,result){
+            if (!err) {
+              counter++;
+              if( counter == tpss.length ){
+                cb({status : 1});
+              }
+            } else {
+              console.log(err);
+              cb({status : 2});
+            }
+          });
+        }
+      } else {
+        console.log(err);
+        cb({status : 2});
       }
     });
   }

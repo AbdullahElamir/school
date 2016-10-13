@@ -3,6 +3,20 @@ var router = express.Router();
 var TransferProcessMgr = require("../controller/transferProcess");
 var userHelpers = require("../controller/userHelpers");
 
+// Get all teachers on transfer process By id of transfer process
+router.get('/transferProcessTeachers/all/:id',userHelpers.isLogin , function(req, res) {
+  TransferProcessMgr.getTransferProcessTeachers(req.params.id,function(transferProcessTeachers){
+    res.send(transferProcessTeachers);
+  });
+});
+
+// Edit all teachers on transfer process By id of transfer process
+router.put('/transferProcessTeachers/edit/:id',userHelpers.isLogin , function(req, res) {
+  TransferProcessMgr.updateTeachers(req.params.id,req.body,function(status){
+    res.send(status);
+  });
+});
+
 // Get all students on transfer process By id of transfer process
 router.get('/transferProcessStudents/all/:id',userHelpers.isLogin , function(req, res) {
   TransferProcessMgr.getTransferProcessStudents(req.params.id,function(transferProcessStudents){
@@ -12,7 +26,7 @@ router.get('/transferProcessStudents/all/:id',userHelpers.isLogin , function(req
 
 // Edit all students on transfer process By id of transfer process
 router.put('/transferProcessStudents/edit/:id',userHelpers.isLogin , function(req, res) {
-  TransferProcessMgr.update(req.params.id,req.body,function(status){
+  TransferProcessMgr.updateStudents(req.params.id,req.body,function(status){
     res.send(status);
   });
 });

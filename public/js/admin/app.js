@@ -888,6 +888,21 @@
           });
         }]
       }
+    }).state('transferProcessesTeachers',{
+      url: '/transferProcessesTeachers/:id',
+      templateUrl: 'admin/pages/transfer/transferProcessesTeachers',
+      data: {pageTitle: 'عمليات نقل المدرسين'},
+      controller: 'transferProcessesTeachersCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/transferProcessesCtl.js'
+            ]
+          });
+        }]
+      }
     }).state('inOutcomeTypes',{
       url: '/inOutcomeTypes',
       templateUrl: 'admin/pages/inOutcomeType/inOutcomeTypes',
