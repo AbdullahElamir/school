@@ -876,7 +876,7 @@
     }).state('transferProcessesStudents',{
       url: '/transferProcessesStudents/:id',
       templateUrl: 'admin/pages/transfer/transferProcessesStudents',
-      data: {pageTitle: 'الطلبة'},
+      data: {pageTitle: 'عمليات نقل الطلاب'},
       controller: 'transferProcessesStudentsCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){

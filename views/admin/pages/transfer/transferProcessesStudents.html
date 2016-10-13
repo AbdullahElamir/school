@@ -2,17 +2,53 @@
   <div class="portlet-title">
     <div class="caption caption-md">
       <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">إختر الطلبة الذين تريد ربطهم مع عملية النقل</span>
+      <span class="caption-subject font-green bold">حدد الطلاب الذين تريد ربطهم مع عملية النقل</span>
     </div>
   </div>
   <div class="portlet-body">
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <td style="font-weight: bold">إسم السائق :</td>
+          <td>{{transferProcess.driver.name}}</td>
+          <td style="font-weight: bold">رقم الهاتف :</td>
+          <td>{{transferProcess.driver.phone1 + ((transferProcess.driver.phone2 == "")? "": (" / " + transferProcess.driver.phone2) ) }}</td>
+          <td style="font-weight: bold">أجر السائق :</td>
+          <td>{{transferProcess.fare + " د.ل"}}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold">إسم الحافلة :</td>
+          <td>{{transferProcess.bus.name + " (" + transferProcess.bus.color + ")" }}</td>  
+          <td style="font-weight: bold">رقم اللوحة :</td>
+          <td>{{transferProcess.bus.plateNumber}}</td>
+          <td style="font-weight: bold">عدد الركاب :</td>
+          <td>{{transferProcess.bus.size}}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold">إسم المشرف :</td>
+          <td>{{transferProcess.supervisor.name }}</td>
+          <td style="font-weight: bold">رقم الهاتف :</td>
+          <td>{{transferProcess.supervisor.phone + ((transferProcess.supervisor.phone2 == "NULL")? "": (" / " + transferProcess.supervisor.phone2) ) }}</td>
+          <td style="font-weight: bold">الرقم الوطني :</td>
+          <td>{{transferProcess.supervisor.nid}}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold">خط السير :</td>
+          <td colspan="5">{{transferProcess.path }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold">ملاحظات :</td>
+          <td colspan="5">{{transferProcess.notes }}</td>
+        </tr>
+      </tbody>
+    </table>
     <hr>
     <div class="row">
       <div class="col-xs-12 col-md-12 col-lg-12">
         <div class="row clearfix">
          <div class="dual-list list-left col-md-5">
           <div class="well text-right">
-              <h5 class="text-center">طلبة عملية النقل</h5>
+              <h5 class="text-center">طلاب عملية النقل</h5>
               <div class="row">
                   <div class="col-md-10">
                       <div class="input-group btn-block">
@@ -43,7 +79,7 @@
 
       <div class="dual-list list-right col-md-5">
           <div class="well">
-            <h5 class="text-center">طلبة المدرسة</h5>
+            <h5 class="text-center">طلاب المدرسة</h5>
               <div class="row">
                   <div class="col-md-2">
                       <div class="btn-group">
