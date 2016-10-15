@@ -12,7 +12,7 @@ var multipartMiddleware = multipart();
 var fs = require("fs");
 var path = require("path");
 var user={};
-    user.school="57fb8d5606d14d29e32b3c86";
+    user.school="5801f550e4de0e349c8714c2";
 
 router.get('/report1',userHelpers.isLogin , function(req, res) {
   jsreport.render({

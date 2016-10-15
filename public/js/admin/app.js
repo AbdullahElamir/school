@@ -89,18 +89,17 @@
         }]
       }
     })
-    .state('school',{
-      url: '/school',
-      templateUrl: 'admin/pages/school/info',
-      data: {pageTitle: 'معلومات المدرسة'},
-      controller: 'SchoolCtl',
+    .state('schools',{
+      url: '/schools',
+      templateUrl: 'admin/pages/school/schools',
+      data: {pageTitle: 'ألفروع'},
+      controller: 'SchoolsCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/schoolCtl.js',
-              '/css/admin/timeline.css'
+              '/js/admin/controllers/schoolCtl.js'
             ]
           });
         }]
@@ -746,8 +745,8 @@
           });
         }]
       }
-    }).state('adminsAttendance',{
-      url: '/adminsAttendance',
+    }).state('adminAttendance',{
+      url: '/adminAttendance',
       templateUrl: 'admin/pages/attendance/adminsAttendance',
       data: {pageTitle: 'ألحضور والغياب'},
       controller: 'adminsAttendanceCtl',
@@ -1079,6 +1078,21 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/evaluationsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('checks',{
+      url: '/checks',
+      templateUrl: 'admin/pages/medical/medicalCheck',
+      data: {pageTitle: 'ألكشوفات'},
+      controller: 'ChecksCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/medicalChecksCtl.js'
             ]
           });
         }]

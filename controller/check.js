@@ -1,0 +1,98 @@
+var model = require('../models');
+var Check = null;
+
+module.exports = {
+
+  getAllCheck :function(cb){
+    model.Check.find({status:1}, function(err, Checks){
+      if(!err){
+        cb(Checks);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+
+  //getAllChecksBySearchValue
+  getAllChecksBySearchValue :function(searchValue,limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.Check.count({name:new RegExp(searchValue, 'i')},function(err, count){
+      model.Check.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Checks){
+        if(!err){
+          cb({result:Checks,count:count});
+        }else{
+          // console.log(err);
+          cb(null);
+        }
+      });
+    });
+  },
+
+  //getAllChecksCount
+  getAllCheckCount :function(limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.Check.count({},function(err, count){
+      model.Check.find({}).limit(limit).skip(page*limit).exec(function(err,Checks){
+        if(!err){
+          cb({result:Checks,count:count});
+        }else{
+          // console.log(err);
+          cb(null);
+        }
+      });
+    });
+  },
+
+  getCheckId :function(id,cb){
+    model.Check.findOne({_id : id}, function(err, custom){
+      if(!err){
+        cb(custom);
+      }else{
+        cb(null);
+      }
+    });
+  },
+
+  addCheck : function(body,cb){
+    var obj =body;
+    obj.date = new Date();
+    Check = new model.Check(obj);
+    Check.save(function(err,result){
+      if (!err) {
+        cb(true);
+      } else {
+        // console.log(err);
+        cb(false);
+      }
+    });
+  },
+
+  updateCheck : function(id,body,cb){
+    var obj = body;
+    model.Check.findOneAndUpdate({_id:id}, obj, function(err,result) {
+      if (!err) {
+        cb(true);
+      } else {
+        // console.log(err);
+        cb(false);
+      }
+    });
+  },
+
+  deleteCheck : function(id,cb){
+    model.Check.remove({_id:id}, function(err,result) {
+      if (!err) {
+        cb(2);
+      } else {
+        // console.log(err);
+        cb(3);
+      }
+    });
+  }
+
+};
