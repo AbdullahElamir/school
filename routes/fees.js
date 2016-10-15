@@ -4,7 +4,7 @@ var feesMgr = require("../controller/fees");
 var classRoomMgr = require("../controller/classRoom");
 var userHelpers = require("../controller/userHelpers");
 var user={};
-    user.school="57fb8d5606d14d29e32b3c86";
+    user.school="5801f550e4de0e349c8714c2";
 
 
 

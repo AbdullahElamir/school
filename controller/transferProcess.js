@@ -165,9 +165,23 @@ module.exports = {
   },
   
   "deleteTransferProcess" : function(id,cb){
-    model.TransferProcess.remove({_id:id}, function(err,result) {
+    model.transferProcessStudents.remove({transferProcess:id}, function(err,result) {
       if (!err) {
-        cb(2);
+         model.transferProcessTeachers.remove({transferProcess:id}, function(err,result) {
+          if (!err) {
+            model.TransferProcess.remove({_id:id}, function(err,result) {
+              if (!err) {
+                cb(2);
+              } else {
+                console.log(err);
+                cb(3);
+              }
+            });
+          } else {
+            console.log(err);
+            cb(3);
+          }
+        });
       } else {
         console.log(err);
         cb(3);
