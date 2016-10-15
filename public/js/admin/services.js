@@ -259,6 +259,27 @@
       },
       'editSchool': function(obj){
         return $http.put('/school/edit',obj);
+      },
+      'addSchool': function(year){
+        return $http.post('/school/add',year);
+      },
+      'getSchools': function(limit,page){
+        return $http.get('/school/'+limit+'/'+page);
+      },
+      'deleteSchool': function(id){
+        return $http.delete('/school/delete/'+id);
+      },
+      'getSchoolById': function(id){
+        return $http.get('/school/'+id.id);
+      },
+      'editSchoolById': function(id,obj){
+        return $http.put('/school/edit/'+id,obj);
+      },
+      'getAllSchool': function(){
+        return $http.get('/school/all');
+      },
+      'getSchoolsBySearchValue': function(searchValue,limit,page){
+        return $http.get('/school/'+searchValue+'/'+limit+'/'+page);
       }
     };
     return self;
@@ -558,6 +579,33 @@
         },
         'editEvaluation': function(id,obj){
           return $http.put('/evaluation/edit/'+id,obj);
+        }
+      };
+      return self;
+    }]);
+
+    app.service('ChecksServ',['$http',function($http){
+      var self = {
+        'addChecks': function(year){
+          return $http.post('/checks/add',year);
+        },
+        'getChecks': function(limit,page){
+          return $http.get('/checks/'+limit+'/'+page);
+        },
+        'getChecksBySearchValue': function(searchValue,limit,page){
+          return $http.get('/checks/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteChecks': function(id){
+          return $http.delete('/checks/delete/'+id);
+        },
+        'getChecksById': function(id){
+          return $http.get('/checks/'+id.id);
+        },
+        'editChecks': function(id,obj){
+          return $http.put('/checks/edit/'+id,obj);
+        },
+        'getAllChecks': function(){
+          return $http.get('/checks/all');
         }
       };
       return self;
