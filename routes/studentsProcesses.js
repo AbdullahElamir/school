@@ -10,7 +10,7 @@ var resultMgr = require("../controller/result");
 var stuEvaMgr = require("../controller/studentEvaluation");
 var evaMgr = require("../controller/evaluation");
 var user={};
-    user.school="57fb8d5606d14d29e32b3c86";
+    user.school="5801f550e4de0e349c8714c2";
 //get student information
 router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(req, res) {
   evaMgr.getAllEvaluation(function(result){

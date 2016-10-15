@@ -8,7 +8,7 @@ var parentMsg = require("../controller/parentMsg");
 var TSCMgr = require("../controller/teacherSubjectClass");
 var userHelpers = require("../controller/userHelpers");
 var user={};
-    user.school="57fb8d5606d14d29e32b3c86";
+    user.school="5801f550e4de0e349c8714c2";
 
 /* Send Message to Parent of Students of ClassRoom By classRoomID */
 router.put('/message/:classRoomID',function(req, res) {
