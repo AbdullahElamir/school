@@ -99,9 +99,23 @@
 
   }]);
 
-  app.controller('newYearCtl',['$scope','YearServ','SystemServ','$state','toastr',function($scope,YearServ,SystemServ,$state,toastr){
+  app.controller('newYearCtl',['$scope','YearServ','SystemServ','$state','toastr','AdminServ','SchoolServ',function($scope,YearServ,SystemServ,$state,toastr,AdminServ,SchoolServ){
 
     $scope.newYearForm={};
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newYear = function(){
       YearServ.addYear($scope.newYearForm).then(function(response){
         if(response.data){

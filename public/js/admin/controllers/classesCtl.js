@@ -86,7 +86,7 @@
 
   }]);
 
-  app.controller('newClassCtl',['$scope','ClassServ','$state','toastr',function($scope,ClassServ,$state,toastr){
+  app.controller('newClassCtl',['$scope','ClassServ','$state','toastr','AdminServ','SchoolServ',function($scope,ClassServ,$state,toastr,AdminServ,SchoolServ){
 
     $scope.newClassForm={};
     $scope.allTypes = [
@@ -94,7 +94,20 @@
       {_id:2,name:"اعدادي"},
       {_id:3,name:"ثانوي"}
     ];
-
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newClass = function(){
       ClassServ.addClass($scope.newClassForm).then(function(response){
         if(response.data){
