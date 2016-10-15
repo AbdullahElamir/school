@@ -20,6 +20,9 @@
       },
       'saveGradesOfStudent': function(idStudent,subjectID,classRoomID,examsGrades){
         return $http.put('/studentsProcesses/grades/edit/'+idStudent+'/'+subjectID+'/'+classRoomID,examsGrades);
+      },
+      'sendMessageToParentOfStudent': function(idStudent,message){
+        return $http.put('/student/message/'+idStudent,message);
       }
     };
     return self;
@@ -29,6 +32,9 @@
     var self = {
       'getTeacherClassRooms': function(id){
         return $http.get('/classRoom/teacher/'+id);
+      },
+      'sendMessageToParentsOfClassRoom': function(idClassRoom,message){
+        return $http.put('/classRoom/message/'+idClassRoom,message);
       }
     };
     return self;
@@ -46,7 +52,47 @@
     return self;
   }]);
 
+  app.service('TeacherServ',['$http',function($http){
+    var self = {
+      'getTeacherById': function(id) {
+        return $http.get('/teacher/'+id.id);
+      },
+      'editTeacher': function(id,obj) {
+        return $http.put('/teacher/edit/'+id,obj);
+      },
+      'changePass': function(userId,passwords){
+        return $http.put('/teacher/changePass/'+userId,passwords);
+      }
+    };
+    return self;
+  }]);
 
+  app.service('TasksServ',['$http',function($http){
+    var self = {
+      'addTasks': function(year){
+        return $http.post('/tasks/add',year);
+      },
+      'getTasks': function(limit,page){
+        return $http.get('/tasks/'+limit+'/'+page);
+      },
+      'getTasksBySearchValue': function(searchValue,limit,page,classRoom,subject){
+        return $http.get('/tasks/'+searchValue+'/'+limit+'/'+page+'/'+classRoom+'/'+subject);
+      },
+      'deleteTasks': function(id){
+        return $http.delete('/tasks/delete/'+id);
+      },
+      'getTasksById': function(id){
+        return $http.get('/tasks/'+id.id);
+      },
+      'editTasks': function(id,obj){
+        return $http.put('/tasks/edit/'+id,obj);
+      },
+      'getAllTasks': function(){
+        return $http.get('/tasks/all');
+      }
+    };
+    return self;
+  }]);
 
 
 

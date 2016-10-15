@@ -7,10 +7,12 @@ var MessageMgr = require("../controller/message");
 var parentMsg = require("../controller/parentMsg");
 var TSCMgr = require("../controller/teacherSubjectClass");
 var userHelpers = require("../controller/userHelpers");
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
 
 /* Send Message to Parent of Students of ClassRoom By classRoomID */
 router.put('/message/:classRoomID',function(req, res) {
-  stuproMgr.getStuproRoom([req.params.classRoomID],function(stupro){
+  stuproMgr.getStuproRoom(req.params.classRoomID,function(stupro){
     studentMgr.getStudentAllID(stupro,function(students){
       MessageMgr.addMsgParent(req.body,function(msg){
         parentMsg.addParentMsgBulk(students,msg._id,function(send){
@@ -81,12 +83,11 @@ router.get('/name/:name',userHelpers.isLogin , function(req, res) {
 // get class room by name
 router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
   TSCMgr.getTeacherClassSubject(req.params.id,function(result){
-    console.log(result);
     var tsc = [];
     if(result.length === 0){
       res.send([]);
     }
-    for( i in result){
+    for(var i in result){
       tsc.push({
         _id:result[i].classRoom._id,
         name:result[i].classRoom.name,
@@ -111,7 +112,7 @@ router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res)
     if(Crooms.length === 0){
       res.send([]);
     }
-    for (i in Crooms){
+    for (var i in Crooms){
       _room.push(Crooms[i].student);
       if(i == Crooms.length-1){
         res.send(_room);

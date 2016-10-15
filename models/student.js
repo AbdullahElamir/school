@@ -7,6 +7,10 @@ var Student = new Schema({
   motherName: { type: String, default:"NULL"},
   nid: {type: String, index: true},
   birth_day:{ type:Date, required: [true, 'birth date required']},
+  startDate:{ type:Date, required: [true, 'start date required']},
+  finishDate:{ type:Date },
+  email: { type: String},
+  password: { type: String},
   birth_place:{ type:String, default:"NULL"},
   parent:[{ type: Schema.Types.ObjectId , ref: 'Parent'}],
   gender:{type: String,default:"NULL"},
@@ -16,7 +20,9 @@ var Student = new Schema({
   closestPerson:{type: String,default:"NULL"},
   closestPersonPhone:{type: String,default:"NULL"},
   bloodType:{type: String,default:"NULL"},
-  status: {type: Number, default:1}
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
+  status: {type: Number, default:1},
+  active: {type: Number, default:1}
 });
 
 Student.plugin(timestamps);

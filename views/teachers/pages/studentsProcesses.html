@@ -22,12 +22,54 @@
           <td>{{classRoom.course}}</td>
           <td>
             <a class="btn btn-success btn-xs" ui-sref="studentInformation({id:classRoom._id,course:classRoom.courseId})"><i class="fa fa-pencil fa-fw"></i>&nbsp;الطلبة</a>
+            <a class="btn btn-success btn-xs" ui-sref="tasks({id:classRoom._id,course:classRoom.courseId})"><i class="fa fa-tasks fa-fw"></i>&nbsp;المهام</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#messageModal" ng-click="openSendMessageDialog(classRoom._id)"><i class="fa fa-envelope fa-fw"></i>&nbsp; رسالة جماعية</a>
             <a class="btn btn-success btn-xs"><i class="fa fa-pie-chart fa-fw"></i>&nbsp;كشف درجات</a>
             <a class="btn btn-success btn-xs"><i class="fa fa-file-text fa-fw"></i>&nbsp;كشف باسماء الطلبة</a>
           </td>
         </tr>
       </tbody>
     </table>
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalMessageLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalMessageLabel">إرسال رسالة</h4>
+          </div>
+          <form novalidate ng-submit="sendMessageToParentsOfClassRoom()">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                      <div class="form-group">
+                        <label class="control-label">عنوان الرسالة</label>
+                        <input class="form-control input-sm" type="text" ng-model="message.title" placeholder="عنوان الرسالة" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                      <div class="form-group">
+                        <label class="control-label">محتوى الرسالة</label>
+                        <textarea class="form-control input-sm" rows="6" cols="12" ng-model="message.description" placeholder="محتوى الرسالة" required></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button value="idClassRoom" type="submit" class="btn btn-success" >إرسال</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <div ng-show="classRooms.length == 0">
       <div class="alert alert-info">
         <p class="text-center">

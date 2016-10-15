@@ -9,7 +9,7 @@ module.exports = {
       if(!err){
         cb(Attendancees);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -27,7 +27,7 @@ module.exports = {
         if(!err){
           cb({result:Attendancees,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -39,7 +39,7 @@ module.exports = {
       if(!err){
         cb(Attendancees);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -64,19 +64,19 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateAttendance : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Attendance.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -98,14 +98,14 @@ module.exports = {
         if(Attendancees.length==0){
           cb(att);
         }
-        for(j in Attendancees){
+        for(var j in Attendancees){
           att[Attendancees[j].StuPro.id]={attend:Attendancees[j].attend,reson:Attendancees[j].reason};
           if(j == Attendancees.length-1){
             cb(att);
           }
         }
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -135,26 +135,51 @@ module.exports = {
             if (!err) {
               cb(true);
             } else {
-              console.log(err);
+              // console.log(err);
               cb(false);
             }
           });
         }
 
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
 
   },
   setReason : function (id,reason,date,cb){
-    console.log(reason);
-    model.Attendance.findOneAndUpdate({_id:id,date:date}, {reason:reason.reason}, function(err,result) {
+// <<<<<<< HEAD
+//     console.log(reason);
+//     model.Attendance.findOneAndUpdate({_id:id,date:date}, {reason:reason.reason}, function(err,result) {
+// =======
+    var d1 = new Date(date);
+    var d2 = new Date(date);
+    d1.setHours(0);
+    d1.setMinutes(0);
+    d1.setSeconds(0);
+    d2.setHours(23);
+    // d2.setMilliseconds(999);
+    d2.setMinutes(59);
+    d2.setSeconds(59);
+    model.Attendance.findOneAndUpdate({$and:[{StuPro:id},{date:{$lte: new Date(d2)}},{date:{$gte: new Date(d1)}}]}, {reason:reason.reason}, function(err,result) {
       if (!err) {
-        cb(true);
+        if(result){
+          cb(true);
+        } else {
+          var obj = {"StuPro":id,"date":new Date(date),"attend":0,"reason":reason.reason};
+          var Attendance = new model.Attendance(obj);
+          Attendance.save(function(err,result){
+            if (!err) {
+              cb(true);
+            } else {
+              // console.log(err);
+              cb(false);
+            }
+          });
+        }
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });

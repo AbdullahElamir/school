@@ -3,16 +3,17 @@ var router = express.Router();
 var classMgr = require("../controller/class");
 var classRoomMgr = require("../controller/classRoom");
 var userHelpers = require("../controller/userHelpers");
-
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
 /*GET all Classes By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  classMgr.getAllClassesBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(parents){
+  classMgr.getAllClassesBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(parents){
     res.send(parents);
   });
 });
 
 router.get('/classRooms/:year', userHelpers.isLogin ,function(req, res) {
-  classRoomMgr.getAllClassesAndClassRoomsByYear(req.params.year, function(classes){
+  classRoomMgr.getAllClassesAndClassRoomsByYear(user.school,req.params.year, function(classes){
     var _class = [];
     var obj=[];
     var k = 0;
@@ -33,18 +34,19 @@ router.get('/classRooms/:year', userHelpers.isLogin ,function(req, res) {
 
 // GET all class
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  classMgr.getAllClassCount(req.params.limit,req.params.page,function(_class){
+  classMgr.getAllClassCount(user.school,req.params.limit,req.params.page,function(_class){
     res.send(_class);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  classMgr.getAllClass(function(_class){
+  classMgr.getAllClass(user.school,function(_class){
     res.send(_class);
   });
 });
 // Add new class
 router.post('/add', userHelpers.isLogin ,function(req, res) {
+  req.body.school=user.school;
   classMgr.addClass(req.body,function(_class){
     res.send(_class);
   });

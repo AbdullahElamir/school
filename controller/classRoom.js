@@ -9,7 +9,7 @@ module.exports = {
       if(!err){
         cb(ClassRoomes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -25,7 +25,7 @@ module.exports = {
         if(!err){
           cb({result:ClassRoomes,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +41,7 @@ module.exports = {
         if(!err){
           cb({result:ClassRoomes,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -53,7 +53,7 @@ module.exports = {
       if(!err){
         cb(ClassRoomes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -86,30 +86,30 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateClassRoom : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.ClassRoom.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
-  getAllClassesAndClassRoomsByYear : function(year,cb){
-    model.ClassRoom.find({year:year}).populate('class')
+  getAllClassesAndClassRoomsByYear : function(school,year,cb){
+    model.ClassRoom.find({year:year,school:school}).populate('class')
     .exec(function(err, ClassRoomes){
       if(!err){
         cb(ClassRoomes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -119,11 +119,11 @@ module.exports = {
       if(!err){
         cb(ClassRoomes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
-  },
+  }
   // deleteClassRoom : function(id,cb){
   //   model.Study.find({customer:id}, function(err,resul) {
   //     if(resul.length > 0){

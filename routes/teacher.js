@@ -5,18 +5,21 @@ var userHelpers = require("../controller/userHelpers");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
-var path = require("path");
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
+// var path = require("path");
 
 /*GET all Teachers By Search Value*/
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  teacherMgr.getAllTeacher(function(teacher){
+  teacherMgr.getAllTeacher(user.school,function(teacher){
     res.send(teacher);
   });
 });
 
 /* Add new teacher  */
 router.post('/add', userHelpers.isLogin ,function(req, res) {
+  req.body.school=user.school;
   teacherMgr.addTeacher(req.body,function(teacher){
     res.send(teacher);
   });
@@ -33,10 +36,10 @@ router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req
   fs.readFile(req.files.file.path, function (err, data) {
     var newPath =dir+'/'+req.params.id;
     fs.writeFile(newPath, data, function (err) {
-      if(!err){  
-        res.send(true);       
+      if(!err){
+        res.send(true);
       }
-       
+
     });
   });
 });
@@ -47,6 +50,12 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
     res.send(teacher);
   });
 });
+
+router.put('/changePass/:id', userHelpers.isLogin ,function(req, res) {
+  teacherMgr.changePass(req.params.id,req.body,function(result){
+    res.send({result:result});
+  });
+});
 /* Delete teacher by id  */
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   teacherMgr.deleteTeacher(req.params.id,function(teacher){
@@ -54,14 +63,14 @@ router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   });
 });
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  teacherMgr.getTeachersBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(student){
+  teacherMgr.getTeachersBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 /* GET all teacher */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  teacherMgr.getAllTeacherCount(req.params.limit,req.params.page,function(teacher){
+  teacherMgr.getAllTeacherCount(user.school,req.params.limit,req.params.page,function(teacher){
     res.send(teacher);
   });
 });

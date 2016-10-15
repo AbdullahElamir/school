@@ -3,14 +3,14 @@ var subject = null;
 
 module.exports = {
 
-  getAllSubject :function(cb){
-    model.Subject.find({})
+  getAllSubject :function(school,cb){
+    model.Subject.find({school:school,status:1})
     .populate('clas')
     .exec(function(err, Subjects){
       if(!err){
         cb(Subjects);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -22,34 +22,35 @@ module.exports = {
       if(!err){
         cb(Subjects);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
   
   //getAllStudentsBySearchValue
-  getSubjectsBySearchValueAndClass :function(searchValue,clas,limit,page,cb){
+  getSubjectsBySearchValueAndClass :function(school,searchValue,clas,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
     if( clas != "all" ){
-      model.Subject.count({$and :[{name:new RegExp(searchValue, 'i')},{clas:clas}]},function(err, count){
-        model.Subject.find({$and :[{name:new RegExp(searchValue, 'i')},{clas:clas}]}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
+      model.Subject.count({school:school,$and :[{name:new RegExp(searchValue, 'i')},{clas:clas}]},function(err, count){
+        model.Subject.find({school:school,$and :[{name:new RegExp(searchValue, 'i')},{clas:clas}]}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
           if(!err){
             cb({result:subjects,count:count});
           }else{
-            console.log(err);
+            // console.log(err);
             cb(null);
           }
         });
       });
     } else {
-      model.Subject.count({name:new RegExp(searchValue, 'i')},function(err, count){ model.Subject.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
+      model.Subject.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){ 
+        model.Subject.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
           if(!err){
             cb({result:subjects,count:count});
           }else{
-            console.log(err);
+            // console.log(err);
             cb(null);
           }
         });
@@ -58,39 +59,39 @@ module.exports = {
   },
 
   //getAllCustomerCount
-  getAllSubjectCount :function(limit,page,cb){
+  getAllSubjectCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Subject.count({},function(err, count){
-      model.Subject.find({}).limit(limit).skip(page*limit)
+    model.Subject.count({school:school,status:1},function(err, count){
+      model.Subject.find({school:school,status:1}).limit(limit).skip(page*limit)
       .populate('clas')
       .exec(function(err,subjects){
         if(!err){
           cb({result:subjects,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
     });
   },
 
-  getAllSubjectStatus:function(status,cb){
-    model.Subject.find({status:status})
+  getAllSubjectStatus:function(school,status,cb){
+    model.Subject.find({school:school,status:status})
     .populate('clas')
     .exec(function(err, subjects){
       if(!err){
         cb(subjects);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
   
-  getSubjectName :function(name,cb){
-    model.Subject.find({name :{ $regex:name, $options: 'i' }}).limit(30)
+  getSubjectName :function(school,name,cb){
+    model.Subject.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30)
     .populate('clas')
     .exec(function(err, custom){ 
       if(!err){
@@ -121,19 +122,19 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateSubject : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Subject.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -148,7 +149,7 @@ module.exports = {
           if (!err) {
             cb(2);
           } else {
-            console.log(err);
+            // console.log(err);
             cb(3);
           }
         });

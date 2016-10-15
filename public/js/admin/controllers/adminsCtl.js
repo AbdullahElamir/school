@@ -113,6 +113,7 @@ app.controller('EditAdminCtl',['$scope','$state','AdminServ','toastr','$statePar
      //set image of selected admin to dialog
    };
 
+   $scope.date = new Date().getTime();
    // upload on file select or drop
    $scope.upload = function (file) {
      if($scope.file){
@@ -123,6 +124,7 @@ app.controller('EditAdminCtl',['$scope','$state','AdminServ','toastr','$statePar
        }).success(function (data, status, headers, config) {
            if(data){
              $('#picModal').modal('hide');
+             $scope.date = new Date().getTime();
              toastr.success('تم تغيير الصورة بنجاح');
            }else{
              toastr.info('فشل تحميل الصورة');

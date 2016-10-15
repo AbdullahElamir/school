@@ -3,6 +3,8 @@ var router = express.Router();
 var examMgr = require("../controller/exam");
 var userHelpers = require("../controller/userHelpers");
 var resultMgr = require("../controller/result");
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
 
 
 

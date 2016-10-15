@@ -3,80 +3,83 @@ var Admin = null;
 var userHelpers = require("./userHelpers");
 module.exports = {
 
-  getAllAdmin :function(cb){
-    model.Admin.find({},function(err, Admins){
+  getAllAdmin :function(school,cb){
+    model.Admin.find({school:school,status:1},function(err, Admins){
       if(!err){
         cb(Admins);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
 
   //getAlladminsBySearchValue
-  getAllAdminsBySearchValue :function(searchValue,limit,page,cb){
+  getAllAdminsBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Admin.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]},function(err, count){
-      model.Admin.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,admins){
-        if(!err){
-          cb({result:admins,count:count});
-        }else{
-          console.log(err);
-          cb(null);
-        }
+    model.Admin.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school},function(err, count){
+      model.Admin.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).exec(function(err,admins){
+        model.Admin.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).distinct('_id',function(err,adminsId){
+        
+          if(!err){
+            cb({result:admins,count:count,adminsId:adminsId});
+          }else{
+            // console.log(err);
+            cb(null);
+          }
+        });
       });
     });
   },
 
   //getAdminsBySearchValue
-  getAdminsBySearchValue :function(searchValue,limit,page,cb){
+  getAdminsBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Admin.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]},function(err, count){
-      model.Admin.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,Admins){
+    model.Admin.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school},function(err, count){
+      model.Admin.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).exec(function(err,Admins){
         if(!err){
           cb({result:Admins,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
     });
   },
 
-  getAllAdminCount :function(limit,page,cb){
+  getAllAdminCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Admin.count({},function(err, count){
-      model.Admin.find({}).limit(limit).skip(page*limit).exec(function(err,Admins){
+    model.Admin.count({school:school,status:1},function(err, count){
+      model.Admin.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,Admins){
         if(!err){
           cb({result:Admins,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
     });
   },
 
-  getAllAdminStatus:function(status,cb){
-    model.Admin.find({status:status},function(err, Admins){
+  getAllAdminStatus:function(school,status,cb){
+    model.Admin.find({school:school,status:status},function(err, Admins){
       if(!err){
         cb(Admins);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
 
-  getAdminName :function(name,cb){
-    model.Admin.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, Admins){
+  getAdminName :function(school,name,cb){
+    model.Admin.find({name :{ $regex:name, $options: 'i' },school:school}).limit(30).exec(function(err, Admins){
       if(!err){
         cb(Admins);
       }else{
@@ -88,7 +91,7 @@ module.exports = {
   getAdminId :function(id,cb){
     model.Admin.findOne({_id : id}, function(err, Admins){
       if(!err){
-      console.log("Admins");
+      // console.log("Admins");
         cb(Admins);
       }else{
         cb(null);
@@ -105,7 +108,7 @@ module.exports = {
     });
   },
   addAdmin : function(body,cb){
-    obj = body;
+    var obj = body;
     userHelpers.Hash(body.password,function(hash){
       obj.password=hash.password;
       obj.salt=hash.salt;
@@ -122,13 +125,13 @@ module.exports = {
   },
 
   updateAdmin : function(id,body,cb){
-    obj = body;
+    var obj = body;
 
     model.Admin.findOneAndUpdate({_id:id}, obj, function(err,Admins) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -139,7 +142,7 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(3);
       }
     });
@@ -155,7 +158,7 @@ module.exports = {
             cb(2); //wrong password
           }
         } else {
-          console.log(err);
+          // console.log(err);
           cb(3); //error
         }
       });

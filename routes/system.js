@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var systemMgr = require("../controller/system");
 var userHelpers = require("../controller/userHelpers");
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
 
 // edit system setting
 router.put('/data/edit', userHelpers.isLogin ,function(req, res) {
@@ -26,7 +28,7 @@ router.get('/data/:id/:year',userHelpers.isLogin , function(req, res) {
 
 // GET all systems
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  systemMgr.getAllSystemCount(req.params.limit,req.params.page,function(system){
+  systemMgr.getAllSystemCount(user.school,req.params.limit,req.params.page,function(system){
     res.send(system);
   });
 });
@@ -39,6 +41,7 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
 
 // Add new system
 router.post('/add', userHelpers.isLogin ,function(req, res) {
+  req.body.school=user.school;
   systemMgr.addSystem(req.body,function(system){
     res.send(system);
   }); 
@@ -46,6 +49,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
 
 // Edit system by id
 router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
+  req.body.school=user.school;
   systemMgr.updateSystem(req.params.id,req.body,function(system){
     res.send(system);
   });

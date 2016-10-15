@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(Exames);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -24,7 +24,7 @@ module.exports = {
         if(!err){
           cb({result:Exames,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +41,7 @@ module.exports = {
         if(!err){
           cb({result:Exames,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -53,7 +53,7 @@ module.exports = {
       if(!err){
         cb(Exames);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -86,19 +86,19 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateExam : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Exam.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -108,11 +108,11 @@ module.exports = {
       if(!err){
         cb(exam);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
-  },
+  }
   
   // deleteExam : function(id,cb){
   //   model.Exam.remove({_id:id}, function(err,result) {

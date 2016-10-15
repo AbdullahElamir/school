@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(Stuevas);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -24,7 +24,7 @@ module.exports = {
         if(!err){
           cb({result:Stuevas,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -36,7 +36,7 @@ module.exports = {
       if(!err){
         cb(classes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -60,19 +60,19 @@ module.exports = {
   //     if (!err) {
   //       cb(true);
   //     } else {
-  //       console.log(err);
+        // console.log(err);
   //       cb(false);
   //     }
   //   });
   // },
 
   updateStueva : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Stueva.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -80,7 +80,7 @@ module.exports = {
   getStuEva : function(stupro,course,month,half,cb){
     model.Stueva.find({$and:[{StuPro:stupro},{course:course},{month:month},{half:half} ]}, function(err, Stuevas){
       if (!err) {
-        obj =[];
+        var obj =[];
         if( Stuevas.length==0){
           cb(obj);
         }
@@ -91,7 +91,7 @@ module.exports = {
           }
         }
       } else {
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -115,14 +115,14 @@ module.exports = {
             if (!err) {
               cb(true);
             } else {
-              console.log(err);
+              // console.log(err);
               cb(false);
             }
           });
         }
         
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);  
       }
     });  

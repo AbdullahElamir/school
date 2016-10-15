@@ -3,7 +3,8 @@ var router = express.Router();
 var roomMgr = require("../controller/room");
 var sysYearMgr = require("../controller/systemYear");
 var userHelpers = require("../controller/userHelpers");
-
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
 //get all Rooms By Search Value
 router.post('/addY', userHelpers.isLogin ,function(req, res) {
   sysYearMgr.addSystemYear(req.body,function(room){
@@ -12,27 +13,27 @@ router.post('/addY', userHelpers.isLogin ,function(req, res) {
   
 });
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  roomMgr.getAllRoomsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(rooms){
+  roomMgr.getAllRoomsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(rooms){
     res.send(rooms);
   });
 });
 
 // get all rooms
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  roomMgr.getAllRoomCount(req.params.limit,req.params.page,function(room){
+  roomMgr.getAllRoomCount(user.school,req.params.limit,req.params.page,function(room){
     res.send(room);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  roomMgr.getAllRoom(function(room){
-    console.log(room);
+  roomMgr.getAllRoom(user.school,function(room){
     res.send(room);
   });
 });
 
 // add new room
 router.post('/add', userHelpers.isLogin ,function(req, res) {
+  req.body.school=user.school;
   roomMgr.addRoom(req.body,function(room){
     res.send(room);
   });

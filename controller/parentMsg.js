@@ -1,5 +1,6 @@
 var model = require('../models');
 var ParentMsg1 = null;
+var ParentM = null;
 
 module.exports = {
 
@@ -8,7 +9,7 @@ module.exports = {
       if(!err){
         cb(ParentMsges);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -24,7 +25,7 @@ module.exports = {
         if(!err){
           cb({result:ParentMsges,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -36,7 +37,7 @@ module.exports = {
       if(!err){
         cb(ParentMsges);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -47,7 +48,7 @@ module.exports = {
       if(!err){
         cb(ParentMsges);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -98,43 +99,66 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
   addParentMsgBulk : function(stu,msg,cb){
-    for( k in stu){
-      var obj ={
-      parent:stu[k].parent[0],
-      msg:msg
+    var count = 0;
+    for(var k in stu){
+      var obj = {
+        parent:stu[k].parent[0],
+        msg:msg
       };
       ParentMsg1 = new model.ParentMsg(obj);
       ParentMsg1.save(function(err,result){
-        // if (!err) {
-        //   cb(true);
-        // } else {
-        //   console.log(err);
-        //   cb(false);
-        // }
-        if(k == stu.length-1){
+        count++;
+        if(count == stu.length){
           cb(true);
+          return;
         }
       });  
     }
     
   },
   updateParentMsg : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.ParentMsg.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
+  
+  sentMsgsAllParents: function(msg,cb){
+    var count = 0;
+    model.Parent.find({status:1}).exec(function(err,parents){
+      if(!err){
+        for(var i in parents){
+          ParentM = new model.ParentMsg({parent:parents[i]._id,msg:msg,seen:0,status:1});
+          ParentM.save(function(err,result){
+            if (!err) {
+              count++;
+              if( count == parents.length ){
+                cb(true);
+                return;
+              }
+            } else {
+              // console.log(err);
+              cb(false);
+            }
+          });
+        }
+      }else{
+        // console.log(err);
+        cb(false);
+      }
+    });
+  }
   
   // deleteParentMsg : function(id,cb){
   //   model.ParentMsg.remove({_id:id}, function(err,result) {

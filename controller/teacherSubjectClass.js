@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(TSCs);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -22,7 +22,7 @@ module.exports = {
       if(!err){
         cb(TSCs);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -46,32 +46,39 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateTSC : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.TSC.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
   
-   getTeacherClassSubject : function(id,cb){
-    model.TSC.find({teacher:id,status:1}).populate('classRoom subject').exec(function(err, teachers){
+  getTeacherClassSubject : function(id,cb){
+    model.Year.findOne({active : 1}, function(err, activeYear){
       if(!err){
-        cb(teachers);
+        model.TSC.find({teacher:id,status:1,year:activeYear._id}).populate('classRoom subject').exec(function(err, teachers){
+          if(!err){
+            cb(teachers);
+          }else{
+            // console.log(err);
+            cb(null);
+          }
+        });
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
-  },
+  }
 };

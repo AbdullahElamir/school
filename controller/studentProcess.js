@@ -9,7 +9,7 @@ module.exports = {
       if(!err){
         cb(Stupros);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -29,7 +29,7 @@ module.exports = {
         if(!err){
           cb({result:Stupros,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +41,7 @@ module.exports = {
       if(!err){
         cb(Stupros);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -60,26 +60,25 @@ module.exports = {
   },
 
   addStupro : function(body,cb){
-    obj = body
-
+    var obj = body
     Stupro = new model.Stupro(obj);
     Stupro.save(function(err,result){
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateStupro : function(id,body,cb){
-    obj = body
+    var obj = body
     model.Stupro.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true)
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -90,58 +89,57 @@ module.exports = {
       if(!err){
         cb(Stupros);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
   getStudentClassRoom : function(classRoom,cb){
-   model.Stupro.find({classRoom:classRoom}).distinct('_id',function(err, Stupros){
-    if(!err){
-      model.Stupro.find({classRoom:classRoom}).populate('student')
-      .exec(function(err,Stu) {
-        if(!err){
-          cb({StuP:Stupros,stu:Stu});
-        }else{
-          console.log(err);
-          cb(null);
-        }
-      });
-    }else{
-      console.log(err);
-      cb(null);
-    }
-    
-   });
+    model.Stupro.find({classRoom:classRoom}).distinct('_id',function(err, Stupros){
+      if(!err){
+        model.Stupro.find({classRoom:classRoom}).populate('student')
+        .exec(function(err,Stu) {
+          if(!err){
+            cb({StuP:Stupros,stu:Stu});
+          }else{
+            // console.log(err);
+            cb(null);
+          }
+        });
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+      
+    });
   },
   getStuproRoom : function(classRoom,cb){
-   model.Stupro.find({classRoom:{$in:classRoom}}).distinct('student',function(err, Stupros){
-    if(!err){
-      cb(Stupros);
-    }else{
-      console.log(err);
-      cb(null);
-    }
-   });
+    model.Stupro.find({classRoom:{$in:classRoom}}).distinct('student',function(err, Stupros){
+      if(!err){
+        cb(Stupros);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
   },
   getStudentClassRoomYear : function(classRoom,year,cb){
-   model.Stupro.find({classRoom:classRoom,year:year}).distinct('_id',function(err, Stupros){
-    if(!err){
-      model.Stupro.find({classRoom:classRoom,year:year}).populate('student')
-      .exec(function(err,Stu) {
-        if(!err){
-          cb({StuP:Stupros,stu:Stu});
-        }else{
-          console.log(err);
-          cb(null);
-        }
-      });
-    }else{
-      console.log(err);
-      cb(null);
-    }
-    
-   });
+    model.Stupro.find({classRoom:classRoom,year:year}).distinct('_id',function(err, Stupros){
+      if(!err){
+        model.Stupro.find({classRoom:classRoom,year:year}).populate('student')
+        .exec(function(err,Stu) {
+          if(!err){
+            cb({StuP:Stupros,stu:Stu});
+          }else{
+            // console.log(err);
+            cb(null);
+          }
+        });
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
   },
   getStudentsSto : function(classRoom,student,cb){
     model.Stupro.findOne({classRoom:classRoom,student:student})
@@ -149,7 +147,7 @@ module.exports = {
       if(!err){
         cb(Stupros._id);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -163,14 +161,14 @@ module.exports = {
     model.Stupro.findOneAndUpdate(obj,{description:"NULL"}, function(err, stup){
       if(!err){
         if(stup){
-           cb(true);
+          cb(true);
         }else{
           Stupro = new model.Stupro(obj);
           Stupro.save(function(err,result){
             if (!err) {
               cb(true);  
             } else {
-              console.log(err);
+              // console.log(err);
               cb(false);
             }
           });
@@ -179,5 +177,5 @@ module.exports = {
         cb(null);
       }
     });
-  },
+  }
 };

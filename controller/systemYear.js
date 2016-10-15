@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(SystemYears);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -26,7 +26,7 @@ module.exports = {
         if(!err){
           cb({result:SystemYears,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -38,7 +38,7 @@ module.exports = {
       if(!err){
         cb(SystemYears);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -48,7 +48,7 @@ module.exports = {
       if(!err){
         cb(SystemYears);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -71,23 +71,23 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateSystemYear : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.SystemYear.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
-  },
+  }
   
 
 };

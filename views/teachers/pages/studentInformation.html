@@ -1,4 +1,14 @@
 <div class="portlet light bordered ">
+  <div class="portlet-title">
+    <div class="row">
+      <div class="col-xs-3 col-md-3">
+        <div class="caption caption-xs">
+          <i class="icon-settings font-green"></i>
+          <span class="caption-subject font-green bold">الطلبة</span>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="portlet-body" style="padding-top:0px;">
     <table class="table table-striped">
       <thead>
@@ -13,12 +23,53 @@
           <td>{{$index+1}}</td>
           <td>{{studentinfo.name}}</td>
           <td>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#messageModal" ng-click="openSendMessageDialog(studentinfo._id)"><i class="fa fa-envelope fa-fw"></i>&nbsp; رسالة لولي الأمر</a>
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#gradesModal" ng-click="openGradesDialog(studentinfo._id)"><i class="fa fa-file-text-o fa-fw"></i>&nbsp; الدرجات</a>
             <a class="btn btn-success btn-xs" ui-sref="studentsEvaluate({id:classRoomID,course:subjectID,student:studentinfo._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;التقييم الشهري</a>
           </td>
         </tr>
       </tbody>
     </table>
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalMessageLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalMessageLabel">إرسال رسالة لولي أمر الطالب</h4>
+          </div>
+          <form novalidate ng-submit="sendMessageToParentOfStudent()">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                      <div class="form-group">
+                        <label class="control-label">عنوان الرسالة</label>
+                        <input class="form-control input-sm" type="text" ng-model="message.title" placeholder="عنوان الرسالة" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                      <div class="form-group">
+                        <label class="control-label">محتوى الرسالة</label>
+                        <textarea class="form-control input-sm" rows="6" cols="12" ng-model="message.description" placeholder="محتوى الرسالة" required></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button value="idStudentMsg" type="submit" class="btn btn-success" >إرسال</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <div class="modal fade" id="gradesModal" tabindex="-1" role="dialog" aria-labelledby="myModalGradesLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -71,6 +122,12 @@
         <p class="text-center">
           عفوا لاتوجد بيانات
         </p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-3 col-md-2 col-md-offset-5">
+        <a class="btn btn-success btn-sm btn-block" ui-sref="studentsProcesses"><i class="fa fa-arrow-right"></i>&nbsp;رجوع</a>
       </div>
     </div>
   </div>

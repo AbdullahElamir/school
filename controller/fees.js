@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(Feeses);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -24,7 +24,7 @@ module.exports = {
         if(!err){
           cb({result:Feeses,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +41,7 @@ module.exports = {
         if(!err){
           cb({result:Feeses,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -53,7 +53,7 @@ module.exports = {
       if(!err){
         cb(Feeses);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -86,19 +86,19 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateFees : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Fees.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -106,20 +106,21 @@ module.exports = {
   getSumFees :function(id,cb){
     model.Fees.aggregate([
       {$match:{id_class:id}},
-      { $group: {
-        _id: '$id_class',
-        sum: { $sum :'$amount'}
+      { 
+        $group: {
+          _id: '$id_class',
+          sum: { $sum :'$amount'}
         }
       }
     ], function (err, results) {
       if (!err) {
-          cb(results);
+        cb(results);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
-  },
+  }
   // deleteFees : function(id,cb){
   //   model.Fees.remove({_id:id}, function(err,result) {
   //     if (!err) {

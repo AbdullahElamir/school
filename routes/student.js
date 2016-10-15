@@ -11,10 +11,12 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
 var path = require("path");
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
 
 router.get('/report',userHelpers.isLogin , function(req, res) {
   jsreport.render({
-    template: { 
+    template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/testReport.html"), "utf8")
@@ -27,7 +29,7 @@ router.get('/report',userHelpers.isLogin , function(req, res) {
 });
 router.get('/report1',userHelpers.isLogin , function(req, res) {
   jsreport.render({
-    template: { 
+    template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
       phantom:{
@@ -42,10 +44,23 @@ router.get('/report1',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
+router.get('/report2',userHelpers.isLogin , function(req, res) {
+  jsreport.render({
+    template: {
+      engine: "jsrender",
+      recipe: "phantom-pdf",
+      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/printTest2.html"), "utf8")
+    },data:{result:null}
+  }).then(function(resp) {
+    resp.stream.pipe(res);
+  }).catch(function(e) {
+    res.end(e.message);
+  });
+});
 router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
     stuproMgr.getStuproRoom(clas,function(stupro){
-      studentMgr.getStudentStupro(req.params.searchValue,stupro,function(student){
+      studentMgr.getStudentStupro(user.school,req.params.searchValue,stupro,function(student){
         res.send(student);
       });
     });
@@ -55,7 +70,7 @@ router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
   // get real data without search text
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
     stuproMgr.getStuproRoom(clas,function(stupro){
-      studentMgr.getStudentStupro('',stupro,function(student){
+      studentMgr.getStudentStupro(user.school,'',stupro,function(student){
         res.send(student);
       });
 
@@ -79,26 +94,27 @@ router.put('/message/:studentId',userHelpers.isLogin,function(req, res) {
 
 /*GET all Student By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  studentMgr.getAllStudentsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(student){
+  studentMgr.getAllStudentsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 /* GET all student */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  studentMgr.getAllStudentsCount(req.params.limit,req.params.page,function(student){
+  studentMgr.getAllStudentsCount(user.school,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res){
-  studentMgr.getAllStudent(function(student){
+  studentMgr.getAllStudent(user.school,function(student){
     res.send(student);
   });
 });
 
 /* Add new student  */
 router.post('/add',function(req, res) {
+  req.body.school=user.school;
   studentMgr.addStudent(req.body,function(student){
     res.send(student);
   });
@@ -109,20 +125,33 @@ router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req
   //save image to public/img/students with a name of "student's id" without extention
   // don't forget to delete all req.files when done
   var dir = './public/img/students';
-    if (!fs.existsSync(dir)){
-      fs.mkdirSync(dir);
-    }
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
 
-    fs.readFile(req.files.file.path, function (err, data) {
-      var newPath =dir+'/'+req.params.id;
-      fs.writeFile(newPath, data, function (err) {
-        if(!err){  
-          res.send(true);       
-        }
-         
-      });
+  fs.readFile(req.files.file.path, function (err, data) {
+    var newPath =dir+'/'+req.params.id;
+    fs.writeFile(newPath, data, function (err) {
+      if(!err){
+        res.send(true);
+      }
+
     });
+  });
 
+});
+
+/* open student,s file by id  */
+router.put('/openFile/:id',userHelpers.isLogin,function(req, res) {
+  studentMgr.updateStudent(req.params.id,{finishDate:null,active:1},function(student){
+    res.send(student);
+  });
+});
+/* close student;s file by id  */
+router.put('/closeFile/:id',userHelpers.isLogin,function(req, res) {
+  studentMgr.updateStudent(req.params.id,{finishDate:new Date(),active:0},function(student){
+    res.send(student);
+  });
 });
 
 /* Edit student by id  */
@@ -131,6 +160,7 @@ router.put('/edit/:id',userHelpers.isLogin,function(req, res) {
     res.send(student);
   });
 });
+
 /* Delete student by id  */
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   studentMgr.deleteStudent(req.params.id,function(student){

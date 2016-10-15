@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(MarksSubes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -24,7 +24,7 @@ module.exports = {
         if(!err){
           cb({result:MarksSubes,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +41,7 @@ module.exports = {
         if(!err){
           cb({result:MarksSubes,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -53,7 +53,7 @@ module.exports = {
       if(!err){
         cb(MarksSubes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -69,15 +69,15 @@ module.exports = {
       }
     });
   },
-  getMarksSubSubject :function(subject,cb){
-    model.MarksSub.find({subject : subject,status:1}).populate('exam').populate('subject').exec(function(err, MarksSubes){
-      if(!err){
-        cb(MarksSubes);
-      }else{
-        cb(null);
-      }
-    });
-  },
+  // getMarksSubSubject :function(subject,cb){
+  //   model.MarksSub.find({subject : subject,status:1}).populate('exam').populate('subject').exec(function(err, MarksSubes){
+  //     if(!err){
+  //       cb(MarksSubes);
+  //     }else{
+  //       cb(null);
+  //     }
+  //   });
+  // },
   getMarksSubExam :function(exam,cb){
     model.MarksSub.find({exam : exam,status:1}).populate('exam').populate('subject').exec(function(err, MarksSubes){
       if(!err){
@@ -102,20 +102,20 @@ module.exports = {
       if(!err){
         cb(MarksSubes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
-  getMarksSubId :function(id,cb){
-    model.MarksSub.findOne({_id : id,status:1}).populate('exam').populate('subject').exec(function(err, MarksSubes){
-      if(!err){
-        cb(MarksSubes);
-      }else{
-        cb(null);
-      }
-    });
-  },
+  // getMarksSubId :function(id,cb){
+  //   model.MarksSub.findOne({_id : id,status:1}).populate('exam').populate('subject').exec(function(err, MarksSubes){
+  //     if(!err){
+  //       cb(MarksSubes);
+  //     }else{
+  //       cb(null);
+  //     }
+  //   });
+  // },
 
   addMarksSub : function(body,cb){
     var obj =body;
@@ -124,23 +124,23 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateMarksSub : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.MarksSub.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
-  },
+  }
   
   // deleteMarksSub : function(id,cb){
   //   model.MarksSub.remove({_id:id}, function(err,result) {

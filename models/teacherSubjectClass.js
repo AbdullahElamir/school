@@ -7,6 +7,7 @@ var TSC = new Schema({
   classRoom:{ type: Schema.Types.ObjectId , ref: 'ClassRoom'},
   teacher:{ type: Schema.Types.ObjectId , ref: 'Teacher'},
   subject:{ type: Schema.Types.ObjectId , ref: 'Subject'},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

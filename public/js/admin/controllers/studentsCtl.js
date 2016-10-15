@@ -54,6 +54,7 @@
      //set image of selected student to dialog
    };
 
+   $scope.date = new Date().getTime();
    // upload on file select or drop
    $scope.upload = function (file) {
      if($scope.file){
@@ -64,6 +65,7 @@
        }).success(function (data, status, headers, config) {
            if(data){
              $('#picModal').modal('hide');
+             $scope.date = new Date().getTime();
              toastr.success('تم تغيير الصورة بنجاح');
            }else{
              toastr.info('فشل تحميل الصورة');
@@ -87,6 +89,47 @@
       },function(response){
         console.log("Somthing went wrong");
       });
+   };
+
+   $scope.activate = function(student){
+     if(student.active === 0){
+       StudentServ.openFile(student._id).then(function(response){
+         if(response.data){
+           student.active = 1;
+         }else {
+           toastr.error('لم يتم فتح ملف الطالب');
+         }
+       });
+     }else {
+       StudentServ.closeFile(student._id).then(function(response){
+         if(response.data){
+           student.active = 0;
+         }else {
+           toastr.error('لم يتم اغلاق ملف الطالب');
+         }
+       });
+     }
+   };
+
+   $scope.preLogin = function (student){
+     $scope.idStudent = student._id;
+     $scope.login = {email:student.email,password:""};
+   };
+
+   $scope.saveLogin = function(idStudent){
+     if($scope.login.password === ""){
+       delete $scope.login.password;
+     }
+     StudentServ.editStudent(idStudent,$scope.login).then(function(response) {
+       if(response.data){
+         toastr.info('تم التعديل بنجاح');
+         $('#loginModal').modal('hide');
+       } else {
+         console.log(response.data);
+       }
+     }, function(response) {
+       console.log("Something went wrong");
+     });
    };
 
   }]);

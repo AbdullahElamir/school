@@ -108,6 +108,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
       //set image of selected parent to dialog
     };
 
+    $scope.date = new Date().getTime();
     // upload on file select or drop
     $scope.upload = function (file) {
       if($scope.file){
@@ -118,6 +119,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
         }).success(function (data, status, headers, config) {
             if(data){
               $('#picModal').modal('hide');
+              $scope.date = new Date().getTime();
               toastr.success('تم تغيير الصورة بنجاح');
             }else{
               toastr.info('فشل تحميل الصورة');
@@ -139,6 +141,19 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','toastr','$stateP
           toastr.success('تم إرسال الرسالة بنجاح');
         }
       },function(response) {
+        console.log("Somthing went wrong");
+      });
+    };
+    
+    $scope.sendMessageAllParentInSchoole = function(){
+      ParentServ.sendMessageAllParentInSchoole($scope.message).then(function(response){
+        if(response.data === true){
+          $scope.message.title = "";
+          $scope.message.description = "";
+          $('#messageAllModal').modal('hide');
+          toastr.success('تم إرسال الرسالة لجميع أولياء الأمور بنجاح');
+        }
+      },function(response){
         console.log("Somthing went wrong");
       });
     };

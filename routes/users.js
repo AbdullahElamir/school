@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var adminMgr = require("../controller/admin");
 var userHelpers = require("../controller/userHelpers");
-
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   adminMgr.getAllAdmin(function(admins){

@@ -9,6 +9,8 @@ var stuproMgr = require("../controller/studentProcess");
 var resultMgr = require("../controller/result");
 var stuEvaMgr = require("../controller/studentEvaluation");
 var evaMgr = require("../controller/evaluation");
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
 //get student information
 router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(req, res) {
   evaMgr.getAllEvaluation(function(result){
@@ -52,7 +54,7 @@ router.get('/stuPro', userHelpers.isLogin ,function(req, res) {
 // update grades of exams student in subject on classRoom for a current year (where year is Active)
 router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
   stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
-    for( k in req.body){
+    for( var k in req.body){
       var obj={
         StuPro:sto,
         exam:req.body[k]._id,
@@ -77,24 +79,22 @@ router.put('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(r
 
     });
     if(index == req.body.length-1){
-        res.send(true);
-      }
-
+      res.send(true);
+    }
   }
-
 });
 // get grades of exams for student in subject on classRoom for a current year (where year is Active)
 router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
   classRoomMgr.getClassRoomId(req.params.classRoomId,function(classR){
     var clssY=classR.class;
     sysYearMgr.getSystemYear(classR.year,function(sysyear){
-      system=sysyear.system;
+      var system=sysyear.system;
       marksSubMgr.getMarksSubSubject(req.params.subjectId,system,function(examssub){
         examMgr.getExamSClass(classR.class,sysyear.system,function(exams){
           stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
             resultMgr.getResultSubject(sto,exams,req.params.subjectId,function(marksS){
               var examsGrades=[];
-              for( i in examssub){
+              for(var i in examssub){
                 var obj ={
                   _id:examssub[i].exam._id,
                   name:examssub[i].exam.name,
@@ -129,7 +129,7 @@ router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin ,function(re
     if(Crooms.length === 0){
       res.send([]);
     }
-    for (i in Crooms.stu){
+    for (var i in Crooms.stu){
       _room.push(Crooms.stu[i].student);
       if(i == Crooms.stu.length-1){
         res.send(_room);

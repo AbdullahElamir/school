@@ -3,28 +3,28 @@ var class1 = null;
 
 module.exports = {
 
-  getAllClass :function(cb){
-    model.Class.find({}, function(err, classes){
+  getAllClass :function(school,cb){
+    model.Class.find({school:school,status:1}, function(err, classes){
       if(!err){
         cb(classes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
   
   //getAllClassesBySearchValue
-  getAllClassesBySearchValue :function(searchValue,limit,page,cb){
+  getAllClassesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Class.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Class.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,classes){
+    model.Class.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
+      model.Class.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,classes){
         if(!err){
           cb({result:classes,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -32,35 +32,35 @@ module.exports = {
   },
 
   //getAllCustomerCount
-  getAllClassCount :function(limit,page,cb){
+  getAllClassCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Class.count({},function(err, count){
-      model.Class.find({}).limit(limit).skip(page*limit).exec(function(err,classes){
+    model.Class.count({school:school,status:1},function(err, count){
+      model.Class.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,classes){
         if(!err){
           cb({result:classes,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
     });
   },
 
-  getAllClassStatus:function(status,cb){
-    model.Class.find({status:status},function(err, classes){
+  getAllClassStatus:function(school,status,cb){
+    model.Class.find({school:school,status:status},function(err, classes){
       if(!err){
         cb(classes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
   
-  getClassName :function(name,cb){
-    model.Class.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, classes){
+  getClassName :function(school,name,cb){
+    model.Class.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, classes){
       if(!err){
         cb(classes);
       }else{
@@ -86,19 +86,19 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateClass : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Class.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -113,7 +113,7 @@ module.exports = {
           if (!err) {
             cb(2);
           } else {
-            console.log(err);
+            // console.log(err);
             cb(3);
           }
         });

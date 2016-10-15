@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(Messages);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -24,7 +24,7 @@ module.exports = {
         if(!err){
           cb({result:Messages,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +41,7 @@ module.exports = {
         if(!err){
           cb({result:Messages,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -53,7 +53,7 @@ module.exports = {
       if(!err){
         cb(classes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -86,19 +86,19 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateMessage : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Message.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -106,18 +106,19 @@ module.exports = {
   addMsgParent : function(body,cb){
     var obj ={
       name:body.title,
-      description:body.description
+      msg:body.description
     };
     Message = new model.Message(obj);
     Message.save(function(err,result){
       if (!err) {
         cb(result);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
-  },
+  }
+  
   // deleteMessage : function(id,cb){
   //   model.Message.remove({_id:id}, function(err,result) {
   //     if (!err) {

@@ -19,6 +19,19 @@
     };
     YearServ.getAllYears().then(function(response){
       $scope.allYear = response.data;
+      var activeFound = false;
+      for(var i in $scope.allYear){
+        if( $scope.allYear[i].active == 1 ){
+          activeFound = true;
+          $scope.year = $scope.allYear[i];
+          $scope.refresh();
+          break;
+        }
+        if( !activeFound && i == $scope.allYear.length-1 ){
+          $scope.year = $scope.allYear[0];
+          $scope.refresh();
+        }
+      }
     },function(response){
       console.log("Somthing went wrong");
     });

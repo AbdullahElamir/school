@@ -243,22 +243,6 @@
         }]
       }
     })
-    .state('assigningTeacher',{
-      url: '/assigning_teacher',
-      templateUrl: 'admin/pages/system/assigningTeacher',
-      data: {pageTitle: 'تعيين المعلم'},
-      controller: 'assigningTeacherCtl',
-      resolve: {
-        deps: ['$ocLazyLoad',function($ocLazyLoad){
-          return $ocLazyLoad.load({
-            insertBefore: '#ngLoadControllerAfter',
-            files: [
-              '/js/admin/controllers/assigningTeacherCtl.js'
-            ]
-          });
-        }]
-      }
-    })
     .state('newTeacher',{
       url: '/newTeacher',
       templateUrl: 'admin/pages/teacher/newTeacher',
@@ -437,23 +421,6 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/roomsCtl.js'
-            ]
-          });
-        }]
-      }
-    })
-
-    .state('newClassRooms',{
-      url: '/newClassRooms',
-      templateUrl: 'admin/pages/classRoom/newClassRooms',
-      data: {pageTitle: 'إضافة غرفة جديدة'},
-      controller: 'newClassRoomCtl',
-      resolve: {
-        deps: ['$ocLazyLoad',function($ocLazyLoad){
-          return $ocLazyLoad.load({
-            insertBefore: '#ngLoadControllerAfter',
-            files: [
-              '/js/admin/controllers/classRoomsCtl.js'
             ]
           });
         }]
@@ -759,6 +726,84 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/clothesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('teacherAttendance',{
+      url: '/teacherAttendance',
+      templateUrl: 'admin/pages/attendance/teachersAttendance',
+      data: {pageTitle: 'ألحضور والغياب'},
+      controller: 'teachersAttendanceCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/attendanceCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('adminsAttendance',{
+      url: '/adminsAttendance',
+      templateUrl: 'admin/pages/attendance/adminsAttendance',
+      data: {pageTitle: 'ألحضور والغياب'},
+      controller: 'adminsAttendanceCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/attendanceCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+    .state('drivers',{
+      url: '/drivers',
+      templateUrl: 'admin/pages/driver/drivers',
+      data: {pageTitle: 'السائقين'},
+      controller: 'DriversCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/driversCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+    .state('newDriver',{
+      url: '/newDriver',
+      templateUrl: 'admin/pages/driver/newDriver',
+      data: {pageTitle: 'إضافة سائق'},
+      controller: 'newDriverCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/driversCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+     .state('editDriver',{
+      url: '/editDriver/edit/:id',
+      templateUrl: 'admin/pages/driver/editDriver',
+      data: {pageTitle: 'تعديل سائق'},
+      controller: 'editDriverCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/driversCtl.js'
             ]
           });
         }]

@@ -13,8 +13,9 @@ var System = new Schema({
           id_subject:{type:Schema.Types.ObjectId , ref: 'Subject'}
         }]
       }
-    }],
+    }]
   },
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

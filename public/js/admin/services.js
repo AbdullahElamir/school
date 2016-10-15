@@ -27,6 +27,12 @@
       },
       'sendMessageToParentOfStudent': function(idStudent,message){
         return $http.put('/student/message/'+idStudent,message);
+      },
+      'openFile': function(idStudent){
+        return $http.put('/student/openFile/'+idStudent);
+      },
+      'closeFile': function(idStudent){
+        return $http.put('/student/closeFile/'+idStudent);
       }
     };
     return self;
@@ -206,6 +212,9 @@
       },
       'sendMessageToParent': function(idParent,message){
         return $http.put('/parent/message/'+idParent,message);
+      },
+      'sendMessageAllParentInSchoole' : function(message){
+        return $http.put('/parent/message/all',message);
       }
     };
     return self;
@@ -272,11 +281,29 @@
       'getStudentsByDateAndClassRoom': function(classRoom,date){
         return $http.get('/attendance/students/'+classRoom+'/'+date);
       },
+      'getTeachersByDateAndSearchValue': function(date,searchText,size,page){
+        return $http.get('/attendance/teachers/'+searchText+'/'+date+'/'+size+'/'+page);
+      },
+      'getAdminsByDateAndSearchValue': function(date,searchText,size,page){
+        return $http.get('/attendance/admins/'+searchText+'/'+date+'/'+size+'/'+page);
+      },
       'setStuProAttend': function(StuPro,attend,date){
         return $http.put('/attendance/stupro/'+StuPro+'/'+attend+'/'+date);
       },
+      'setTeacherAttend': function(teacher,attend,date){
+        return $http.put('/attendance/teacher/'+teacher+'/'+attend+'/'+date);
+      },
+      'setAdminAttend': function(admin,attend,date){
+        return $http.put('/attendance/admin/'+admin+'/'+attend+'/'+date);
+      },
       'setReason': function(StuPro,reason,date){
         return $http.put('/attendance/reason/'+StuPro._id+'/'+date,{reason:reason});
+      },
+      'setTeacherReason': function(teacher,reason,date){
+        return $http.put('/attendance/teacher/reason/'+teacher._id+'/'+date,{reason:reason});
+      },
+      'setAdminReason': function(admin,reason,date){
+        return $http.put('/attendance/admin/reason/'+admin._id+'/'+date,{reason:reason});
       }
     };
     return self;
@@ -349,6 +376,54 @@
       },
       'getAllClothes': function(){
         return $http.get('/clothes/all');
+      }
+    };
+    return self;
+  }]);
+  
+  app.service('DriverServ',['$http',function($http){
+    var self = {
+      'addDriver': function(driver){
+        return $http.post('/driver/add',driver);
+      },
+      'getDrivers': function(limit,page){
+        return $http.get('/driver/'+limit+'/'+page);
+      },
+      'getDriversBySearchValue': function(searchValue,limit,page){
+        return $http.get('/driver/'+searchValue+'/'+limit+'/'+page);
+      },
+      'deleteDriver': function(id){
+        return $http.delete('/driver/delete/'+id);
+      },
+      'getDriverById': function(id){
+        return $http.get('/driver/'+id.id);
+      },
+      'editDriver': function(id,obj){
+        return $http.put('/driver/edit/'+id,obj);
+      }
+    };
+    return self;
+  }]);
+
+  app.service('BusServ',['$http',function($http){
+    var self = {
+      'addBus': function(bus){
+        return $http.post('/bus/add',bus);
+      },
+      'getBuses': function(limit,page){
+        return $http.get('/bus/'+limit+'/'+page);
+      },
+      'getBusesBySearchValue': function(searchValue,limit,page){
+        return $http.get('/bus/'+searchValue+'/'+limit+'/'+page);
+      },
+      'deleteBus': function(id){
+        return $http.delete('/bus/delete/'+id);
+      },
+      'getBusById': function(id){
+        return $http.get('/bus/'+id.id);
+      },
+      'editBus': function(id,obj){
+        return $http.put('/bus/edit/'+id,obj);
       }
     };
     return self;

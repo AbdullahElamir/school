@@ -6,6 +6,7 @@ var Subject = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
   description: {type: String,default:"NULL"},
   clas:{ type: Schema.Types.ObjectId , ref: 'Class'},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

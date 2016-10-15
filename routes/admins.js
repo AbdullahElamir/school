@@ -6,29 +6,32 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
 var path = require("path");
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
 
 
 /*GET all ADmins By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  adminMgr.getAllAdminsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(admins){
+  adminMgr.getAllAdminsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
     res.send(admins);
   });
 });
 
 /* GET all admin */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  adminMgr.getAllAdminCount(req.params.limit,req.params.page,function(admins){
+  adminMgr.getAllAdminCount(user.school,req.params.limit,req.params.page,function(admins){
     res.send(admins);
   });
 });
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  adminMgr.getAllAdmin(function(admins){
+  adminMgr.getAllAdmin(user.school,function(admins){
     res.send(admins);
   });
 });
 
 /* Add new admin  */
 router.post('/add', userHelpers.isLogin ,function(req, res) {
+  req.body.school=user.school;
   adminMgr.addAdmin(req.body,function(admins){
     res.send(admins);
   });
