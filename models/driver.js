@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var Driver = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
   phone1: {type: String,default:"NULL"},
-  phone2: {type: String,default:"NULL"},
+  phone2: {type: String,default:""},
   nid: {type: String, default:"NULL"},
   address:{type: String,default:"NULL"},
   school:{type: Schema.Types.ObjectId , ref: 'School'},

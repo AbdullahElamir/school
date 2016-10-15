@@ -25,12 +25,19 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
   });
 });
 
+// get  evaluation room by id
+router.get('/:id',userHelpers.isLogin , function(req, res) {
+  evaMgr.getEvaluationId(req.params.id,function(evaluation){
+    res.send(evaluation);
+  });
+});
+
 // add new eva
 router.post('/add', userHelpers.isLogin ,function(req, res) {
   evaMgr.addEvaluation(req.body,function(eva){
     res.send(eva);
   });
-  
+
 });
 
 // edit eva by id

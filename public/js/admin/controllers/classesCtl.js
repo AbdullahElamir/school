@@ -38,13 +38,11 @@
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
 
-          $scope.init($scope.searchValue);
-          var count = $scope.classes.filter(function(obj){return obj._id != id;}).length;
-          if( $scope.currentPage > 1 && count == 0 ){
+          var count = $scope.classes.length;
+          if( $scope.currentPage > 1 && count === 1 ){
             $scope.currentPage -= 1;
-            $scope.init($scope.searchValue);
           }
-
+          $scope.init($scope.searchValue);
         } else if (response.data.result == 3){
           toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
         }

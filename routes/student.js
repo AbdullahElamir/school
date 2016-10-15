@@ -14,29 +14,12 @@ var path = require("path");
 var user={};
     user.school="57fb8d5606d14d29e32b3c86";
 
-router.get('/report',userHelpers.isLogin , function(req, res) {
-  jsreport.render({
-    template: {
-      engine: "jsrender",
-      recipe: "phantom-pdf",
-      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/testReport.html"), "utf8")
-    },data:{result:null}
-  }).then(function(resp) {
-    resp.stream.pipe(res);
-  }).catch(function(e) {
-    res.end(e.message);
-  });
-});
 router.get('/report1',userHelpers.isLogin , function(req, res) {
   jsreport.render({
     template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
-      phantom:{
-        format: 'A4',
-        orientation: "landscape"
-      },
-      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/printTest1.html"), "utf8")
+      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report1.html"), "utf8")
     },data:{result:null}
   }).then(function(resp) {
     resp.stream.pipe(res);
@@ -49,7 +32,41 @@ router.get('/report2',userHelpers.isLogin , function(req, res) {
     template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
-      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/printTest2.html"), "utf8")
+      phantom:{
+        format: 'A4',
+        orientation: "landscape"
+      },
+      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report2.html"), "utf8")
+    },data:{result:null}
+  }).then(function(resp) {
+    resp.stream.pipe(res);
+  }).catch(function(e) {
+    res.end(e.message);
+  });
+});
+router.get('/report3',userHelpers.isLogin , function(req, res) {
+  jsreport.render({
+    template: {
+      engine: "jsrender",
+      recipe: "phantom-pdf",
+      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report3.html"), "utf8")
+    },data:{result:null}
+  }).then(function(resp) {
+    resp.stream.pipe(res);
+  }).catch(function(e) {
+    res.end(e.message);
+  });
+});
+router.get('/report4',userHelpers.isLogin , function(req, res) {
+  jsreport.render({
+    template: {
+      engine: "jsrender",
+      recipe: "phantom-pdf",
+      phantom:{
+        format: 'A4',
+        orientation: "landscape"
+      },
+      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report4.html"), "utf8")
     },data:{result:null}
   }).then(function(resp) {
     resp.stream.pipe(res);

@@ -16,7 +16,6 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   TaskMgr.addTask(req.body,function(task){
     res.send(task);
   });
-
 });
 // get task by status
 router.get('/status/:status',userHelpers.isLogin , function(req, res) {

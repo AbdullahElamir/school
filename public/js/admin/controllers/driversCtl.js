@@ -25,7 +25,7 @@
     $scope.deleteDriver = function(id) {
       $scope.idDriver = id;
     };
-   
+
     $scope.deleteConfirm = function(id) {
       DriverServ.deleteDriver(id).then(function(response){
         if(response.data.result == 1){
@@ -33,12 +33,12 @@
           } else if (response.data.result == 2){
             $('#myModal').modal('hide');
             toastr.success('تم الحذف بنجاح');
-            $scope.init($scope.searchValue);
-            var count = $scope.drivers.filter(function(obj){return obj._id != id;}).length;
-            if( $scope.currentPage > 1 && count === 0 ){
+            
+            var count = $scope.drivers.length;
+            if( $scope.currentPage > 1 && count === 1 ){
               $scope.currentPage -= 1;
-              $scope.init($scope.searchValue);
             }
+            $scope.init($scope.searchValue);
           } else if (response.data.result == 3){
             toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
           }
@@ -77,9 +77,9 @@
 
 
   app.controller('newDriverCtl',['$scope','DriverServ','toastr',function($scope,DriverServ,toastr){
-    
+
     $scope.newDriverForm={};
-    
+
     $scope.newDriver = function(){
       DriverServ.addDriver($scope.newDriverForm).then(function(response){
         if(response.data){

@@ -23,7 +23,7 @@ router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(r
         var eva={
           _id:result[i]._id,
           name:result[i].name
-        }
+        };
         if(evaluation[result[i]._id]){
           eva.rating=evaluation[result[i]._id];
         }else{
@@ -60,7 +60,7 @@ router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogi
         exam:req.body[k]._id,
         subject:req.params.subjectId,
         mark:req.body[k].studentMark
-      }
+      };
       resultMgr.addResultUpdate(obj,function(result){
         if(k==req.body.length-1){
           res.send(true);
@@ -95,13 +95,14 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,fu
             resultMgr.getResultSubject(sto,exams,req.params.subjectId,function(marksS){
               var examsGrades=[];
               for(var i in examssub){
+
                 var obj ={
                   _id:examssub[i].exam._id,
                   name:examssub[i].exam.name,
                   mark:examssub[i].mark,
                   type:examssub[i].exam.type,
                   semester:examssub[i].exam.semester
-                }
+                };
                 if(marksS[examssub[i].exam._id]){
                   obj.studentMark=marksS[examssub[i].exam._id];
 

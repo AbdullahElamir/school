@@ -19,16 +19,16 @@
       });
     };
     $scope.init("");
-     
+
     $scope.getClothesBySearchValue = function (searchValue){
       $scope.currentPage = 1;
       $scope.init(searchValue);
     };
-   
+
     $scope.deleteClothes = function(id) {
       $scope.idClothes = id;
     };
-   
+
     $scope.deleteConfirm = function(id) {
       ClothesServ.deleteClothes(id).then(function(response){
         if(response.data.result == 1){
@@ -36,12 +36,12 @@
         } else if (response.data.result == 2){
           $('#myModal').modal('hide');
           toastr.success('تم الحذف بنجاح');
-          $scope.init($scope.searchValue);
-          var count = $scope.clothes.filter(function(obj){return obj._id != id;}).length;
-          if( $scope.currentPage > 1 && count == 0 ){
+          
+          var count = $scope.clothes.length;
+          if( $scope.currentPage > 1 && count === 1 ){
             $scope.currentPage -= 1;
-            $scope.init($scope.searchValue);
           }
+          $scope.init($scope.searchValue);
         } else if (response.data.result == 3){
           toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
         }
@@ -53,7 +53,7 @@
   }]);
 
   app.controller('editClothesCtl',['$scope','$stateParams','ClothesServ','$state','toastr',function($scope,$stateParams,ClothesServ,$state,toastr){
-    
+
     $scope.editClothesForm={};
     ClothesServ.getClothesById($stateParams).then(function(response) {
       $scope.editClothesForm = response.data;
@@ -77,7 +77,7 @@
   }]);
 
   app.controller('newClothesCtl',['$scope','ClothesServ','$state','toastr',function($scope,ClothesServ,$state,toastr){
-    
+
     $scope.newClothesForm={};
     $scope.newClothes = function(){
       ClothesServ.addClothes($scope.newClothesForm).then(function(response){
@@ -91,7 +91,7 @@
         console.log("Somthing went wrong");
       });
     };
-    
+
   }]);
 
 }());

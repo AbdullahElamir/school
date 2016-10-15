@@ -1,0 +1,62 @@
+<form novalidate ng-submit="newBus()">
+  <div class="portlet light bordered">
+    <div class="portlet-title">
+      <div class="row">
+        <div class="col-xs-6 col-md-6">
+          <div class="caption caption-md">
+            <i class="icon-settings font-green"></i>
+            <span class="caption-subject font-green bold">إضافة حافلة جديدة</span>
+          </div>
+        </div>
+        <div class="col-xs-6 col-md-3 col-md-offset-3 text-left" ng-if="superAdminStatus">
+          <div class="form-group">
+            <select class="form-control input-sm" ng-model="" ng-options="" required>
+              <option value="" disabled selected>الرجاء اختر المدرسة</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label class="control-label">اسم الحافلة</label>
+              <input class="form-control input-sm" type="text" ng-model="newBusForm.name" placeholder="اسم الحافلة" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label class="control-label">رقم اللوحة</label>
+              <input class="form-control input-sm" type="text" ng-model="newBusForm.plateNumber" placeholder="رقم اللوحة" required>
+            </div>
+          </div>
+        </div>
+        <div class="row">  
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label class="control-label">القدرة الإستعابية</label>
+              <input class="form-control input-sm" type="number" ng-model="newBusForm.size" placeholder="القدرة الإستعابية" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label class="control-label">اللون</label>
+              <input class="form-control input-sm" type="text" ng-model="newBusForm.color" placeholder="اللون" required>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-6 col-md-2 col-md-offset-4">
+            <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
+          </div>
+          <div class="col-xs-6 col-md-2">
+            <a class="btn btn-success btn-sm btn-block" onclick="$('#busesId').click();"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

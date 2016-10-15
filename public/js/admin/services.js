@@ -60,6 +60,9 @@
       },
       'getAllTeacher': function(id){
         return $http.get('/teacher/all/'+id);
+      },
+      'getAllTeachers': function(){
+        return $http.get('/teacher/all');
       }
     };
     return self;
@@ -380,7 +383,7 @@
     };
     return self;
   }]);
-  
+
   app.service('DriverServ',['$http',function($http){
     var self = {
       'addDriver': function(driver){
@@ -400,6 +403,9 @@
       },
       'editDriver': function(id,obj){
         return $http.put('/driver/edit/'+id,obj);
+      },
+      'getAllDrivers': function(){
+        return $http.get('/driver/all');
       }
     };
     return self;
@@ -424,9 +430,137 @@
       },
       'editBus': function(id,obj){
         return $http.put('/bus/edit/'+id,obj);
+      },
+      'getAllBuses': function(){
+        return $http.get('/bus/all');
       }
     };
     return self;
   }]);
+
+  app.service('TransferProcessServ',['$http',function($http){
+    var self = {
+      'getTransferProcessesBySearchValueAndYear' : function(searchValue,year,limit,page){
+        return $http.get('/transferProcess/'+searchValue+'/'+year+'/'+limit+'/'+page);
+      },'addTransferProcess': function(tpo){
+        return $http.post('/transferProcess/add',tpo);
+      },'deleteTransferProcess': function(id){
+        return $http.delete('/transferProcess/delete/'+id);
+      },'editTransferProcess' : function(id,tpo){
+        return $http.put('/transferProcess/edit/'+id,tpo);
+      },'getTransferProcess' : function(id){
+        return $http.get('/transferProcess/get/'+id);
+      },'getStudents' : function(idTP){
+        return $http.get('/transferProcess/transferProcessStudents/all/'+idTP);
+      },'updateStudents' : function(idtp,tpss){
+        return $http.put('/transferProcess/transferProcessStudents/edit/'+idtp,tpss);
+      },'getTeachers' : function(idTP){
+        return $http.get('/transferProcess/transferProcessTeachers/all/'+idTP);
+      },'updateTeachers' : function(idtp,tpts){
+        return $http.put('/transferProcess/transferProcessTeachers/edit/'+idtp,tpts);
+      }
+    };
+    return self;
+  }]);
+
+
+    app.service('InOutcomeTypesServ',['$http',function($http){
+      var self = {
+        'addInOutcomeTypes': function(inOutcomeType){
+          return $http.post('/inOutcomeTypes/add',inOutcomeType);
+        },
+        'getInOutcomeTypes': function(limit,page){
+          return $http.get('/inOutcomeTypes/'+limit+'/'+page);
+        },
+        'getInOutcomeTypesBySearchValue': function(searchValue,limit,page){
+          return $http.get('/inOutcomeTypes/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteInOutcomeTypes': function(id){
+          return $http.delete('/inOutcomeTypes/delete/'+id);
+        },
+        'getInOutcomeTypesById': function(id){
+          return $http.get('/inOutcomeTypes/'+id.id);
+        },
+        'editInOutcomeTypes': function(id,obj){
+          return $http.put('/inOutcomeTypes/edit/'+id,obj);
+        },
+        'getAllInOutcomeTypes': function(){
+          return $http.get('/inOutcomeTypes/all');
+        }
+      };
+      return self;
+    }]);
+
+    app.service('IncomesServ',['$http',function($http){
+      var self = {
+        'addIncome': function(inOutcomeType){
+          return $http.post('/inOutcomes/add',inOutcomeType);
+        },
+        'getIncomesBySearchValue': function(type,cat,searchValue,startDate,finishDate,limit,page){
+          return $http.get('/inOutcomes/'+searchValue+'/'+startDate+'/'+finishDate+'/'+limit+'/'+page+'/'+type+'/'+cat);
+        },
+        'deleteIncome': function(id){
+          return $http.delete('/inOutcomes/delete/'+id);
+        },
+        'getIncomeById': function(id){
+          return $http.get('/inOutcomes/'+id.id);
+        },
+        'editIncome': function(id,obj){
+          return $http.put('/inOutcomes/edit/'+id,obj);
+        },
+        'getAllIncomes': function(){
+          return $http.get('/inOutcomes/all');
+        }
+      };
+      return self;
+    }]);
+
+    app.service('OutcomesServ',['$http',function($http){
+      var self = {
+        'addOutcome': function(inOutcomeType){
+          return $http.post('/inOutcomes/add',inOutcomeType);
+        },
+        'getOutcomesBySearchValue': function(type,cat,searchValue,startDate,finishDate,limit,page){
+          return $http.get('/inOutcomes/'+searchValue+'/'+startDate+'/'+finishDate+'/'+limit+'/'+page+'/'+type+'/'+cat);
+        },
+        'deleteOutcome': function(id){
+          return $http.delete('/inOutcomes/delete/'+id);
+        },
+        'getOutcomeById': function(id){
+          return $http.get('/inOutcomes/'+id.id);
+        },
+        'editOutcome': function(id,obj){
+          return $http.put('/inOutcomes/edit/'+id,obj);
+        },
+        'getAllOutcomes': function(){
+          return $http.get('/inOutcomes/all');
+        }
+      };
+      return self;
+    }]);
+
+    app.service('EvaluationServ',['$http',function($http){
+      var self = {
+        'addEvaluation': function(evaluation){
+          return $http.post('/evaluation/add',evaluation);
+        },
+        'getEvaluations': function(limit,page){
+          return $http.get('/evaluation/'+limit+'/'+page);
+        },
+        'getEvaluationsBySearchValue' : function(searchValue,limit,page){
+          return $http.get('/evaluation/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteEvaluation': function(id){
+          return $http.delete('/evaluation/delete/'+id);
+        },
+        'getEvaluationById': function(id){
+          return $http.get('/evaluation/'+id.id);
+        },
+        'editEvaluation': function(id,obj){
+          return $http.put('/evaluation/edit/'+id,obj);
+        }
+      };
+      return self;
+    }]);
 
 }());
