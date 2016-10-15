@@ -257,6 +257,9 @@
       'getInfo': function(){
         return $http.get('/school/info');
       },
+      'getAll': function(){
+        return $http.get('/school/all');
+      },
       'editSchool': function(obj){
         return $http.put('/school/edit',obj);
       }
@@ -331,6 +334,9 @@
       var self = {
       'addAdmin': function(admin){
         return $http.post('/admins/add',admin);
+      },
+      'getuser': function(){
+        return $http.get('/admins/getuser');
       },
       'getAdmins': function(limit,page){
         return $http.get('/admins/'+limit+'/'+page);

@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var inOutcomeTypesMgr = require("../controller/inOutcomeType");
 var userHelpers = require("../controller/userHelpers");
+var user={};
+    user.school="57fb8d5606d14d29e32b3c86";
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   inOutcomeTypesMgr.getAllInOutcomeTypes(function(inOutcomeTypes){
@@ -11,6 +13,7 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
 
 // add new inOutcomeTypes
 router.post('/add', userHelpers.isLogin ,function(req, res) {
+  req.body.school=user.school;
   inOutcomeTypesMgr.addInOutcomeTypes(req.body,function(inOutcomeTypes){
     res.send(inOutcomeTypes);
   });

@@ -75,9 +75,22 @@
 
   }]);
 
-  app.controller('newInOutcomeTypesCtl',['$scope','InOutcomeTypesServ','$state','toastr',function($scope,InOutcomeTypesServ,$state,toastr){
-
+  app.controller('newInOutcomeTypesCtl',['$scope','InOutcomeTypesServ','$state','toastr','SchoolServ','AdminServ',function($scope,InOutcomeTypesServ,$state,toastr,SchoolServ,AdminServ){
+    $scope.superAdminStatus;
+    $scope.schools=[];
     $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newInOutcomeTypes = function(){
       InOutcomeTypesServ.addInOutcomeTypes($scope.newInOutcomeTypesForm).then(function(response){
         if(response.data){

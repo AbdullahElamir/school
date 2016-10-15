@@ -3,8 +3,6 @@ var school=null;
 
 module.exports = {
   getSchoolInfo :function(id,cb){
-    console.log(id);
-      console.log('req.user.school');
     model.School.findOne({_id : id}, function(err, school){
       if(!err){
         cb(school);

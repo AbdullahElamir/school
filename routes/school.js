@@ -22,5 +22,10 @@ router.post('/add',function(req, res) {
     res.send(school);
   });
 });
+router.get('/all', userHelpers.isLogin ,function(req, res) {
+  schoolMgr.getAllSchool(function(info){
+    res.send(info);
+  });
+});
 
 module.exports = router;

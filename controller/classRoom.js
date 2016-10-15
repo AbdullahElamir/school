@@ -109,7 +109,7 @@ module.exports = {
       if(!err){
         cb(ClassRoomes);
       }else{
-        // console.log(err);
+        console.log(err);
         cb(null);
       }
     });
