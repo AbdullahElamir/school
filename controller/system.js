@@ -18,15 +18,15 @@ function setTS(system,sys_class,classRoom_id,yearId,counterOfClassRooms,sumOfCla
 
 function systemSetting(system,sys_class,yearId,counterOfClassRooms,sumOfClassRooms,cb){
   if( system.flag != 1 ){
-    model.Fees.findOne({year:yearId,id_class:sys_class.id_class._id}).exec(function(err,fessResult){
+    model.Fees.find({year:yearId,id_class:sys_class.id_class._id}).exec(function(err,fessesResult){
       if(!err){
-        if( fessResult == null ){  // get new system setting
+        if( fessesResult == null || fessesResult.length == 0 ){  // get new system setting
           system.flag = 1;
           cb(system);
           return;
         }else{                     // get edit system setting
           system.flag = 2;
-          sys_class.fees = fessResult;
+          sys_class.fees = fessesResult;
           model.ClassRoom.find({year:yearId,class:sys_class.id_class._id}).exec(function(err,classRoomsResult){
             if(!err){
               sys_class.classRooms = classRoomsResult;
@@ -229,18 +229,25 @@ function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb
 }
 
 function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,cb){
-  var feesSaved = new model.Fees(fees);
-  feesSaved.save(function(err,result){
-    if (!err) {
-      for(var i in classRooms){
-        sumFinalClassRooms.value += tss[i].length;
-        saveClassRoom(classRooms[i],tss[i],counterFinalClassRooms,sumFinalClassRooms,cb);
+  var feesCounter = 0;
+  for(var feesObj in fees){
+    var feesSaved = new model.Fees(fees[feesObj]);
+    feesSaved.save(function(err,result){
+      if (!err) {
+        feesCounter++;
+        if( feesCounter == fees.length ){
+          for(var i in classRooms){
+            sumFinalClassRooms.value += tss[i].length;
+            saveClassRoom(classRooms[i],tss[i],counterFinalClassRooms,sumFinalClassRooms,cb);
+          }
+        }
+      } else {
+        // console.log(err);
+        cb(false);
+        return;
       }
-    } else {
-      // console.log(err);
-      cb(false);
-    }
-  });
+    });
+  }
 }
 
 function updateFees(fees,system,cb){
@@ -289,7 +296,7 @@ module.exports = {
   addNewSystemSetting :addNewSystemSetting,
   updateSystemSetting : function(system,cb){
     if( system.flag == 2 ){
-      updateFees(system.sys_class[0].fees,system,cb);
+      updateFees(system.sys_class[0].fees[0],system,cb);
     }else{
       cb(false);
     }

@@ -3,7 +3,7 @@ var router = express.Router();
 var systemMgr = require("../controller/system");
 var userHelpers = require("../controller/userHelpers");
 var user={};
-    user.school="5801f550e4de0e349c8714c2";
+user.school="5801f550e4de0e349c8714c2";
 
 // edit system setting
 router.put('/data/edit', userHelpers.isLogin ,function(req, res) {
@@ -16,7 +16,7 @@ router.put('/data/edit', userHelpers.isLogin ,function(req, res) {
 router.post('/data/add', userHelpers.isLogin ,function(req, res) {
   systemMgr.addNewSystemSetting(req.body,function(system){
     res.send(system);
-  }); 
+  });
 });
 
 // GET Classes And ClassRooms by System ID
