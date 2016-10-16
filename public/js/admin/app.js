@@ -1112,6 +1112,21 @@
           });
         }]
       }
+    }).state('others',{
+      url: '/others',
+      templateUrl: 'admin/pages/medical/other',
+      data: {pageTitle: 'عمليات اخرى'},
+      controller: 'OthersCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/othersCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);

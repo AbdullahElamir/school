@@ -42,6 +42,7 @@ var inOutcomeTypes = require('./routes/inOutcomeType');
 var inOutcome = require('./routes/inOutcome');
 var check = require('./routes/check');
 var vaccination = require('./routes/vaccination');
+var others = require('./routes/other');
 
 var app = express();
 
@@ -113,6 +114,7 @@ app.use('/inOutcomeTypes',inOutcomeTypes);
 app.use('/inOutcomes',inOutcome);
 app.use('/checks',check);
 app.use('/vaccinations',vaccination);
+app.use('/others',others);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

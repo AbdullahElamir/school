@@ -643,5 +643,32 @@
       };
       return self;
     }]);
+    
+    app.service('OthersServ',['$http',function($http){
+      var self = {
+        'addOthers': function(year){
+          return $http.post('/others/add',year);
+        },
+        'getOthers': function(limit,page){
+          return $http.get('/others/'+limit+'/'+page);
+        },
+        'getOthersBySearchValue': function(searchValue,limit,page){
+          return $http.get('/others/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteOthers': function(id){
+          return $http.delete('/others/delete/'+id);
+        },
+        'getOthersById': function(id){
+          return $http.get('/others/'+id.id);
+        },
+        'editOthers': function(id,obj){
+          return $http.put('/others/edit/'+id,obj);
+        },
+        'getAllOthers': function(){
+          return $http.get('/others/all');
+        }
+      };
+      return self;
+    }]);
 
 }());
