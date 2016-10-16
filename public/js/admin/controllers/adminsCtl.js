@@ -2,9 +2,23 @@
   'use strict';
   var app = angular.module('adminSchool');
 
-  app.controller('NewAdminCtl',['$scope','$state','AdminServ','toastr',function($scope,$state,AdminServ,toastr){
+  app.controller('NewAdminCtl',['$scope','$state','AdminServ','toastr','SchoolServ',function($scope,$state,AdminServ,toastr,SchoolServ){
 
     $scope.newAdminForm = {};
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newAdmin = function(){
       $scope.newAdminForm.password = $scope.newAdminForm.email;
       AdminServ.addAdmin($scope.newAdminForm).then(function(response){

@@ -109,9 +109,23 @@
     };
   }]);
 
-  app.controller('newTeacherCtl',['$scope','TeacherServ','$state','toastr',function($scope,TeacherServ,$state,toastr){
+  app.controller('newTeacherCtl',['$scope','TeacherServ','$state','toastr','AdminServ','SchoolServ',function($scope,TeacherServ,$state,toastr,AdminServ,SchoolServ){
 
     $scope.newTeacherForm={};
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newTeacher = function(){
       $scope.newTeacherForm.password = $scope.newTeacherForm.email;
       TeacherServ.addTeacher($scope.newTeacherForm).then(function(response){

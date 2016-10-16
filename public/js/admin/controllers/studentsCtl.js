@@ -165,7 +165,21 @@
       });
     };
   }]);
-  app.controller('newStudentCtl',['$scope','StudentServ','ParentServ','$state','toastr',function($scope,StudentServ,ParentServ,$state,toastr){
+  app.controller('newStudentCtl',['$scope','StudentServ','ParentServ','$state','toastr','AdminServ','SchoolServ',function($scope,StudentServ,ParentServ,$state,toastr,AdminServ,SchoolServ){
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     ParentServ.getAllParents().then(function(response){
       $scope.getAllParents = response.data;
     },function(response){

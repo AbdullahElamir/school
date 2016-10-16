@@ -43,7 +43,7 @@ router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   });
 });
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  parentMgr.getAllParent(function(parents){
+  parentMgr.getAllParent(user.school,function(parents){
     res.send(parents);
   });
 });

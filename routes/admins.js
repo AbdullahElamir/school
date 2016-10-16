@@ -28,7 +28,13 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
     res.send(admins);
   });
 });
-
+router.get('/getuser',userHelpers.isLogin , function(req, res) {
+  if(user.school){
+    res.send(true);
+  }else{
+    res.send(false);
+  }
+});
 /* Add new admin  */
 router.post('/add', userHelpers.isLogin ,function(req, res) {
   req.body.school=user.school;

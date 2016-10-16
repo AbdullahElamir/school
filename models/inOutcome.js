@@ -9,6 +9,7 @@ var InOutcome = new Schema({
   date:{type:Date},
   amount:{type:Number,default:0},
   type:{type:Number,default:1},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

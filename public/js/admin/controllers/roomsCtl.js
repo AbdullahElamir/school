@@ -81,9 +81,23 @@
 
   }]);
 
-  app.controller('newRoomCtl',['$scope','RoomServ','$state','toastr',function($scope,RoomServ,$state,toastr){
+  app.controller('newRoomCtl',['$scope','RoomServ','$state','toastr','AdminServ','SchoolServ',function($scope,RoomServ,$state,toastr,AdminServ,SchoolServ){
 
     $scope.newRoomForm={};
+    $scope.superAdminStatus;
+    $scope.schools=[];
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newRoom = function(){
       RoomServ.addRoom($scope.newRoomForm).then(function(response){
         if(response.data){
