@@ -5,38 +5,38 @@
       <div class="col-xs-3 col-md-3">
         <div class="caption caption-xs">
           <i class="icon-settings font-green"></i>
-          <span class="caption-subject font-green bold">الكشوفات</span>
+          <span class="caption-subject font-green bold">التطعيمات</span>
         </div>
       </div>
       <div class="col-xs-7 col-md-6">
-        <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getChecksBySearchValue(searchValue)" placeholder="بحث ..">
+        <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getVaccinationsBySearchValue(searchValue)" placeholder="بحث ..">
       </div>
       <div class="col-xs-2 col-md-3 text-left">
-        <a data-toggle="modal" data-target="#newCheckModal" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>
-          <span class="hidden-xs">&nbsp;إضافة كشف جديد</span>
+        <a data-toggle="modal" data-target="#newVaccinationModal" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>
+          <span class="hidden-xs">&nbsp;إضافة تطعيم جديد</span>
         </a>
       </div>
     </div>
   </div>
   <div class="portlet-body" style="padding-top:0px;">
-    <table class="table table-striped" ng-show="checks.length">
+    <table class="table table-striped" ng-show="vaccinations.length">
       <thead>
         <tr>
-          <th>إسم الكشف</th>
+          <th>إسم التطعيم</th>
           <th><i class="fa fa-cog"></i></th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="c in checks">
+        <tr ng-repeat="c in vaccinations">
           <td>{{c.name}}</td>
           <td>
-            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#editCheckModal" ng-click="preCheck(c)"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل</a>
-            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="preCheck(c)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#editVaccinationModal" ng-click="preVaccination(c)"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="preVaccination(c)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
           </td>
         </tr>
       </tbody>
     </table>
-    <div ng-show="!checks || checks.length == 0">
+    <div ng-show="!vaccinations || vaccinations.length == 0">
       <div class="alert alert-info">
         <p class="text-center">
           عفوا لاتوجد بيانات
@@ -50,45 +50,45 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">مســح الكشف</h4>
+            <h4 class="modal-title" id="myModalLabel">مســح التطعيم</h4>
           </div>
           <div class="modal-body">
-            هل حقا تريد مسح هذا الكشف ؟
+            هل حقا تريد مسح هذا التطعيم ؟
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-            <button ng-click="deleteConfirm(idChecks)" type="button" class="btn btn-danger">مسح</button>
+            <button ng-click="deleteConfirm(idVaccinations)" type="button" class="btn btn-danger">مسح</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="modal fade" id="newCheckModal" tabindex="-1" role="dialog" aria-labelledby="newCheckModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newVaccinationModal" tabindex="-1" role="dialog" aria-labelledby="newVaccinationModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="newCheckModalLabel">اضافة كشف</h4>
+            <h4 class="modal-title" id="newVaccinationModalLabel">اضافة تطعيم</h4>
           </div>
-          <form novalidate ng-submit="newCheck()">
+          <form novalidate ng-submit="newVaccination()">
           <div class="modal-body">
             <div class="row">
               <div class="col-xs-12">
                 <div class="form-group">
-                  <label class="control-label">اسم الكشف</label>
-                  <input class="form-control input-sm" type="text" ng-model="newChecksForm.name" placeholder="اسم الكشف" required>
+                  <label class="control-label">اسم التطعيم</label>
+                  <input class="form-control input-sm" type="text" ng-model="newVaccinationsForm.name" placeholder="اسم التطعيم" required>
                 </div>
               </div>
               <div class="col-xs-12">
                 <div class="form-group">
                   <label class="control-label">الوصف</label>
-                  <textarea class="form-control input-sm" rows="6" cols="12" ng-model="newChecksForm.description" placeholder="وصف" required></textarea>
+                  <textarea class="form-control input-sm" rows="6" cols="12" ng-model="newVaccinationsForm.description" placeholder="وصف" required></textarea>
                 </div>
               </div>
               <div class="col-xs-12" ng-if="superAdminStatus">
                 <div class="form-group">
-                  <select class="form-control input-sm" ng-model="newChecksForm.school" ng-options="school._id as school.name for school in getAllSchools" required>
+                  <select class="form-control input-sm" ng-model="newVaccinationsForm.school" ng-options="school._id as school.name for school in getAllSchools" required>
                     <option value="" disabled selected>الرجاء اختر المدرسة</option>
                   </select>
                 </div>
@@ -103,28 +103,28 @@
         </div>
       </div>
     </div>
-    <div class="modal fade" id="editCheckModal" tabindex="-1" role="dialog" aria-labelledby="editCheckModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editVaccinationModal" tabindex="-1" role="dialog" aria-labelledby="editVaccinationModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="editCheckModalLabel">تعديل كشف</h4>
+            <h4 class="modal-title" id="editVaccinationModalLabel">تعديل تطعيم</h4>
           </div>
-          <form novalidate ng-submit="editCheck()">
+          <form novalidate ng-submit="editVaccination()">
           <div class="modal-body">
             <div class="row">
               <div class="col-xs-12">
                 <div class="form-group">
-                  <label class="control-label">اسم الكشف</label>
-                  <input class="form-control input-sm" type="text" ng-model="editChecksForm.name" placeholder="اسم الكشف" required>
+                  <label class="control-label">اسم التطعيم</label>
+                  <input class="form-control input-sm" type="text" ng-model="editVaccinationsForm.name" placeholder="اسم التطعيم" required>
                 </div>
               </div>
               <div class="col-xs-12">
                 <div class="form-group">
                   <label class="control-label">الوصف</label>
-                  <textarea class="form-control input-sm" rows="6" cols="12" ng-model="editChecksForm.description" placeholder="وصف" required></textarea>
+                  <textarea class="form-control input-sm" rows="6" cols="12" ng-model="editVaccinationsForm.description" placeholder="وصف" required></textarea>
                 </div>
               </div>
             </div>
@@ -137,7 +137,7 @@
         </div>
       </div>
     </div>
-    <div class="row" ng-show="checks.length">
+    <div class="row" ng-show="vaccinations.length">
       <div class="col-xs-12 col-md-12 text-center">
         <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
         <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>

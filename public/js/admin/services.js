@@ -617,4 +617,31 @@
       return self;
     }]);
 
+    app.service('VaccinationsServ',['$http',function($http){
+      var self = {
+        'addVaccinations': function(year){
+          return $http.post('/vaccinations/add',year);
+        },
+        'getVaccinations': function(limit,page){
+          return $http.get('/vaccinations/'+limit+'/'+page);
+        },
+        'getVaccinationsBySearchValue': function(searchValue,limit,page){
+          return $http.get('/vaccinations/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteVaccinations': function(id){
+          return $http.delete('/vaccinations/delete/'+id);
+        },
+        'getVaccinationsById': function(id){
+          return $http.get('/vaccinations/'+id.id);
+        },
+        'editVaccinations': function(id,obj){
+          return $http.put('/vaccinations/edit/'+id,obj);
+        },
+        'getAllVaccinations': function(){
+          return $http.get('/vaccinations/all');
+        }
+      };
+      return self;
+    }]);
+
 }());

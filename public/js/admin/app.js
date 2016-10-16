@@ -1097,6 +1097,21 @@
           });
         }]
       }
+    }).state('vaccinations',{
+      url: '/vaccinations',
+      templateUrl: 'admin/pages/medical/vaccination',
+      data: {pageTitle: 'التطعيمات'},
+      controller: 'VaccinationsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/vaccinationsCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);
