@@ -612,6 +612,18 @@
         },
         'getAllChecks': function(){
           return $http.get('/checks/all');
+        },
+        'getStudentChecks':function(id){
+          return $http.get('/checks/student/'+id);
+        },
+        'setStudentCheck': function(check){
+          return $http.post('/checks/student',check);
+        },
+        'editStd': function(id,obj){
+          return $http.put('/checks/student/edit/'+id,obj);
+        },
+        'deleteStd': function(id){
+          return $http.delete('/checks/student/delete/'+id);
         }
       };
       return self;
@@ -639,11 +651,23 @@
         },
         'getAllVaccinations': function(){
           return $http.get('/vaccinations/all');
+        },
+        'getStudentVaccinations':function(id){
+          return $http.get('/vaccinations/student/'+id);
+        },
+        'setStudentVaccination': function(vaccination){
+          return $http.post('/vaccinations/student',vaccination);
+        },
+        'editStd': function(id,obj){
+          return $http.put('/vaccinations/student/edit/'+id,obj);
+        },
+        'deleteStd': function(id){
+          return $http.delete('/vaccinations/student/delete/'+id);
         }
       };
       return self;
     }]);
-    
+
     app.service('OthersServ',['$http',function($http){
       var self = {
         'addOthers': function(year){
@@ -666,6 +690,18 @@
         },
         'getAllOthers': function(){
           return $http.get('/others/all');
+        },
+        'getStudentOthers':function(id){
+          return $http.get('/others/student/'+id);
+        },
+        'setStudentOther': function(other){
+          return $http.post('/others/student',other);
+        },
+        'editStd': function(id,obj){
+          return $http.put('/others/student/edit/'+id,obj);
+        },
+        'deleteStd': function(id){
+          return $http.delete('/others/student/delete/'+id);
         }
       };
       return self;

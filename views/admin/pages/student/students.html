@@ -41,6 +41,7 @@
               <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteStudent(student._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
               <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#picModal" ng-click="imagePicker(student)"><i class="fa fa-image fa-fw"></i>&nbsp;الصورة</a>
               <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#loginModal" ng-click="preLogin(student)"><i class="fa fa-sign-in fa-fw"></i>&nbsp;بيانات الدخول</a>
+              <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#medicalModal" ng-click="preMedical(student._id)"><i class="fa fa-heartbeat fa-fw"></i>&nbsp;الملف الصحي</a>
               <a ng-class="{'btn-info':!student.active,'btn-danger':student.active}" class="btn btn-xs" ng-click="activate(student)"><i class="fa fa-exchange fa-fw"></i>&nbsp;{{student.active?"اغلاق ملف":"فتح ملف"}}</a>
             </td>
           </tr>
@@ -191,6 +192,167 @@
           </div>
         </div>
       </div>
+      <div class="modal fade" id="medicalModal" tabindex="-1" role="dialog" aria-labelledby="medicalModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div  class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="medicalModalLabel">الملف الصحي</h4>
+            </div>
+            <div  class="modal-body">
+              <div style="max-height: calc(80vh - 100px);overflow-y: auto;overflow-x: hidden;" class="outer-container">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <ul class="nav nav-tabs">
+                      <li class="active">
+                        <a  id="cktab" data-toggle="tab" showtab="" aria-expanded ="true" href="#t1">الكشوفات</a>
+                      </li>
+                      <li id="vtab">
+                        <a  data-toggle="tab"   showtab="" href="#t2">التطعيمات</a>
+                      </li>
+                      <li id="otab">
+                        <a  data-toggle="tab"   showtab="" href="#t3">عمليات اخرى</a>
+                      </li>
+                      <li>
+                        <a  data-toggle="tab"   showtab="" href="#t4">اضافة</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content">
+                      <div id="t1" class="tab-pane fade active in">
+                        <table class="table table-striped" ng-show="stdCks.length">
+                          <thead>
+                            <tr>
+                              <th>الكشف</th>
+                              <th>المكان</th>
+                              <th>التاريخ</th>
+                              <th>وصف</th>
+                              <th><i class="fa fa-cog"></i></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="stdCk in stdCks">
+                              <td>{{stdCk.check.name}}</td>
+                              <td>{{stdCk.place}}</td>
+                              <td>{{stdCk.date}}</td>
+                              <td>{{stdCk.description}}</td>
+                              <td>
+                                <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteStdModal" ng-click="preStd(stdCk._id,1)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#editStdModal"  ng-click="preEdit(stdCk,1)"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل / عرض</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div id="t2" class="tab-pane fade">
+                        <table class="table table-striped" ng-show="stdVs.length">
+                          <thead>
+                            <tr>
+                              <th>التطعيم</th>
+                              <th>المكان</th>
+                              <th>التاريخ</th>
+                              <th>وصف</th>
+                              <th><i class="fa fa-cog"></i></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="stdV in stdVs">
+                              <td>{{stdV.vaccination.name}}</td>
+                              <td>{{stdV.place}}</td>
+                              <td>{{stdV.date}}</td>
+                              <td>{{stdV.description}}</td>
+                              <td>
+                                <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteStdModal" ng-click="preStd(stdV._id,2)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#editStdModal"  ng-click="preEdit(stdV,2)"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل / عرض</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div id="t3" class="tab-pane fade">
+                        <table class="table table-striped" ng-show="stdOs.length">
+                          <thead>
+                            <tr>
+                              <th>الاسم</th>
+                              <th>المكان</th>
+                              <th>التاريخ</th>
+                              <th>وصف</th>
+                              <th><i class="fa fa-cog"></i></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="stdO in stdOs">
+                              <td>{{stdO.check.name}}</td>
+                              <td>{{stdO.place}}</td>
+                              <td>{{stdO.date}}</td>
+                              <td>{{stdO.description}}</td>
+                              <td>
+                                <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteStdModal" ng-click="preStd(stdO._id,3)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#editStdModal"  ng-click="preEdit(stdO._id,3)"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل / عرض</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div id="t4" class="tab-pane fade">
+                        <form novalidate ng-submit="newStd()">
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <div class="form-group">
+                                <label class="control-label">الفئة</label>
+                                <select ng-change="refreshTypes()" class="form-control input-sm" ng-model="section" required>
+                                  <option value="" disabled selected>الرجاء الاختيار</option>
+                                  <option value = "1" >الكشوفات</option>
+                                  <option value = "2" >التطعيمات</option>
+                                  <option value = "3" >عمليات اخرى</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-xs-12">
+                              <div class="form-group">
+                                <label class="control-label">النوع</label>
+                                <select class="form-control input-sm" ng-model="type" ng-options="type._id as type.name for type in getAllTypes" required>
+                                  <option value="" disabled selected>الرجاء الاختيار</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-xs-12">
+                              <div class="form-group">
+                                <label class="control-label">المكان</label>
+                                <input class="form-control input-sm" type="text" ng-model="newStdForm.place" placeholder="المكان" required>
+                              </div>
+                            </div>
+                            <div class="col-xs-12">
+                              <div class="form-group">
+                                <label class="control-label">التاريخ</label>
+                                <input type="text" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="newStdForm.date" placeholder="التاريخ"/>
+                              </div>
+                            </div>
+                            <div class="col-xs-12">
+                              <div class="form-group">
+                                <label class="control-label">الوصف</label>
+                                <textarea class="form-control input-sm" rows="6" cols="12" ng-model="newStdForm.description" placeholder="وصف" required></textarea>
+                              </div>
+                            </div>
+                            <div class="col-xs-12">
+                              <button type="submit" class="btn btn-success">حفظ</button>
+                              <button type="reset" id="reset" class="btn btn-default">افراغ</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row" ng-show="students.length">
         <div class="col-xs-12 col-md-12 text-center">
           <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
@@ -204,6 +366,65 @@
       <p class="text-center">
         عفوا لاتوجد بيانات
       </p>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="deleteStdModal" tabindex="-1" role="dialog" aria-labelledby="deleteStdModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="deleteStdModalLabel">حذف الاجراء</h4>
+      </div>
+      <div class="modal-body">
+        هل انت متأكد من عملية الحذف؟
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+        <button ng-click="deleteStd()"  type="button" class="btn btn-danger">مسح</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="editStdModal" tabindex="-1" role="dialog" aria-labelledby="editStdModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="editStdModalLabel">تعديل</h4>
+      </div>
+      <form novalidate ng-submit="editStd()">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label class="control-label">المكان</label>
+                <input class="form-control input-sm" type="text" ng-model="editStdForm.place" placeholder="المكان" required>
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label class="control-label">التاريخ</label>
+                <input type="text" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="editStdForm.date" placeholder="التاريخ"/>
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label class="control-label">الوصف</label>
+                <textarea class="form-control input-sm" rows="6" cols="12" ng-model="editStdForm.description" placeholder="وصف" required></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+          <button type="submit" class="btn btn-success">حفظ</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

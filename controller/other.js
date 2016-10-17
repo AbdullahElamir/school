@@ -13,6 +13,27 @@ module.exports = {
       }
     });
   },
+  getAllOtherStudent :function(id,cb){
+    model.StdOther.find({status:1,student:id}).populate("other").exec(function(err, Others){
+      if(!err){
+        cb(Others);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+  setStudentOther :function(StdOther,cb){
+    var stdO = new model.StdOther(StdOther);
+    stdO.save(function(err,result){
+      if (!err) {
+        cb(true);
+      } else {
+        // console.log(err);
+        cb(false);
+      }
+    });
+  },
 
   //getAllOthersBySearchValue
   getAllOthersBySearchValue :function(searchValue,limit,page,cb){
@@ -83,9 +104,31 @@ module.exports = {
       }
     });
   },
+  updateStudentOther : function(id,body,cb){
+    var obj = body;
+    model.StdOther.findOneAndUpdate({_id:id}, obj, function(err,result) {
+      if (!err) {
+        cb(true);
+      } else {
+        // console.log(err);
+        cb(false);
+      }
+    });
+  },
 
   deleteOther : function(id,cb){
     model.Other.remove({_id:id}, function(err,result) {
+      if (!err) {
+        cb(2);
+      } else {
+        // console.log(err);
+        cb(3);
+      }
+    });
+  },
+
+  deleteStudentOther : function(id,cb){
+    model.StdOther.remove({_id:id}, function(err,result) {
       if (!err) {
         cb(2);
       } else {

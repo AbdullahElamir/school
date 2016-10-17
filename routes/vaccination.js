@@ -17,9 +17,25 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
     res.send(vaccination);
   });
 });
+// add new student's vaccination
+router.post('/student', userHelpers.isLogin ,function(req, res) {
+  VaccinationMgr.setStudentVaccination(req.body,function(result){
+    res.send(result);
+  });
+});
 // get vaccination by status
 router.get('/status/:status',userHelpers.isLogin , function(req, res) {
   VaccinationMgr.getAllVaccinationStatus(req.params.status,function(vaccination){
+    res.send(vaccination);
+  });
+});
+router.get('/student/:id',userHelpers.isLogin , function(req, res) {
+  VaccinationMgr.getAllVaccinationStudent(req.params.id,function(vaccination){
+    res.send(vaccination);
+  });
+});
+router.put('/student/edit/:id', userHelpers.isLogin ,function(req, res) {
+  VaccinationMgr.updateStudentVaccination(req.params.id,req.body,function(vaccination){
     res.send(vaccination);
   });
 });
@@ -30,6 +46,11 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   });
 });
 
+router.delete('/student/delete/:id',userHelpers.isLogin , function(req, res) {
+  VaccinationMgr.deleteStudentVaccination(req.params.id,function(vaccination){
+    res.send({result:vaccination});
+  });
+});
 // delete vaccination by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   VaccinationMgr.deleteVaccination(req.params.id,function(vaccination){
