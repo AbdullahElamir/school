@@ -7,6 +7,7 @@ var Bus = new Schema({
   size: {type: Number,default:0},
   color: {type: String,default:"NULL"},
   plateNumber: {type: String, default:"NULL"},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

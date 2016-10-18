@@ -22,6 +22,7 @@ var Admin = new Schema({
   address:{type: String,default:"NULL"},
   closestPoint:{type: String,default:"NULL"},
   level:{type:Number,default:2},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

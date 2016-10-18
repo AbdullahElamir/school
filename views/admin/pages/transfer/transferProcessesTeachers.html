@@ -1,0 +1,152 @@
+<div class="portlet light bordered">
+  <div class="portlet-title">
+    <div class="caption caption-md">
+      <i class="icon-settings font-green"></i>
+      <span class="caption-subject font-green bold">حدد المدرسين الذين تريد ربطهم مع عملية النقل</span>
+    </div>
+  </div>
+  <div class="portlet-body">
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <td style="font-weight: bold">إسم السائق :</td>
+          <td>{{transferProcess.driver.name}}</td>
+          <td style="font-weight: bold">رقم الهاتف :</td>
+          <td>{{transferProcess.driver.phone1 + ((transferProcess.driver.phone2 == "")? "": (" / " + transferProcess.driver.phone2) ) }}</td>
+          <td style="font-weight: bold">أجر السائق :</td>
+          <td>{{transferProcess.fare + " د.ل"}}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold">إسم الحافلة :</td>
+          <td>{{transferProcess.bus.name + " (" + transferProcess.bus.color + ")" }}</td>  
+          <td style="font-weight: bold">رقم اللوحة :</td>
+          <td>{{transferProcess.bus.plateNumber}}</td>
+          <td style="font-weight: bold">عدد الركاب :</td>
+          <td>{{transferProcess.bus.size}}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold">إسم المشرف :</td>
+          <td>{{transferProcess.supervisor.name }}</td>
+          <td style="font-weight: bold">رقم الهاتف :</td>
+          <td>{{transferProcess.supervisor.phone + ((transferProcess.supervisor.phone2 == "NULL")? "": (" / " + transferProcess.supervisor.phone2) ) }}</td>
+          <td style="font-weight: bold">الرقم الوطني :</td>
+          <td>{{transferProcess.supervisor.nid}}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold">خط السير :</td>
+          <td colspan="5">{{transferProcess.path }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold">ملاحظات :</td>
+          <td colspan="5">{{transferProcess.notes }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <div class="row">
+      <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="row clearfix">
+         <div class="dual-list list-left col-md-5">
+          <div class="well text-right">
+            <h5 class="text-center">مدرسوا عملية النقل (<span id="teachersLength"></span>)</h5>
+              <div class="row">
+                  <div class="col-md-10">
+                      <div class="input-group btn-block">
+                          <input type="text" id="input" name="SearchDualList" class="form-control" placeholder="بحث" />
+                      </div>
+                  </div>
+                  <div class="col-md-2">
+                      <div class="btn-group">
+                          <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                      </div>
+                  </div>
+              </div>
+              <ul style="max-height:300px;overflow:scroll;overflow-x:hidden;margin-top: 8px;" class="list-group">
+
+              </ul>
+              <button id="cost" ng-click="openDialogCostTeachers()" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#myModal"><i class="fa fa-dollar"></i>&nbsp;التكاليف</button>
+          </div>
+      </div>
+
+      <div style="padding-top: 100px;" class="list-arrows col-md-1 text-center">
+          <button style="margin-bottom: 20px;" class="btn btn-default btn-sm move-left">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
+          <button style="margin-bottom: 20px;" class="btn btn-default btn-sm move-right">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+          </button>
+      </div>
+
+      <div class="dual-list list-right col-md-5">
+          <div class="well">
+            <h5 class="text-center">مدرسوا المدرسة</h5>
+              <div class="row">
+                  <div class="col-md-2">
+                      <div class="btn-group">
+                          <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                      </div>
+                  </div>
+                  <div class="col-md-10">
+                    <div class="form-group btn-block">
+                      <input ng-change="getTeachers(searchText)" type="text" ng-model="searchText" class="form-control" placeholder="بحث" />
+                    </div>
+                  </div>
+              </div>
+              <ul style="max-height:300px;overflow:scroll;overflow-x:hidden;margin-top: 8px;" class="list-group">
+                <li style="cursor: pointer;" x='{{teacher}}' ng-repeat="teacher in filteredTeachers" class="list-group-item">{{teacher.name}}</li> 
+              </ul>
+          </div>
+        </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-6 col-md-2 col-md-offset-4">
+            <button class="btn btn-primary btn-sm btn-block" ng-click="save()"><i class="fa fa-plus"></i>&nbsp;حفظ</button>
+          </div>
+          <div class="col-xs-6 col-md-2">
+            <a class="btn btn-success btn-sm btn-block" id="back" ui-sref="transferProcesses"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <form novalidate ng-submit="saveCostDialogTransferProcessTeachers()">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">تكاليف المدرسين</h4>
+              </div>
+              <div style="max-height: calc(80vh - 100px);overflow-y: auto;" class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <table class="table table-bordered">
+                      <thead>
+                          <tr><th>إسم المدرس</th><th>التكلفة</th></tr>
+                      </thead>
+                      <tbody>
+                         <tr ng-repeat="st in allTeachersDialog">
+                            <td>{{ st.name }}</td>
+                            <td>
+                              <div class="form-group">
+                                <input type="number" required="required" placeholder="التكلفة" ng-model="st.amount" min="0" class="form-control text-center">
+                              </div>
+                            </td>
+                         </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success" >حفظ</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

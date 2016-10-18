@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(Evaluations);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -24,7 +24,7 @@ module.exports = {
         if(!err){
           cb({result:Evaluations,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +41,7 @@ module.exports = {
         if(!err){
           cb({result:Evaluations,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -53,7 +53,7 @@ module.exports = {
       if(!err){
         cb(classes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -86,21 +86,22 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateEvaluation : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Evaluation.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
-  },
+  }
 };
+

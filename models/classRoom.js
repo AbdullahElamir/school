@@ -9,6 +9,7 @@ var ClassRoom = new Schema({
   room:{type: Schema.Types.ObjectId , ref: 'Room'},
   class:{ type: Schema.Types.ObjectId , ref: 'Class'},
   sheft:{type: Number, default:1},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

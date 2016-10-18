@@ -91,7 +91,21 @@
 
   }]);
 
-  app.controller('newSubjectCtl',['$scope','ClassServ','SubjectServ','$state','toastr',function($scope,ClassServ,SubjectServ,$state,toastr){
+  app.controller('newSubjectCtl',['$scope','ClassServ','SubjectServ','$state','toastr','AdminServ','SchoolServ',function($scope,ClassServ,SubjectServ,$state,toastr,AdminServ,SchoolServ){
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      }
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     ClassServ.getAllClasses().then(function(response){
       $scope.getAllClasses = response.data;
     },function(response){

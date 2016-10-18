@@ -115,9 +115,25 @@
     };
   }]);
 
-  app.controller('newTeacherCtl',['$scope','TeacherServ','NationalityServ','$state','toastr',function($scope,TeacherServ,NationalityServ,$state,toastr){
+
+  app.controller('newTeacherCtl',['$scope','TeacherServ','AdminServ','NationalityServ','$state','toastr',function($scope,TeacherServ,AdminServ,NationalityServ,$state,toastr){
+
 
     $scope.newTeacherForm={};
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newTeacher = function(){
       $scope.newTeacherForm.password = $scope.newTeacherForm.email;
       TeacherServ.addTeacher($scope.newTeacherForm).then(function(response){

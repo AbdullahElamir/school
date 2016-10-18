@@ -76,10 +76,23 @@
   }]);
 
 
-  app.controller('newDriverCtl',['$scope','DriverServ','toastr',function($scope,DriverServ,toastr){
+  app.controller('newDriverCtl',['$scope','DriverServ','toastr','AdminServ','SchoolServ',function($scope,DriverServ,toastr,AdminServ,SchoolServ){
 
     $scope.newDriverForm={};
-
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newDriver = function(){
       DriverServ.addDriver($scope.newDriverForm).then(function(response){
         if(response.data){

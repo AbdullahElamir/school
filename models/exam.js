@@ -8,6 +8,7 @@ var Exam = new Schema({
   clas:{ type: Schema.Types.ObjectId , ref: 'Class'},
   semester: {type: Number},
   type: {type: Number},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

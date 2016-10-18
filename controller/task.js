@@ -1,7 +1,18 @@
 var model = require('../models');
-var task = null;
+var Task = null;
 
 module.exports = {
+
+  getAllTask :function(cb){
+    model.Task.find({status:1}, function(err, Tasks){
+      if(!err){
+        cb(Tasks);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
 
   //getAllTasksBySearchValue
   getAllTasksBySearchValue :function(searchValue,limit,page,classRoom,subject,cb){
@@ -13,7 +24,7 @@ module.exports = {
         if(!err){
           cb({result:Tasks,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -30,7 +41,7 @@ module.exports = {
         if(!err){
           cb({result:Tasks,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -55,19 +66,19 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateTask : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Task.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -78,7 +89,7 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(3);
       }
     });

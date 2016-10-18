@@ -38,13 +38,14 @@
         'password': $scope.loginForm.password
       }).then(function(response) {
         //First function handles success
+        console.log(response.data);
         if(response.data.admin == undefined){
          toastr.error('خطأ : اسم المستخدم او كلمة المرور غير صحيح');
         } else {
         if(response.data.admin==1){
-          window.location.replace('/admin');  
+          window.location.replace('/');  
         }else if(response.data.admin==2){
-          window.location.replace('/');
+          window.location.replace('/admin');
         }else if(response.data.admin==3){
           window.location.replace('/');
         }

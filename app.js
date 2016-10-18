@@ -41,6 +41,10 @@ var transferProcess = require('./routes/transferProcess');
 var inOutcomeTypes = require('./routes/inOutcomeType');
 var inOutcome = require('./routes/inOutcome');
 var nationality = require('./routes/nationality');
+var check = require('./routes/check');
+var vaccination = require('./routes/vaccination');
+var others = require('./routes/other');
+
 
 var app = express();
 
@@ -111,6 +115,9 @@ app.use('/transferProcess',transferProcess);
 app.use('/inOutcomeTypes',inOutcomeTypes);
 app.use('/inOutcomes',inOutcome);
 app.use('/nationality',nationality);
+app.use('/checks',check);
+app.use('/vaccinations',vaccination);
+app.use('/others',others);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

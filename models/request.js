@@ -8,8 +8,9 @@ var Request = new Schema({
   clothes:{ type: Schema.Types.ObjectId , ref: 'Clothes'},
   size: {type: Number},
   quantity: {type: Number},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 
 Request.plugin(timestamps);
-exports.Request = mongoose.model('Request', Request);
+exports.Request = mongoose.model('Request', Request); 

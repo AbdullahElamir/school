@@ -76,9 +76,22 @@
 
   }]);
 
-  app.controller('newEvaluationCtl',['$scope','EvaluationServ','$state','toastr',function($scope,EvaluationServ,$state,toastr){
+  app.controller('newEvaluationCtl',['$scope','EvaluationServ','$state','toastr','AdminServ','SchoolServ',function($scope,EvaluationServ,$state,toastr,AdminServ,SchoolServ){
     $scope.newEvaluationForm={};
-
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newEvaluation = function(){
       EvaluationServ.addEvaluation($scope.newEvaluationForm).then(function(response){
         if(response.data){

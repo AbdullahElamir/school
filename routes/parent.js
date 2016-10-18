@@ -7,11 +7,13 @@ var userHelpers = require("../controller/userHelpers");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
-var path = require("path");
+var user={};
+    user.school="5801f550e4de0e349c8714c2";
+// var path = require("path");
 
 /*GET all Student By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  parentMgr.getAllParentsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(parents){
+  parentMgr.getAllParentsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(parents){
     res.send(parents);
   });
 });
@@ -36,18 +38,19 @@ router.put('/message/:parentId',userHelpers.isLogin,function(req, res) {
 
 /* GET all parent */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  parentMgr.getAllParentCount(req.params.limit,req.params.page,function(parents){
+  parentMgr.getAllParentCount(user.school,req.params.limit,req.params.page,function(parents){
     res.send(parents);
   });
 });
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  parentMgr.getAllParent(function(parents){
+  parentMgr.getAllParent(user.school,function(parents){
     res.send(parents);
   });
 });
 
 /* Add new parent  */
 router.post('/add', userHelpers.isLogin ,function(req, res) {
+  req.body.school=user.school;
   parentMgr.addParent(req.body,function(parents){
     res.send(parents);
   });

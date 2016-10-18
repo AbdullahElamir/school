@@ -18,15 +18,15 @@ function setTS(system,sys_class,classRoom_id,yearId,counterOfClassRooms,sumOfCla
 
 function systemSetting(system,sys_class,yearId,counterOfClassRooms,sumOfClassRooms,cb){
   if( system.flag != 1 ){
-    model.Fees.findOne({year:yearId,id_class:sys_class.id_class._id}).exec(function(err,fessResult){
+    model.Fees.find({year:yearId,id_class:sys_class.id_class._id}).exec(function(err,fessesResult){
       if(!err){
-        if( fessResult == null ){  // get new system setting
+        if( fessesResult == null || fessesResult.length == 0 ){  // get new system setting
           system.flag = 1;
           cb(system);
           return;
         }else{                     // get edit system setting
           system.flag = 2;
-          sys_class.fees = fessResult;
+          sys_class.fees = fessesResult;
           model.ClassRoom.find({year:yearId,class:sys_class.id_class._id}).exec(function(err,classRoomsResult){
             if(!err){
               sys_class.classRooms = classRoomsResult;
@@ -87,14 +87,15 @@ function addMarks(examI,custom,cb,counter,sum){
           final.sys_class[i].exams = [];
           for(var j =0;j<custom.sys_class[i].exams.length;j++){
             final.sys_class[i].exams[j]={
-            _id:custom.sys_class[i].exams[j]._id,
-            clas:custom.sys_class[i].exams[j].clas,
-            name:custom.sys_class[i].exams[j].name,
-            semester:custom.sys_class[i].exams[j].semester,
-            type:custom.sys_class[i].exams[j].type,
-            status:custom.sys_class[i].exams[j].status,
-            system:custom.sys_class[i].exams[j].system,
-            subjects:custom.sys_class[i].exams[j].subjects};
+              _id:custom.sys_class[i].exams[j]._id,
+              clas:custom.sys_class[i].exams[j].clas,
+              name:custom.sys_class[i].exams[j].name,
+              semester:custom.sys_class[i].exams[j].semester,
+              type:custom.sys_class[i].exams[j].type,
+              status:custom.sys_class[i].exams[j].status,
+              system:custom.sys_class[i].exams[j].system,
+              subjects:custom.sys_class[i].exams[j].subjects
+            };
           }
           if(i== custom.sys_class.length-1){
             cb(final);
@@ -109,6 +110,7 @@ function addMarks(examI,custom,cb,counter,sum){
 }
 
 function saveExam(examI,cb){
+  console.log(examI);
   var exam = new model.Exam(examI);
   exam.save(function(err,examResult){
     if(!err){
@@ -122,7 +124,7 @@ function saveExam(examI,cb){
         subIndex++;
       }
     }else{
-      console.log(err);
+      // console.log(err);
       cb(false);
       return;
     }
@@ -132,7 +134,7 @@ function saveMark(subjectsI,cb){
   var marksSubject = new model.MarksSub(subjectsI);
   marksSubject.save(function(err,marksResult){
     if(err){
-      console.log(err);
+      // console.log(err);
       cb(false);
       return;
     }
@@ -188,7 +190,7 @@ var addSystem = function(body,cb){
       }
       cb(true);
     } else {
-      console.log(err);
+      // console.log(err);
       cb(false);
     }
   });
@@ -196,7 +198,7 @@ var addSystem = function(body,cb){
 
 function saveTS(tsObject,classRoom_id,counterFinalClassRooms,sumFinalClassRooms,cb){
   var obj = {year:tsObject.year , classRoom:classRoom_id , teacher:tsObject.teacher, subject:tsObject.subject._id };
-  tsObjectSaved = new model.TSC(obj);
+  var tsObjectSaved = new model.TSC(obj);
   tsObjectSaved.save(function(err,result){
     if (!err) {
       counterFinalClassRooms.value++;
@@ -205,7 +207,7 @@ function saveTS(tsObject,classRoom_id,counterFinalClassRooms,sumFinalClassRooms,
         return;
       }
     } else {
-      console.log(err);
+      // console.log(err);
       cb(false);
     }
   });
@@ -213,32 +215,39 @@ function saveTS(tsObject,classRoom_id,counterFinalClassRooms,sumFinalClassRooms,
 
 function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb){
   var obj = {year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft };
-  classRoomSaved = new model.ClassRoom(obj);
+  var classRoomSaved = new model.ClassRoom(obj);
   classRoomSaved.save(function(err,result){
     if (!err) {
       for(var i in ts){
         saveTS(ts[i],result._id,counterFinalClassRooms,sumFinalClassRooms,cb);
       }
     } else {
-      console.log(err);
+      // console.log(err);
       cb(false);
     }
   });
 }
 
 function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,cb){
-  feesSaved = new model.Fees(fees);
-  feesSaved.save(function(err,result){
-    if (!err) {
-      for(var i in classRooms){
-        sumFinalClassRooms.value += tss[i].length;
-        saveClassRoom(classRooms[i],tss[i],counterFinalClassRooms,sumFinalClassRooms,cb);
+  var feesCounter = 0;
+  for(var feesObj in fees){
+    var feesSaved = new model.Fees(fees[feesObj]);
+    feesSaved.save(function(err,result){
+      if (!err) {
+        feesCounter++;
+        if( feesCounter == fees.length ){
+          for(var i in classRooms){
+            sumFinalClassRooms.value += tss[i].length;
+            saveClassRoom(classRooms[i],tss[i],counterFinalClassRooms,sumFinalClassRooms,cb);
+          }
+        }
+      } else {
+        // console.log(err);
+        cb(false);
+        return;
       }
-    } else {
-      console.log(err);
-      cb(false);
-    }
-  });
+    });
+  }
 }
 
 function updateFees(fees,system,cb){
@@ -251,19 +260,19 @@ function updateFees(fees,system,cb){
               system.flag = 1;
               addNewSystemSetting(system,cb);
             } else {
-              console.log(err);
+              // console.log(err);
               cb(false);
               return;
             }
           });
         } else {
-          console.log(err);
+          // console.log(err);
           cb(false);
           return;
         }
       });
     } else {
-      console.log(err);
+      // console.log(err);
       cb(false);
       return;
     }
@@ -271,15 +280,15 @@ function updateFees(fees,system,cb){
 }
 
 function addNewSystemSetting (system,cb){
-    var counterFinalClassRooms = {value : 0};
-    var sumFinalClassRooms = {value : 0};
-    if( system.flag == 1 ){
-      for(var i in system.sys_class){
-        saveFees(system.sys_class[i].fees,system.sys_class[i].classRooms,system.sys_class[i].ts,counterFinalClassRooms,sumFinalClassRooms,cb);
-      }
-    }else{
-      cb(false);
+  var counterFinalClassRooms = {value : 0};
+  var sumFinalClassRooms = {value : 0};
+  if( system.flag == 1 ){
+    for(var i in system.sys_class){
+      saveFees(system.sys_class[i].fees,system.sys_class[i].classRooms,system.sys_class[i].ts,counterFinalClassRooms,sumFinalClassRooms,cb);
     }
+  }else{
+    cb(false);
+  }
 }
 
 module.exports = {
@@ -287,7 +296,7 @@ module.exports = {
   addNewSystemSetting :addNewSystemSetting,
   updateSystemSetting : function(system,cb){
     if( system.flag == 2 ){
-      updateFees(system.sys_class[0].fees,system,cb);
+      updateFees(system.sys_class[0].fees[0],system,cb);
     }else{
       cb(false);
     }
@@ -298,26 +307,26 @@ module.exports = {
       if(!err){
         cb(systems);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
 
   //getAllSystems Count
-  getAllSystemCount :function(limit,page,cb){
+  getAllSystemCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.System.count({},function(err, count){
-      model.System.find({}).limit(limit).skip(page*limit)
+    model.System.count({school:school,status:1},function(err, count){
+      model.System.find({school:school,status:1}).limit(limit).skip(page*limit)
       .populate('sys_class')
       .populate('selected')
       .exec(function(err,systems){
         if(!err){
           cb({result:systems,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -332,7 +341,7 @@ module.exports = {
       if(!err){
         cb(subjects);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -387,7 +396,7 @@ module.exports = {
   deleteSystem : deleteSystem,
   // still update thier exams and  marks
   updateSystem : function(id,body,cb){
-    obj = body;
+    var obj = body;
     deleteSystem(id,function(no){
       if(no == 2){
         addSystem(body,cb);

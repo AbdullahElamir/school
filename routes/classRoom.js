@@ -7,6 +7,8 @@ var MessageMgr = require("../controller/message");
 var parentMsg = require("../controller/parentMsg");
 var TSCMgr = require("../controller/teacherSubjectClass");
 var userHelpers = require("../controller/userHelpers");
+var user={};
+user.school="5801f550e4de0e349c8714c2";
 
 /* Send Message to Parent of Students of ClassRoom By classRoomID */
 router.put('/message/:classRoomID',function(req, res) {
@@ -19,7 +21,6 @@ router.put('/message/:classRoomID',function(req, res) {
       });
     });
   });
-
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
@@ -33,7 +34,6 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   classRoomMgr.addClassRoom(req.body,function(Croom){
     res.send(Croom);
   });
-
 });
 
 // edit class room by id
@@ -66,18 +66,21 @@ router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
     res.send({result:Croom});
   });
 });
+
 // get class room by status
 router.get('/status/:status',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getAllClassRoomStatus(req.params.status,function(Croom){
     res.send(Croom);
   });
 });
+
 // get class room by name
 router.get('/name/:name',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomName(req.params.name,function(Croom){
     res.send(Croom);
   });
 });
+
 // get class room by name
 router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
   TSCMgr.getTeacherClassSubject(req.params.id,function(result){
@@ -96,13 +99,14 @@ router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
         res.send(tsc);
       }
     }
-  })
+  });
   // res.send([
   //   {_id:84515641,name:"3/1",course:"الفيزياء",courseId:651356},
   //   {_id:87458458,name:"3/2",course:"الفيزياء",courseId:651356},
   //   {_id:85648866,name:"4/1",course:"كيمياء",courseId:653156}
   // ]);
 });
+
 //get all claas Rooms By Search Value
 router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
   stuproMgr.getAllClassRoomeStudentsByYear(req.params.classRoom,req.params.year,function(Crooms){
@@ -124,18 +128,21 @@ router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res)
   //   {_id:812674577,name:"d"}
   // ]);
 });
+
 //get all claas Rooms By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getAllClassRoomesBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(Crooms){
     res.send(Crooms);
   });
 });
+
 // get all class rooms
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getAllClassRoomCount(req.params.limit,req.params.page,function(Croom){
     res.send(Croom);
   });
 });
+
 // get  class room by id
 router.get('/:id',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomId(req.params.id,function(Croom){

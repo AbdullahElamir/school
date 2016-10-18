@@ -53,6 +53,7 @@
   app.run(['$rootScope','settings','$state',function($rootScope,settings,$state){
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
+    $rootScope.superAdminStatus = true;
   }]);
   /* Setup Rounting For All Pages */
   app.config(['$stateProvider','$urlRouterProvider','$datepickerProvider',function($stateProvider,$urlRouterProvider,$datepickerProvider){
@@ -88,18 +89,17 @@
         }]
       }
     })
-    .state('school',{
-      url: '/school',
-      templateUrl: 'admin/pages/school/info',
-      data: {pageTitle: 'معلومات المدرسة'},
-      controller: 'SchoolCtl',
+    .state('schools',{
+      url: '/schools',
+      templateUrl: 'admin/pages/school/schools',
+      data: {pageTitle: 'ألفروع'},
+      controller: 'SchoolsCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/schoolCtl.js',
-              '/css/admin/timeline.css'
+              '/js/admin/controllers/schoolCtl.js'
             ]
           });
         }]
@@ -745,8 +745,8 @@
           });
         }]
       }
-    }).state('adminsAttendance',{
-      url: '/adminsAttendance',
+    }).state('adminAttendance',{
+      url: '/adminAttendance',
       templateUrl: 'admin/pages/attendance/adminsAttendance',
       data: {pageTitle: 'ألحضور والغياب'},
       controller: 'adminsAttendanceCtl',
@@ -869,6 +869,36 @@
             files: [
               '/js/admin/controllers/transferProcessesCtl.js'
               ]
+          });
+        }]
+      }
+    }).state('transferProcessesStudents',{
+      url: '/transferProcessesStudents/:id',
+      templateUrl: 'admin/pages/transfer/transferProcessesStudents',
+      data: {pageTitle: 'عمليات نقل الطلاب'},
+      controller: 'transferProcessesStudentsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/transferProcessesCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('transferProcessesTeachers',{
+      url: '/transferProcessesTeachers/:id',
+      templateUrl: 'admin/pages/transfer/transferProcessesTeachers',
+      data: {pageTitle: 'عمليات نقل المدرسين'},
+      controller: 'transferProcessesTeachersCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/transferProcessesCtl.js'
+            ]
           });
         }]
       }
@@ -1048,6 +1078,51 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/evaluationsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('checks',{
+      url: '/checks',
+      templateUrl: 'admin/pages/medical/medicalCheck',
+      data: {pageTitle: 'ألكشوفات'},
+      controller: 'ChecksCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/medicalChecksCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('vaccinations',{
+      url: '/vaccinations',
+      templateUrl: 'admin/pages/medical/vaccination',
+      data: {pageTitle: 'التطعيمات'},
+      controller: 'VaccinationsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/vaccinationsCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('others',{
+      url: '/others',
+      templateUrl: 'admin/pages/medical/other',
+      data: {pageTitle: 'عمليات اخرى'},
+      controller: 'OthersCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/othersCtl.js'
             ]
           });
         }]

@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(buses);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       } 
     });
@@ -24,7 +24,7 @@ module.exports = {
         if(!err){
           cb({result:buses,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +41,7 @@ module.exports = {
         if(!err){
           cb({result:buses,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -53,7 +53,7 @@ module.exports = {
       if(!err){
         cb(buses);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -80,25 +80,25 @@ module.exports = {
   },
 
   addBus : function(body,cb){
-    obj = body;
+    var obj = body;
     bus = new model.Bus(obj);
     bus.save(function(err,result){
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateBus : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Bus.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -109,7 +109,7 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(3);
       }
     });

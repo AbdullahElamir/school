@@ -76,9 +76,23 @@
 
   }]);
 
-  app.controller('newClothesCtl',['$scope','ClothesServ','$state','toastr',function($scope,ClothesServ,$state,toastr){
+  app.controller('newClothesCtl',['$scope','ClothesServ','$state','toastr','AdminServ','SchoolServ',function($scope,ClothesServ,$state,toastr,AdminServ,SchoolServ){
 
     $scope.newClothesForm={};
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newClothes = function(){
       ClothesServ.addClothes($scope.newClothesForm).then(function(response){
         if(response.data){

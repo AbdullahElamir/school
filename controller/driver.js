@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(drivers);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       } 
     });
@@ -24,7 +24,7 @@ module.exports = {
         if(!err){
           cb({result:drivers,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +41,7 @@ module.exports = {
         if(!err){
           cb({result:drivers,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -53,7 +53,7 @@ module.exports = {
       if(!err){
         cb(drivers);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -80,25 +80,25 @@ module.exports = {
   },
 
   addDriver : function(body,cb){
-    obj = body;
+    var obj = body;
     driver = new model.Driver(obj);
     driver.save(function(err,result){
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateDriver : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Driver.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -109,7 +109,7 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(3);
       }
     });

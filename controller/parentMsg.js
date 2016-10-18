@@ -1,5 +1,6 @@
 var model = require('../models');
 var ParentMsg1 = null;
+var ParentM = null;
 
 module.exports = {
 
@@ -8,7 +9,7 @@ module.exports = {
       if(!err){
         cb(ParentMsges);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -24,7 +25,7 @@ module.exports = {
         if(!err){
           cb({result:ParentMsges,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -36,7 +37,7 @@ module.exports = {
       if(!err){
         cb(ParentMsges);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -47,7 +48,7 @@ module.exports = {
       if(!err){
         cb(ParentMsges);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -98,7 +99,7 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -122,12 +123,12 @@ module.exports = {
     
   },
   updateParentMsg : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.ParentMsg.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -147,13 +148,13 @@ module.exports = {
                 return;
               }
             } else {
-              console.log(err);
+              // console.log(err);
               cb(false);
             }
           });
         }
       }else{
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });

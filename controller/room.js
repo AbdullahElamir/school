@@ -3,28 +3,28 @@ var room = null;
 
 module.exports = {
 
-  getAllRoom :function(cb){
-    model.Room.find({}, function(err, rooms){
+  getAllRoom :function(school,cb){
+    model.Room.find({school:school,status:1}, function(err, rooms){
       if(!err){
         cb(rooms);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
   
   //getAllRoomsBySearchValue
-  getAllRoomsBySearchValue :function(searchValue,limit,page,cb){
+  getAllRoomsBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Room.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Room.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,rooms){
+    model.Room.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
+      model.Room.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,rooms){
         if(!err){
           cb({result:rooms,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -32,35 +32,35 @@ module.exports = {
   },
 
   //getAllRoomsCount
-  getAllRoomCount :function(limit,page,cb){
+  getAllRoomCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Room.count({},function(err, count){
-      model.Room.find({}).limit(limit).skip(page*limit).exec(function(err,rooms){
+    model.Room.count({school:school,status:1},function(err, count){
+      model.Room.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,rooms){
         if(!err){
           cb({result:rooms,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
     });
   },
 
-  getAllRoomStatus:function(status,cb){
-    model.Room.find({status:status},function(err, classes){
+  getAllRoomStatus:function(school,status,cb){
+    model.Room.find({school:school,status:status},function(err, classes){
       if(!err){
         cb(classes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
   
-  getRoomName :function(name,cb){
-    model.Room.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
+  getRoomName :function(school,name,cb){
+    model.Room.find({name :{ $regex:name, $options: 'i' },school:school}).limit(30).exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -86,19 +86,19 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateRoom : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Room.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -113,7 +113,7 @@ module.exports = {
           if (!err) {
             cb(2);
           } else {
-            console.log(err);
+            // console.log(err);
             cb(3);
           }
         });

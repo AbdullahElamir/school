@@ -56,7 +56,8 @@
           for(var i in $scope.data.sys_class){
             $scope.data.sys_class[i].classRooms = [];
             $scope.data.sys_class[i].ts = [];
-            $scope.data.sys_class[i].fees = {amount : 0 , id_class:$scope.data.sys_class[i].id_class._id , year:$scope.year._id};
+            $scope.data.sys_class[i].fees = [];
+            $scope.data.sys_class[i].fees.push({name:"", feesDate:"" , amount : '' , id_class:$scope.data.sys_class[i].id_class._id , year:$scope.year._id});
             $scope.addDataRow(i);
           }
         }
@@ -77,12 +78,27 @@
       $('#myModal').modal('hide');
     };
     
+    $('#saveBtn').removeAttr("disabled");
+    
     $scope.save = function (){
+      $('#saveBtn').attr("disabled", true);
+      
+      for(var i in $scope.data.sys_class){
+        for(var j in $scope.data.sys_class[i].fees){
+          if( $scope.data.sys_class[i].fees[j].name == "" ){
+            toastr.error("يجب تحديد تكلفة "+ $scope.data.sys_class[i].id_class.name + " !");
+            $('#saveBtn').removeAttr("disabled");
+            return;
+          }
+        }
+      }
+      
       for(var i in $scope.data.sys_class){
         for(var j in $scope.data.sys_class[i].ts){
           for(var k in $scope.data.sys_class[i].ts[j]){
             if( $scope.data.sys_class[i].ts[j][k].teacher == "" ){
               toastr.error("يجب تحديد أستاذ مادة "+$scope.data.sys_class[i].ts[j][k].subject.name+" لـ "+$scope.data.sys_class[i].id_class.name+" في المجموعة "+$scope.data.sys_class[i].classRooms[j].name);
+              $('#saveBtn').removeAttr("disabled");
               return;
             }
           } 
@@ -95,9 +111,11 @@
             $scope.data.flag = 2;
             toastr.success("تم الحفظ بنجاح");
             $("html, body").animate({ scrollTop: 0 }, "slow");
+            $('#saveBtn').removeAttr("disabled");
           } else {
             toastr.error('عملية الحفظ فشلت، حاول مرة أخرى !');
             $("html, body").animate({ scrollTop: 0 }, "slow");
+            $('#saveBtn').removeAttr("disabled");
           }
         }, function(response) {
           console.log("Something went wrong");
@@ -107,15 +125,34 @@
           if(response.data){
             toastr.info("تم التعديل بنجاح");
             $("html, body").animate({ scrollTop: 0 }, "slow");
+            $('#saveBtn').removeAttr("disabled");
           } else {
             toastr.error('عملية التعديل فشلت، حاول مرة أخرى !');
             $("html, body").animate({ scrollTop: 0 }, "slow");
+            $('#saveBtn').removeAttr("disabled");
           }
         }, function(response) {
           console.log("Something went wrong");
         });
       }
-      
+    };
+
+    $scope.openFeesDialog = function(classFeesIndex){
+      $scope.classFeesIndex = classFeesIndex;
+      $scope.allFeesClass = JSON.parse(JSON.stringify($scope.data.sys_class[$scope.classFeesIndex].fees));
+    };
+
+    $scope.saveFeesClass = function(classFeesIndex){
+      $scope.data.sys_class[classFeesIndex].fees = JSON.parse(JSON.stringify($scope.allFeesClass));
+      $('#myFeesModal').modal('hide');
+    };
+    
+    $scope.deleteFeesClassRow = function(feesIndes){
+      $scope.allFeesClass.splice(feesIndes, 1);
+    };
+    
+    $scope.addFeesClassRow = function(classFeesIndex){
+      $scope.allFeesClass.push({name:"", feesDate:"" , amount : '' , id_class:$scope.data.sys_class[classFeesIndex].id_class._id , year:$scope.year._id});
     };
     
   }]);
