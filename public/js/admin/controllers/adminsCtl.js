@@ -2,7 +2,7 @@
   'use strict';
   var app = angular.module('adminSchool');
 
-  app.controller('NewAdminCtl',['$scope','$state','AdminServ','NationalityServ','toastr',function($scope,$state,AdminServ,NationalityServ,toastr){
+  app.controller('NewAdminCtl',['$scope','$state','AdminServ','NationalityServ','SchoolServ','toastr',function($scope,$state,AdminServ,NationalityServ,SchoolServ,toastr){
 
 
     $scope.newAdminForm = {};

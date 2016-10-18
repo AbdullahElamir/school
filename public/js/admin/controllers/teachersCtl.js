@@ -93,7 +93,6 @@
 
     NationalityServ.getAllNationality().then(function(response){
       $scope.getAllNationality = response.data;
-        console.log($scope.getAllNationality);
       },function(response){
         console.log("Somthing went wrong");
     });
@@ -116,7 +115,7 @@
   }]);
 
 
-  app.controller('newTeacherCtl',['$scope','TeacherServ','AdminServ','NationalityServ','$state','toastr',function($scope,TeacherServ,AdminServ,NationalityServ,$state,toastr){
+  app.controller('newTeacherCtl',['$scope','TeacherServ','AdminServ','NationalityServ','SchoolServ','$state','toastr',function($scope,TeacherServ,AdminServ,NationalityServ,SchoolServ,$state,toastr){
 
 
     $scope.newTeacherForm={};
@@ -152,7 +151,6 @@
 
     NationalityServ.getAllNationality().then(function(response){
       $scope.getAllNationality = response.data;
-        console.log($scope.getAllNationality);
       },function(response){
         console.log("Somthing went wrong");
     });
