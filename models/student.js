@@ -14,7 +14,7 @@ var Student = new Schema({
   birth_place:{ type:String, default:"NULL"},
   parent:[{ type: Schema.Types.ObjectId , ref: 'Parent'}],
   gender:{type: String,default:"NULL"},
-  nationality:{type: String,default:"NULL"},
+  nationality:{type: Number},
   address:{type: String,default:"NULL"},
   closestPoint:{type: String,default:"NULL"},
   closestPerson:{type: String,default:"NULL"},

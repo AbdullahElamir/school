@@ -18,7 +18,7 @@ var Teacher = new Schema({
   startDate:{ type:String , default:"NULL"},
   /*last_login:{ type:Date, required: [true, 'start date required']},*/
   gender:{type: String,default:"NULL"},
-  nationality:{type: String,default:"NULL"},
+  nationality:{type: Number},
   address:{type: String,default:"NULL"},
   closestPoint:{type: String,default:"NULL"},
   level:{type:Number, default:2},

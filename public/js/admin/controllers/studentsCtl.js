@@ -134,10 +134,17 @@
 
   }]);
   //editStudentCtl
-  app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,StudentServ,$state,toastr){
+  app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','NationalityServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,NationalityServ,StudentServ,$state,toastr){
 
     ParentServ.getAllParents().then(function(response){
       $scope.getAllParents = response.data;
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+
+    NationalityServ.getAllNationality().then(function(response){
+      $scope.getAllNationality = response.data;
+      console.log($scope.getAllNationality);
     },function(response){
       console.log("Somthing went wrong");
     });
@@ -171,6 +178,7 @@
     },function(response){
       console.log("Somthing went wrong");
     });
+    
     NationalityServ.getAllNationality().then(function(response){
       $scope.getAllNationality = response.data;
       console.log($scope.getAllNationality);

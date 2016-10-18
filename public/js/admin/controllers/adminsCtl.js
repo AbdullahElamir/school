@@ -2,7 +2,7 @@
   'use strict';
   var app = angular.module('adminSchool');
 
-  app.controller('NewAdminCtl',['$scope','$state','AdminServ','toastr',function($scope,$state,AdminServ,toastr){
+  app.controller('NewAdminCtl',['$scope','$state','AdminServ','NationalityServ','toastr',function($scope,$state,AdminServ,NationalityServ,toastr){
 
     $scope.newAdminForm = {};
     $scope.newAdmin = function(){
@@ -21,11 +21,17 @@
 
     };
 
+    NationalityServ.getAllNationality().then(function(response){
+      $scope.getAllNationality = response.data;
+      },function(response){
+        console.log("Somthing went wrong");
+    });
+
   }]);
 
 //editStudentCtl
 
-app.controller('EditAdminCtl',['$scope','$state','AdminServ','toastr','$stateParams',function($scope,$state,AdminServ,toastr,$stateParams){
+app.controller('EditAdminCtl',['$scope','$state','AdminServ','NationalityServ','toastr','$stateParams',function($scope,$state,AdminServ,NationalityServ,toastr,$stateParams){
   $scope.editAdminForm ={};
 
     AdminServ.getAdminById($stateParams).then(function(response) {
@@ -52,6 +58,12 @@ app.controller('EditAdminCtl',['$scope','$state','AdminServ','toastr','$statePar
         console.log("Something went wrong");
       });
     };
+
+    NationalityServ.getAllNationality().then(function(response){
+      $scope.getAllNationality = response.data;
+      },function(response){
+        console.log("Somthing went wrong");
+    });
 
  }]);
 

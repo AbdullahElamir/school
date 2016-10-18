@@ -7,7 +7,6 @@ var nationality = require('../Nationality');
 /* Get All Nationality  */
 
 router.get('/Nat', userHelpers.isLogin ,function(req, res){
-    console.log(nationality);
     res.send(nationality);
 });
 

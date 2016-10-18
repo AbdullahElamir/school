@@ -80,7 +80,7 @@
   }]);
 
 //editTeacherCtl
-  app.controller('editTeacherCtl',['$scope','$stateParams','TeacherServ','$state','toastr',function($scope,$stateParams,TeacherServ,$state,toastr){
+  app.controller('editTeacherCtl',['$scope','$stateParams','TeacherServ','NationalityServ','$state','toastr',function($scope,$stateParams,TeacherServ,NationalityServ,$state,toastr){
     $scope.editTeacherForm={};
 
     TeacherServ.getTeacherById($stateParams).then(function(response) {
@@ -91,6 +91,12 @@
         console.log("Something went wrong");
       });
 
+    NationalityServ.getAllNationality().then(function(response){
+      $scope.getAllNationality = response.data;
+        console.log($scope.getAllNationality);
+      },function(response){
+        console.log("Somthing went wrong");
+    });
 
      $scope.editTeacher = function(){
        if($scope.editTeacherForm.password === ""){
@@ -109,7 +115,7 @@
     };
   }]);
 
-  app.controller('newTeacherCtl',['$scope','TeacherServ','$state','toastr',function($scope,TeacherServ,$state,toastr){
+  app.controller('newTeacherCtl',['$scope','TeacherServ','NationalityServ','$state','toastr',function($scope,TeacherServ,NationalityServ,$state,toastr){
 
     $scope.newTeacherForm={};
     $scope.newTeacher = function(){
@@ -127,6 +133,13 @@
       });
 
     };
+
+    NationalityServ.getAllNationality().then(function(response){
+      $scope.getAllNationality = response.data;
+        console.log($scope.getAllNationality);
+      },function(response){
+        console.log("Somthing went wrong");
+    });
   }]);
 
 }());
