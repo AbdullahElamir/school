@@ -59,7 +59,9 @@
     $scope.types = [
       {value:1,name:"متوسط"},
       {value:2,name:"مجموع متوسطات"},
-      {value:3,name:"اساسي"}
+      {value:3,name:"اساسي"},
+      {value:4,name:"نهائي"},
+      {value:5,name:"دور ثاني"}
     ];
 
     $scope.editSystem = function(){
@@ -325,7 +327,7 @@
         },function(response){
           console.log("Somthing went wrong");
         });
-      } 
+      }
     },function(response){
       console.log("Somthing went wrong");
     });
@@ -338,7 +340,9 @@
     $scope.types = [
       {value:1,name:"متوسط"},
       {value:2,name:"مجموع متوسطات"},
-      {value:3,name:"اساسي"}
+      {value:3,name:"اساسي"},
+      {value:4,name:"نهائي"},
+      {value:5,name:"دور ثاني"}
     ];
 
     //save submit

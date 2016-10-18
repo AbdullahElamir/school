@@ -285,7 +285,7 @@
 
    $scope.preLogin = function (student){
      $scope.idStudent = student._id;
-     $scope.login = {email:student.email,password:""};
+     $scope.login = {stdEmail:student.stdEmail,password:""};
    };
 
    $scope.saveLogin = function(idStudent){
@@ -306,7 +306,15 @@
 
   }]);
   //editStudentCtl
-  app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','NationalityServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,NationalityServ,StudentServ,$state,toastr){
+
+  app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','NationalityServ','ClassServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,NationalityServ,ClassServ,StudentServ,$state,toastr){
+
+    ClassServ.getAllClasses().then(function(response){
+      $scope.getAllClasses = response.data;
+      $scope.getAllClasses.splice(0,0,{name:"لايوجد",_id:null});
+    },function(response){
+      console.log("Somthing went wrong");
+    });
 
     ParentServ.getAllParents().then(function(response){
       $scope.getAllParents = response.data;
@@ -316,7 +324,6 @@
 
     NationalityServ.getAllNationality().then(function(response){
       $scope.getAllNationality = response.data;
-      console.log($scope.getAllNationality);
     },function(response){
       console.log("Somthing went wrong");
     });
@@ -345,7 +352,7 @@
     };
   }]);
 
-  app.controller('newStudentCtl',['$scope','StudentServ','ParentServ','NationalityServ','$state','toastr',function($scope,StudentServ,ParentServ,NationalityServ,$state,toastr){
+  app.controller('newStudentCtl',['$scope','StudentServ','ParentServ','NationalityServ','ClassServ','$state','toastr','AdminServ','SchoolServ',function($scope,StudentServ,ParentServ,NationalityServ,ClassServ,$state,toastr,AdminServ,SchoolServ){
 
     $scope.schools=[];
     $scope.newInOutcomeTypesForm={};
@@ -361,7 +368,14 @@
     },function(response){
       console.log("Somthing went wrong");
     });
->>>>>>> e3ee82da82995b5e4644f0b201feba179cdb2815
+
+    ClassServ.getAllClasses().then(function(response){
+      $scope.getAllClasses = response.data;
+      $scope.getAllClasses.splice(0,0,{name:"لايوجد",_id:null});
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+
     ParentServ.getAllParents().then(function(response){
       $scope.getAllParents = response.data;
     },function(response){
@@ -370,7 +384,6 @@
     
     NationalityServ.getAllNationality().then(function(response){
       $scope.getAllNationality = response.data;
-      console.log($scope.getAllNationality);
     },function(response){
       console.log("Somthing went wrong");
     });
