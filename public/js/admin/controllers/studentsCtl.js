@@ -165,9 +165,15 @@
       });
     };
   }]);
-  app.controller('newStudentCtl',['$scope','StudentServ','ParentServ','$state','toastr',function($scope,StudentServ,ParentServ,$state,toastr){
+  app.controller('newStudentCtl',['$scope','StudentServ','ParentServ','NationalityServ','$state','toastr',function($scope,StudentServ,ParentServ,NationalityServ,$state,toastr){
     ParentServ.getAllParents().then(function(response){
       $scope.getAllParents = response.data;
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+    NationalityServ.getAllNationality().then(function(response){
+      $scope.getAllNationality = response.data;
+      console.log($scope.getAllNationality);
     },function(response){
       console.log("Somthing went wrong");
     });

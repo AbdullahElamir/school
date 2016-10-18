@@ -40,6 +40,7 @@ var tasks = require('./routes/task');
 var transferProcess = require('./routes/transferProcess');
 var inOutcomeTypes = require('./routes/inOutcomeType');
 var inOutcome = require('./routes/inOutcome');
+var nationality = require('./routes/nationality');
 
 var app = express();
 
@@ -109,6 +110,7 @@ app.use('/tasks',tasks);
 app.use('/transferProcess',transferProcess);
 app.use('/inOutcomeTypes',inOutcomeTypes);
 app.use('/inOutcomes',inOutcome);
+app.use('/nationality',nationality);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

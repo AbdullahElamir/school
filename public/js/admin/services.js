@@ -218,6 +218,9 @@
       },
       'sendMessageAllParentInSchoole' : function(message){
         return $http.put('/parent/message/all',message);
+      },
+      'getAllNationality' : function(){
+        return $http.get('/student/nationality');
       }
     };
     return self;
@@ -548,6 +551,15 @@
         },
         'editEvaluation': function(id,obj){
           return $http.put('/evaluation/edit/'+id,obj);
+        }
+      };
+      return self;
+    }]);
+    
+    app.service('NationalityServ',['$http',function($http){
+      var self = {
+        'getAllNationality' : function(){
+        return $http.get('/nationality/Nat');
         }
       };
       return self;
