@@ -63,6 +63,13 @@
       {_id:3,name:"ثانوي"}
     ];
 
+    ClassServ.getAllClasses().then(function(response){
+      $scope.getAllClasses = response.data;
+      $scope.getAllClasses.splice(0,0,{name:"لايوجد",_id:null});
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+
     ClassServ.getClassById($stateParams).then(function(response) {
       $scope.editClassForm = response.data;
     }, function(response) {
@@ -94,6 +101,14 @@
       {_id:2,name:"اعدادي"},
       {_id:3,name:"ثانوي"}
     ];
+
+    ClassServ.getAllClasses().then(function(response){
+      $scope.getAllClasses = response.data;
+      $scope.getAllClasses.splice(0,0,{name:"لايوجد",_id:null});
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+
     $scope.schools=[];
     $scope.newInOutcomeTypesForm={};
     AdminServ.getuser().then(function(response){
@@ -104,7 +119,7 @@
         },function(response){
           console.log("Somthing went wrong");
         });
-      } 
+      }
     },function(response){
       console.log("Somthing went wrong");
     });

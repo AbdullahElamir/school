@@ -13,14 +13,14 @@ module.exports = {
       }
     });
   },
-  
+
   //getAllClassesBySearchValue
   getAllClassesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
     model.Class.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Class.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,classes){
+      model.Class.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).populate("prevClass").exec(function(err,classes){
         if(!err){
           cb({result:classes,count:count});
         }else{
@@ -37,7 +37,7 @@ module.exports = {
     page-=1;
     limit = parseInt(limit);
     model.Class.count({school:school,status:1},function(err, count){
-      model.Class.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,classes){
+      model.Class.find({school:school,status:1}).limit(limit).skip(page*limit).populate("prevClass").exec(function(err,classes){
         if(!err){
           cb({result:classes,count:count});
         }else{
@@ -58,7 +58,7 @@ module.exports = {
       }
     });
   },
-  
+
   getClassName :function(school,name,cb){
     model.Class.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, classes){
       if(!err){
@@ -81,6 +81,7 @@ module.exports = {
 
   addClass : function(body,cb){
     var obj =body;
+    console.log(body);
     class1 = new model.Class(obj);
     class1.save(function(err,result){
       if (!err) {
@@ -103,22 +104,16 @@ module.exports = {
       }
     });
   },
-  
+
   deleteClass : function(id,cb){
-    model.Study.find({customer:id}, function(err,resul) {
-      if(resul.length > 0){
-        cb(1);
-      } else{
-        model.Class.remove({_id:id}, function(err,result) {
-          if (!err) {
-            cb(2);
-          } else {
-            // console.log(err);
-            cb(3);
-          }
-        });
-      }
-    });
+    model.Class.remove({_id:id}, function(err,result) {
+        if (!err) {
+          cb(2);
+        } else {
+          // console.log(err);
+          cb(3);
+        }
+      });
   }
-  
+
 };

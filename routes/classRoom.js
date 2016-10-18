@@ -48,16 +48,17 @@ router.put('/students/:id', userHelpers.isLogin ,function(req, res) {
   //update students of this classroom
   classRoomMgr.getClassRoomId(req.params.id,function(Croom){
     if(req.body.length==0){
-      res.send(true);  
+      res.send(true);
     }
     for(var t in req.body){
       stuproMgr.addStudentsProcess(Croom,req.body[t],function(pro){
-      }); 
+      });
+      studentMgr.updateStudent(req.body[t]._id,{class:Croom.class},function(st){}); //set this class as student's current class
       if(t == req.body.length-1){
-        res.send(true);  
-      } 
+        res.send(true);
+      }
     }
-  });  
+  });
 });
 
 // delete room by id

@@ -285,7 +285,7 @@
 
    $scope.preLogin = function (student){
      $scope.idStudent = student._id;
-     $scope.login = {email:student.email,password:""};
+     $scope.login = {stdEmail:student.stdEmail,password:""};
    };
 
    $scope.saveLogin = function(idStudent){
@@ -306,7 +306,14 @@
 
   }]);
   //editStudentCtl
-  app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,StudentServ,$state,toastr){
+  app.controller('editStudentCtl',['$scope','$stateParams','ParentServ','ClassServ','StudentServ','$state','toastr',function($scope,$stateParams,ParentServ,ClassServ,StudentServ,$state,toastr){
+
+    ClassServ.getAllClasses().then(function(response){
+      $scope.getAllClasses = response.data;
+      $scope.getAllClasses.splice(0,0,{name:"لايوجد",_id:null});
+    },function(response){
+      console.log("Somthing went wrong");
+    });
 
     ParentServ.getAllParents().then(function(response){
       $scope.getAllParents = response.data;
@@ -337,7 +344,7 @@
       });
     };
   }]);
-  app.controller('newStudentCtl',['$scope','StudentServ','ParentServ','$state','toastr','AdminServ','SchoolServ',function($scope,StudentServ,ParentServ,$state,toastr,AdminServ,SchoolServ){
+  app.controller('newStudentCtl',['$scope','StudentServ','ParentServ','ClassServ','$state','toastr','AdminServ','SchoolServ',function($scope,StudentServ,ParentServ,ClassServ,$state,toastr,AdminServ,SchoolServ){
     $scope.schools=[];
     $scope.newInOutcomeTypesForm={};
     AdminServ.getuser().then(function(response){
@@ -349,6 +356,12 @@
           console.log("Somthing went wrong");
         });
       }
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+    ClassServ.getAllClasses().then(function(response){
+      $scope.getAllClasses = response.data;
+      $scope.getAllClasses.splice(0,0,{name:"لايوجد",_id:null});
     },function(response){
       console.log("Somthing went wrong");
     });

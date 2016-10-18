@@ -109,6 +109,13 @@
               <input class="form-control input-sm" type="text" ng-model="editStudentForm.birth_place" placeholder="مكان الميلاد" required>
             </div>
           </div>
+          <div class="col-xs-12 col-md-3">
+            <div class="form-group">
+              <label class="control-label">الصف الحالى</label>
+              <select class="form-control input-sm" ng-model="editStudentForm.clas" ng-options="clas._id as clas.name for clas in getAllClasses" >
+              </select>
+            </div>
+          </div>
         </div>
         <hr>
         <div class="row">

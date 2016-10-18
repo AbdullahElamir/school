@@ -9,7 +9,7 @@ var Student = new Schema({
   birth_day:{ type:Date, required: [true, 'birth date required']},
   startDate:{ type:Date, required: [true, 'start date required']},
   finishDate:{ type:Date },
-  email: { type: String,default:""},
+  stdEmail: { type: String,default:""},
   password: { type: String,default:""},
   birth_place:{ type:String, default:"NULL"},
   parent:[{ type: Schema.Types.ObjectId , ref: 'Parent'}],
@@ -21,6 +21,7 @@ var Student = new Schema({
   closestPersonPhone:{type: String,default:"NULL"},
   bloodType:{type: String,default:"NULL"},
   school:{type: Schema.Types.ObjectId , ref: 'School'},
+  clas:{type: Schema.Types.ObjectId , ref: 'Class'},
   status: {type: Number, default:1},
   active: {type: Number, default:1}
 });
