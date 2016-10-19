@@ -102,7 +102,7 @@
         },function(response){
           console.log("Somthing went wrong");
         });
-      } 
+      }
     },function(response){
       console.log("Somthing went wrong");
     });

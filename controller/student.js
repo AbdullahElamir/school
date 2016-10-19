@@ -23,7 +23,7 @@ module.exports = {
     page-=1;
     limit = parseInt(limit);
     model.Student.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school},function(err, count){
-      model.Student.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).exec(function(err,students){
+      model.Student.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).populate("clas").exec(function(err,students){
         if(!err){
           cb({result:students,count:count});
         }else{
@@ -40,7 +40,7 @@ module.exports = {
     page-=1;
     limit = parseInt(limit);
     model.Student.count({school:school,status:1},function(err, count){
-      model.Student.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,students){
+      model.Student.find({school:school,status:1}).limit(limit).skip(page*limit).populate("clas").exec(function(err,students){
         if(!err){
           cb({result:students,count:count});
         }else{
@@ -87,6 +87,7 @@ module.exports = {
     obj.startDate = new Date();
     student = new model.Student(obj);
     student.save(function(err,result){
+      console.log(err);
       if (!err) {
         cb(true);
       } else {

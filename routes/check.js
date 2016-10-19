@@ -17,9 +17,26 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
     res.send(check);
   });
 });
+
+// add new student's check
+router.post('/student', userHelpers.isLogin ,function(req, res) {
+  CheckMgr.setStudentCheck(req.body,function(result){
+    res.send(result);
+  });
+});
 // get check by status
 router.get('/status/:status',userHelpers.isLogin , function(req, res) {
   CheckMgr.getAllCheckStatus(req.params.status,function(check){
+    res.send(check);
+  });
+});
+router.get('/student/:id',userHelpers.isLogin , function(req, res) {
+  CheckMgr.getAllCheckStudent(req.params.id,function(check){
+    res.send(check);
+  });
+});
+router.put('/student/edit/:id', userHelpers.isLogin ,function(req, res) {
+  CheckMgr.updateStudentCheck(req.params.id,req.body,function(check){
     res.send(check);
   });
 });
@@ -30,6 +47,11 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   });
 });
 
+router.delete('/student/delete/:id',userHelpers.isLogin , function(req, res) {
+  CheckMgr.deleteStudentCheck(req.params.id,function(check){
+    res.send({result:check});
+  });
+});
 // delete check by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   CheckMgr.deleteCheck(req.params.id,function(check){

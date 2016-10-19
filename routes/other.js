@@ -10,6 +10,12 @@ router.get('/all', userHelpers.isLogin ,function(req, res) {
     res.send(other);
   });
 });
+// add new student's medical other stuff
+router.post('/student', userHelpers.isLogin ,function(req, res) {
+  OtherMgr.setStudentOther(req.body,function(result){
+    res.send(result);
+  });
+});
 
 // add new other
 router.post('/add', userHelpers.isLogin ,function(req, res) {
@@ -23,6 +29,16 @@ router.get('/status/:status',userHelpers.isLogin , function(req, res) {
     res.send(other);
   });
 });
+router.get('/student/:id',userHelpers.isLogin , function(req, res) {
+  OtherMgr.getAllOtherStudent(req.params.id,function(other){
+    res.send(other);
+  });
+});
+router.put('/student/edit/:id', userHelpers.isLogin ,function(req, res) {
+  OtherMgr.updateStudentOther(req.params.id,req.body,function(other){
+    res.send(other);
+  });
+});
 // edit other by id
 router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   OtherMgr.updateOther(req.params.id,req.body,function(other){
@@ -30,6 +46,11 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   });
 });
 
+router.delete('/student/delete/:id',userHelpers.isLogin , function(req, res) {
+  OtherMgr.deleteStudentOther(req.params.id,function(other){
+    res.send({result:other});
+  });
+});
 // delete other by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   OtherMgr.deleteOther(req.params.id,function(other){

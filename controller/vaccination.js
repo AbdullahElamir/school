@@ -13,6 +13,27 @@ module.exports = {
       }
     });
   },
+  getAllVaccinationStudent :function(id,cb){
+    model.StdVaccination.find({status:1,student:id}).populate("vaccination").exec(function(err, Vaccinations){
+      if(!err){
+        cb(Vaccinations);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+  setStudentVaccination :function(StdVaccination,cb){
+    var stdV = new model.StdVaccination(StdVaccination);
+    stdV.save(function(err,result){
+      if (!err) {
+        cb(true);
+      } else {
+        // console.log(err);
+        cb(false);
+      }
+    });
+  },
 
   //getAllVaccinationsBySearchValue
   getAllVaccinationsBySearchValue :function(searchValue,limit,page,cb){
@@ -83,9 +104,31 @@ module.exports = {
       }
     });
   },
+  updateStudentVaccination : function(id,body,cb){
+    var obj = body;
+    model.StdVaccination.findOneAndUpdate({_id:id}, obj, function(err,result) {
+      if (!err) {
+        cb(true);
+      } else {
+        // console.log(err);
+        cb(false);
+      }
+    });
+  },
 
   deleteVaccination : function(id,cb){
     model.Vaccination.remove({_id:id}, function(err,result) {
+      if (!err) {
+        cb(2);
+      } else {
+        // console.log(err);
+        cb(3);
+      }
+    });
+  },
+
+  deleteStudentVaccination : function(id,cb){
+    model.StdVaccination.remove({_id:id}, function(err,result) {
       if (!err) {
         cb(2);
       } else {

@@ -13,6 +13,28 @@ module.exports = {
       }
     });
   },
+  getAllCheckStudent :function(id,cb){
+    model.StdCheck.find({status:1,student:id}).populate("check").exec(function(err, Checks){
+      if(!err){
+        cb(Checks);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+  setStudentCheck :function(StdCheck,cb){
+
+    var stdCk = new model.StdCheck(StdCheck);
+    stdCk.save(function(err,result){
+      if (!err) {
+        cb(true);
+      } else {
+        // console.log(err);
+        cb(false);
+      }
+    });
+  },
 
   //getAllChecksBySearchValue
   getAllChecksBySearchValue :function(searchValue,limit,page,cb){
@@ -83,9 +105,31 @@ module.exports = {
       }
     });
   },
+  updateStudentCheck : function(id,body,cb){
+    var obj = body;
+    model.StdCheck.findOneAndUpdate({_id:id}, obj, function(err,result) {
+      if (!err) {
+        cb(true);
+      } else {
+        // console.log(err);
+        cb(false);
+      }
+    });
+  },
 
   deleteCheck : function(id,cb){
     model.Check.remove({_id:id}, function(err,result) {
+      if (!err) {
+        cb(2);
+      } else {
+        // console.log(err);
+        cb(3);
+      }
+    });
+  },
+
+  deleteStudentCheck : function(id,cb){
+    model.StdCheck.remove({_id:id}, function(err,result) {
       if (!err) {
         cb(2);
       } else {

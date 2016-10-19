@@ -218,6 +218,9 @@
       },
       'sendMessageAllParentInSchoole' : function(message){
         return $http.put('/parent/message/all',message);
+      },
+      'getAllNationality' : function(){
+        return $http.get('/student/nationality');
       }
     };
     return self;
@@ -565,111 +568,6 @@
     return self;
   }]);
 
-  app.service('EvaluationServ',['$http',function($http){
-    var self = {
-      'addEvaluation': function(evaluation){
-        return $http.post('/evaluation/add',evaluation);
-      },
-      'getEvaluations': function(limit,page){
-        return $http.get('/evaluation/'+limit+'/'+page);
-      },
-      'getEvaluationsBySearchValue' : function(searchValue,limit,page){
-        return $http.get('/evaluation/'+searchValue+'/'+limit+'/'+page);
-      },
-      'deleteEvaluation': function(id){
-        return $http.delete('/evaluation/delete/'+id);
-      },
-      'getEvaluationById': function(id){
-        return $http.get('/evaluation/'+id.id);
-      },
-      'editEvaluation': function(id,obj){
-        return $http.put('/evaluation/edit/'+id,obj);
-      }
-    };
-    return self;
-  }]);
-
-  app.service('ChecksServ',['$http',function($http){
-    var self = {
-      'addChecks': function(year){
-        return $http.post('/checks/add',year);
-      },
-      'getChecks': function(limit,page){
-        return $http.get('/checks/'+limit+'/'+page);
-      },
-      'getChecksBySearchValue': function(searchValue,limit,page){
-        return $http.get('/checks/'+searchValue+'/'+limit+'/'+page);
-      },
-      'deleteChecks': function(id){
-        return $http.delete('/checks/delete/'+id);
-      },
-      'getChecksById': function(id){
-        return $http.get('/checks/'+id.id);
-      },
-      'editChecks': function(id,obj){
-        return $http.put('/checks/edit/'+id,obj);
-      },
-      'getAllChecks': function(){
-        return $http.get('/checks/all');
-      }
-    };
-    return self;
-  }]);
-
-  app.service('VaccinationsServ',['$http',function($http){
-    var self = {
-      'addVaccinations': function(year){
-        return $http.post('/vaccinations/add',year);
-      },
-      'getVaccinations': function(limit,page){
-        return $http.get('/vaccinations/'+limit+'/'+page);
-      },
-      'getVaccinationsBySearchValue': function(searchValue,limit,page){
-        return $http.get('/vaccinations/'+searchValue+'/'+limit+'/'+page);
-      },
-      'deleteVaccinations': function(id){
-        return $http.delete('/vaccinations/delete/'+id);
-      },
-      'getVaccinationsById': function(id){
-        return $http.get('/vaccinations/'+id.id);
-      },
-      'editVaccinations': function(id,obj){
-        return $http.put('/vaccinations/edit/'+id,obj);
-      },
-      'getAllVaccinations': function(){
-        return $http.get('/vaccinations/all');
-      }
-    };
-    return self;
-  }]);
-
-  app.service('OthersServ',['$http',function($http){
-    var self = {
-      'addOthers': function(year){
-        return $http.post('/others/add',year);
-      },
-      'getOthers': function(limit,page){
-        return $http.get('/others/'+limit+'/'+page);
-      },
-      'getOthersBySearchValue': function(searchValue,limit,page){
-        return $http.get('/others/'+searchValue+'/'+limit+'/'+page);
-      },
-      'deleteOthers': function(id){
-        return $http.delete('/others/delete/'+id);
-      },
-      'getOthersById': function(id){
-        return $http.get('/others/'+id.id);
-      },
-      'editOthers': function(id,obj){
-        return $http.put('/others/edit/'+id,obj);
-      },
-      'getAllOthers': function(){
-        return $http.get('/others/all');
-      }
-    };
-    return self;
-  }]);
-
   app.service('CommitteeServ',['$http',function($http){
     var self = {
       'getCommitteesBySearchValueAndYear' : function(searchValue,year,limit,page){
@@ -687,4 +585,154 @@
     return self;
   }]);
 
+  app.service('EvaluationServ',['$http',function($http){
+      var self = {
+        'addEvaluation': function(evaluation){
+          return $http.post('/evaluation/add',evaluation);
+        },
+        'getEvaluations': function(limit,page){
+          return $http.get('/evaluation/'+limit+'/'+page);
+        },
+        'getEvaluationsBySearchValue' : function(searchValue,limit,page){
+          return $http.get('/evaluation/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteEvaluation': function(id){
+          return $http.delete('/evaluation/delete/'+id);
+        },
+        'getEvaluationById': function(id){
+          return $http.get('/evaluation/'+id.id);
+        },
+        'editEvaluation': function(id,obj){
+          return $http.put('/evaluation/edit/'+id,obj);
+        }
+      };
+      return self;
+    }]);
+    
+    app.service('NationalityServ',['$http',function($http){
+      var self = {
+        'getAllNationality' : function(){
+        return $http.get('/nationality/Nat');
+        }
+      };
+      return self;
+    }]);
+
+    app.service('ChecksServ',['$http',function($http){
+      var self = {
+        'addChecks': function(year){
+          return $http.post('/checks/add',year);
+        },
+        'getChecks': function(limit,page){
+          return $http.get('/checks/'+limit+'/'+page);
+        },
+        'getChecksBySearchValue': function(searchValue,limit,page){
+          return $http.get('/checks/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteChecks': function(id){
+          return $http.delete('/checks/delete/'+id);
+        },
+        'getChecksById': function(id){
+          return $http.get('/checks/'+id.id);
+        },
+        'editChecks': function(id,obj){
+          return $http.put('/checks/edit/'+id,obj);
+        },
+        'getAllChecks': function(){
+          return $http.get('/checks/all');
+        },
+        'getStudentChecks':function(id){
+          return $http.get('/checks/student/'+id);
+        },
+        'setStudentCheck': function(check){
+          return $http.post('/checks/student',check);
+        },
+        'editStd': function(id,obj){
+          return $http.put('/checks/student/edit/'+id,obj);
+        },
+        'deleteStd': function(id){
+          return $http.delete('/checks/student/delete/'+id);
+        }
+      };
+      return self;
+    }]);
+
+    app.service('VaccinationsServ',['$http',function($http){
+      var self = {
+        'addVaccinations': function(year){
+          return $http.post('/vaccinations/add',year);
+        },
+        'getVaccinations': function(limit,page){
+          return $http.get('/vaccinations/'+limit+'/'+page);
+        },
+        'getVaccinationsBySearchValue': function(searchValue,limit,page){
+          return $http.get('/vaccinations/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteVaccinations': function(id){
+          return $http.delete('/vaccinations/delete/'+id);
+        },
+        'getVaccinationsById': function(id){
+          return $http.get('/vaccinations/'+id.id);
+        },
+        'editVaccinations': function(id,obj){
+          return $http.put('/vaccinations/edit/'+id,obj);
+        },
+        'getAllVaccinations': function(){
+          return $http.get('/vaccinations/all');
+        },
+        'getStudentVaccinations':function(id){
+          return $http.get('/vaccinations/student/'+id);
+        },
+        'setStudentVaccination': function(vaccination){
+          return $http.post('/vaccinations/student',vaccination);
+        },
+        'editStd': function(id,obj){
+          return $http.put('/vaccinations/student/edit/'+id,obj);
+        },
+        'deleteStd': function(id){
+          return $http.delete('/vaccinations/student/delete/'+id);
+        }
+      };
+      return self;
+    }]);
+
+    app.service('OthersServ',['$http',function($http){
+      var self = {
+        'addOthers': function(year){
+          return $http.post('/others/add',year);
+        },
+        'getOthers': function(limit,page){
+          return $http.get('/others/'+limit+'/'+page);
+        },
+        'getOthersBySearchValue': function(searchValue,limit,page){
+          return $http.get('/others/'+searchValue+'/'+limit+'/'+page);
+        },
+        'deleteOthers': function(id){
+          return $http.delete('/others/delete/'+id);
+        },
+        'getOthersById': function(id){
+          return $http.get('/others/'+id.id);
+        },
+        'editOthers': function(id,obj){
+          return $http.put('/others/edit/'+id,obj);
+        },
+        'getAllOthers': function(){
+          return $http.get('/others/all');
+        },
+        'getStudentOthers':function(id){
+          return $http.get('/others/student/'+id);
+        },
+        'setStudentOther': function(other){
+          return $http.post('/others/student',other);
+        },
+        'editStd': function(id,obj){
+          return $http.put('/others/student/edit/'+id,obj);
+        },
+        'deleteStd': function(id){
+          return $http.delete('/others/student/delete/'+id);
+        }
+      };
+      return self;
+    }]);
+  
 }());
