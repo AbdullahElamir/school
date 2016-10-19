@@ -344,8 +344,11 @@
       'getStudentsByYearAndClassRoom': function(classRoom,year){
         return $http.get('/paid/students/'+classRoom+'/'+year);
       },
-      'payAmount': function(StuPro,amount){
-        return $http.put('/paid/student/'+StuPro,amount);
+      'payFee': function(StuPro,fee){
+        return $http.put('/paid/student/'+StuPro,fee);
+      },
+      'getFeesByClassRoom': function(classRoom){
+        return $http.get('/fees/classRoom/'+classRoom);
       }
     };
     return self;

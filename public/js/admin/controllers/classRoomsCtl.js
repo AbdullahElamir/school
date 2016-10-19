@@ -241,22 +241,53 @@
     $scope.year = $stateParams.year;
     $scope.paid={};
     PaymentServ.getClassFeesByYear($stateParams.id,$stateParams.year).then(function(result){
-      console.log(result.data.amount);
       $scope.total=result.data.amount;
     });
     PaymentServ.getStudentsByYearAndClassRoom($stateParams.id,$stateParams.year).then(function(students){
       $scope.students=students.data;
     });
+    PaymentServ.getFeesByClassRoom($stateParams.id).then(function(response){
+      $scope.fees=response.data;
+    });
 
-    $scope.payBefore = function(StuProId){
-      $scope.idStudent = StuProId;
+    $scope.payBefore = function(StuPro){
+      $scope.amount = "";
+      $scope.idStudent = StuPro;
+      for(var f in $scope.fees){
+        $scope.fees[f].paidUp = 0;
+        for(var p in StuPro.paid){
+          if($scope.fees[f]._id == StuPro.paid[p].fees){
+            $scope.fees[f].paidUp = StuPro.paid[p].paidUp;
+          }
+        }
+      }
     };
-    $scope.pay = function(StuProId,amount){
-      PaymentServ.payAmount(StuProId,$scope.paid).then(function(result){
+    $scope.select=function(selectedFee){
+      $scope.amount = "";
+      $scope.paid = false;
+      var StuPro = $scope.idStudent;
+      if(StuPro.paid){
+        for(var p in StuPro.paid){
+          if(selectedFee == StuPro.paid[p].fees){
+            $scope.paid = true;
+            $scope.amount = StuPro.paid[p].paidUp;
+          }
+        }
+      }
+      if($scope.fees){
+        for(var f in $scope.fees){
+          if(selectedFee == $scope.fees[f]._id){
+            $scope.amount = $scope.fees[f].amount;
+            break;
+          }
+        }
+      }
+    };
+    $scope.pay = function(StuPro,fee){
+      PaymentServ.payFee(StuPro._id,fee).then(function(result){
         if(result.data){
-          $scope.paid.paidUp = "";
-          $scope.paid.name = "";
-          $scope.paid.description = "";
+          StuPro.paid.push(fee);
+          StuPro.paidUp+=$scope.amount;
           $('#myModal').modal('hide');
           toastr.success('تمت عملية الدفع');
         }else{

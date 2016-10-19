@@ -14,7 +14,7 @@ module.exports = {
       }
     });
   },
-  
+
   //getAllClassRoomesBySearchValue
   getAllClassRoomesBySearchValue :function(searchValue,limit,page,cb){
     page = parseInt(page);
@@ -58,7 +58,7 @@ module.exports = {
       }
     });
   },
-  
+
   getClassRoomName :function(name,cb){
     model.ClassRoom.find({$and:[{status:1},{name :{ $regex:name, $options: 'i' }}]}).populate('room').limit(30).exec(function(err, ClassRoomes){
       if(!err){
@@ -104,7 +104,7 @@ module.exports = {
     });
   },
   getAllClassesAndClassRoomsByYear : function(school,year,cb){
-    model.ClassRoom.find({year:year,school:school}).populate('class')
+    model.ClassRoom.find({year:year}).populate('class')
     .exec(function(err, ClassRoomes){
       if(!err){
         cb(ClassRoomes);
@@ -140,5 +140,5 @@ module.exports = {
   //     }
   //   });
   // }
-  
+
 };

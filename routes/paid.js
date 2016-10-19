@@ -34,7 +34,6 @@ router.put('/fees/:fees', userHelpers.isLogin ,function(req, res) {
 });
 //pay for a specific stuPro
 router.put('/student/:stupro', userHelpers.isLogin ,function(req, res) {
-  //##########################
   req.body.StuPro=req.params.stupro;
   req.body.receip_num="123";
   paid.addPaid(req.body,function(paid){
@@ -73,13 +72,14 @@ router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res)
       paid.getPaidStuPro(stupro.stu[i]._id,function(paid){
         var obj={
           _id:stupro.stu[i]._id,
-          name:stupro.stu[i].student.name
+          name:stupro.stu[i].student.name,
+          paid:paid
         };
-        if(paid){
-          obj.paidUp= paid[0].paidUp;
-
-        }else{
-          obj.paidUp= 0;
+        obj.paidUp= 0;
+        if(paid && paid.length>0){
+          for(var p in paid){
+            obj.paidUp+=paid[p].paidUp;
+          }
         }
         _student.push(obj);
         if(i == stupro.stu.length-1){

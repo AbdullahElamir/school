@@ -13,7 +13,7 @@ module.exports = {
       }
     });
   },
-  
+
   //getAllPaidesBySearchValue
   getAllPaidesBySearchValue :function(searchValue,limit,page,cb){
     page = parseInt(page);
@@ -130,15 +130,7 @@ module.exports = {
     });
   },
   getPaidStuPro:function(id,cb){
-    model.Paid.aggregate([
-      {$match:{StuPro:id}},
-      { 
-        $group: {
-          _id: '$StuPro',
-          paidUp: { $sum :'$paidUp'}
-        }
-      }
-    ], function (err, results) {
+    model.Paid.find({StuPro:id}, function (err, results) {
       if (!err) {
           cb(results);
       } else {
@@ -158,5 +150,5 @@ module.exports = {
   //     }
   //   });
   // }
-  
+
 };
