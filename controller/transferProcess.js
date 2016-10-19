@@ -3,7 +3,7 @@ var transferProcess = null;
 
 module.exports = {
   
-  //getAllStudentsBySearchValue
+  //getTransferProcessesBySearchValueAndYear
   "getTransferProcessesBySearchValueAndYear" :function(searchValue,year,limit,page,cb){
     page = parseInt(page);
     page-=1;
