@@ -1127,6 +1127,21 @@
           });
         }]
       }
+    }).state('committees',{
+      url: '/committees',
+      templateUrl: 'admin/pages/committee/committees',
+      data: {pageTitle: 'اللجان الدراسية'},
+      controller: 'CommitteesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/committeesCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);
