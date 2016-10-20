@@ -124,6 +124,127 @@
 
   }]);
 
+  app.controller('examsCommitteeCtl',['$scope','toastr','ExamCommitteeServ','$stateParams','ClassServ',function($scope,toastr,ExamCommitteeServ,$stateParams,ClassServ){
+    
+    $scope.pageSize = 10;
+    $scope.currentPage = 1;
+    $scope.total = 0;
+    
+    $scope.init = function (searchValue) {
+      if( searchValue === 'undefined' || !searchValue ){
+        searchValue = "";
+      }
+      
+      searchValue = encodeURIComponent(searchValue);
+      ExamCommitteeServ.getExamsCommitteeBySearchValue($stateParams.id,searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
+        $scope.AllExamsCommittee = response.data.result;
+        $scope.total = response.data.count;
+      }, function(response){
+        console.log("Something went wrong");
+      });
+    };
+    
+    $scope.init("");
+    $scope.getExamsCommitteeBySearchValue = function (searchValue){
+      $scope.currentPage = 1;
+      $scope.init(searchValue);
+    };
+    
+    $scope.addExamCommitteeForm = {};
+    $scope.addExamCommitteeForm.year = $stateParams.year;
+    $scope.addExamCommitteeForm.students = [];
+    $scope.addExamCommitteeForm.proctors = [];
+    $scope.addExamCommitteeForm.committee = $stateParams.id;
+    
+    ClassServ.getClassesByYear($stateParams.year).then(function(response) {
+      $scope.AllClasses = response.data;
+    }, function(response){
+      console.log("Something went wrong");
+    });
+    
+    $scope.getExamsByClass = function(){
+      ClassServ.getExamsByYearAndClass($stateParams.year,$scope.addExamCommitteeForm.clas).then(function(response) {
+        $scope.AllExams = response.data;
+      }, function(response){
+        console.log("Something went wrong");
+      });
+    };
+    
+    $scope.addExamCommittee = function(){
+      ExamCommitteeServ.addExamCommittee($scope.addExamCommitteeForm).then(function(response) {
+        if(response.data.status == 1){
+          toastr.success("تم الحفظ بنجاح");
+          $scope.addExamCommitteeForm = {};
+          $scope.addExamCommitteeForm.year = $stateParams.year;
+          $scope.addExamCommitteeForm.students = [];
+          $scope.addExamCommitteeForm.proctors = [];
+          $scope.addExamCommitteeForm.committee = $stateParams.id;
+          $scope.AllExams = [];
+          $('#myAddExamCommitteeModal').modal('hide');
+          $scope.init($scope.searchValue);
+        } else if ( response.data.status == 2 ) {
+          toastr.error('عملية الإضافة فشلت، حاول مرة أخرى !');
+        }
+      }, function(response) {
+        console.log("Something went wrong");
+      });
+    };
+
+    /*
+    $scope.editCommittee = function(co) {
+      console.log(co);
+      $scope.editCommitteeForm = JSON.parse(JSON.stringify(co));
+      $scope.editCommitteeForm.room = co.room._id;
+      console.log($scope.editCommitteeForm);
+    };
+
+    $scope.updateCommittee = function(){
+      CommitteeServ.editCommittee($scope.editCommitteeForm._id,$scope.editCommitteeForm).then(function(response) {
+        if(response.data){
+          toastr.info("تم التعديل بنجاح");
+          $scope.editCommitteeForm = {};
+          $('#myEditCommitteeModal').modal('hide');
+          $scope.init($scope.searchValue,$scope.year);
+        } else {
+          toastr.error('عملية الحفظ فشلت، حاول مرة أخرى !');
+        }
+      }, function(response) {
+        console.log("Something went wrong");
+      });
+    };
+    */
+    
+    $scope.deleteExamCommittee = function(id) {
+      $scope.idExamCommittee = id;
+    };
+    
+    $scope.deleteConfirm = function(id) {
+      ExamCommitteeServ.deleteExamCommittee(id).then(function(response){
+        if(response.data.result == 1){
+          toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليه');
+        } else if (response.data.result == 2){
+          $('#myModal').modal('hide');
+          toastr.success('تم الحذف بنجاح');
+          $scope.init($scope.searchValue);
+          var count = $scope.AllExamsCommittee.filter(function(obj){return obj._id != id;}).length;
+          if( $scope.currentPage > 1 && count == 0 ){
+            $scope.currentPage -= 1;
+            $scope.init($scope.searchValue);
+          }
+        } else if (response.data.result == 3){
+          toastr.error('عفوا يوجد خطأ الرجاء المحاولة لاحقا');
+        }
+      },function(response){
+        console.log("Somthing went wrong");
+      });
+    };
+   
+  }]);
+
+  
+
+
+
 
 /*
   app.controller('transferProcessesStudentsCtl',['$scope','TransferProcessServ','toastr','$stateParams','ClassServ','StudentServ',function($scope,TransferProcessServ,toastr,$stateParams,ClassServ,StudentServ){

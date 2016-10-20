@@ -93,6 +93,12 @@
       },
       'getAllClassesByYear': function(year){
         return $http.get('/class/classRooms/'+year);
+      },
+      'getClassesByYear': function(id){
+        return $http.get('/class/classes/'+id);
+      },
+      'getExamsByYearAndClass': function(year,clas){
+        return $http.get('/class/exams/'+year+'/'+clas);
       }
     };
     return self;
@@ -580,6 +586,23 @@
         return $http.put('/committee/edit/'+id,co);
       },'getCommittee' : function(id){
         return $http.get('/committee/get/'+id);
+      }
+    };
+    return self;
+  }]);
+
+  app.service('ExamCommitteeServ',['$http',function($http){
+    var self = {
+      'getExamsCommitteeBySearchValue' : function(id_of_committee,searchValue,limit,page){
+        return $http.get('/committee/examCommittee/'+searchValue+'/'+limit+'/'+page+'/'+id_of_committee);
+      },'addExamCommittee': function(eco){
+        return $http.post('/committee/examCommittee/add',eco);
+      },'deleteExamCommittee': function(id){
+        return $http.delete('/committee/examCommittee/delete/'+id);
+      },'editExamCommittee' : function(id,eco){
+        return $http.put('/committee/examCommittee/edit/'+id,eco);
+      },'getExamCommittee' : function(id){
+        return $http.get('/committee/examCommittee/get/'+id);
       }
     };
     return self;

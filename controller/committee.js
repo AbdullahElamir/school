@@ -1,5 +1,5 @@
 var model = require("../models");
-var committee = null;
+var committee = null , examCommittees = null;
 
 module.exports = {
 
@@ -56,7 +56,7 @@ module.exports = {
     }
   } , 
   
-  //getAllDriversCount
+  //getAllCommitteesCount
   getAllCommitteesCount :function(limit,page,cb){
     page = parseInt(page);
     page-=1;
@@ -138,7 +138,124 @@ module.exports = {
   },
 
   deleteCommittee : function(id,cb){
-    model.Committee.remove({_id:id}, function(err,result) {
+    model.Committee.remove({_id:id}, function(err,result1) {
+      if (!err) {
+        model.ExamCommittee.remove({committee:id}, function(err,result2) {
+          if (!err) {
+            cb(2);
+          } else {
+            // console.log(err);
+            cb(3);
+          }
+        });
+      } else {
+        // console.log(err);
+        cb(3);
+      }
+    });
+  },
+  
+  getAllExamCommittees :function(cb){
+    model.ExamCommittee.find({},function(err, examCommittees){
+      if(!err){
+        cb(examCommittees);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+
+  //getExamCommitteesBySearchValue
+  getExamCommitteesBySearchValue :function(id_of_committee,searchValue,limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.ExamCommittee.count({notes:new RegExp(searchValue, 'i'),committee:id_of_committee})
+    .populate('clas')
+    .populate('exam')
+    .exec(function(err,count){
+      model.ExamCommittee.find({notes:new RegExp(searchValue, 'i'),committee:id_of_committee})
+      .limit(limit)
+      .skip(page*limit)
+      .populate('clas')
+      .populate('exam')
+      .exec(function(err,examCommittees){
+        if(!err){
+          cb({result:examCommittees,count:count});
+        }else{
+          //console.log(err);
+          cb(null);
+        }
+      });
+    });
+  } , 
+  
+  //getAllExamCommitteesCount
+  getAllExamCommitteesCount :function(limit,page,cb){
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.ExamCommittee.count({},function(err, count){
+      model.ExamCommittee.find({}).limit(limit).skip(page*limit).exec(function(err,examCommittees){
+        if(!err){
+          cb({result:examCommittees,count:count});
+        }else{
+          // console.log(err);
+          cb(null);
+        }
+      });
+    });
+  },
+
+  getAllExamCommitteesStatus:function(status,cb){
+    model.ExamCommittee.find({status:status},function(err, examCommittees){
+      if(!err){
+        cb(examCommittees);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+
+  getExamCommitteeId :function(id,cb){
+    model.ExamCommittee.findOne({_id : id}, function(err, custom){
+      if(!err){
+        cb(custom);
+      }else{
+        cb(null);
+      }
+    });
+  },
+
+  addExamCommittee : function(body,cb){
+    var obj = body;
+    examCommittees = new model.ExamCommittee(obj);
+    examCommittees.save(function(err,result){
+      if (!err) {
+        cb({status : 1});
+      } else {
+        // console.log(err);
+        cb({status : 2});
+      }
+    });
+  },
+
+  updateExamCommittee : function(id,body,cb){
+    var obj = body;
+    model.ExamCommittee.findOneAndUpdate({_id:id}, obj, function(err,result) {
+      if (!err) {
+        cb(true);
+      } else {
+        // console.log(err);
+        cb(false);
+      }
+    });
+  },
+
+  deleteExamCommittee : function(id,cb){
+    model.ExamCommittee.remove({_id:id}, function(err,result) {
       if (!err) {
         cb(2);
       } else {
@@ -147,5 +264,5 @@ module.exports = {
       }
     });
   }
-  
+
 };

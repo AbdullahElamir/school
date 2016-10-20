@@ -14,6 +14,50 @@ module.exports = {
     });
   },
 
+  getClassesByYear :function(school,year_id,cb){
+    model.Year.findOne({school:school , _id:year_id}, function(err, year_obj){
+      if(!err){
+        model.System.findOne({school:school , _id:year_obj.system})
+        .populate('sys_class.id_class')
+        .exec(function(err, system){
+          if(!err){
+            var classes = [];
+            if( system.sys_class.length == 0 ){
+              cb([]);
+              return;
+            }
+            for(var i in system.sys_class ){
+              classes.push(system.sys_class[i].id_class);
+              if( i == system.sys_class.length-1 ){
+                cb(classes);
+              }
+            }
+          }else{
+            cb(null);
+          }
+        });
+      }else{
+        cb(null);
+      }
+    });
+  },
+  
+  getExamsByYearAndClass : function(school,year,clas,cb){
+    model.Year.findOne({school:school , _id:year}, function(err, year_obj){
+      if(!err){
+        model.Exam.find({school:school , system:year_obj.system ,clas:clas,type : { $ne: 2 } },function(err, exams){
+          if(!err){
+            cb(exams);
+          } else {
+            cb(null);
+          }
+        });
+      } else {
+        cb(null);
+      }
+    });
+  },
+  
   //getAllClassesBySearchValue
   getAllClassesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);

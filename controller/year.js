@@ -113,6 +113,7 @@ module.exports = {
       }
     });
   },
+  
   activate: function (school,id,cb) {
     model.Year.update({school:school}, {active:0},{multi: true}, function(err,result) {
       if (!err) {
@@ -130,6 +131,7 @@ module.exports = {
       }
     });
   },
+  
   disActivate: function (id,cb) {
     model.Year.update({_id:id}, {active:0},{multi: true}, function(err,result) {
       if (!err) {

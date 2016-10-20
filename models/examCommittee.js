@@ -7,7 +7,6 @@ var ExamCommittee = new Schema({
   exam: {type: Schema.Types.ObjectId , ref: 'Exam'},
   day: {type: String, default: ""},
   time: {type: String, default: ""},
-  year: {type: Schema.Types.ObjectId , ref: 'Year'},
   committee: {type: Schema.Types.ObjectId , ref: 'Committee'},
   notes: {type: String, default: ""},
   students:{

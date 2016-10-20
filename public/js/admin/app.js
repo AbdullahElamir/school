@@ -1142,6 +1142,21 @@
           });
         }]
       }
+    }).state('examCommittee',{
+      url: '/examsCommittee/:id/:year',
+      templateUrl: 'admin/pages/committee/examsCommittee',
+      data: {pageTitle: 'لجنة الإمتحانات'},
+      controller: 'examsCommitteeCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/committeesCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);
