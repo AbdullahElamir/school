@@ -1157,6 +1157,21 @@
           });
         }]
       }
+    }).state('examCommitteeStudents',{
+      url: '/examCommitteeStudents/:idExamCommittee/:year',
+      templateUrl: 'admin/pages/committee/examCommitteeStudents',
+      data: {pageTitle: 'طلاب لجنة الإمتحان'},
+      controller: 'examCommitteeStudentsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/committeesCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);
