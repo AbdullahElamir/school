@@ -13,7 +13,17 @@ module.exports = {
       }
     });
   },
-  
+  getFeesByClassRoom :function(classRoom,cb){
+    model.Fees.find({status:1,year:classRoom.year,id_class:classRoom.class}).exec(function(err, Feeses){
+      if(!err){
+        cb(Feeses);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+
   //getAllFeesesBySearchValue
   getAllFeesesBySearchValue :function(searchValue,limit,page,cb){
     page = parseInt(page);
@@ -58,7 +68,7 @@ module.exports = {
       }
     });
   },
-  
+
   getFeesName :function(name,cb){
     model.Fees.find({name :{ $regex:name, $options: 'i' }}).populate('id_class').limit(30).exec(function(err, Feeses){
       if(!err){
@@ -106,7 +116,7 @@ module.exports = {
   getSumFees :function(id,cb){
     model.Fees.aggregate([
       {$match:{id_class:id}},
-      { 
+      {
         $group: {
           _id: '$id_class',
           sum: { $sum :'$amount'}
@@ -131,5 +141,5 @@ module.exports = {
   //     }
   //   });
   // }
-  
+
 };

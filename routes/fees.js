@@ -65,6 +65,13 @@ router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res)
     res.send(feess);
   });
 });
+router.get('/classRoom/:classRoom',userHelpers.isLogin , function(req, res){
+  classRoomMgr.getClassRoomId(req.params.classRoom,function(Croom){
+    feesMgr.getFeesByClassRoom(Croom,function(fees){
+      res.send(fees);
+    });
+  });
+});
 // get all fees
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res){
   feesMgr.getAllFeesCount(req.params.limit,req.params.page,function(fees){
