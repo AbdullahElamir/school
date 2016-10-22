@@ -99,6 +99,9 @@
       },
       'getExamsByYearAndClass': function(year,clas){
         return $http.get('/class/exams/'+year+'/'+clas);
+      },
+      'getAllClassRoomsByClassAndYear': function(clas,year){
+        return $http.get('/class/classRooms/'+clas+'/'+year);
       }
     };
     return self;
@@ -307,6 +310,9 @@
       },
       'sendMessageToParentsOfClassRoom': function(idClassRoom,message){
         return $http.put('/classRoom/message/'+idClassRoom,message);
+      },
+      'getStudentsByClassRoomAndYearAndSearchValue': function(classRoom,year,text){
+        return $http.get('/classRoom/students/'+classRoom+'/'+year+'/'+text);
       }
     };
     return self;

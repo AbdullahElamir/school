@@ -1158,7 +1158,7 @@
         }]
       }
     }).state('examCommitteeStudents',{
-      url: '/examCommitteeStudents/:idExamCommittee/:year',
+      url: '/examCommitteeStudents/:clas/:c_id/:idExamCommittee/:year',
       templateUrl: 'admin/pages/committee/examCommitteeStudents',
       data: {pageTitle: 'طلاب لجنة الإمتحان'},
       controller: 'examCommitteeStudentsCtl',

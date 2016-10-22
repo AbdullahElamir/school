@@ -15,9 +15,17 @@ module.exports = {
     });
   },
 
-
-
-
+  getStuProcessesByClassRoomAndYear: function(classRoom,year,cb){
+    model.Stupro.find({classRoom:classRoom,year:year},'_id',function(err, stupros){
+      if(!err){
+        console.log(stupros);
+        cb(stupros);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
 
   //getAllCustomerCount
   getAllStuprosCount :function(limit,page,cb){

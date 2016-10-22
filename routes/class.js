@@ -6,6 +6,13 @@ var userHelpers = require("../controller/userHelpers");
 var user={};
 user.school="5801f550e4de0e349c8714c2";
     
+// get all class rooms by class and year
+router.get('/classRooms/:clas/:year',userHelpers.isLogin , function(req, res) {
+  classMgr.getAllClassRoomsByClassAndYear(req.params.clas,req.params.year,function(classRooms){
+    res.send(classRooms);
+  });
+});
+ 
 //get all classes by year
 router.get('/classes/:id', userHelpers.isLogin ,function(req, res) {
   classMgr.getClassesByYear(user.school,req.params.id,function(classes){

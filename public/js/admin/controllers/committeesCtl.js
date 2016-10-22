@@ -149,6 +149,7 @@
     };
     
     $scope.year = $stateParams.year;
+    $scope.cid = $stateParams.id;
     
     $scope.addExamCommitteeForm = {};
     $scope.addExamCommitteeForm.year = $stateParams.year;
@@ -250,14 +251,11 @@
    
   }]);
 
-
-
-  app.controller('examCommitteeStudentsCtl',['$scope','toastr','$stateParams','ClassServ','StudentServ',function($scope,toastr,$stateParams,ClassServ,StudentServ){
+  app.controller('examCommitteeStudentsCtl',['$scope','toastr','$stateParams','ClassServ','StudentServ','ExamCommitteeServ','ClassRoomsServ',function($scope,toastr,$stateParams,ClassServ,StudentServ,ExamCommitteeServ,ClassRoomsServ){
     
-    console.log("$stateParams.idExamCommittee : " + $stateParams.idExamCommittee );
-    console.log("$stateParams.year : " + $stateParams.year );
-    /*
-    $scope.allStudents = 1;
+    $scope.c_id = $stateParams.c_id;
+    $scope.year = $stateParams.year;
+    
     $scope.filteredStudents = [];
     $scope.students = [];
     $scope.searchText = "";
@@ -286,9 +284,6 @@
             actives.eq(fst).clone().appendTo('.list-left ul');
             $scope.students.push(std);
           }
-          if( fst == actives.length-1 && $scope.students.length > 0){
-            $('#cost').show();
-          }
         }
         $("#studentsLength").html($scope.students.length + "");
       } else if ($button.hasClass('move-right')) {
@@ -304,9 +299,6 @@
           }
           if(index != -1){
             $scope.students.splice(index,1);
-          }
-          if( fst == actives.length-1 && $scope.students.length <= 0){
-            $('#cost').hide();
           }
         }
         $("#studentsLength").html($scope.students.length + "");
@@ -337,43 +329,24 @@
       }).hide();
     });
 
-    ClassServ.getAllClasses().then(function(response){
-      $scope.getAllClasses = response.data;
+    ClassServ.getAllClassRoomsByClassAndYear($stateParams.clas,$stateParams.year).then(function(response){
+      $scope.getAllClassRoomsByClassAndYear = response.data;
     },function(response){
       console.log("Somthing went wrong");
     });
 
-    TransferProcessServ.getTransferProcess($stateParams.id).then(function(response){
-      $scope.transferProcess = response.data;
-    }, function(response){
-      console.log("Something went wrong");
-    });
-
-    TransferProcessServ.getStudents($stateParams.id).then(function(response){
-      $scope.students=response.data;
+    ExamCommitteeServ.getExamCommittee($stateParams.idExamCommittee).then(function(response){
+      $scope.students=response.data.students;
       $("#studentsLength").html($scope.students.length + "");
       for(var st in $scope.students){
         $('.list-left ul').append("<li style='cursor: pointer;' x='"+JSON.stringify($scope.students[st])+"' class='list-group-item'>"+$scope.students[st].name+"</li>");
-      }
-      if( $scope.students.length > 0){
-        $('#cost').show();
-      } else if( $scope.students.length <= 0){
-        $('#cost').hide();
       }
     },function(response) {
       console.log("Something went wrong");
     });
 
     $scope.save = function(){
-      
-      for(var i in $scope.students){
-        if( $scope.students[i].amount == undefined ){
-          toastr.error('يجب تحديد التكلفة لجميع الطلاب !');
-          return;
-        }
-      }
-      
-      TransferProcessServ.updateStudents($stateParams.id,$scope.students).then(function(response){
+      /*TransferProcessServ.updateStudents($stateParams.id,$scope.students).then(function(response){
         if(response.data.status == 1){
           toastr.info('تم التعديل بنجاح');
           $("#back").click();
@@ -382,38 +355,18 @@
         }
       }, function(response){
         console.log("Something went wrong");
-      });
+      });*/
     };
 
-    $scope.reset = function(){
-      $scope._class = "";
-      $scope.filteredStudents = [];
-    };
-    
     $scope.getStudents = function(text){
-      if($scope.allStudents == 1){
-        StudentServ.getStudentsBySearchValue(text,50,1).then(function(response){
-          $scope.filteredStudents=response.data.result;
-        });
-      }else{
-        if($scope._class){
-          StudentServ.getStudentsByLastYearClass(text,$scope._class).then(function(response){
-            $scope.filteredStudents=response.data;
-          });
-        }
-      }
-    };
-    $scope.getStudents("");
-      
-    $scope.openDialogCostStudents = function(){
-      $scope.allStudentsDialog = JSON.parse(JSON.stringify($scope.students));
+      //text = encodeURIComponent(text);
+      ClassRoomsServ.getStudentsByClassRoomAndYearAndSearchValue($scope.classRoom,$stateParams.year,text).then(function(response){
+        $scope.filteredStudents=response.data;
+        },function(response){
+        console.log("Somthing went wrong");
+      });
     };
       
-    $scope.saveCostDialogTransferProcessStudents = function(){
-      $scope.students = JSON.parse(JSON.stringify($scope.allStudentsDialog));
-      $('#myModal').modal('hide');
-    };
-      */
   }]);
 
 

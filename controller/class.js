@@ -92,6 +92,17 @@ module.exports = {
     });
   },
 
+  getAllClassRoomsByClassAndYear : function(clas,year,cb){
+    model.ClassRoom.find({class:clas,year:year},function(err, classRooms){
+      if(!err){
+        cb(classRooms);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+
   getAllClassStatus:function(school,status,cb){
     model.Class.find({school:school,status:status},function(err, classes){
       if(!err){

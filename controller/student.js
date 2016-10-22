@@ -15,6 +15,16 @@ module.exports = {
     });
   },
 
+  getStudentByStuProcessAndSearchValue : function(stuProsIds,text,cb){
+    model.Student.find( {name : new RegExp(text, 'i') , _id : {$in : stuProsIds} },function(err,students){
+      if(!err){
+        cb(students);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
 
 
   //getAllStudentsBySearchValue

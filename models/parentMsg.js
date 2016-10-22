@@ -10,4 +10,4 @@ var ParentMsg = new Schema({
 });
 
 ParentMsg.plugin(timestamps);
-exports.ParentMsg = mongoose.model('ParentMsg', ParentMsg); 
+exports.ParentMsg = mongoose.model('ParentMsg', ParentMsg);
