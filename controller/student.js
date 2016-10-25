@@ -16,7 +16,7 @@ module.exports = {
   },
 
   getStudentByStuProcessAndSearchValue : function(stuProsIds,text,cb){
-    model.Student.find( {name : new RegExp(text, 'i') , _id : {$in : stuProsIds} },function(err,students){
+    model.Student.find({_id : { $in : stuProsIds } , $or :[{name:new RegExp(text, 'i')},{nid:new RegExp(text, 'i')}] },function(err,students){
       if(!err){
         cb(students);
       }else{

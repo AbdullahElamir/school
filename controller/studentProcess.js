@@ -16,10 +16,19 @@ module.exports = {
   },
 
   getStuProcessesByClassRoomAndYear: function(classRoom,year,cb){
-    model.Stupro.find({classRoom:classRoom,year:year},'_id',function(err, stupros){
+    model.Stupro.find({classRoom:classRoom,year:year},'student',function(err, stupros){
       if(!err){
-        console.log(stupros);
-        cb(stupros);
+        var array = [];
+        if( stupros.length == 0){
+          cb([]);
+          return;
+        }
+        for( var i in stupros ){
+          array.push(stupros[i].student);
+          if( i == stupros.length -1 ){
+            cb(array);
+          }
+        }
       }else{
         // console.log(err);
         cb(null);

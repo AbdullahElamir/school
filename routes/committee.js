@@ -3,6 +3,12 @@ var router = express.Router();
 var CommitteeMgr = require("../controller/committee");
 var userHelpers = require("../controller/userHelpers");
 
+router.put('/examCommittee/students/:id',userHelpers.isLogin , function(req, res) {
+  CommitteeMgr.updateStudents(req.params.id,req.body,function(re){
+    res.send(re);
+  });
+});
+
 // GET Committee By id
 router.get('/get/:id',userHelpers.isLogin , function(req, res) {
   CommitteeMgr.getCommitteeId(req.params.id,function(committee){
@@ -12,7 +18,7 @@ router.get('/get/:id',userHelpers.isLogin , function(req, res) {
  
 // GET Exam Committee By id
 router.get('/examCommittee/get/:id',userHelpers.isLogin , function(req, res) {
-  CommitteeMgr.getExamCommitteeId(req.params.id,function(examCommittee){
+  CommitteeMgr.getFullStudentsExamCommitteeId(req.params.id,function(examCommittee){
     res.send(examCommittee);
   });
 });

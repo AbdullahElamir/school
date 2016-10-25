@@ -10,9 +10,17 @@ var userHelpers = require("../controller/userHelpers");
 var user={};
 user.school="5801f550e4de0e349c8714c2";
 
-router.get('/students/:classRoom/:year/:text', userHelpers.isLogin ,function(req, res) {
+router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,function(req, res) {
   stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
     studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,req.params.text,function(students){
+      res.send(students);
+    });
+  });
+});
+
+router.get('/student/:classRoom/:year/', userHelpers.isLogin ,function(req, res) {
+  stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
+    studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,"",function(students){
       res.send(students);
     });
   });

@@ -312,7 +312,7 @@
         return $http.put('/classRoom/message/'+idClassRoom,message);
       },
       'getStudentsByClassRoomAndYearAndSearchValue': function(classRoom,year,text){
-        return $http.get('/classRoom/students/'+classRoom+'/'+year+'/'+text);
+        return $http.get('/classRoom/student/'+classRoom+'/'+year+'/'+text);
       }
     };
     return self;
@@ -612,6 +612,8 @@
         return $http.put('/committee/examCommittee/edit/'+id,eco);
       },'getExamCommittee' : function(id){
         return $http.get('/committee/examCommittee/get/'+id);
+      },'updateStudents' : function(id,students){
+        return $http.put('/committee/examCommittee/students/'+id,students);
       }
     };
     return self;

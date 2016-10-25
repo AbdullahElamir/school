@@ -336,7 +336,7 @@
     });
 
     ExamCommitteeServ.getExamCommittee($stateParams.idExamCommittee).then(function(response){
-      $scope.students=response.data.students;
+      $scope.students=response.data;
       $("#studentsLength").html($scope.students.length + "");
       for(var st in $scope.students){
         $('.list-left ul').append("<li style='cursor: pointer;' x='"+JSON.stringify($scope.students[st])+"' class='list-group-item'>"+$scope.students[st].name+"</li>");
@@ -346,7 +346,7 @@
     });
 
     $scope.save = function(){
-      /*TransferProcessServ.updateStudents($stateParams.id,$scope.students).then(function(response){
+      ExamCommitteeServ.updateStudents($stateParams.idExamCommittee,$scope.students).then(function(response){
         if(response.data.status == 1){
           toastr.info('تم التعديل بنجاح');
           $("#back").click();
@@ -355,11 +355,11 @@
         }
       }, function(response){
         console.log("Something went wrong");
-      });*/
+      });
     };
 
     $scope.getStudents = function(text){
-      //text = encodeURIComponent(text);
+      text = encodeURIComponent(text);
       ClassRoomsServ.getStudentsByClassRoomAndYearAndSearchValue($scope.classRoom,$stateParams.year,text).then(function(response){
         $scope.filteredStudents=response.data;
         },function(response){
