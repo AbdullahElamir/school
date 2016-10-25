@@ -75,10 +75,23 @@
   }]);
 
 
-  app.controller('newBusCtl',['$scope','BusServ','toastr',function($scope,BusServ,toastr){
+  app.controller('newBusCtl',['$scope','BusServ','toastr','AdminServ','SchoolServ',function($scope,BusServ,toastr,AdminServ,SchoolServ){
 
     $scope.newBusForm={};
-
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newBus = function(){
       BusServ.addBus($scope.newBusForm).then(function(response){
         if(response.data){

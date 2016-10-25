@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var Evaluation = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
   description: {type: String,default:"NULL"},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

@@ -5,7 +5,8 @@ var stuproMgr = require("../controller/studentProcess");
 var classRoomMgr = require("../controller/classRoom");
 var feesMgr = require("../controller/fees");
 var userHelpers = require("../controller/userHelpers");
-
+var user={};
+    user.school="5801f550e4de0e349c8714c2";
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   paid.getAllPaid(function(paids){
     res.send(paids);
@@ -33,7 +34,6 @@ router.put('/fees/:fees', userHelpers.isLogin ,function(req, res) {
 });
 //pay for a specific stuPro
 router.put('/student/:stupro', userHelpers.isLogin ,function(req, res) {
-  //##########################
   req.body.StuPro=req.params.stupro;
   req.body.receip_num="123";
   paid.addPaid(req.body,function(paid){
@@ -66,36 +66,28 @@ router.get('/status/:status',userHelpers.isLogin , function(req, res) {
 
 // get paids and stupro
 router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
-  //####################
-  
-      stuproMgr.getStudentClassRoomYear(req.params.classRoom,req.params.year,function(stupro){
-        var _student=[];
-        for (i in stupro.stu){
-          paid.getPaidStuPro(stupro.stu[i]._id,function(paid){
-          var obj={
-            _id:stupro.stu[i]._id,
-            name:stupro.stu[i].student.name
-          };
-          if(paid){
-            obj.paidUp= paid[0].paidUp;
-
-          }else{
-            obj.paidUp= 0;
+  stuproMgr.getStudentClassRoomYear(req.params.classRoom,req.params.year,function(stupro){
+    var _student=[];
+    for (var i in stupro.stu){
+      paid.getPaidStuPro(stupro.stu[i]._id,function(paid){
+        var obj={
+          _id:stupro.stu[i]._id,
+          name:stupro.stu[i].student.name,
+          paid:paid
+        };
+        obj.paidUp= 0;
+        if(paid && paid.length>0){
+          for(var p in paid){
+            obj.paidUp+=paid[p].paidUp;
           }
-          _student.push(obj);
-          if(i == stupro.stu.length-1){
-            res.send(_student);
-          }
-        });
+        }
+        _student.push(obj);
+        if(i == stupro.stu.length-1){
+          res.send(_student);
         }
       });
-
-  // res.send([
-  //   {_id:1456165,name:"abdo",paidUp:500},
-  //   {_id:8745175,name:"ahmed",paidUp:300},
-  //   {_id:5214565,name:"taha",paidUp:1000},
-  //   {_id:5489665,name:"salem",paidUp:0}
-  // ]);
+    }
+  });
 });
 
 //get all paids By Search Value

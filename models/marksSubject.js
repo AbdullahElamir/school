@@ -7,6 +7,7 @@ var MarksSub = new Schema({
   subject:{ type: Schema.Types.ObjectId , ref: 'Subject'},
   system:{ type: Schema.Types.ObjectId , ref: 'System'},
   mark: {type: Number , required:true},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

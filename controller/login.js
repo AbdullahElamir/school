@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 var model = require("../models");
 var teacherMgr = require("./teacher");
 var parentMgr = require("./parent");
+var adminMgr = require("./admin");
+
 
 //read the passport api docs if you wanna know what this does
 passport.use(new LocalStrategy(
@@ -49,7 +51,7 @@ module.exports = function (router) {
         if (err) { return next(err); }
         if (user.level==1){
           return res.send({login: true,admin:1 });
-        }else if (user.level==1){
+        }else if (user.level==2){
           return res.send({login: true,admin:2 });  
         }else{
           return res.send({login: true,admin:3 });
@@ -68,35 +70,49 @@ module.exports = function (router) {
 }
 
 function findById(id, fn) {
-  teacherMgr.getTeacherId(id,function(user){
+  adminMgr.getAdminId(id,function(user){
     if (user) {
       fn(null, user);
     } else {
-      parentMgr.getParentId(id,function(user){
+      teacherMgr.getTeacherId(id,function(user){
         if (user) {
           fn(null, user);
         } else {
-          fn(new Error('User ' + id + ' does not exist'));
+          parentMgr.getParentId(id,function(user){
+            if (user) {
+              fn(null, user);
+            } else {
+              fn(new Error('User ' + id + ' does not exist'));
+            }
+          });
         }
       });
     }
   });
+  
 
 }
 
 function findByUserName(username, fn) {
-  teacherMgr.getTeacherEmail(username,function(user){
-    if (user) {
+  adminMgr.getAdminEmail(username,function(user){
+    if(user){
       fn(null, user);
-    } else {
-      parentMgr.getParentEmail(username,function(user){
+    }else{
+      teacherMgr.getTeacherEmail(username,function(user){
         if (user) {
           fn(null, user);
         } else {
-          return fn(null, null);
+          parentMgr.getParentEmail(username,function(user){
+            if (user) {
+              fn(null, user);
+            } else {
+              return fn(null, null);
+            }
+          });
         }
       });
     }
+    
   });
 
 }
@@ -106,7 +122,7 @@ function authenticate(user, userEnteredPassword, callback) {
   // created hash when hashed with the same salt.
   easyPbkdf2.verify(user.salt, user.password, userEnteredPassword, function (err, valid) {
     if (err) {
-      console.log(err);
+      // console.log(err);
     } else {
       callback(valid);
     }

@@ -4,12 +4,12 @@ var parent = null;
 
 module.exports = {
 
-  getAllParent :function(cb){
-    model.Parent.find({},function(err, parents){
+  getAllParent :function(school,cb){
+    model.Parent.find({school:school,status:1},function(err, parents){
       if(!err){
         cb(parents);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -17,16 +17,16 @@ module.exports = {
   
   
   //getAllParentsBySearchValue
-  getAllParentsBySearchValue :function(searchValue,limit,page,cb){
+  getAllParentsBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Parent.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]},function(err, count){
-      model.Parent.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,parents){
+    model.Parent.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school},function(err, count){
+      model.Parent.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).exec(function(err,parents){
         if(!err){
           cb({result:parents,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -35,35 +35,35 @@ module.exports = {
 
 
   //getAllParentCount
-  getAllParentCount :function(limit,page,cb){
+  getAllParentCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Parent.count({},function(err, count){
-      model.Parent.find({}).limit(limit).skip(page*limit).exec(function(err,parents){
+    model.Parent.count({school:school,status:1},function(err, count){
+      model.Parent.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,parents){
         if(!err){
           cb({result:parents,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
     });
   },
 
-  getAllParentStatus:function(status,cb){
-    model.Parent.find({status:status},function(err, parents){
+  getAllParentStatus:function(school,status,cb){
+    model.Parent.find({status:status,school:school},function(err, parents){
       if(!err){
         cb(parents);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
   
-  getParentName :function(name,cb){
-    model.Parent.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, parents){
+  getParentName :function(school,name,cb){
+    model.Parent.find({name :{ $regex:name, $options: 'i' },school:school}).limit(30).exec(function(err, parents){
       if(!err){
         cb(parents);
       }else{
@@ -91,7 +91,7 @@ module.exports = {
     });
   },
   addParent : function(body,cb){
-    obj = body;
+    var obj = body;
     userHelpers.Hash(body.password,function(hash){
       obj.password=hash.password;
       obj.salt=hash.salt;
@@ -100,7 +100,7 @@ module.exports = {
         if (!err) {
           cb(true);
         } else {
-          console.log(err);
+          // console.log(err);
           cb(false);
         }
       });
@@ -108,12 +108,12 @@ module.exports = {
   },
 
   updateParent : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Parent.findOneAndUpdate({_id:id}, obj, function(err,parents) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -124,7 +124,7 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(3);
       }
     });

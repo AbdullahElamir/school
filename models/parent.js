@@ -11,10 +11,11 @@ var Parent = new Schema({
   phone2: {type: String,default:"NULL"},
   /*last_login:{ type:Date, required: [true, 'start date required']},*/
   gender:{type: String,default:"NULL"},
-  nationality:{type: String,default:"NULL"},
+  nationality:{type: Number},
   job:{type: String,default:"NULL"},
   workPlace:{type: String,default:"NULL"},
   level:{type:Number,default:3},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

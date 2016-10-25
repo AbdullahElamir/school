@@ -63,6 +63,13 @@
       {_id:3,name:"ثانوي"}
     ];
 
+    ClassServ.getAllClasses().then(function(response){
+      $scope.getAllClasses = response.data;
+      $scope.getAllClasses.splice(0,0,{name:"لايوجد",_id:null});
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+
     ClassServ.getClassById($stateParams).then(function(response) {
       $scope.editClassForm = response.data;
     }, function(response) {
@@ -86,7 +93,7 @@
 
   }]);
 
-  app.controller('newClassCtl',['$scope','ClassServ','$state','toastr',function($scope,ClassServ,$state,toastr){
+  app.controller('newClassCtl',['$scope','ClassServ','$state','toastr','AdminServ','SchoolServ',function($scope,ClassServ,$state,toastr,AdminServ,SchoolServ){
 
     $scope.newClassForm={};
     $scope.allTypes = [
@@ -95,6 +102,27 @@
       {_id:3,name:"ثانوي"}
     ];
 
+    ClassServ.getAllClasses().then(function(response){
+      $scope.getAllClasses = response.data;
+      $scope.getAllClasses.splice(0,0,{name:"لايوجد",_id:null});
+    },function(response){
+      console.log("Somthing went wrong");
+    });
+
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      }
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newClass = function(){
       ClassServ.addClass($scope.newClassForm).then(function(response){
         if(response.data){

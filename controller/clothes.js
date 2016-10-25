@@ -1,29 +1,29 @@
 var model = require('../models');
-
+var Clothes1 = null;
 module.exports = {
 
-  getAllClothes :function(cb){
-    model.Clothes.find({}, function(err, Clothes){
+  getAllClothes :function(school,cb){
+    model.Clothes.find({school:school,status:1}, function(err, Clothes){
       if(!err){
         cb(Clothes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
   
   //getAllClothesBySearchValue
-  getAllClothesBySearchValue :function(searchValue,limit,page,cb){
+  getAllClothesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Clothes.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Clothes.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Clothes){
+    model.Clothes.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
+      model.Clothes.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Clothes){
         if(!err){
           cb({result:Clothes,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -31,35 +31,35 @@ module.exports = {
   },
 
   //getAllClothesCount
-  getAllClothesCount :function(limit,page,cb){
+  getAllClothesCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Clothes.count({},function(err, count){
-      model.Clothes.find({}).limit(limit).skip(page*limit).exec(function(err,Clothes){
+    model.Clothes.count({school:school,status:1},function(err, count){
+      model.Clothes.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,Clothes){
         if(!err){
           cb({result:Clothes,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
     });
   },
 
-  getAllClothesStatus:function(status,cb){
-    model.Clothes.find({status:status},function(err, clothes){
+  getAllClothesStatus:function(school,status,cb){
+    model.Clothes.find({school:school,status:status},function(err, clothes){
       if(!err){
         cb(clothes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
   
   getClothesName :function(name,cb){
-    model.Clothes.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, name){
+    model.Clothes.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, name){
       if(!err){
         cb(name);
       }else{
@@ -85,19 +85,19 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateClothes : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Clothes.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -108,7 +108,7 @@ module.exports = {
       if (!err) {
         cb({result : 2});
       } else {
-        console.log(err);
+        // console.log(err);
         cb({result : 3});
       }
     });

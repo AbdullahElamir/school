@@ -3,28 +3,28 @@ var Year1 = null;
 
 module.exports = {
 
-  getAllYear :function(cb){
-    model.Year.find({}, function(err, Years){
+  getAllYear :function(school,cb){
+    model.Year.find({school:school,status:1}, function(err, Years){
       if(!err){
         cb(Years);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
 
   //getAllYearsBySearchValue
-  getAllYearsBySearchValue :function(searchValue,limit,page,cb){
+  getAllYearsBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Year.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Year.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Years){
+    model.Year.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
+      model.Year.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Years){
         if(!err){
           cb({result:Years,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -32,35 +32,35 @@ module.exports = {
   },
 
   //getAllYearsCount
-  getAllYearCount :function(limit,page,cb){
+  getAllYearCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Year.count({},function(err, count){
-      model.Year.find({}).limit(limit).skip(page*limit).exec(function(err,Years){
+    model.Year.count({school:school,status:1},function(err, count){
+      model.Year.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,Years){
         if(!err){
           cb({result:Years,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
     });
   },
 
-  getAllYearStatus:function(status,cb){
-    model.Year.find({status:status},function(err, classes){
+  getAllYearStatus:function(school,status,cb){
+    model.Year.find({school:school,status:status},function(err, classes){
       if(!err){
         cb(classes);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
 
-  getYearName :function(name,cb){
-    model.Year.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
+  getYearName :function(school,name,cb){
+    model.Year.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -86,26 +86,26 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateYear : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Year.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
-  getActiveYear : function(cb){
-    model.Year.findOne({active : 1}, function(err, custom){
+  getActiveYear : function(school,cb){
+    model.Year.findOne({active : 1,school:school}, function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -113,29 +113,31 @@ module.exports = {
       }
     });
   },
-  activate: function (id,cb) {
-    model.Year.update({}, {active:0},{multi: true}, function(err,result) {
+  
+  activate: function (school,id,cb) {
+    model.Year.update({school:school}, {active:0},{multi: true}, function(err,result) {
       if (!err) {
         model.Year.findOneAndUpdate({_id:id}, {active:1}, function(err,result) {
           if (!err) {
             cb(true);
           } else {
-            console.log(err);
+            // console.log(err);
             cb(false);
           }
         });
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
+  
   disActivate: function (id,cb) {
     model.Year.update({_id:id}, {active:0},{multi: true}, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
@@ -150,7 +152,7 @@ module.exports = {
           if (!err) {
             cb(2);
           } else {
-            console.log(err);
+            // console.log(err);
             cb(3);
           }
         });

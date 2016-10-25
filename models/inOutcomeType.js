@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var InOutcomeType = new Schema({
   name: { type: String, index: true, default: "Unknown"},
   description: { type: String, default: "NULL"},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });
 

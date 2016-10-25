@@ -1,13 +1,27 @@
-<div class="portlet light bordered">
-  <div class="portlet-title">
-    <div class="caption caption-md">
-      <i class="icon-settings font-green"></i>
-      <span class="caption-subject font-green bold">اضافة دخل</span>
+<form novalidate ng-submit="newIncome()">
+  <div class="portlet light bordered">
+    <div class="portlet-title">
+      <div class="row">
+        <div class="col-xs-6 col-md-6">
+          <div class="caption caption-md">
+            <i class="icon-settings font-green"></i>
+            <span class="caption-subject font-green bold">اضافة دخل</span>
+          </div>
+        </div>
+        <div class="col-xs-6 col-md-3 col-md-offset-3 text-left" ng-if="superAdminStatus">
+          <div class="form-group">
+            <select class="form-control input-sm" ng-model="school"  required>
+              <option value="" disabled selected>الرجاء اختر المدرسة</option>
+              <option ng-repeat="sc in schools" value="{{sc._id}}">
+                {{sc.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-md-12 col-lg-12">
-      <form novalidate ng-submit="newIncome()">
+    <div class="row">
+      <div class="col-xs-12 col-md-12 col-lg-12">  
         <div class="row">
           <div class="col-xs-12 col-md-4">
             <div class="form-group">
@@ -39,7 +53,7 @@
             <a class="btn btn-success btn-sm btn-block" ui-sref="incomes"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
-</div>
+</form>

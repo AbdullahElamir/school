@@ -59,7 +59,9 @@
     $scope.types = [
       {value:1,name:"متوسط"},
       {value:2,name:"مجموع متوسطات"},
-      {value:3,name:"اساسي"}
+      {value:3,name:"اساسي"},
+      {value:4,name:"نهائي"},
+      {value:5,name:"دور ثاني"}
     ];
 
     $scope.editSystem = function(){
@@ -316,7 +318,21 @@
 
   }]);
 
-  app.controller('newSystemCtl',['$scope','ClassServ','SubjectServ','SystemServ','$state','toastr','$compile',function($scope,ClassServ,SubjectServ,SystemServ,$state,toastr,$compile){
+  app.controller('newSystemCtl',['$scope','ClassServ','SubjectServ','SystemServ','$state','toastr','$compile','AdminServ','SchoolServ',function($scope,ClassServ,SubjectServ,SystemServ,$state,toastr,$compile,AdminServ,SchoolServ){
+    $scope.superAdminStatus;
+    $scope.schools=[];
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      }
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     ClassServ.getAllClasses().then(function(response){
       $scope.getAllClasses = response.data;
     },function(response){
@@ -326,7 +342,9 @@
     $scope.types = [
       {value:1,name:"متوسط"},
       {value:2,name:"مجموع متوسطات"},
-      {value:3,name:"اساسي"}
+      {value:3,name:"اساسي"},
+      {value:4,name:"نهائي"},
+      {value:5,name:"دور ثاني"}
     ];
 
     //save submit

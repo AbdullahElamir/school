@@ -3,28 +3,72 @@ var class1 = null;
 
 module.exports = {
 
-  getAllClass :function(cb){
-    model.Class.find({}, function(err, classes){
+  getAllClass :function(school,cb){
+    model.Class.find({school:school,status:1}, function(err, classes){
       if(!err){
         cb(classes);
       }else{
-        console.log(err);
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+
+  getClassesByYear :function(school,year_id,cb){
+    model.Year.findOne({school:school , _id:year_id}, function(err, year_obj){
+      if(!err){
+        model.System.findOne({school:school , _id:year_obj.system})
+        .populate('sys_class.id_class')
+        .exec(function(err, system){
+          if(!err){
+            var classes = [];
+            if( system.sys_class.length == 0 ){
+              cb([]);
+              return;
+            }
+            for(var i in system.sys_class ){
+              classes.push(system.sys_class[i].id_class);
+              if( i == system.sys_class.length-1 ){
+                cb(classes);
+              }
+            }
+          }else{
+            cb(null);
+          }
+        });
+      }else{
+        cb(null);
+      }
+    });
+  },
+  
+  getExamsByYearAndClass : function(school,year,clas,cb){
+    model.Year.findOne({school:school , _id:year}, function(err, year_obj){
+      if(!err){
+        model.Exam.find({school:school , system:year_obj.system ,clas:clas,type : { $ne: 2 } },function(err, exams){
+          if(!err){
+            cb(exams);
+          } else {
+            cb(null);
+          }
+        });
+      } else {
         cb(null);
       }
     });
   },
   
   //getAllClassesBySearchValue
-  getAllClassesBySearchValue :function(searchValue,limit,page,cb){
+  getAllClassesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Class.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Class.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,classes){
+    model.Class.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
+      model.Class.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).populate("prevClass").exec(function(err,classes){
         if(!err){
           cb({result:classes,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -32,35 +76,46 @@ module.exports = {
   },
 
   //getAllCustomerCount
-  getAllClassCount :function(limit,page,cb){
+  getAllClassCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Class.count({},function(err, count){
-      model.Class.find({}).limit(limit).skip(page*limit).exec(function(err,classes){
+    model.Class.count({school:school,status:1},function(err, count){
+      model.Class.find({school:school,status:1}).limit(limit).skip(page*limit).populate("prevClass").exec(function(err,classes){
         if(!err){
           cb({result:classes,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
     });
   },
 
-  getAllClassStatus:function(status,cb){
-    model.Class.find({status:status},function(err, classes){
+  getAllClassRoomsByClassAndYear : function(clas,year,cb){
+    model.ClassRoom.find({class:clas,year:year},function(err, classRooms){
       if(!err){
-        cb(classes);
+        cb(classRooms);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
-  
-  getClassName :function(name,cb){
-    model.Class.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, classes){
+
+  getAllClassStatus:function(school,status,cb){
+    model.Class.find({school:school,status:status},function(err, classes){
+      if(!err){
+        cb(classes);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+
+  getClassName :function(school,name,cb){
+    model.Class.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, classes){
       if(!err){
         cb(classes);
       }else{
@@ -81,44 +136,39 @@ module.exports = {
 
   addClass : function(body,cb){
     var obj =body;
+    console.log(body);
     class1 = new model.Class(obj);
     class1.save(function(err,result){
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateClass : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Class.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
-  
+
   deleteClass : function(id,cb){
-    model.Study.find({customer:id}, function(err,resul) {
-      if(resul.length > 0){
-        cb(1);
-      } else{
-        model.Class.remove({_id:id}, function(err,result) {
-          if (!err) {
-            cb(2);
-          } else {
-            console.log(err);
-            cb(3);
-          }
-        });
-      }
-    });
+    model.Class.remove({_id:id}, function(err,result) {
+        if (!err) {
+          cb(2);
+        } else {
+          // console.log(err);
+          cb(3);
+        }
+      });
   }
-  
+
 };

@@ -8,12 +8,12 @@ module.exports = {
       if(!err){
         cb(Paides);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
   },
-  
+
   //getAllPaidesBySearchValue
   getAllPaidesBySearchValue :function(searchValue,limit,page,cb){
     page = parseInt(page);
@@ -24,7 +24,7 @@ module.exports = {
         if(!err){
           cb({result:Paides,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +41,7 @@ module.exports = {
         if(!err){
           cb({result:Paides,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -53,18 +53,7 @@ module.exports = {
       if(!err){
         cb(Paides);
       }else{
-        console.log(err);
-        cb(null);
-      }
-    });
-  },
-  
-
-  getPaidId :function(id,cb){
-    model.Paid.findOne({_id : id,status:1}).populate('id_fees').populate('StuPro').exec(function(err, Paides){
-      if(!err){
-        cb(Paides);
-      }else{
+        // console.log(err);
         cb(null);
       }
     });
@@ -123,40 +112,33 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updatePaid : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Paid.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
   getPaidStuPro:function(id,cb){
-    model.Paid.aggregate([
-      {$match:{StuPro:id}},
-      { $group: {
-        _id: '$StuPro',
-        paidUp: { $sum :'$paidUp'}
-        }
-      }
-    ], function (err, results) {
+    model.Paid.find({StuPro:id}, function (err, results) {
       if (!err) {
           cb(results);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
-  },
+  }
 
   // deletePaid : function(id,cb){
   //   model.Paid.remove({_id:id}, function(err,result) {
@@ -168,5 +150,5 @@ module.exports = {
   //     }
   //   });
   // }
-  
+
 };

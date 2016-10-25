@@ -8,7 +8,7 @@ module.exports = {
       if(!err){
         cb(Results);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -25,7 +25,7 @@ module.exports = {
         if(!err){
           cb({result:Results,count:count});
         }else{
-          console.log(err);
+          // console.log(err);
           cb(null);
         }
       });
@@ -37,7 +37,7 @@ module.exports = {
       if(!err){
         cb(Result);
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -46,11 +46,11 @@ module.exports = {
   getResultSubject:function(StuPro,exam,subject,cb){
     model.Result.find({StuPro:StuPro,exam:{$in:exam},subject:subject},function(err, Result){
       if(!err){
-        mark=[];
+        var mark=[];
         if(Result.length==0){
           cb(mark);
         }
-        for(j in Result){
+        for(var j in Result){
           mark[Result[j].exam]=Result[j].mark;
           if(j==Result.length-1){
             cb(mark);
@@ -58,7 +58,7 @@ module.exports = {
         }
         
       }else{
-        console.log(err);
+        // console.log(err);
         cb(null);
       }
     });
@@ -80,25 +80,25 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
 
   updateResult : function(id,body,cb){
-    obj = body;
+    var obj = body;
     model.Result.findOneAndUpdate({_id:id}, obj, function(err,result) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
   },
   addResultUpdate : function(body,cb){
-    obj = body;
+    var obj = body;
     model.Result.findOneAndUpdate({StuPro:obj.StuPro,exam:obj.exam,subject:obj.subject}, {mark:obj.mark}, function(err,result) {
       if (!err) {
         if(result){
@@ -109,18 +109,18 @@ module.exports = {
             if (!err) {
               cb(true);
             } else {
-              console.log(err);
+              // console.log(err);
               cb(false);
             }
           });
         }
         
       } else {
-        console.log(err);
+        // console.log(err);
         cb(false);
       }
     });
-  },
+  }
 
   
 };

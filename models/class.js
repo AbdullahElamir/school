@@ -6,6 +6,8 @@ var Class = new Schema({
   name: { type: String, index: true, default: "Unknown user"},
   description: {type: String,default:"NULL"},
   type: {type: Number,default:1},
+  school:{type: Schema.Types.ObjectId , ref: 'School'},
+  prevClass:{type: Schema.Types.ObjectId , ref: 'Class'},
   status: {type: Number, default:1}
 });
 

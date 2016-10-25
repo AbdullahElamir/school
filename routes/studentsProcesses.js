@@ -9,6 +9,8 @@ var stuproMgr = require("../controller/studentProcess");
 var resultMgr = require("../controller/result");
 var stuEvaMgr = require("../controller/studentEvaluation");
 var evaMgr = require("../controller/evaluation");
+var user={};
+    user.school="5801f550e4de0e349c8714c2";
 //get student information
 router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(req, res) {
   evaMgr.getAllEvaluation(function(result){
@@ -77,24 +79,23 @@ router.put('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(r
 
     });
     if(index == req.body.length-1){
-        res.send(true);
-      }
-
+      res.send(true);
+    }
   }
-
 });
 // get grades of exams for student in subject on classRoom for a current year (where year is Active)
 router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
   classRoomMgr.getClassRoomId(req.params.classRoomId,function(classR){
     var clssY=classR.class;
     sysYearMgr.getSystemYear(classR.year,function(sysyear){
-      system=sysyear.system;
+      var system=sysyear.system;
       marksSubMgr.getMarksSubSubject(req.params.subjectId,system,function(examssub){
         examMgr.getExamSClass(classR.class,sysyear.system,function(exams){
           stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
             resultMgr.getResultSubject(sto,exams,req.params.subjectId,function(marksS){
               var examsGrades=[];
-              for( var i in examssub){
+              for(var i in examssub){
+
                 var obj ={
                   _id:examssub[i].exam._id,
                   name:examssub[i].exam.name,

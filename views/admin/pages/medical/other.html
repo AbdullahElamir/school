@@ -1,0 +1,146 @@
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <div class="row">
+      <div class="col-xs-3 col-md-3">
+        <div class="caption caption-xs">
+          <i class="icon-settings font-green"></i>
+          <span class="caption-subject font-green bold">عمليات اخرى</span>
+        </div>
+      </div>
+      <div class="col-xs-7 col-md-6">
+        <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getOthersBySearchValue(searchValue)" placeholder="بحث ..">
+      </div>
+      <div class="col-xs-2 col-md-3 text-left">
+        <a data-toggle="modal" data-target="#newOtherModal" class="btn btn-sm btn-primary"><i class="fa fa-plus fa-fw"></i>
+          <span class="hidden-xs">&nbsp;إضافة عملية جديدة</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="portlet-body" style="padding-top:0px;">
+    <table class="table table-striped" ng-show="others.length">
+      <thead>
+        <tr>
+          <th>إسم العملية</th>
+          <th><i class="fa fa-cog"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="c in others">
+          <td>{{c.name}}</td>
+          <td>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#editOtherModal" ng-click="preOther(c)"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل</a>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="preOther(c)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div ng-show="!others || others.length == 0">
+      <div class="alert alert-info">
+        <p class="text-center">
+          عفوا لاتوجد بيانات
+        </p>
+      </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">مســح العملية</h4>
+          </div>
+          <div class="modal-body">
+            هل حقا تريد مسح هذه العملية ؟
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            <button ng-click="deleteConfirm(idOthers)" type="button" class="btn btn-danger">مسح</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="newOtherModal" tabindex="-1" role="dialog" aria-labelledby="newOtherModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="newOtherModalLabel">اضافة عملية</h4>
+          </div>
+          <form novalidate ng-submit="newOther()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label class="control-label">اسم العملية</label>
+                  <input class="form-control input-sm" type="text" ng-model="newOthersForm.name" placeholder="اسم العملية" required>
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label class="control-label">الوصف</label>
+                  <textarea class="form-control input-sm" rows="6" cols="12" ng-model="newOthersForm.description" placeholder="وصف" required></textarea>
+                </div>
+              </div>
+              <div class="col-xs-12" ng-if="superAdminStatus">
+                <div class="form-group">
+                  <select class="form-control input-sm" ng-model="newOthersForm.school" ng-options="school._id as school.name for school in getAllSchools" required>
+                    <option value="" disabled selected>الرجاء اختر المدرسة</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            <button type="submit" class="btn btn-success">حفظ</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="editOtherModal" tabindex="-1" role="dialog" aria-labelledby="editOtherModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="editOtherModalLabel">تعديل عملية</h4>
+          </div>
+          <form novalidate ng-submit="editOther()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label class="control-label">اسم العملية</label>
+                  <input class="form-control input-sm" type="text" ng-model="editOthersForm.name" placeholder="اسم العملية" required>
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label class="control-label">الوصف</label>
+                  <textarea class="form-control input-sm" rows="6" cols="12" ng-model="editOthersForm.description" placeholder="وصف" required></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            <button type="submit" class="btn btn-success">حفظ</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-show="others.length">
+      <div class="col-xs-12 col-md-12 text-center">
+        <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
+        <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
+      </div>
+    </div>
+  </div>
+</div>

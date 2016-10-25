@@ -80,7 +80,7 @@
   }]);
 
 //editTeacherCtl
-  app.controller('editTeacherCtl',['$scope','$stateParams','TeacherServ','$state','toastr',function($scope,$stateParams,TeacherServ,$state,toastr){
+  app.controller('editTeacherCtl',['$scope','$stateParams','TeacherServ','NationalityServ','$state','toastr',function($scope,$stateParams,TeacherServ,NationalityServ,$state,toastr){
     $scope.editTeacherForm={};
 
     TeacherServ.getTeacherById($stateParams).then(function(response) {
@@ -91,6 +91,11 @@
         console.log("Something went wrong");
       });
 
+    NationalityServ.getAllNationality().then(function(response){
+      $scope.getAllNationality = response.data;
+      },function(response){
+        console.log("Somthing went wrong");
+    });
 
      $scope.editTeacher = function(){
        if($scope.editTeacherForm.password === ""){
@@ -109,9 +114,25 @@
     };
   }]);
 
-  app.controller('newTeacherCtl',['$scope','TeacherServ','$state','toastr',function($scope,TeacherServ,$state,toastr){
+
+  app.controller('newTeacherCtl',['$scope','TeacherServ','AdminServ','NationalityServ','SchoolServ','$state','toastr',function($scope,TeacherServ,AdminServ,NationalityServ,SchoolServ,$state,toastr){
+
 
     $scope.newTeacherForm={};
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newTeacher = function(){
       $scope.newTeacherForm.password = $scope.newTeacherForm.email;
       TeacherServ.addTeacher($scope.newTeacherForm).then(function(response){
@@ -127,6 +148,12 @@
       });
 
     };
+
+    NationalityServ.getAllNationality().then(function(response){
+      $scope.getAllNationality = response.data;
+      },function(response){
+        console.log("Somthing went wrong");
+    });
   }]);
 
 }());

@@ -2,9 +2,24 @@
   'use strict';
   var app = angular.module('adminSchool');
 
-  app.controller('NewAdminCtl',['$scope','$state','AdminServ','toastr',function($scope,$state,AdminServ,toastr){
+  app.controller('NewAdminCtl',['$scope','$state','AdminServ','NationalityServ','SchoolServ','toastr',function($scope,$state,AdminServ,NationalityServ,SchoolServ,toastr){
+
 
     $scope.newAdminForm = {};
+    $scope.schools=[];
+    $scope.newInOutcomeTypesForm={};
+    AdminServ.getuser().then(function(response){
+      $scope.superAdminStatus=response.data;
+      if(response.data){
+        SchoolServ.getAll().then(function(response){
+          $scope.schools=response.data;
+        },function(response){
+          console.log("Somthing went wrong");
+        });
+      } 
+    },function(response){
+      console.log("Somthing went wrong");
+    });
     $scope.newAdmin = function(){
       $scope.newAdminForm.password = $scope.newAdminForm.email;
       AdminServ.addAdmin($scope.newAdminForm).then(function(response){
@@ -21,11 +36,17 @@
 
     };
 
+    NationalityServ.getAllNationality().then(function(response){
+      $scope.getAllNationality = response.data;
+      },function(response){
+        console.log("Somthing went wrong");
+    });
+
   }]);
 
 //editStudentCtl
 
-app.controller('EditAdminCtl',['$scope','$state','AdminServ','toastr','$stateParams',function($scope,$state,AdminServ,toastr,$stateParams){
+app.controller('EditAdminCtl',['$scope','$state','AdminServ','NationalityServ','toastr','$stateParams',function($scope,$state,AdminServ,NationalityServ,toastr,$stateParams){
   $scope.editAdminForm ={};
 
     AdminServ.getAdminById($stateParams).then(function(response) {
@@ -52,6 +73,12 @@ app.controller('EditAdminCtl',['$scope','$state','AdminServ','toastr','$statePar
         console.log("Something went wrong");
       });
     };
+
+    NationalityServ.getAllNationality().then(function(response){
+      $scope.getAllNationality = response.data;
+      },function(response){
+        console.log("Somthing went wrong");
+    });
 
  }]);
 
