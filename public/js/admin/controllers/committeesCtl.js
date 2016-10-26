@@ -56,11 +56,13 @@
     });
     
     $scope.addCommitteeForm = {};
+    $scope.addCommitteeForm.proctors = [];
     $scope.addCommittee = function(){
       CommitteeServ.addCommittee($scope.addCommitteeForm).then(function(response) {
         if(response.data.status == 1){
           toastr.success("تم الحفظ بنجاح");
           $scope.addCommitteeForm = {};
+          $scope.addCommitteeForm.proctors = [];
           $('#myAddCommitteeModal').modal('hide');
           $scope.init($scope.searchValue,$scope.year);
         } else if ( response.data.status == 2 ) {
@@ -68,6 +70,7 @@
         } else if ( response.data.status == 3 ) {
           toastr.error('لا يمكن الإضافة وذلك لعدم وجود سنة مفعلة !');
           $scope.addCommitteeForm = {};
+          $scope.addCommitteeForm.proctors = [];
           $('#myAddCommitteeModal').modal('hide');
         }
       }, function(response) {
@@ -154,7 +157,6 @@
     $scope.addExamCommitteeForm = {};
     $scope.addExamCommitteeForm.year = $stateParams.year;
     $scope.addExamCommitteeForm.students = [];
-    $scope.addExamCommitteeForm.proctors = [];
     $scope.addExamCommitteeForm.committee = $stateParams.id;
     
     ClassServ.getClassesByYear($stateParams.year).then(function(response) {
@@ -179,7 +181,6 @@
           $scope.addExamCommitteeForm = {};
           $scope.addExamCommitteeForm.year = $stateParams.year;
           $scope.addExamCommitteeForm.students = [];
-          $scope.addExamCommitteeForm.proctors = [];
           $scope.addExamCommitteeForm.committee = $stateParams.id;
           $scope.AllExams = [];
           $('#myAddExamCommitteeModal').modal('hide');
@@ -201,9 +202,12 @@
       });
     };
 
+    var classTemp ;
+
     $scope.editExamCommittee = function(co) {
       $scope.editExamCommitteeForm = JSON.parse(JSON.stringify(co));
       $scope.editExamCommitteeForm.clas = co.clas._id;
+      classTemp = $scope.editExamCommitteeForm.clas;
       $scope.editExamCommitteeForm.exam = co.exam._id;
       $scope.getEditExamsByClass();
     };
@@ -211,10 +215,25 @@
     $scope.updateExamCommittee = function(){
       ExamCommitteeServ.editExamCommittee($scope.editExamCommitteeForm._id,$scope.editExamCommitteeForm).then(function(response) {
         if(response.data){
-          toastr.info("تم التعديل بنجاح");
-          $scope.editExamCommitteeForm = {};
-          $('#myEditExamCommitteeModal').modal('hide');
-          $scope.init($scope.searchValue);
+          if( $scope.editExamCommitteeForm.clas != classTemp){
+            ExamCommitteeServ.updateStudents($scope.editExamCommitteeForm._id,[]).then(function(response){
+              if(response.data.status == 1){
+                toastr.info("تم التعديل بنجاح");
+                $scope.editExamCommitteeForm = {};
+                $('#myEditExamCommitteeModal').modal('hide');
+                $scope.init($scope.searchValue);
+              } else {
+                toastr.error('عملية الحفظ فشلت، حاول مرة أخرى !');
+              }
+            }, function(response){
+              console.log("Something went wrong");
+            });
+          } else {
+            toastr.info("تم التعديل بنجاح");
+            $scope.editExamCommitteeForm = {};
+            $('#myEditExamCommitteeModal').modal('hide');
+            $scope.init($scope.searchValue);
+          }
         } else {
           toastr.error('عملية الحفظ فشلت، حاول مرة أخرى !');
         }
@@ -223,7 +242,7 @@
       });
     };
     
-    
+      
     $scope.deleteExamCommittee = function(id) {
       $scope.idExamCommittee = id;
     };
@@ -251,7 +270,7 @@
    
   }]);
 
-  app.controller('examCommitteeStudentsCtl',['$scope','toastr','$stateParams','ClassServ','StudentServ','ExamCommitteeServ','ClassRoomsServ',function($scope,toastr,$stateParams,ClassServ,StudentServ,ExamCommitteeServ,ClassRoomsServ){
+  app.controller('examCommitteeStudentsCtl',['$scope','toastr','$stateParams','ClassServ','ExamCommitteeServ','ClassRoomsServ',function($scope,toastr,$stateParams,ClassServ,ExamCommitteeServ,ClassRoomsServ){
     
     $scope.c_id = $stateParams.c_id;
     $scope.year = $stateParams.year;
@@ -335,7 +354,7 @@
       console.log("Somthing went wrong");
     });
 
-    ExamCommitteeServ.getExamCommittee($stateParams.idExamCommittee).then(function(response){
+    ExamCommitteeServ.getExamCommitteeStudents($stateParams.idExamCommittee).then(function(response){
       $scope.students=response.data;
       $("#studentsLength").html($scope.students.length + "");
       for(var st in $scope.students){
@@ -369,18 +388,14 @@
       
   }]);
 
-
-
-
-
-
-/*
-  app.controller('transferProcessesTeachersCtl',['$scope','TransferProcessServ','toastr','$stateParams','ClassServ','TeacherServ',function($scope,TransferProcessServ,toastr,$stateParams,ClassServ,TeacherServ){
+  app.controller('committeeProctorsCtl',['$scope','toastr','$stateParams','ExamCommitteeServ','TeacherServ',function($scope,toastr,$stateParams,ExamCommitteeServ,TeacherServ){
     
-    $scope.filteredTeachers = [];
-    $scope.teachers = [];
+    $scope.c_id = $stateParams.c_id;
+    
+    $scope.filteredProctors = [];
+    $scope.proctors = [];
     $scope.searchText = "";
-    $("#teachersLength").html("0");
+    $("#proctorsLength").html("0");
     
     $('body').off('click', '.list-group .list-group-item');
     $('body').on('click', '.list-group .list-group-item', function () {
@@ -396,39 +411,33 @@
         for(var fst=0;fst<actives.length;fst++){
           var found = false;
           var std = JSON.parse(actives.eq(fst).attr('x'));
-          for(var st in $scope.teachers){
-            if(std._id == $scope.teachers[st]._id){
+          for(var st in $scope.proctors){
+            if(std._id == $scope.proctors[st]._id){
               found = true;
             }
           }
           if(!found){
             actives.eq(fst).clone().appendTo('.list-left ul');
-            $scope.teachers.push(std);
-          }
-          if( fst == actives.length-1 && $scope.teachers.length > 0){
-            $('#cost').show();
+            $scope.proctors.push(std);
           }
         }
-        $("#teachersLength").html($scope.teachers.length + "");
+        $("#proctorsLength").html($scope.proctors.length + "");
       } else if ($button.hasClass('move-right')) {
         actives = $('.list-left ul li.active');
         actives.remove();
         for(var fst=0;fst<actives.length;fst++){
           var std = JSON.parse(actives.eq(fst).attr('x'));
           var index = -1;
-          for(var st in $scope.teachers){
-            if($scope.teachers[st]._id == std._id){
+          for(var st in $scope.proctors){
+            if($scope.proctors[st]._id == std._id){
               index = st;
             }
           }
           if(index != -1){
-            $scope.teachers.splice(index,1);
-          }
-          if( fst == actives.length-1 && $scope.teachers.length <= 0){
-            $('#cost').hide();
+            $scope.proctors.splice(index,1);
           }
         }
-        $("#teachersLength").html($scope.teachers.length + "");
+        $("#proctorsLength").html($scope.proctors.length + "");
       }
     });
 
@@ -443,6 +452,7 @@
         $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
       }
     });
+    
     $('body').off('keyup','#input');
     $('body').on('keyup','#input',function (e) {
       var code = e.keyCode || e.which;
@@ -455,38 +465,19 @@
         return !~text.indexOf(val);
       }).hide();
     });
-
-    TransferProcessServ.getTransferProcess($stateParams.id).then(function(response){
-      $scope.transferProcess = response.data;
-    }, function(response){
-      console.log("Something went wrong");
-    });
-
-    TransferProcessServ.getTeachers($stateParams.id).then(function(response){
-      $scope.teachers=response.data;
-      $("#teachersLength").html($scope.teachers.length + "");
-      for(var st in $scope.teachers){
-        $('.list-left ul').append("<li style='cursor: pointer;' x='"+JSON.stringify($scope.teachers[st])+"' class='list-group-item'>"+$scope.teachers[st].name+"</li>");
-      }
-      if( $scope.teachers.length > 0){
-        $('#cost').show();
-      } else if( $scope.teachers.length <= 0){
-        $('#cost').hide();
+    
+    ExamCommitteeServ.getCommitteeProctors($scope.c_id).then(function(response){
+      $scope.proctors=response.data;
+      $("#proctorsLength").html($scope.proctors.length + "");
+      for(var st in $scope.proctors){
+        $('.list-left ul').append("<li style='cursor: pointer;' x='"+JSON.stringify($scope.proctors[st])+"' class='list-group-item'>"+$scope.proctors[st].name+"</li>");
       }
     },function(response) {
       console.log("Something went wrong");
     });
 
     $scope.save = function(){
-      
-      for(var i in $scope.teachers){
-        if( $scope.teachers[i].amount == undefined ){
-          toastr.error('يجب تحديد التكلفة لجميع المدرسين !');
-          return;
-        }
-      }
-      
-      TransferProcessServ.updateTeachers($stateParams.id,$scope.teachers).then(function(response){
+      ExamCommitteeServ.updateProctors($scope.c_id,$scope.proctors).then(function(response){
         if(response.data.status == 1){
           toastr.info('تم التعديل بنجاح');
           $("#back").click();
@@ -498,28 +489,14 @@
       });
     };
 
-    $scope.reset = function(){
-      $scope.filteredTeachers = [];
-    };
-    
-    $scope.getTeachers = function(text){
+    $scope.getProctors = function(text){
+      text = encodeURIComponent(text);
       TeacherServ.getTeachersBySearchValue(text,50,1).then(function(response){
-        $scope.filteredTeachers=response.data.result;
+        $scope.filteredProctors=response.data.result;
       });
     };
-    $scope.getTeachers("");
-      
-    $scope.openDialogCostTeachers = function(){
-      $scope.allTeachersDialog = JSON.parse(JSON.stringify($scope.teachers));
-    };
-      
-    $scope.saveCostDialogTransferProcessTeachers = function(){
-      $scope.teachers = JSON.parse(JSON.stringify($scope.allTeachersDialog));
-      $('#myModal').modal('hide');
-    };
+    $scope.getProctors("");
       
   }]);
-  
-  */
 
 }());

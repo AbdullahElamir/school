@@ -245,7 +245,7 @@ module.exports = {
           }
         }
       }else{
-        cb(null); 
+        cb(null);
       }
     });
   },
@@ -302,6 +302,54 @@ module.exports = {
       array.push({examCommitteeStudents : students[i]._id});
       if( i == students.length-1 ){
         model.ExamCommittee.update({_id:id},{$set :{ students:array }},{upsert: true}, function(err,result) {
+          if (!err) {
+            cb({status : 1});
+          } else {
+            // console.log(err);
+            cb({status : 2});
+          }
+        });
+      }
+    }
+  },
+  
+  getFullProctorsExamCommitteeId :function(id,cb){
+    model.Committee.findOne({_id : id})
+      .populate('proctors.examCommitteeProctors')
+      .exec(function(err, custom){
+      if(!err){
+        var array = [];
+        if( custom.proctors.length == 0 ){
+          cb([]);
+        }
+        for(var i in custom.proctors ){
+          array.push(custom.proctors[i].examCommitteeProctors);
+          if( i == custom.proctors.length-1 ){
+            cb(array);
+          }
+        }
+      }else{
+        cb(null);
+      }
+    });
+  },
+  
+  updateProctors : function(id,proctors,cb){
+    var array = [];
+    if( proctors.length == 0 ){
+      model.Committee.update({_id:id},{$set :{ proctors:array }},{upsert: true}, function(err,result) {
+        if (!err) {
+          cb({status : 1});
+        } else {
+          // console.log(err);
+          cb({status : 2});
+        }
+      });
+    }
+    for(var i in proctors){
+      array.push({examCommitteeProctors : proctors[i]._id});
+      if( i == proctors.length-1 ){
+        model.Committee.update({_id:id},{$set :{ proctors:array }},{upsert: true}, function(err,result) {
           if (!err) {
             cb({status : 1});
           } else {
