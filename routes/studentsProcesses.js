@@ -61,11 +61,14 @@ router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogi
         subject:req.params.subjectId,
         mark:req.body[k].studentMark
       };
-      resultMgr.addResultUpdate(obj,function(result){
-        if(k==req.body.length-1){
-          res.send(true);
-        }
-      });
+      var fun = function(obj,k){
+        resultMgr.addResultUpdate(obj,function(result){
+          if(k==req.body.length-1){
+            res.send(true);
+          }
+        });
+      };
+      fun(obj,k);
     }
 
   });
@@ -85,40 +88,37 @@ router.put('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(r
 });
 // get grades of exams for student in subject on classRoom for a current year (where year is Active)
 router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
-  classRoomMgr.getClassRoomId(req.params.classRoomId,function(classR){
+  classRoomMgr.getClassRoomIdWithYear(req.params.classRoomId,function(classR){
     var clssY=classR.class;
-    sysYearMgr.getSystemYear(classR.year,function(sysyear){
-      var system=sysyear.system;
-      marksSubMgr.getMarksSubSubject(req.params.subjectId,system,function(examssub){
-        examMgr.getExamSClass(classR.class,sysyear.system,function(exams){
-          stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
-            resultMgr.getResultSubject(sto,exams,req.params.subjectId,function(marksS){
-              var examsGrades=[];
-              for(var i in examssub){
+    var system=classR.year.system;
+    marksSubMgr.getMarksSubSubject(req.params.subjectId,system,function(examssub){
+      examMgr.getExamSClass(classR.class,system,function(exams){
+        stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
+          resultMgr.getResultSubject(sto,exams,req.params.subjectId,function(marksS){
+            var examsGrades=[];
+            for(var i in examssub){
 
-                var obj ={
-                  _id:examssub[i].exam._id,
-                  name:examssub[i].exam.name,
-                  mark:examssub[i].mark,
-                  type:examssub[i].exam.type,
-                  semester:examssub[i].exam.semester
-                };
-                if(marksS[examssub[i].exam._id]){
-                  obj.studentMark=marksS[examssub[i].exam._id];
+              var obj ={
+                _id:examssub[i].exam._id,
+                name:examssub[i].exam.name,
+                mark:examssub[i].mark,
+                type:examssub[i].exam.type,
+                semester:examssub[i].exam.semester
+              };
+              if(marksS[examssub[i].exam._id]){
+                obj.studentMark=marksS[examssub[i].exam._id];
 
-                }else{
-                  obj.studentMark=0;
-                }
-                examsGrades.push(obj);
-                if(i ==examssub.length-1){
-                  res.send(examsGrades);
-                }
+              }else{
+                obj.studentMark=0;
               }
-            });
+              examsGrades.push(obj);
+              if(i ==examssub.length-1){
+                res.send(examsGrades);
+              }
+            }
           });
         });
       });
-
     });
   });
 });

@@ -78,6 +78,15 @@ module.exports = {
       }
     });
   },
+  getClassRoomIdWithYear :function(id,cb){
+    model.ClassRoom.findOne({_id : id}).populate('year').exec(function(err, ClassRoomes){
+      if(!err){
+        cb(ClassRoomes);
+      }else{
+        cb(null);
+      }
+    });
+  },
 
   addClassRoom : function(body,cb){
     var obj =body;
