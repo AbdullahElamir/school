@@ -1,0 +1,75 @@
+<div class="portlet light bordered">
+  <div class="portlet-title">
+    <div class="caption caption-md">
+      <i class="icon-settings font-green"></i>
+      <span class="caption-subject font-green bold">حدد مراقبوا اللجنة</span>
+    </div>
+  </div>
+  <div class="portlet-body">
+    <div class="row">
+      <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="row clearfix">
+         <div class="dual-list list-left col-md-5">
+          <div class="well text-right">
+            <h5 class="text-center">مراقبو اللجنة (<span id="proctorsLength"></span>)</h5>
+              <div class="row">
+                  <div class="col-md-10">
+                      <div class="input-group btn-block">
+                          <input type="text" id="input" name="SearchDualList" class="form-control" placeholder="بحث" />
+                      </div>
+                  </div>
+                  <div class="col-md-2">
+                      <div class="btn-group">
+                          <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                      </div>
+                  </div>
+              </div>
+              <ul style="max-height:300px;overflow:scroll;overflow-x:hidden;margin-top: 8px;" class="list-group">
+
+              </ul>
+          </div>
+      </div>
+
+      <div style="padding-top: 100px;" class="list-arrows col-md-1 text-center">
+          <button style="margin-bottom: 20px;" class="btn btn-default btn-sm move-left">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
+          <button style="margin-bottom: 20px;" class="btn btn-default btn-sm move-right">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+          </button>
+      </div>
+
+      <div class="dual-list list-right col-md-5">
+          <div class="well">
+            <h5 class="text-center">المراقبيين</h5>
+              <div class="row">
+                  <div class="col-md-2">
+                      <div class="btn-group">
+                          <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                      </div>
+                  </div>
+                  <div class="col-md-10">
+                    <div class="form-group btn-block">
+                      <input ng-change="getProctors(searchText)" type="text" ng-model="searchText" class="form-control" placeholder="بحث" />
+                    </div>
+                  </div>
+              </div>
+              <ul style="max-height:300px;overflow:scroll;overflow-x:hidden;margin-top: 8px;" class="list-group">
+                <li style="cursor: pointer;" x='{{proctor}}' ng-repeat="proctor in filteredProctors" class="list-group-item">{{proctor.name}}</li> 
+              </ul>
+          </div>
+        </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-6 col-md-2 col-md-offset-4">
+            <button class="btn btn-primary btn-sm btn-block" ng-click="save()"><i class="fa fa-plus"></i>&nbsp;حفظ</button>
+          </div>
+          <div class="col-xs-6 col-md-2">
+            <a class="btn btn-success btn-sm btn-block" id="back" ui-sref="committees"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

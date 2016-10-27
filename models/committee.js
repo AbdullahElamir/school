@@ -7,6 +7,11 @@ var Committee = new Schema({
   room: {type: Schema.Types.ObjectId , ref: 'Room'},
   year: {type: Schema.Types.ObjectId , ref: 'Year'},
   notes: {type: String, default: ""},
+  proctors:{
+    type: [{
+      examCommitteeProctors:{type: Schema.Types.ObjectId , ref: 'Teacher'}
+    }]
+  },
   school: {type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });

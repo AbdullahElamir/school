@@ -1172,6 +1172,21 @@
           });
         }]
       }
+    }).state('committeeProctors',{
+      url: '/committeeProctors/:c_id',
+      templateUrl: 'admin/pages/committee/committeeProctors',
+      data: {pageTitle: 'مراقبوا لجنة الإمتحان'},
+      controller: 'committeeProctorsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/committeesCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);

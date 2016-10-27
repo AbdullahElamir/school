@@ -9,6 +9,12 @@ router.put('/examCommittee/students/:id',userHelpers.isLogin , function(req, res
   });
 });
 
+router.put('/examCommittee/proctors/:id',userHelpers.isLogin , function(req, res) {
+  CommitteeMgr.updateProctors(req.params.id,req.body,function(re){
+    res.send(re);
+  });
+});
+
 // GET Committee By id
 router.get('/get/:id',userHelpers.isLogin , function(req, res) {
   CommitteeMgr.getCommitteeId(req.params.id,function(committee){
@@ -16,10 +22,17 @@ router.get('/get/:id',userHelpers.isLogin , function(req, res) {
   });
 });
  
-// GET Exam Committee By id
-router.get('/examCommittee/get/:id',userHelpers.isLogin , function(req, res) {
-  CommitteeMgr.getFullStudentsExamCommitteeId(req.params.id,function(examCommittee){
-    res.send(examCommittee);
+// GET Exam Committee students By id
+router.get('/examCommittee/get/students/:id',userHelpers.isLogin , function(req, res) {
+  CommitteeMgr.getFullStudentsExamCommitteeId(req.params.id,function(students){
+    res.send(students);
+  });
+});
+
+// GET Exam Committee proctors By id
+router.get('/examCommittee/get/proctors/:id',userHelpers.isLogin , function(req, res) {
+  CommitteeMgr.getFullProctorsExamCommitteeId(req.params.id,function(proctors){
+    res.send(proctors);
   });
 });
 

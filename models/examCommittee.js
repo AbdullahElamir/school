@@ -14,11 +14,6 @@ var ExamCommittee = new Schema({
       examCommitteeStudents:{type: Schema.Types.ObjectId , ref: 'Student'}
     }]
   },
-  proctors:{
-    type: [{
-      examCommitteeProctors:{type: Schema.Types.ObjectId , ref: 'Teacher'}
-    }]
-  },
   status: {type: Number, default:1}
 });
 

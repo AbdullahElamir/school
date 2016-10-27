@@ -42,6 +42,7 @@
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myEditCommitteeModal" ng-click="editCommittee(c)"><i class="fa fa-pencil fa-fw"></i>&nbsp;عرض / تعديل</a>
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteCommittee(c._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a>
             <a class="btn btn-success btn-xs" ui-sref="examCommittee({id:c._id,year:c.year})" ><i class="fa fa-files-o fa-fw"></i>&nbsp;الإمتحانات</a>
+            <a class="btn btn-success btn-xs" ui-sref="committeeProctors({c_id:c._id})" ><i class="fa fa-user-secret fa-fw"></i>&nbsp;المراقبين</a>
           </td>
         </tr>
       </tbody>

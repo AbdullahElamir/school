@@ -610,10 +610,14 @@
         return $http.delete('/committee/examCommittee/delete/'+id);
       },'editExamCommittee' : function(id,eco){
         return $http.put('/committee/examCommittee/edit/'+id,eco);
-      },'getExamCommittee' : function(id){
-        return $http.get('/committee/examCommittee/get/'+id);
+      },'getExamCommitteeStudents' : function(id){
+        return $http.get('/committee/examCommittee/get/students/'+id);
       },'updateStudents' : function(id,students){
         return $http.put('/committee/examCommittee/students/'+id,students);
+      },'getCommitteeProctors' : function(id){
+        return $http.get('/committee/examCommittee/get/proctors/'+id);
+      },'updateProctors' : function(id,proctors){
+        return $http.put('/committee/examCommittee/proctors/'+id,proctors);
       }
     };
     return self;
