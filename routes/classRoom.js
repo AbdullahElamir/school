@@ -18,6 +18,27 @@ router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,function(req,
   });
 });
 
+router.get('/results/:limit/:page/:searchValue', userHelpers.isLogin ,function(req, res) {
+  res.send({
+    result:[
+      {StuPro:"1",name:"احمد",status:0},
+      {StuPro:"2",name:"سالم",status:1},
+      {StuPro:"3",name:"محمد",status:2}
+    ],
+    count:3
+  });
+});
+router.get('/results/:limit/:page/', userHelpers.isLogin ,function(req, res) {
+  res.send({
+    result:[
+      {StuPro:"1",name:"احمد",status:0},
+      {StuPro:"2",name:"سالم",status:1},
+      {StuPro:"3",name:"محمد",status:2}
+    ],
+    count:3
+  });
+});
+
 router.get('/student/:classRoom/:year/', userHelpers.isLogin ,function(req, res) {
   stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
     studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,"",function(students){
