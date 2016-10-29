@@ -314,8 +314,8 @@
       'getStudentsByClassRoomAndYearAndSearchValue': function(classRoom,year,text){
         return $http.get('/classRoom/student/'+classRoom+'/'+year+'/'+text);
       },
-      'getStudentsBySearchValue': function(searchValue,limit,page){
-        return $http.get('/classRoom/results/'+limit+'/'+page+'/'+searchValue);
+      'getStudentsBySearchValue': function(searchValue,classRoom,year){
+        return $http.get('/classRoom/results/'+searchValue+"/"+classRoom+'/'+year);
       }
     };
     return self;

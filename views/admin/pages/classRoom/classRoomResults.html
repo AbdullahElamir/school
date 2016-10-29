@@ -24,7 +24,7 @@
       <tbody>
         <tr ng-repeat="student in students">
           <td>{{student.name}}</td>
-          <td>{{status[student.status] || "غير متوفر"}}</td>
+          <td>{{status[student.stat] || "غير متوفر"}}</td>
           <td>
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="marksBefore(student._id)"><i class="fa fa-line-chart fa-fw"></i>&nbsp;الدرجات</a>
           </td>
@@ -51,29 +51,38 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>إسم الإمتحان</th>
-                        <th>الدرجة</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="ex in examsGrades">
-                        <td>{{ ex.name }}</td>
-                        <td>
-                          <div class="form-group">
-                            <div class="input-group">
-                                <span ng-if="ex.type!=2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
-                                <input  ng-if="ex.type!=2" aria-describedby="basic-addon1" type="number" required="required" placeholder="الدرجة" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" ng-change="calculateAvg(ex.semester)" >
-                                <span ng-if="ex.type==2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
-                                <input  ng-if="ex.type==2"  disabled="disabled" readonly="readonly" aria-describedby="basic-addon1" type="number" required="required" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" >
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <ul class="nav nav-tabs">
+                    <li ng-repeat="sub in subjects" ng-class="($index == 0)?'active':''">
+                      <a data-toggle="tab" showtab="" aria-expanded ="true" href="#sub._id">{{sub.name}}</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div ng-repeat="sub in subjects" id="{{sub._id}}" class="tab-pane fade" ng-class="($index == 0)?'active':''">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>إسم الإمتحان</th>
+                            <th>الدرجة</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="ex in sub.examsGrades">
+                            <td>{{ ex.name }}</td>
+                            <td>
+                              <div class="form-group">
+                                <div class="input-group">
+                                    <span ng-if="ex.type!=2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
+                                    <input  ng-if="ex.type!=2" aria-describedby="basic-addon1" type="number" required="required" placeholder="الدرجة" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" ng-change="calculateAvg(ex.semester)" >
+                                    <span ng-if="ex.type==2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
+                                    <input  ng-if="ex.type==2"  disabled="disabled" readonly="readonly" aria-describedby="basic-addon1" type="number" required="required" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" >
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -84,12 +93,6 @@
             </form>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row" ng-show="students.length">
-      <div class="col-xs-12 col-md-12 text-center">
-        <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
-        <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
       </div>
     </div>
   </div>

@@ -13,7 +13,7 @@ module.exports = {
       }
     });
   },
-  
+
 
   //getAllResultsCount
   getAllResultCount :function(limit,page,cb){
@@ -42,12 +42,49 @@ module.exports = {
       }
     });
   },
-  
+  studentStatus:function(students,std,classRoom,cb){
+    model.Stupro.findOne({student:students[std]._id,classRoom:classRoom},function(err,result){
+      if(!err){
+        model.Result.aggregate([
+          {$match : {StuPro:result._id}},
+          {$group : {
+             _id : "$subject",
+             exams : {$push:{exam:"$exam",mark:"$mark"}}
+          }}
+        ]).exec(function(err,results){
+          if(!err){
+            var flag;
+            var exams = {};
+            for(var res in results){
+              var rslt = results[res];
+              flag = 2;
+              for(var ex in rslt.exams){
+                var exam = rslt.exams[ex];
+                if(!exams[exam.exam]){
+                  model.Exam.findOne({_id:exam.exam},function(err,exm){
+                    if(!err){
+                      exams[exam.exam]=exm;
+                      //
+                    }
+                  });
+                }
+              }
+              if(flag === 2){
+                break;
+              }
+            }
+            cb(std,flag);
+          }
+        });
+      }
+    });
+  },
+
   getResultSubject:function(StuPro,exam,subject,cb){
     model.Result.find({StuPro:StuPro,exam:{$in:exam},subject:subject},function(err, Result){
       if(!err){
         var mark=[];
-        if(Result.length==0){
+        if(Result.length===0){
           cb(mark);
         }
         for(var j in Result){
@@ -56,7 +93,7 @@ module.exports = {
             cb(mark);
           }
         }
-        
+
       }else{
         // console.log(err);
         cb(null);
@@ -102,7 +139,7 @@ module.exports = {
     model.Result.findOneAndUpdate({StuPro:obj.StuPro,exam:obj.exam,subject:obj.subject}, {mark:obj.mark}, function(err,result) {
       if (!err) {
         if(result){
-          cb(true);  
+          cb(true);
         }else{
           Result = new model.Result(obj);
           Result.save(function(err,result){
@@ -114,7 +151,7 @@ module.exports = {
             }
           });
         }
-        
+
       } else {
         // console.log(err);
         cb(false);
@@ -122,5 +159,5 @@ module.exports = {
     });
   }
 
-  
+
 };
