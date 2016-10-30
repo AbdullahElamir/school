@@ -53,27 +53,73 @@ module.exports = {
           }}
         ]).exec(function(err,results){
           if(!err){
-            var flag;
+            var flag = 0;
             var exams = {};
+            var rs = 0;
             for(var res in results){
+              if(flag === 2) break;
+              var degree=0,sum=0,final=false,second=false,finalSum=0;
               var rslt = results[res];
-              flag = 2;
-              for(var ex in rslt.exams){
-                var exam = rslt.exams[ex];
-                if(!exams[exam.exam]){
-                  model.Exam.findOne({_id:exam.exam},function(err,exm){
+              for(var exa in rslt.exams){
+                if(flag === 2) break;
+                var func = function(ex){
+                  var exam = rslt.exams[ex];
+                  model.MarksSub.findOne({exam:exam.exam,subject:rslt._id})
+                  .populate("exam")
+                  .exec(function(err,exm){
                     if(!err){
                       exams[exam.exam]=exm;
-                      //
+                      switch(exm.exam.type){
+                        case 2:
+                        case 3:
+                          degree+=exam.mark;
+                          sum+=exm.mark;
+                          break;
+                        case 4:
+                          degree+=exam.mark;
+                          sum+=exm.mark;
+                          final = exam.mark;
+                          finalSum = exm.mark;
+                          if(second!==false){
+                            degree-=exam.mark;
+                            sum-=exm.mark;
+                          }
+                          break;
+                        case 5:
+                          if(exam.mark>0){
+                            degree+=exam.mark;
+                            sum+=exm.mark;
+                            second=exam.mark;
+                            if(final!==false){
+                              degree-=final;
+                              sum-=finalSum;
+                            }
+                          }
+                          break;
+                      }
+                      if(ex == rslt.exams.length-1){
+                        //success
+                        if(degree/sum >= 0.5){
+                          if(second!==false && flag === 0){
+                            flag = 1;
+                          }
+                        }else{
+                          if(flag != 2){
+                            flag = 2;
+                            cb(std,flag);
+                          }
+                        }
+                        rs++;
+                        if(rs == results.length-1 && flag !== 2){
+                          cb(std,flag);
+                        }
+                      }
                     }
                   });
-                }
-              }
-              if(flag === 2){
-                break;
+                };
+                func(exa);
               }
             }
-            cb(std,flag);
           }
         });
       }
