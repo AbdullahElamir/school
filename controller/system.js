@@ -17,6 +17,7 @@ function setTS(system,sys_class,classRoom_id,yearId,counterOfClassRooms,sumOfCla
 }
 
 function systemSetting(system,sys_class,yearId,counterOfClassRooms,sumOfClassRooms,cb){
+  
   if( system.flag != 1 ){
     model.Fees.find({year:yearId,id_class:sys_class.id_class._id}).exec(function(err,fessesResult){
       if(!err){
@@ -175,6 +176,7 @@ var deleteSystem = function (id,cb){
 
 var addSystem = function(body,cb){
   var obj=body;
+  /*console.log(obj.sys_class[0].exams['0'].subjects);*/
   system = new model.System(obj);
   system.save(function(err,sysResult){
     if (!err) {
@@ -280,6 +282,7 @@ function updateFees(fees,system,cb){
 }
 
 function addNewSystemSetting (system,cb){
+
   var counterFinalClassRooms = {value : 0};
   var sumFinalClassRooms = {value : 0};
   if( system.flag == 1 ){

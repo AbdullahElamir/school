@@ -24,6 +24,10 @@ router.get('/report1', function(req, res) {
   });
 });
 
+
+
+
+
 router.get('/report2', function(req, res) {
   jsreport.render({
     template: {

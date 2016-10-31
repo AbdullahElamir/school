@@ -14,6 +14,8 @@ var path = require("path");
 var user={};
     user.school="5801f550e4de0e349c8714c2";
 
+
+
 router.get('/report1',userHelpers.isLogin , function(req, res) {
   jsreport.render({
     template: {
@@ -27,6 +29,9 @@ router.get('/report1',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
+
+
+
 router.get('/report2',userHelpers.isLogin , function(req, res) {
   jsreport.render({
     template: {
