@@ -7,6 +7,7 @@ var MessageMgr = require("../controller/message");
 var parentMsg = require("../controller/parentMsg");
 var TSCMgr = require("../controller/teacherSubjectClass");
 var userHelpers = require("../controller/userHelpers");
+var resultMgr = require("../controller/result");
 var user={};
 user.school="5801f550e4de0e349c8714c2";
 
@@ -16,6 +17,54 @@ router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,function(req,
       res.send(students);
     });
   });
+});
+
+router.get('/results/:searchValue/:classRoom/:year', userHelpers.isLogin ,function(req, res) {
+  stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
+    studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,req.params.searchValue,function(students){
+      var cb = function(std,status){
+        students[std].stat=status;
+        if(std===students.length-1){
+          res.send(students);
+        }
+      };
+      for(var std in students){
+        resultMgr.studentStatus(students,std,cb);
+      }
+    });
+  });
+  // res.send({
+  //   result:[
+  //     {StuPro:"1",name:"احمد",status:0},
+  //     {StuPro:"2",name:"سالم",status:1},
+  //     {StuPro:"3",name:"محمد",status:2}
+  //   ],
+  //   count:3
+  // });
+});
+router.get('/results//:classRoom/:year', userHelpers.isLogin ,function(req, res) {
+  stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
+    studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,req.params.searchValue,function(students){
+      var cb = function(std,status){
+        students[std] = students[std].toObject();
+        students[std].stat=status;
+        if(std==students.length-1){
+          res.send(students);
+        }
+      };
+      for(var std in students){
+        resultMgr.studentStatus(students,std,req.params.classRoom,cb);
+      }
+    });
+  });
+//   res.send({
+//     result:[
+//       {StuPro:"1",name:"احمد",status:0},
+//       {StuPro:"2",name:"سالم",status:1},
+//       {StuPro:"3",name:"محمد",status:2}
+//     ],
+//     count:3
+//   });
 });
 
 router.get('/student/:classRoom/:year/', userHelpers.isLogin ,function(req, res) {
@@ -63,7 +112,7 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 router.put('/students/:id', userHelpers.isLogin ,function(req, res) {
   //update students of this classroom
   classRoomMgr.getClassRoomId(req.params.id,function(Croom){
-    if(req.body.length==0){
+    if(req.body.length===0){
       res.send(true);
     }
     for(var t in req.body){
