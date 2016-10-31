@@ -12,6 +12,13 @@ router.get('/:folder/:student/:name', function(req, res) {
 });
 
 
+router.get('/getObject', function(req, res) {
+  res.send({x:1});
+});
+
+
+
+
 
 
 router.get('/:folder/:name', function(req, res) {
