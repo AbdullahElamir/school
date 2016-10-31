@@ -316,6 +316,9 @@
       },
       'getStudentsBySearchValue': function(searchValue,classRoom,year){
         return $http.get('/classRoom/results/'+searchValue+"/"+classRoom+'/'+year);
+      },
+      'getStudentMarks': function(id,classRoom){
+        return $http.get('/classRoom/grades'+"/"+id+"/"+classRoom);
       }
     };
     return self;

@@ -8,6 +8,8 @@ var parentMsg = require("../controller/parentMsg");
 var TSCMgr = require("../controller/teacherSubjectClass");
 var userHelpers = require("../controller/userHelpers");
 var resultMgr = require("../controller/result");
+var marksSubMgr = require("../controller/marksSubject");
+var examMgr = require("../controller/exam");
 var user={};
 user.school="5801f550e4de0e349c8714c2";
 
@@ -65,6 +67,66 @@ router.get('/results//:classRoom/:year', userHelpers.isLogin ,function(req, res)
 //     ],
 //     count:3
 //   });
+});
+
+router.get('/grades/:idStudent/:classRoomId', userHelpers.isLogin ,function(req, res) {
+  classRoomMgr.getClassRoomIdWithYearAndSystem(req.params.classRoomId,function(classR){
+    var clssY=classR.class;
+    var system=classR.year.system;
+    var result = [];
+    var flag = 0;
+    var func = function(subject,size){
+      subject = subject.id_subject.toObject();
+      marksSubMgr.getMarksSubSubject(subject._id,system._id,function(examssub){
+        examMgr.getExamSClass(classR.class,system._id,function(exams){
+          stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
+            resultMgr.getResultSubject(sto,exams,subject._id,function(marksS){
+              var examsGrades=[];
+              var fun = function(i){
+                var obj ={
+                  _id:examssub[i].exam._id,
+                  name:examssub[i].exam.name,
+                  mark:examssub[i].mark,
+                  type:examssub[i].exam.type,
+                  semester:examssub[i].exam.semester
+                };
+                if(marksS[examssub[i].exam._id]){
+                  obj.studentMark=marksS[examssub[i].exam._id];
+
+                }else{
+                  obj.studentMark=0;
+                }
+                examsGrades.push(obj);
+                if(i ==examssub.length-1){
+                  console.log("aaa");
+                  result.push({
+                    _id:subject._id,
+                    name:subject.name,
+                    examsGrades:examsGrades
+                  });
+                  flag++;
+                  if(flag===size){
+                    res.send(result);
+                  }
+                }
+              };
+              for(var i in examssub){
+                fun(i);
+              }
+            });
+          });
+        });
+      });
+    };
+    for(var cls =0 ; cls<system.sys_class.length ; cls ++){
+      if(system.sys_class[cls].id_class+"" === clssY+""){
+        for(var sub = 0 ; sub < system.sys_class[cls].selected.length ; sub++){
+          func(system.sys_class[cls].selected[sub],system.sys_class[cls].selected.length);
+        }
+        break;
+      }
+    }
+  });
 });
 
 router.get('/student/:classRoom/:year/', userHelpers.isLogin ,function(req, res) {

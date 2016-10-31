@@ -53,11 +53,11 @@
                 <div class="col-xs-12 col-md-12 col-lg-12">
                   <ul class="nav nav-tabs">
                     <li ng-repeat="sub in subjects" ng-class="($index == 0)?'active':''">
-                      <a data-toggle="tab" showtab="" aria-expanded ="true" href="#sub._id">{{sub.name}}</a>
+                      <a data-toggle="tab" showtab=""  href="#{{sub._id}}">{{sub.name}}</a>
                     </li>
                   </ul>
                   <div class="tab-content">
-                    <div ng-repeat="sub in subjects" id="{{sub._id}}" class="tab-pane fade" ng-class="($index == 0)?'active':''">
+                    <div ng-repeat="sub in subjects" id="{{sub._id}}" class="tab-pane fade" ng-class="($index == 0)?'active in':''">
                       <table class="table table-bordered">
                         <thead>
                           <tr>
@@ -72,9 +72,9 @@
                               <div class="form-group">
                                 <div class="input-group">
                                     <span ng-if="ex.type!=2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
-                                    <input  ng-if="ex.type!=2" aria-describedby="basic-addon1" type="number" required="required" placeholder="الدرجة" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" ng-change="calculateAvg(ex.semester)" >
+                                    <input disabled ng-if="ex.type!=2" aria-describedby="basic-addon1" type="number" required="required" placeholder="الدرجة" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" ng-change="calculateAvg(ex.semester)" >
                                     <span ng-if="ex.type==2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
-                                    <input  ng-if="ex.type==2"  disabled="disabled" readonly="readonly" aria-describedby="basic-addon1" type="number" required="required" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" >
+                                    <input ng-if="ex.type==2"  disabled="disabled" readonly="readonly" aria-describedby="basic-addon1" type="number" required="required" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" >
                                 </div>
                               </div>
                             </td>
@@ -87,7 +87,6 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button value="idStudent" type="submit" class="btn btn-success" >حفظ</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
             </div>
             </form>
