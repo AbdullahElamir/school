@@ -6,36 +6,36 @@ var studentMgr = require("../controller/student");
 
 function setFromsMessages(conversations,cb){
   var sum = 0 ,counter = 0;
-  for(var i in conversations){
-    sum += conversations[i].messages.length;
-    for(var j in conversations[i].messages ){
-      if( conversations[i].messages[j].from.type == "ADMIN" ){
-        adminMgr.getAdminId(conversations[i].messages[j].from.id,function(obj){
-          conversations[i].messages[j].from.id = obj;
+  conversations.forEach(function(conversation) {
+    sum += conversation.messages.length;
+    conversation.messages.forEach(function(message) {
+      if( message.from.type == "ADMIN" ){
+        adminMgr.getAdminId(message.from.id,function(obj){
+          message.from.id = obj;
           counter++;
           if ( sum == counter ){
             cb(conversations);
           }
         });
-      } else if( conversations[i].messages[j].from.type == "PARENT" ){
-        parentMgr.getParentId(conversations[i].messages[j].from.id,function(obj){
-          conversations[i].messages[j].from.id = obj;
+      } else if( message.from.type == "PARENT" ){
+        parentMgr.getParentId(message.from.id,function(obj){
+          message.from.id = obj;
           counter++;
           if ( sum == counter ){
             cb(conversations);
           }
         });
-      } else if( conversations[i].messages[j].from.type == "TEAHER" ){
-        teacherMgr.getTeacherId(conversations[i].messages[j].from.id,function(obj){
-          conversations[i].messages[j].from.id = obj;
+      } else if( message.from.type == "TEAHER" ){
+        teacherMgr.getTeacherId(message.from.id,function(obj){
+          message.from.id = obj;
           counter++;
           if ( sum == counter ){
             cb(conversations);
           }
         });
       }
-    }
-  } 
+    });
+  });
 }
 
 module.exports = {
@@ -46,44 +46,44 @@ module.exports = {
       if(!err){
         var conversations = JSON.parse(JSON.stringify(conversationsMongoose));
         var sum = 0 , counter = 0;
-        for(var i in conversations){
-          sum += conversations[i].participants.length;
-          for(var j in conversations[i].participants){
-            if( conversations[i].participants[j].type == "ADMIN" ){
-              adminMgr.getAdminId(conversations[i].participants[j].id,function(obj){
-                conversations[i].participants[j].id = obj;
+        conversations.forEach(function(conversation) {
+          sum += conversation.participants.length;
+          conversation.participants.forEach(function(participant){
+            if( participant.type == "ADMIN" ){
+              adminMgr.getAdminId(participant.id,function(obj){
+                participant.id = obj;
                 counter++;
                 if( sum == counter ){
                   setFromsMessages(conversations,cb);
                 }
               });
-            }else if( conversations[i].participants[j].type == "PARENT" ){
-              parentMgr.getParentId(conversations[i].participants[j].id,function(obj){
-                conversations[i].participants[j].id = obj;
+            }else if( participant.type == "PARENT" ){
+              parentMgr.getParentId(participant.id,function(obj){
+                participant.id = obj;
                 counter++;
                 if( sum == counter ){
                   setFromsMessages(conversations,cb);
                 }
               });
-            }else if( conversations[i].participants[j].type == "TEAHER" ){
-              teacherMgr.getTeacherId(conversations[i].participants[j].id,function(obj){
-                conversations[i].participants[j].id = obj;
+            }else if( participant.type == "TEAHER" ){
+              teacherMgr.getTeacherId(participant.id,function(obj){
+                participant.id = obj;
                 counter++;
                 if( sum == counter ){
                   setFromsMessages(conversations,cb);
                 }
               });
-            }else if( conversations[i].participants[j].type == "STUDENT" ){
-              studentMgr.getStudentId(conversations[i].participants[j].id,function(obj){
-                conversations[i].participants[j].id = obj;
+            }else if( participant.type == "STUDENT" ){
+              studentMgr.getStudentId(participant.id,function(obj){
+                participant.id = obj;
                 counter++;
                 if( sum == counter ){
                   setFromsMessages(conversations,cb);
                 }
               });
             }
-          }
-        }
+          });
+        });
       }else{
         cb([]);
       }
