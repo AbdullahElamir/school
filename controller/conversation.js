@@ -46,7 +46,7 @@ module.exports = {
       if(!err){
         var conversations = JSON.parse(JSON.stringify(conversationsMongoose));
         var sum = 0 , counter = 0;
-        conversations.forEach(function(conversation) {
+        conversations.forEach(function(conversation){
           sum += conversation.participants.length;
           conversation.participants.forEach(function(participant){
             if( participant.type == "ADMIN" ){
