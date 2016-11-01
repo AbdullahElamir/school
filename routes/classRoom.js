@@ -21,32 +21,9 @@ router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,function(req,
   });
 });
 
-router.get('/results/:searchValue/:classRoom/:year', userHelpers.isLogin ,function(req, res) {
+router.get('/results/:classRoom/:year', userHelpers.isLogin ,function(req, res) {
   stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
-    studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,req.params.searchValue,function(students){
-      var cb = function(std,status){
-        students[std].stat=status;
-        if(std===students.length-1){
-          res.send(students);
-        }
-      };
-      for(var std in students){
-        resultMgr.studentStatus(students,std,cb);
-      }
-    });
-  });
-  // res.send({
-  //   result:[
-  //     {StuPro:"1",name:"احمد",status:0},
-  //     {StuPro:"2",name:"سالم",status:1},
-  //     {StuPro:"3",name:"محمد",status:2}
-  //   ],
-  //   count:3
-  // });
-});
-router.get('/results//:classRoom/:year', userHelpers.isLogin ,function(req, res) {
-  stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
-    studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,req.params.searchValue,function(students){
+    studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,"",function(students){
       var cb = function(std,status){
         students[std] = students[std].toObject();
         students[std].stat=status;
@@ -54,19 +31,14 @@ router.get('/results//:classRoom/:year', userHelpers.isLogin ,function(req, res)
           res.send(students);
         }
       };
+      if(students.length === 0){
+        res.send([]);
+      }
       for(var std in students){
         resultMgr.studentStatus(students,std,req.params.classRoom,cb);
       }
     });
   });
-//   res.send({
-//     result:[
-//       {StuPro:"1",name:"احمد",status:0},
-//       {StuPro:"2",name:"سالم",status:1},
-//       {StuPro:"3",name:"محمد",status:2}
-//     ],
-//     count:3
-//   });
 });
 
 router.get('/grades/:idStudent/:classRoomId', userHelpers.isLogin ,function(req, res) {

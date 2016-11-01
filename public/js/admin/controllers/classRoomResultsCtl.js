@@ -25,21 +25,11 @@
       "راسب"
     ];
 
-   $scope.init = function (searchValue) {
-      if( searchValue === 'undefined' || !searchValue ){
-        searchValue = "";
-      }
-      ClassRoomsServ.getStudentsBySearchValue(searchValue,$scope.id,$scope.year).then(function(response) {
-        $scope.students = response.data;
-      }, function(response) {
-        console.log("Something went wrong");
-      });
-     };
-     $scope.init("");
-
-    $scope.getStudentsBySearchValue = function (searchValue){
-      $scope.init(searchValue);
-    };
+    ClassRoomsServ.getStudentsResults($scope.id,$scope.year).then(function(response) {
+      $scope.students = response.data;
+    }, function(response) {
+      console.log("Something went wrong");
+    });
 
 
     $scope.calculateAvg = function(semester) {

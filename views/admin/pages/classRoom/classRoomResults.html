@@ -7,9 +7,6 @@
           <span class="caption-subject font-green bold">نتائج المجموعة</span>
         </div>
       </div>
-      <div class="col-xs-5 col-md-6">
-        <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getStudentsBySearchValue(searchValue)" placeholder="بحث ..">
-      </div>
     </div>
   </div>
   <div class="portlet-body" style="padding-top:0px;">
@@ -92,6 +89,11 @@
             </form>
           </div>
         </div>
+      </div>
+    </div><hr>
+    <div class="row">
+      <div class="col-xs-6 col-md-2 col-md-offset-4">
+        <a class="btn btn-success btn-sm btn-block" id="back" ui-sref="classRooms({year:year})"><i class="fa fa-ban"></i>&nbsp;رجوع</a>
       </div>
     </div>
   </div>
