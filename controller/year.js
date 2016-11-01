@@ -82,7 +82,7 @@ module.exports = {
   addYear : function(body,cb){
     var obj =body;
     Year1 = new model.Year(obj);
-    Year1.save(function(err,result){
+    Year1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -94,7 +94,7 @@ module.exports = {
 
   updateYear : function(id,body,cb){
     var obj = body;
-    model.Year.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Year.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -115,9 +115,9 @@ module.exports = {
   },
   
   activate: function (school,id,cb) {
-    model.Year.update({school:school}, {active:0},{multi: true}, function(err,result) {
+    model.Year.update({school:school}, {active:0},{multi: true}, function(err) {
       if (!err) {
-        model.Year.findOneAndUpdate({_id:id}, {active:1}, function(err,result) {
+        model.Year.findOneAndUpdate({_id:id}, {active:1}, function(err) {
           if (!err) {
             cb(true);
           } else {
@@ -133,7 +133,7 @@ module.exports = {
   },
   
   disActivate: function (id,cb) {
-    model.Year.update({_id:id}, {active:0},{multi: true}, function(err,result) {
+    model.Year.update({_id:id}, {active:0},{multi: true}, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -148,7 +148,7 @@ module.exports = {
       if(result.length > 0){
         cb(1);
       } else{
-        model.Year.remove({_id:id}, function(err,result) {
+        model.Year.remove({_id:id}, function(err) {
           if (!err) {
             cb(2);
           } else {

@@ -108,7 +108,7 @@ module.exports = {
       obj.password=hash.password;
       obj.salt=hash.salt;
       teacher = new model.Teacher(obj);
-      teacher.save(function(err,result){
+      teacher.save(function(err){
         if (!err) {
           cb(true);
         } else {
@@ -121,7 +121,7 @@ module.exports = {
 
   updateTeacher : function(id,body,cb){
     var obj = body;
-    model.Teacher.findOneAndUpdate({_id:id}, obj, function(err,teachers) {
+    model.Teacher.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -132,7 +132,7 @@ module.exports = {
   },
 
   deleteTeacher : function(id,cb){
-    model.Teacher.remove({_id:id}, function(err,result) {
+    model.Teacher.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

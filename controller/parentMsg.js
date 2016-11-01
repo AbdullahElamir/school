@@ -95,7 +95,7 @@ module.exports = {
   addParentMsg : function(body,cb){
     var obj =body;
     ParentMsg1 = new model.ParentMsg(obj);
-    ParentMsg1.save(function(err,result){
+    ParentMsg1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -112,11 +112,14 @@ module.exports = {
         msg:msg
       };
       ParentMsg1 = new model.ParentMsg(obj);
-      ParentMsg1.save(function(err,result){
-        count++;
-        if(count == stu.length){
-          cb(true);
-          return;
+      ParentMsg1.save(function(err){
+        if (!err) {
+          count++;
+          if(count == stu.length){
+            cb(true);
+          }
+        } else {
+          cb(false);
         }
       });  
     }
@@ -124,7 +127,7 @@ module.exports = {
   },
   updateParentMsg : function(id,body,cb){
     var obj = body;
-    model.ParentMsg.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.ParentMsg.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -140,7 +143,7 @@ module.exports = {
       if(!err){
         for(var i in parents){
           ParentM = new model.ParentMsg({parent:parents[i]._id,msg:msg,seen:0,status:1});
-          ParentM.save(function(err,result){
+          ParentM.save(function(err){
             if (!err) {
               count++;
               if( count == parents.length ){

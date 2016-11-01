@@ -41,7 +41,7 @@ module.exports = {
       if(!err){
         cb(school);
       }else{
-        console.log(err);
+        //console.log(err);
         // cb(null);
       }
     });
@@ -57,7 +57,7 @@ module.exports = {
   },
   updateSchool : function(id,body,cb){
     var obj = body;
-    model.School.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.School.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -69,7 +69,7 @@ module.exports = {
   addSchool : function(body,cb){
     var obj =body;
     school = new model.School(obj);
-    school.save(function(err,result){
+    school.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -79,7 +79,7 @@ module.exports = {
     });
   },
   deleteSchool : function(id,cb){
-    model.School.remove({_id:id}, function(err,result) {
+    model.School.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

@@ -44,7 +44,7 @@ function systemSetting(system,sys_class,yearId,counterOfClassRooms,sumOfClassRoo
 }
 
 function addExams(custom,cb){
-  var allExams=[],index=0;
+  var index=0;
   var counter={value:0};
   var sum={value:0};
   for(var cls=0; cls<custom.sys_class.length ; cls++){
@@ -110,7 +110,7 @@ function addMarks(examI,custom,cb,counter,sum){
 }
 
 function saveExam(examI,cb){
-  console.log(examI);
+//  console.log(examI);
   var exam = new model.Exam(examI);
   exam.save(function(err,examResult){
     if(!err){
@@ -132,7 +132,7 @@ function saveExam(examI,cb){
 }
 function saveMark(subjectsI,cb){
   var marksSubject = new model.MarksSub(subjectsI);
-  marksSubject.save(function(err,marksResult){
+  marksSubject.save(function(err){
     if(err){
       // console.log(err);
       cb(false);
@@ -143,11 +143,11 @@ function saveMark(subjectsI,cb){
 
 var deleteSystem = function (id,cb){
   var flag = false;
-  model.System.remove({_id:id}, function(err,result) {
+  model.System.remove({_id:id}, function(err) {
     if (!err) {
-      model.Exam.remove({system:id},function(err,result){
+      model.Exam.remove({system:id},function(err){
         if(!err){
-          model.MarksSub.remove({system:id},function(err,result){
+          model.MarksSub.remove({system:id},function(err){
             if(!err){
               cb(2);
             }else{
@@ -199,7 +199,7 @@ var addSystem = function(body,cb){
 function saveTS(tsObject,classRoom_id,counterFinalClassRooms,sumFinalClassRooms,cb){
   var obj = {year:tsObject.year , classRoom:classRoom_id , teacher:tsObject.teacher, subject:tsObject.subject._id };
   var tsObjectSaved = new model.TSC(obj);
-  tsObjectSaved.save(function(err,result){
+  tsObjectSaved.save(function(err){
     if (!err) {
       counterFinalClassRooms.value++;
       if( counterFinalClassRooms.value == sumFinalClassRooms.value ){
@@ -232,7 +232,7 @@ function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,
   var feesCounter = 0;
   for(var feesObj in fees){
     var feesSaved = new model.Fees(fees[feesObj]);
-    feesSaved.save(function(err,result){
+    feesSaved.save(function(err){
       if (!err) {
         feesCounter++;
         if( feesCounter == fees.length ){
@@ -251,11 +251,11 @@ function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,
 }
 
 function updateFees(fees,system,cb){
-  model.Fees.remove({year:fees.year},function(err,result){
+  model.Fees.remove({year:fees.year},function(err){
     if (!err){
-      model.ClassRoom.remove({year:fees.year}, function(err,result){
+      model.ClassRoom.remove({year:fees.year}, function(err){
         if(!err){
-          model.TSC.remove({year:fees.year}, function(err,result){
+          model.TSC.remove({year:fees.year}, function(err){
             if(!err){
               system.flag = 1;
               addNewSystemSetting(system,cb);
@@ -396,7 +396,6 @@ module.exports = {
   deleteSystem : deleteSystem,
   // still update thier exams and  marks
   updateSystem : function(id,body,cb){
-    var obj = body;
     deleteSystem(id,function(no){
       if(no == 2){
         addSystem(body,cb);

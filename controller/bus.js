@@ -82,7 +82,7 @@ module.exports = {
   addBus : function(body,cb){
     var obj = body;
     bus = new model.Bus(obj);
-    bus.save(function(err,result){
+    bus.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -94,7 +94,7 @@ module.exports = {
 
   updateBus : function(id,body,cb){
     var obj = body;
-    model.Bus.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Bus.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -105,7 +105,7 @@ module.exports = {
   },
 
   deleteBus : function(id,cb){
-    model.Bus.remove({_id:id}, function(err,result) {
+    model.Bus.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

@@ -4,10 +4,7 @@ var examMgr = require("../controller/exam");
 var userHelpers = require("../controller/userHelpers");
 var resultMgr = require("../controller/result");
 var user={};
-    user.school="5801f550e4de0e349c8714c2";
-
-
-
+user.school="5801f550e4de0e349c8714c2";
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   examMgr.getAllExam(function(exam){
@@ -26,8 +23,8 @@ router.post('/addR', userHelpers.isLogin ,function(req, res) {
   resultMgr.addResult(req.body,function(exam){
     res.send(exam);
   });
-  
 });
+
 // edit class room by id
 router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   examMgr.updateExam(req.params.id,req.body,function(exam){

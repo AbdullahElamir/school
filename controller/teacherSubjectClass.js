@@ -13,9 +13,6 @@ module.exports = {
       }
     });
   },
-  
-
-
 
   getAllTSCStatus:function(status,cb){
     model.TSC.find({status:status},function(err, TSCs){
@@ -27,7 +24,6 @@ module.exports = {
       }
     });
   },
-  
 
   getTSCId :function(id,cb){
     model.TSC.findOne({_id : id}, function(err, TSCs){
@@ -42,7 +38,7 @@ module.exports = {
   addTSC : function(body,cb){
     var obj =body;
     TSC1 = new model.TSC(obj);
-    TSC1.save(function(err,result){
+    TSC1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -54,7 +50,7 @@ module.exports = {
 
   updateTSC : function(id,body,cb){
     var obj = body;
-    model.TSC.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.TSC.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {

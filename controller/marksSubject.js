@@ -120,7 +120,7 @@ module.exports = {
   addMarksSub : function(body,cb){
     var obj =body;
     MarksSub1 = new model.MarksSub(obj);
-    MarksSub1.save(function(err,result){
+    MarksSub1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -132,7 +132,7 @@ module.exports = {
 
   updateMarksSub : function(id,body,cb){
     var obj = body;
-    model.MarksSub.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.MarksSub.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {

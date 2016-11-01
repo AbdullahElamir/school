@@ -25,7 +25,7 @@ module.exports = {
   },
   setStudentVaccination :function(StdVaccination,cb){
     var stdV = new model.StdVaccination(StdVaccination);
-    stdV.save(function(err,result){
+    stdV.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -83,7 +83,7 @@ module.exports = {
     var obj =body;
     obj.date = new Date();
     Vaccination = new model.Vaccination(obj);
-    Vaccination.save(function(err,result){
+    Vaccination.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -95,7 +95,7 @@ module.exports = {
 
   updateVaccination : function(id,body,cb){
     var obj = body;
-    model.Vaccination.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Vaccination.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -106,7 +106,7 @@ module.exports = {
   },
   updateStudentVaccination : function(id,body,cb){
     var obj = body;
-    model.StdVaccination.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.StdVaccination.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -117,7 +117,7 @@ module.exports = {
   },
 
   deleteVaccination : function(id,cb){
-    model.Vaccination.remove({_id:id}, function(err,result) {
+    model.Vaccination.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {
@@ -128,7 +128,7 @@ module.exports = {
   },
 
   deleteStudentVaccination : function(id,cb){
-    model.StdVaccination.remove({_id:id}, function(err,result) {
+    model.StdVaccination.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

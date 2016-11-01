@@ -58,7 +58,7 @@ module.exports = {
     });
   },
   
-  getClothesName :function(name,cb){
+  getClothesName :function(school,name,cb){
     model.Clothes.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, name){
       if(!err){
         cb(name);
@@ -81,7 +81,7 @@ module.exports = {
   addClothes : function(body,cb){
     var obj =body;
     Clothes1 = new model.Clothes(obj);
-    Clothes1.save(function(err,result){
+    Clothes1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -93,7 +93,7 @@ module.exports = {
 
   updateClothes : function(id,body,cb){
     var obj = body;
-    model.Clothes.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Clothes.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -104,7 +104,7 @@ module.exports = {
   },
   
   deleteClothes : function(id,cb){
-    model.Clothes.remove({_id:id}, function(err,result) {
+    model.Clothes.remove({_id:id}, function(err) {
       if (!err) {
         cb({result : 2});
       } else {

@@ -3,8 +3,7 @@ var router = express.Router();
 var evaMgr = require("../controller/evaluation");
 var userHelpers = require("../controller/userHelpers");
 var user={};
-    user.school="5801f550e4de0e349c8714c2";
-
+user.school="5801f550e4de0e349c8714c2";
 
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
   evaMgr.getAllEvaluationsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(eva){

@@ -108,7 +108,7 @@ module.exports = {
   addPaid : function(body,cb){
     var obj =body;
     Paid1 = new model.Paid(obj);
-    Paid1.save(function(err,result){
+    Paid1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -120,7 +120,7 @@ module.exports = {
 
   updatePaid : function(id,body,cb){
     var obj = body;
-    model.Paid.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Paid.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -132,7 +132,7 @@ module.exports = {
   getPaidStuPro:function(id,cb){
     model.Paid.find({StuPro:id}, function (err, results) {
       if (!err) {
-          cb(results);
+        cb(results);
       } else {
         // console.log(err);
         cb(null);

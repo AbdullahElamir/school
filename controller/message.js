@@ -82,7 +82,7 @@ module.exports = {
   addMessage : function(body,cb){
     var obj =body;
     Message = new model.Message(obj);
-    Message.save(function(err,result){
+    Message.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -94,7 +94,7 @@ module.exports = {
 
   updateMessage : function(id,body,cb){
     var obj = body;
-    model.Message.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Message.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {

@@ -67,7 +67,7 @@ module.exports = {
   addSystemYear : function(body,cb){
     var obj =body;
     SystemYear = new model.SystemYear(obj);
-    SystemYear.save(function(err,result){
+    SystemYear.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -79,7 +79,7 @@ module.exports = {
 
   updateSystemYear : function(id,body,cb){
     var obj = body;
-    model.SystemYear.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.SystemYear.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {

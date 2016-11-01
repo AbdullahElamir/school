@@ -92,7 +92,7 @@ module.exports = {
   addFees : function(body,cb){
     var obj =body;
     Fees1 = new model.Fees(obj);
-    Fees1.save(function(err,result){
+    Fees1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -104,7 +104,7 @@ module.exports = {
 
   updateFees : function(id,body,cb){
     var obj = body;
-    model.Fees.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Fees.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {

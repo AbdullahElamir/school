@@ -96,8 +96,8 @@ module.exports = {
     var obj = body;
     obj.startDate = new Date();
     student = new model.Student(obj);
-    student.save(function(err,result){
-      console.log(err);
+    student.save(function(err){
+//      console.log(err);
       if (!err) {
         cb(true);
       } else {
@@ -109,7 +109,7 @@ module.exports = {
 
   updateStudent : function(id,body,cb){
     var obj = body;
-    model.Student.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Student.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -120,7 +120,7 @@ module.exports = {
   },
 
   deleteStudent : function(id,cb){
-    model.Student.remove({_id:id}, function(err,result) {
+    model.Student.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

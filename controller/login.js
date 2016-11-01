@@ -1,8 +1,6 @@
 var passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   easyPbkdf2 = require("easy-pbkdf2")();
-var mongoose = require('mongoose');
-var model = require("../models");
 var teacherMgr = require("./teacher");
 var parentMgr = require("./parent");
 var adminMgr = require("./admin");

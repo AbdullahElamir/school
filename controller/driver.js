@@ -82,7 +82,7 @@ module.exports = {
   addDriver : function(body,cb){
     var obj = body;
     driver = new model.Driver(obj);
-    driver.save(function(err,result){
+    driver.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -94,7 +94,7 @@ module.exports = {
 
   updateDriver : function(id,body,cb){
     var obj = body;
-    model.Driver.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Driver.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -105,7 +105,7 @@ module.exports = {
   },
 
   deleteDriver : function(id,cb){
-    model.Driver.remove({_id:id}, function(err,result) {
+    model.Driver.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

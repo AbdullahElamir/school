@@ -136,9 +136,9 @@ module.exports = {
 
   addClass : function(body,cb){
     var obj =body;
-    console.log(body);
+//    console.log(body);
     class1 = new model.Class(obj);
-    class1.save(function(err,result){
+    class1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -150,7 +150,7 @@ module.exports = {
 
   updateClass : function(id,body,cb){
     var obj = body;
-    model.Class.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Class.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -161,14 +161,14 @@ module.exports = {
   },
 
   deleteClass : function(id,cb){
-    model.Class.remove({_id:id}, function(err,result) {
-        if (!err) {
-          cb(2);
-        } else {
-          // console.log(err);
-          cb(3);
-        }
-      });
+    model.Class.remove({_id:id}, function(err) {
+      if (!err) {
+        cb(2);
+      } else {
+        // console.log(err);
+        cb(3);
+      }
+    });
   }
 
 };

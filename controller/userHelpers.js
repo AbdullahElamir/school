@@ -1,7 +1,8 @@
-var fs = require("fs");
-var path = require("path");
-var generatePassword = require('password-generator'),
-  easyPbkdf2 = require("easy-pbkdf2")();
+//var fs = require("fs");
+//var path = require("path");
+//var generatePassword = require('password-generator'),
+
+var easyPbkdf2 = require("easy-pbkdf2")();
 module.exports = {
   /* here we check if the user have root access */
   isLogin : function (req,res,next) {

@@ -68,7 +68,7 @@ module.exports = {
 
   updateStueva : function(id,body,cb){
     var obj = body;
-    model.Stueva.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Stueva.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -111,7 +111,7 @@ module.exports = {
             half:half
           };
           stueva = new model.Stueva(obj);
-          stueva.save(function(err,result){
+          stueva.save(function(err){
             if (!err) {
               cb(true);
             } else {

@@ -3,10 +3,7 @@ var router = express.Router();
 var marksSubMgr = require("../controller/marksSubject");
 var userHelpers = require("../controller/userHelpers");
 var user={};
-    user.school="5801f550e4de0e349c8714c2";
-
-
-
+user.school="5801f550e4de0e349c8714c2";
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   marksSubMgr.getAllMarksSub(function(marksSub){

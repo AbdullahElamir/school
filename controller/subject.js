@@ -116,9 +116,8 @@ module.exports = {
 
   addSubject : function(body,cb){
     var obj = body;
-
     subject = new model.Subject(obj);
-    subject.save(function(err,result){
+    subject.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -130,7 +129,7 @@ module.exports = {
 
   updateSubject : function(id,body,cb){
     var obj = body;
-    model.Subject.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Subject.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -145,7 +144,7 @@ module.exports = {
       if(resul.length > 0){
         cb(1);
       } else{
-        model.Subject.remove({_id:id}, function(err,result) {
+        model.Subject.remove({_id:id}, function(err) {
           if (!err) {
             cb(2);
           } else {

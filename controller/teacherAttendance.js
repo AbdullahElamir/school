@@ -1,5 +1,4 @@
 var model = require('../models');
-var teacherTeacherAttendance = null;
 
 module.exports = {
 
@@ -14,8 +13,6 @@ module.exports = {
       }
     });
   },
-
-
 
   //getAllCustomerCount
   getAllTeacherAttendanceCount :function(limit,page,cb){
@@ -59,8 +56,8 @@ module.exports = {
 
   addTeacherAttendance : function(body,cb){
     var obj =body;
-    TeacherAttendance1 = new model.TeacherAttendance(obj);
-    TeacherAttendance1.save(function(err,result){
+    var TeacherAttendance1 = new model.TeacherAttendance(obj);
+    TeacherAttendance1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -72,7 +69,7 @@ module.exports = {
 
   updateTeacherAttendance : function(id,body,cb){
     var obj = body;
-    model.TeacherAttendance.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.TeacherAttendance.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -130,8 +127,8 @@ module.exports = {
             date:new Date(date),
             attend:attend
           };
-          TeacherAttendance1 = new model.TeacherAttendance(obj);
-          TeacherAttendance1.save(function(err,result){
+          var TeacherAttendance1 = new model.TeacherAttendance(obj);
+          TeacherAttendance1.save(function(err){
             if (!err) {
               cb(true);
             } else {
@@ -140,7 +137,6 @@ module.exports = {
             }
           });
         }
-
       } else {
         // console.log(err);
         cb(false);
@@ -166,7 +162,7 @@ module.exports = {
         } else {
           var obj = {"teacher":id,"date":new Date(date),"attend":0,"reason":reason.reason};
           var TeacherAttendance = new model.TeacherAttendance(obj);
-          TeacherAttendance.save(function(err,result){
+          TeacherAttendance.save(function(err){
             if (!err) {
               cb(true);
             } else {

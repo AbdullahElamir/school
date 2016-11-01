@@ -82,7 +82,7 @@ module.exports = {
   addEvaluation : function(body,cb){
     var obj =body;
     Evaluation = new model.Evaluation(obj);
-    Evaluation.save(function(err,result){
+    Evaluation.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -94,7 +94,7 @@ module.exports = {
 
   updateEvaluation : function(id,body,cb){
     var obj = body;
-    model.Evaluation.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Evaluation.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {

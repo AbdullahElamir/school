@@ -91,7 +91,7 @@ module.exports = {
   addClassRoom : function(body,cb){
     var obj =body;
     ClassRoom1 = new model.ClassRoom(obj);
-    ClassRoom1.save(function(err,result){
+    ClassRoom1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -103,7 +103,7 @@ module.exports = {
 
   updateClassRoom : function(id,body,cb){
     var obj = body;
-    model.ClassRoom.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.ClassRoom.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -118,7 +118,7 @@ module.exports = {
       if(!err){
         cb(ClassRoomes);
       }else{
-        console.log(err);
+//        console.log(err);
         cb(null);
       }
     });

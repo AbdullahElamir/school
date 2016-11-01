@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var paid = require("../controller/paid");
 var stuproMgr = require("../controller/studentProcess");
-var classRoomMgr = require("../controller/classRoom");
-var feesMgr = require("../controller/fees");
 var userHelpers = require("../controller/userHelpers");
+
 var user={};
-    user.school="5801f550e4de0e349c8714c2";
+user.school="5801f550e4de0e349c8714c2";
+
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   paid.getAllPaid(function(paids){
     res.send(paids);

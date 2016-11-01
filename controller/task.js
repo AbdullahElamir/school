@@ -62,7 +62,7 @@ module.exports = {
     var obj =body;
     obj.date = new Date();
     Task = new model.Task(obj);
-    Task.save(function(err,result){
+    Task.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -74,7 +74,7 @@ module.exports = {
 
   updateTask : function(id,body,cb){
     var obj = body;
-    model.Task.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Task.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -85,7 +85,7 @@ module.exports = {
   },
 
   deleteTask : function(id,cb){
-    model.Task.remove({_id:id}, function(err,result) {
+    model.Task.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

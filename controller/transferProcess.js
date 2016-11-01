@@ -24,7 +24,7 @@ module.exports = {
             if(!err){
               cb({result:tps,count:count});
             }else{
-              console.log(err);
+              //console.log(err);
               cb(null);
             }
           });
@@ -45,7 +45,7 @@ module.exports = {
             if(!err){
               cb({result:tps,count:count});
             }else{
-              console.log(err);
+              //console.log(err);
               cb(null);
             }
           });
@@ -62,27 +62,27 @@ module.exports = {
         obj.driver = tpo.driver._id;
         obj.year = custom._id;
         transferProcess = new model.TransferProcess(obj);
-        transferProcess.save(function(err,result){
+        transferProcess.save(function(err){
           if (!err) {
             cb({status : 1});
           } else {
-            console.log(err);
+            //console.log(err);
             cb({status : 2});
           }
         });
       }else{
-        console.log(err);
+        //console.log(err);
         cb({status : 3});
       }
     });
   },
  
   "editTransferProcess" : function(id,tpo,cb){
-    model.TransferProcess.findOneAndUpdate({_id:id}, tpo, function(err,result) {
+    model.TransferProcess.findOneAndUpdate({_id:id}, tpo, function(err) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+        //console.log(err);
         cb(false);
       }
     });
@@ -97,7 +97,7 @@ module.exports = {
       if(!err){
         cb(tp);
       }else{
-        console.log(err);
+        //console.log(err);
         cb(null);
       }
     });
@@ -124,14 +124,14 @@ module.exports = {
           }
         }
       }else{
-        console.log(err);
+        //console.log(err);
         cb(null);
       }
     });
   },
   
   "updateStudents" : function(id,tpss,cb){
-    model.transferProcessStudents.remove({transferProcess:id}, function(err,result) {
+    model.transferProcessStudents.remove({transferProcess:id}, function(err) {
       if (!err) {
         if( tpss.length == 0 ){
           cb({status : 1});
@@ -145,45 +145,45 @@ module.exports = {
             transferProcess : id
           };
           var transferProcessStudents = new model.transferProcessStudents(obj);
-          transferProcessStudents.save(function(err,result){
+          transferProcessStudents.save(function(err){
             if (!err) {
               counter++;
               if( counter == tpss.length ){
                 cb({status : 1});
               }
             } else {
-              console.log(err);
+              //console.log(err);
               cb({status : 2});
             }
           });
         }
       } else {
-        console.log(err);
+        //console.log(err);
         cb({status : 2});
       }
     });
   },
   
   "deleteTransferProcess" : function(id,cb){
-    model.transferProcessStudents.remove({transferProcess:id}, function(err,result) {
+    model.transferProcessStudents.remove({transferProcess:id}, function(err) {
       if (!err) {
-         model.transferProcessTeachers.remove({transferProcess:id}, function(err,result) {
+        model.transferProcessTeachers.remove({transferProcess:id}, function(err) {
           if (!err) {
-            model.TransferProcess.remove({_id:id}, function(err,result) {
+            model.TransferProcess.remove({_id:id}, function(err) {
               if (!err) {
                 cb(2);
               } else {
-                console.log(err);
+                //console.log(err);
                 cb(3);
               }
             });
           } else {
-            console.log(err);
+            //console.log(err);
             cb(3);
           }
         });
       } else {
-        console.log(err);
+        //console.log(err);
         cb(3);
       }
     });
@@ -210,14 +210,14 @@ module.exports = {
           }
         }
       }else{
-        console.log(err);
+        //console.log(err);
         cb(null);
       }
     });
   },
   
   "updateTeachers" : function(id,tpss,cb){
-    model.transferProcessTeachers.remove({transferProcess:id}, function(err,result) {
+    model.transferProcessTeachers.remove({transferProcess:id}, function(err) {
       if (!err) {
         if( tpss.length == 0 ){
           cb({status : 1});
@@ -231,20 +231,20 @@ module.exports = {
             transferProcess : id
           };
           var transferProcessTeachers = new model.transferProcessTeachers(obj);
-          transferProcessTeachers.save(function(err,result){
+          transferProcessTeachers.save(function(err){
             if (!err) {
               counter++;
               if( counter == tpss.length ){
                 cb({status : 1});
               }
             } else {
-              console.log(err);
+              //console.log(err);
               cb({status : 2});
             }
           });
         }
       } else {
-        console.log(err);
+        //console.log(err);
         cb({status : 2});
       }
     });

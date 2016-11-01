@@ -79,7 +79,7 @@ module.exports = {
   addStupro : function(body,cb){
     var obj = body
     Stupro = new model.Stupro(obj);
-    Stupro.save(function(err,result){
+    Stupro.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -91,7 +91,7 @@ module.exports = {
 
   updateStupro : function(id,body,cb){
     var obj = body
-    model.Stupro.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Stupro.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true)
       } else {
@@ -181,7 +181,7 @@ module.exports = {
           cb(true);
         }else{
           Stupro = new model.Stupro(obj);
-          Stupro.save(function(err,result){
+          Stupro.save(function(err){
             if (!err) {
               cb(true);  
             } else {

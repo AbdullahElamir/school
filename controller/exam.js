@@ -82,7 +82,7 @@ module.exports = {
   addExam : function(body,cb){
     var obj =body;
     Exam1 = new model.Exam(obj);
-    Exam1.save(function(err,result){
+    Exam1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -94,7 +94,7 @@ module.exports = {
 
   updateExam : function(id,body,cb){
     var obj = body;
-    model.Exam.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Exam.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {

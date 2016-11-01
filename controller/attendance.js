@@ -60,7 +60,7 @@ module.exports = {
   addAttendance : function(body,cb){
     var obj =body;
     Attendance1 = new model.Attendance(obj);
-    Attendance1.save(function(err,result){
+    Attendance1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -72,7 +72,7 @@ module.exports = {
 
   updateAttendance : function(id,body,cb){
     var obj = body;
-    model.Attendance.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Attendance.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -131,7 +131,7 @@ module.exports = {
             attend:attend
           };
           Attendance1 = new model.Attendance(obj);
-          Attendance1.save(function(err,result){
+          Attendance1.save(function(err){
             if (!err) {
               cb(true);
             } else {
@@ -169,7 +169,7 @@ module.exports = {
         } else {
           var obj = {"StuPro":id,"date":new Date(date),"attend":0,"reason":reason.reason};
           var Attendance = new model.Attendance(obj);
-          Attendance.save(function(err,result){
+          Attendance.save(function(err){
             if (!err) {
               cb(true);
             } else {

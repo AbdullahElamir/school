@@ -8,11 +8,7 @@ var teacherMgr = require("../controller/teacher");
 var adminMgr = require("../controller/admin");
 var userHelpers = require("../controller/userHelpers");
 var user={};
-    user.school="5801f550e4de0e349c8714c2";
-
-
-
-
+user.school="5801f550e4de0e349c8714c2";
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   attendMgr.getAllAttend(function(attend){
@@ -103,8 +99,8 @@ router.get('/teachers/:searchValue/:date/:limit/:page',userHelpers.isLogin , fun
       for(var i in teachers.result){
         var att = {
           _id:teachers.result[i]._id,
-          name:teachers.result[i].name,
-        }
+          name:teachers.result[i].name
+        };
         if(attends[teachers.result[i]._id]==null){
           att.attend=0;
         }else{
@@ -129,8 +125,8 @@ router.get('/teachers//:date/:limit/:page',userHelpers.isLogin , function(req, r
       for(var i in teachers.result){
         var att = {
           _id:teachers.result[i]._id,
-          name:teachers.result[i].name,
-        }
+          name:teachers.result[i].name
+        };
         if(attends[teachers.result[i]._id]==null){
           att.attend=0;
         }else{
@@ -165,8 +161,8 @@ router.get('/admins/:searchValue/:date/:limit/:page',userHelpers.isLogin , funct
       for(var i in teachers.result){
         var att = {
           _id:teachers.result[i]._id,
-          name:teachers.result[i].name,
-        }
+          name:teachers.result[i].name
+        };
         if(attends[teachers.result[i]._id]==null){
           att.attend=0;
         }else{
@@ -201,8 +197,8 @@ router.get('/admins//:date/:limit/:page',userHelpers.isLogin , function(req, res
       for(var i in admins.result){
         var att = {
           _id:admins.result[i]._id,
-          name:admins.result[i].name,
-        }
+          name:admins.result[i].name
+        };
         if(attends[admins.result[i]._id]==null){
           att.attend=0;
         }else{
@@ -229,8 +225,8 @@ router.get('/students/:classRoom/:date',userHelpers.isLogin , function(req, res)
       for(var i in stupro.stu){
         var att = {
           _id:stupro.stu[i]._id,
-          name:stupro.stu[i].student.name,
-        }
+          name:stupro.stu[i].student.name
+        };
         if(attends[stupro.stu[i]._id]==null){
           att.attend=0;
         }else{
@@ -253,6 +249,5 @@ router.get('/:id',userHelpers.isLogin , function(req, res) {
     res.send(attend);
   });
 });
-
 
 module.exports = router;

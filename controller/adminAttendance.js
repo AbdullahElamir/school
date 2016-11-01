@@ -1,5 +1,4 @@
 var model = require('../models');
-var adminAttendance = null;
 
 module.exports = {
 
@@ -59,8 +58,8 @@ module.exports = {
 
   addAdminAttendance : function(body,cb){
     var obj =body;
-    AdminAttendance1 = new model.AdminAttendance(obj);
-    AdminAttendance1.save(function(err,result){
+    var AdminAttendance1 = new model.AdminAttendance(obj);
+    AdminAttendance1.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -72,7 +71,7 @@ module.exports = {
 
   updateAdminAttendance : function(id,body,cb){
     var obj = body;
-    model.AdminAttendance.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.AdminAttendance.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -130,8 +129,8 @@ module.exports = {
             date:new Date(date),
             attend:attend
           };
-          AdminAttendance1 = new model.AdminAttendance(obj);
-          AdminAttendance1.save(function(err,result){
+          var AdminAttendance1 = new model.AdminAttendance(obj);
+          AdminAttendance1.save(function(err){
             if (!err) {
               cb(true);
             } else {
@@ -166,7 +165,7 @@ module.exports = {
         } else {
           var obj = {"admin":id,"date":new Date(date),"attend":0,"reason":reason.reason};
           var AdminAttendance = new model.AdminAttendance(obj);
-          AdminAttendance.save(function(err,result){
+          AdminAttendance.save(function(err){
             if (!err) {
               cb(true);
             } else {

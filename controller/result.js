@@ -76,7 +76,7 @@ module.exports = {
   addResult : function(body,cb){
     var obj =body;
     Result = new model.Result(obj);
-    Result.save(function(err,result){
+    Result.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -88,7 +88,7 @@ module.exports = {
 
   updateResult : function(id,body,cb){
     var obj = body;
-    model.Result.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Result.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -105,7 +105,7 @@ module.exports = {
           cb(true);  
         }else{
           Result = new model.Result(obj);
-          Result.save(function(err,result){
+          Result.save(function(err){
             if (!err) {
               cb(true);
             } else {

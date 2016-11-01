@@ -7,7 +7,7 @@ module.exports = {
       if(!err){
         cb(InOutcomeTypes);
       }else{
-        console.log(err);
+//        console.log(err);
         cb(null);
       }
     });
@@ -23,7 +23,7 @@ module.exports = {
         if(!err){
           cb({result:InOutcomeTypes,count:count});
         }else{
-          console.log(err);
+//          console.log(err);
           cb(null);
         }
       });
@@ -40,7 +40,7 @@ module.exports = {
         if(!err){
           cb({result:InOutcomeTypes,count:count});
         }else{
-          console.log(err);
+//          console.log(err);
           cb(null);
         }
       });
@@ -59,35 +59,35 @@ module.exports = {
 
   addInOutcomeTypes : function(body,cb){
     var obj =body;
-    InOutcomeTypes1 = new model.InOutcomeType(obj);
-    InOutcomeTypes1.save(function(err,result){
+    var InOutcomeTypes1 = new model.InOutcomeType(obj);
+    InOutcomeTypes1.save(function(err){
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+//        console.log(err);
         cb(false);
       }
     });
   },
 
   updateInOutcomeTypes : function(id,body,cb){
-    obj = body;
-    model.InOutcomeType.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    var obj = body;
+    model.InOutcomeType.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
-        console.log(err);
+//        console.log(err);
         cb(false);
       }
     });
   },
 
   deleteInOutcomeTypes : function(id,cb){
-    model.InOutcomeType.remove({_id:id}, function(err,result) {
+    model.InOutcomeType.remove({_id:id}, function(err) {
       if (!err) {
         cb({result : 2});
       } else {
-        console.log(err);
+//        console.log(err);
         cb({result : 3});
       }
     });

@@ -3,7 +3,7 @@ var router = express.Router();
 var subjectMgr = require("../controller/subject");
 var userHelpers = require("../controller/userHelpers");
 var user={};
-    user.school="5801f550e4de0e349c8714c2";
+user.school="5801f550e4de0e349c8714c2";
 /*GET all Subjects By Search Value And Class*/
 router.get('/:searchValue/:clas/:limit/:page',userHelpers.isLogin , function(req, res) {
   subjectMgr.getSubjectsBySearchValueAndClass(user.school,req.params.searchValue,req.params.clas,req.params.limit,req.params.page,function(subject){

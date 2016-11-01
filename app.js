@@ -45,6 +45,7 @@ var check = require('./routes/check');
 var vaccination = require('./routes/vaccination');
 var others = require('./routes/other');
 var committee = require('./routes/committee');
+var conversation = require('./routes/conversation');
 
 
 var app = express();
@@ -59,6 +60,7 @@ store.on('error', function(error) {
   assert.ifError(error);
   assert.ok(false);
 });
+
 // view engine setup
 app.engine('html', require('ejs').renderFile);
 app.set('views', path.join(__dirname, 'views'));
@@ -73,7 +75,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use(session(
-  { store: store,
+  { 
+    store: store,
     secret: 'SEKR37',
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
@@ -120,6 +123,7 @@ app.use('/checks',check);
 app.use('/vaccinations',vaccination);
 app.use('/others',others);
 app.use('/committee',committee);
+app.use('/conversation',conversation);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

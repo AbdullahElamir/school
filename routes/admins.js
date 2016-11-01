@@ -5,10 +5,8 @@ var userHelpers = require("../controller/userHelpers");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
-var path = require("path");
 var user={};
-    user.school="5801f550e4de0e349c8714c2";
-
+user.school="5801f550e4de0e349c8714c2";
 
 /*GET all ADmins By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {

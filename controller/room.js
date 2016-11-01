@@ -82,7 +82,7 @@ module.exports = {
   addRoom : function(body,cb){
     var obj =body;
     room = new model.Room(obj);
-    room.save(function(err,result){
+    room.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -94,7 +94,7 @@ module.exports = {
 
   updateRoom : function(id,body,cb){
     var obj = body;
-    model.Room.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Room.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -109,7 +109,7 @@ module.exports = {
       if(resul.length > 0){
         cb(1);
       } else{
-        model.Room.remove({_id:id}, function(err,result) {
+        model.Room.remove({_id:id}, function(err) {
           if (!err) {
             cb(2);
           } else {

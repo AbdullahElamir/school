@@ -25,7 +25,7 @@ module.exports = {
   },
   setStudentOther :function(StdOther,cb){
     var stdO = new model.StdOther(StdOther);
-    stdO.save(function(err,result){
+    stdO.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -83,7 +83,7 @@ module.exports = {
     var obj =body;
     obj.date = new Date();
     Other = new model.Other(obj);
-    Other.save(function(err,result){
+    Other.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -95,7 +95,7 @@ module.exports = {
 
   updateOther : function(id,body,cb){
     var obj = body;
-    model.Other.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Other.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -106,7 +106,7 @@ module.exports = {
   },
   updateStudentOther : function(id,body,cb){
     var obj = body;
-    model.StdOther.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.StdOther.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -117,7 +117,7 @@ module.exports = {
   },
 
   deleteOther : function(id,cb){
-    model.Other.remove({_id:id}, function(err,result) {
+    model.Other.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {
@@ -128,7 +128,7 @@ module.exports = {
   },
 
   deleteStudentOther : function(id,cb){
-    model.StdOther.remove({_id:id}, function(err,result) {
+    model.StdOther.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

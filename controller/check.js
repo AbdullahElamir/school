@@ -26,7 +26,7 @@ module.exports = {
   setStudentCheck :function(StdCheck,cb){
 
     var stdCk = new model.StdCheck(StdCheck);
-    stdCk.save(function(err,result){
+    stdCk.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -84,7 +84,7 @@ module.exports = {
     var obj =body;
     obj.date = new Date();
     Check = new model.Check(obj);
-    Check.save(function(err,result){
+    Check.save(function(err){
       if (!err) {
         cb(true);
       } else {
@@ -96,7 +96,7 @@ module.exports = {
 
   updateCheck : function(id,body,cb){
     var obj = body;
-    model.Check.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Check.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -107,7 +107,7 @@ module.exports = {
   },
   updateStudentCheck : function(id,body,cb){
     var obj = body;
-    model.StdCheck.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.StdCheck.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -118,7 +118,7 @@ module.exports = {
   },
 
   deleteCheck : function(id,cb){
-    model.Check.remove({_id:id}, function(err,result) {
+    model.Check.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {
@@ -129,7 +129,7 @@ module.exports = {
   },
 
   deleteStudentCheck : function(id,cb){
-    model.StdCheck.remove({_id:id}, function(err,result) {
+    model.StdCheck.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

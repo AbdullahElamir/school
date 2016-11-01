@@ -113,11 +113,11 @@ module.exports = {
       obj.password=hash.password;
       obj.salt=hash.salt;
       Admin = new model.Admin(obj);
-      Admin.save(function(err,result){
+      Admin.save(function(err){
         if (!err) {
           cb(true);
         } else {
-          console.log(err);
+//          console.log(err);
           cb(false);
         }
       });
@@ -127,7 +127,7 @@ module.exports = {
   updateAdmin : function(id,body,cb){
     var obj = body;
 
-    model.Admin.findOneAndUpdate({_id:id}, obj, function(err,Admins) {
+    model.Admin.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -138,7 +138,7 @@ module.exports = {
   },
 
   deleteAdmin : function(id,cb){
-    model.Admin.remove({_id:id}, function(err,result) {
+    model.Admin.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

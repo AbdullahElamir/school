@@ -96,7 +96,7 @@ module.exports = {
       obj.password=hash.password;
       obj.salt=hash.salt;
       parent = new model.Parent(obj);
-      parent.save(function(err,result){
+      parent.save(function(err){
         if (!err) {
           cb(true);
         } else {
@@ -109,7 +109,7 @@ module.exports = {
 
   updateParent : function(id,body,cb){
     var obj = body;
-    model.Parent.findOneAndUpdate({_id:id}, obj, function(err,parents) {
+    model.Parent.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -120,7 +120,7 @@ module.exports = {
   },
   
   deleteParent : function(id,cb){
-    model.Parent.remove({_id:id}, function(err,result) {
+    model.Parent.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {

@@ -468,7 +468,9 @@
         return $http.get('/bus/'+searchValue+'/'+limit+'/'+page);
       },
       'deleteBus': function(id){
-        return $http.delete('/bus/delete/'+id);
+        console.log("YESSSS !");
+        return $http.get('/conversation/conversations/parent/57e050f8611a8c0bb027282e');
+        //return $http.delete('/bus/delete/'+id);
       },
       'getBusById': function(id){
         return $http.get('/bus/'+id.id);

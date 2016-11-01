@@ -8,7 +8,7 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
 var user={};
-    user.school="5801f550e4de0e349c8714c2";
+user.school="5801f550e4de0e349c8714c2";
 // var path = require("path");
 
 /*GET all Student By Search Value*/

@@ -110,7 +110,7 @@ module.exports = {
         var obj = body;
         obj.year = custom._id;
         committee = new model.Committee(obj);
-        committee.save(function(err,result){
+        committee.save(function(err){
           if (!err) {
             cb({status : 1});
           } else {
@@ -127,7 +127,7 @@ module.exports = {
 
   updateCommittee : function(id,body,cb){
     var obj = body;
-    model.Committee.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.Committee.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -138,9 +138,9 @@ module.exports = {
   },
 
   deleteCommittee : function(id,cb){
-    model.Committee.remove({_id:id}, function(err,result1) {
+    model.Committee.remove({_id:id}, function(err) {
       if (!err) {
-        model.ExamCommittee.remove({committee:id}, function(err,result2) {
+        model.ExamCommittee.remove({committee:id}, function(err) {
           if (!err) {
             cb(2);
           } else {
@@ -231,8 +231,8 @@ module.exports = {
 
   getFullStudentsExamCommitteeId :function(id,cb){
     model.ExamCommittee.findOne({_id : id})
-      .populate('students.examCommitteeStudents')
-      .exec(function(err, custom){
+    .populate('students.examCommitteeStudents')
+    .exec(function(err, custom){
       if(!err){
         var array = [];
         if( custom.students.length == 0 ){
@@ -253,7 +253,7 @@ module.exports = {
   addExamCommittee : function(body,cb){
     var obj = body;
     examCommittees = new model.ExamCommittee(obj);
-    examCommittees.save(function(err,result){
+    examCommittees.save(function(err){
       if (!err) {
         cb({status : 1});
       } else {
@@ -265,7 +265,7 @@ module.exports = {
 
   updateExamCommittee : function(id,body,cb){
     var obj = body;
-    model.ExamCommittee.findOneAndUpdate({_id:id}, obj, function(err,result) {
+    model.ExamCommittee.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
         cb(true);
       } else {
@@ -276,7 +276,7 @@ module.exports = {
   },
 
   deleteExamCommittee : function(id,cb){
-    model.ExamCommittee.remove({_id:id}, function(err,result) {
+    model.ExamCommittee.remove({_id:id}, function(err) {
       if (!err) {
         cb(2);
       } else {
@@ -289,7 +289,7 @@ module.exports = {
   updateStudents : function(id,students,cb){
     var array = [];
     if( students.length == 0 ){
-      model.ExamCommittee.update({_id:id},{$set :{ students:array }},{upsert: true}, function(err,result) {
+      model.ExamCommittee.update({_id:id},{$set :{ students:array }},{upsert: true}, function(err) {
         if (!err) {
           cb({status : 1});
         } else {
@@ -301,7 +301,7 @@ module.exports = {
     for(var i in students){
       array.push({examCommitteeStudents : students[i]._id});
       if( i == students.length-1 ){
-        model.ExamCommittee.update({_id:id},{$set :{ students:array }},{upsert: true}, function(err,result) {
+        model.ExamCommittee.update({_id:id},{$set :{ students:array }},{upsert: true}, function(err) {
           if (!err) {
             cb({status : 1});
           } else {
@@ -315,8 +315,8 @@ module.exports = {
   
   getFullProctorsExamCommitteeId :function(id,cb){
     model.Committee.findOne({_id : id})
-      .populate('proctors.examCommitteeProctors')
-      .exec(function(err, custom){
+    .populate('proctors.examCommitteeProctors')
+    .exec(function(err, custom){
       if(!err){
         var array = [];
         if( custom.proctors.length == 0 ){
@@ -337,7 +337,7 @@ module.exports = {
   updateProctors : function(id,proctors,cb){
     var array = [];
     if( proctors.length == 0 ){
-      model.Committee.update({_id:id},{$set :{ proctors:array }},{upsert: true}, function(err,result) {
+      model.Committee.update({_id:id},{$set :{ proctors:array }},{upsert: true}, function(err) {
         if (!err) {
           cb({status : 1});
         } else {
@@ -349,7 +349,7 @@ module.exports = {
     for(var i in proctors){
       array.push({examCommitteeProctors : proctors[i]._id});
       if( i == proctors.length-1 ){
-        model.Committee.update({_id:id},{$set :{ proctors:array }},{upsert: true}, function(err,result) {
+        model.Committee.update({_id:id},{$set :{ proctors:array }},{upsert: true}, function(err) {
           if (!err) {
             cb({status : 1});
           } else {
