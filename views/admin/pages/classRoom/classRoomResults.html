@@ -1,0 +1,100 @@
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <div class="row">
+      <div class="col-xs-5 col-md-3">
+        <div class="caption caption-xs">
+          <i class="icon-settings font-green"></i>
+          <span class="caption-subject font-green bold">نتائج المجموعة</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="portlet-body" style="padding-top:0px;">
+    <table class="table table-striped" ng-show="students.length">
+      <thead>
+        <tr>
+          <th>اسم الطالب</th>
+          <th>الحالة</th>
+          <th><i class="fa fa-cog"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="student in students">
+          <td>{{student.name}}</td>
+          <td>{{status[student.stat] || "غير متوفر"}}</td>
+          <td>
+            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="marksBefore(student._id)"><i class="fa fa-line-chart fa-fw"></i>&nbsp;الدرجات</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div ng-show="!students || students.length == 0">
+      <div class="alert alert-info">
+        <p class="text-center">
+          عفوا لاتوجد بيانات
+        </p>
+      </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">درجات الطالب</h4>
+          </div>
+          <form novalidate ng-submit="saveGrades()">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                  <ul class="nav nav-tabs">
+                    <li ng-repeat="sub in subjects" ng-class="($index == 0)?'active':''">
+                      <a data-toggle="tab" showtab=""  href="#{{sub._id}}">{{sub.name}}</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div ng-repeat="sub in subjects" id="{{sub._id}}" class="tab-pane fade" ng-class="($index == 0)?'active in':''">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>إسم الإمتحان</th>
+                            <th>الدرجة</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="ex in sub.examsGrades">
+                            <td>{{ ex.name }}</td>
+                            <td>
+                              <div class="form-group">
+                                <div class="input-group">
+                                    <span ng-if="ex.type!=2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
+                                    <input disabled ng-if="ex.type!=2" aria-describedby="basic-addon1" type="number" required="required" placeholder="الدرجة" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" ng-change="calculateAvg(ex.semester)" >
+                                    <span ng-if="ex.type==2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
+                                    <input ng-if="ex.type==2"  disabled="disabled" readonly="readonly" aria-describedby="basic-addon1" type="number" required="required" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" >
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div><hr>
+    <div class="row">
+      <div class="col-xs-6 col-md-2 col-md-offset-4">
+        <a class="btn btn-success btn-sm btn-block" id="back" ui-sref="classRooms({year:year})"><i class="fa fa-ban"></i>&nbsp;رجوع</a>
+      </div>
+    </div>
+  </div>
+</div>

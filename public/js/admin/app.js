@@ -1187,6 +1187,21 @@
           });
         }]
       }
+    }).state('classRoomResults',{
+      url: '/classRoomResults/:id/:year',
+      templateUrl: 'admin/pages/classRoom/classRoomResults',
+      data: {pageTitle: 'نتائج المجموعة'},
+      controller: 'ClassRoomResultsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/classRoomResultsCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);

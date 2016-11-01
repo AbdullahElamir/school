@@ -87,6 +87,17 @@ module.exports = {
       }
     });
   },
+  getClassRoomIdWithYearAndSystem :function(id,cb){
+    model.ClassRoom.findOne({_id : id})
+    .populate({path: 'year',populate: { path: 'system' , populate : {path : 'sys_class.selected.id_subject'}}})
+    .exec(function(err, ClassRoomes){
+      if(!err){
+        cb(ClassRoomes);
+      }else{
+        cb(null);
+      }
+    });
+  },
 
   addClassRoom : function(body,cb){
     var obj =body;

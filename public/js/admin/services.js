@@ -313,6 +313,12 @@
       },
       'getStudentsByClassRoomAndYearAndSearchValue': function(classRoom,year,text){
         return $http.get('/classRoom/student/'+classRoom+'/'+year+'/'+text);
+      },
+      'getStudentsResults': function(classRoom,year){
+        return $http.get('/classRoom/results/'+classRoom+'/'+year);
+      },
+      'getStudentMarks': function(id,classRoom){
+        return $http.get('/classRoom/grades'+"/"+id+"/"+classRoom);
       }
     };
     return self;
@@ -648,7 +654,7 @@
       };
       return self;
     }]);
-    
+
     app.service('NationalityServ',['$http',function($http){
       var self = {
         'getAllNationality' : function(){
@@ -774,5 +780,5 @@
       };
       return self;
     }]);
-  
+
 }());

@@ -1,6 +1,6 @@
 
 module.exports = {
-    /*"rules": {
+    "rules": {
         "no-console":1,
          "indent": [
             "error", 
@@ -18,7 +18,7 @@ module.exports = {
             2,
             "always"
         ]
-    },*/
+    },
     "rules": {
         "no-alert": 1,
         "no-array-constructor": 0,
