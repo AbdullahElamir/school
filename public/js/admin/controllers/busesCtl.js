@@ -28,7 +28,6 @@
 
     $scope.deleteConfirm = function(id){
       BusServ.deleteBus(id).then(function(response){
-        console.log(response.data);
         if(response.data.result == 1){
             toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
           } else if (response.data.result == 2){
