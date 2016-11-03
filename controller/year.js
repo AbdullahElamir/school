@@ -70,7 +70,8 @@ module.exports = {
   },
 
   getYearId :function(id,cb){
-    model.Year.findOne({_id : id}, function(err, custom){
+    model.Year.findOne({_id : id}).populate('system')
+    .exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{

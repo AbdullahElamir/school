@@ -70,7 +70,7 @@ module.exports = {
   },
 
   getClassRoomId :function(id,cb){
-    model.ClassRoom.findOne({_id : id}).populate('room').exec(function(err, ClassRoomes){
+    model.ClassRoom.findOne({_id : id}).populate('room').populate('class').exec(function(err, ClassRoomes){
       if(!err){
         cb(ClassRoomes);
       }else{

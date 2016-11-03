@@ -6,6 +6,8 @@ var stuproMgr = require("../controller/studentProcess");
 var MessageMgr = require("../controller/message");
 var parentMsg = require("../controller/parentMsg");
 var userHelpers = require("../controller/userHelpers");
+yearMgr = require("../controller/year");
+var TSCMgr = require("../controller/teacherSubjectClass");
 var jsreport = require("jsreport");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -17,21 +19,38 @@ user.school="5801f550e4de0e349c8714c2";
 
 
 router.get('/report1',userHelpers.isLogin , function(req, res) {
-  jsreport.render({
-    template: {
-      engine: "jsrender",
-      recipe: "phantom-pdf",
-      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report1.html"), "utf8")
-    },data:{result:null}
-  }).then(function(resp) {
-    resp.stream.pipe(res);
-  }).catch(function(e) {
-    res.end(e.message);
-  });
+  // jsreport().init().then(function () { 
+    jsreport.render({
+      template: {
+        engine: "jsrender",
+        recipe: "phantom-pdf",
+        content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report1.html"), "utf8")
+      },data:{result:null}
+    }).then(function(resp) {
+      resp.stream.pipe(res);
+    }).catch(function(e) {
+      res.end(e.message);
+    });
+  // }).catch(function(e) {
+  //   console.log(e)
+  // });
 });
 
 
-
+// router.get('/report2/:stupro',userHelpers.isLogin , function(req, res) {
+//   stuproMgr.getStuPro(req.params.stupro,function(stupro){
+//     if(stupro){
+//       classRoomMgr.getClassRoomId(stupro.classRoom,function(claaes){
+//         yearMgr.getYearId(stupro.year,function(system){
+//           // console.log(system)
+//           TSCMgr.getTeacherSubject(stupro.classRoom,stupro.year,function(teacherSub){
+//             console.log(teacherSub)
+//           });
+//         });
+//       });
+//     }
+//   });
+// });
 router.get('/report2',userHelpers.isLogin , function(req, res) {
   jsreport.render({
     template: {

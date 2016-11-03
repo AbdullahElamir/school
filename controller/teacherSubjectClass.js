@@ -76,5 +76,23 @@ module.exports = {
         cb(null);
       }
     });
+  },
+  getTeacherSubject : function(classroom,year,cb){
+    console.log(classroom+" ammm "+year);
+    model.TSC.find({year:year,classRoom:classroom}).exec(function(err, teachers){
+      if(!err){
+        console.log(teachers);
+        var teacherSub=[];
+        for(var t in teachers){
+          teacherSub[teachers[t].subject]=teachers[t].teacher;
+          if(t == teachers.length-1){
+            cb(teacherSub);    
+          }
+        }
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
   }
 };

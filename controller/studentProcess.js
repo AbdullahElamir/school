@@ -194,5 +194,16 @@ module.exports = {
         cb(null);
       }
     });
+  },
+  getStuPro : function(id,cb){
+    model.Stupro.findOne({_id:id}).populate('student')
+    .exec(function(err,Stu) {
+      if(!err){
+        cb(Stu);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
   }
 };
