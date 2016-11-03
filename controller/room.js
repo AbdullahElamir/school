@@ -105,16 +105,16 @@ module.exports = {
   },
   
   deleteRoom : function(id,cb){
-    model.Study.find({customer:id}, function(err,resul) {
+    model.Room.find({customer:id}, function(err,resul) {
       if(resul.length > 0){
-        cb(1);
+        cb({result:1});
       } else{
         model.Room.remove({_id:id}, function(err) {
           if (!err) {
-            cb(2);
+            cb({result:2});
           } else {
             // console.log(err);
-            cb(3);
+            cb({result:3});
           }
         });
       }

@@ -26,7 +26,7 @@
     };
 
    $scope.deleteRoom = function(id) {
-    $scope.idRoom = id;
+   $scope.idRoom = id;
    };
 
    $scope.deleteConfirm = function(id) {
