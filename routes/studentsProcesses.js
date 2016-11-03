@@ -58,7 +58,7 @@ router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogi
         mark:req.body[k].studentMark
       };
       var fun = function(obj,k){
-        resultMgr.addResultUpdate(obj,function(result){
+        resultMgr.addResultUpdate(obj,function(){
           if(k==req.body.length-1){
             res.send(true);
           }
@@ -72,7 +72,7 @@ router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogi
 router.put('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(req, res) {
   //req.body
   for (var index in req.body){
-    stuEvaMgr.addStuEva(req.params.stupro,req.params.course,req.params.month,req.params.half,req.body[index],function(evaluation){});
+    stuEvaMgr.addStuEva(req.params.stupro,req.params.course,req.params.month,req.params.half,req.body[index],function(){});
     if(index == req.body.length-1){
       res.send(true);
     }
