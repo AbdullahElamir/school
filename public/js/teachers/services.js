@@ -94,6 +94,13 @@
     return self;
   }]);
 
-
+  app.service('getStudentBySubjectServ',['$http',function($http){
+    var self = {
+      'getTeacherById': function() {
+        return $http.get('/teacher');
+      }
+    };
+    return self;
+  }]);
 
 }());
