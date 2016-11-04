@@ -96,8 +96,8 @@
 
   app.service('getStudentBySubjectServ',['$http',function($http){
     var self = {
-      'getTeacherById': function() {
-        return $http.get('/teacher');
+      'getStudent': function() {
+        return $http.get('/student');
       }
     };
     return self;

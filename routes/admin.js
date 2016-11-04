@@ -11,7 +11,7 @@ router.get('/:folder/:student/:name', function(req, res) {
 
 
 router.get('/getObject', function(req, res) {
- res.send({x:1});  
+  res.send({x:1});  
 });
 
 
