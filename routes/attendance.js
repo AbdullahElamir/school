@@ -155,23 +155,23 @@ router.get('/admins/:searchValue/:date/:limit/:page',userHelpers.isLogin , funct
   adminMgr.getAllAdminsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
     attendAdminMgr.getAdminAttendanceDate(new Date(req.params.date),admins.adminsId,function(attends){
       var _attend=[];
-      if(teachers.result.length==0){
+      if(admins.result.length==0){
         res.send(_attend);
       }
-      for(var i in teachers.result){
+      for(var i in admins.result){
         var att = {
-          _id:teachers.result[i]._id,
-          name:teachers.result[i].name
+          _id:admins.result[i]._id,
+          name:admins.result[i].name
         };
-        if(attends[teachers.result[i]._id]==null){
+        if(attends[admins.result[i]._id]==null){
           att.attend=0;
         }else{
-          att.attend=attends[teachers.result[i]._id].attend;
-          att.reason=attends[teachers.result[i]._id].reson;
+          att.attend=attends[admins.result[i]._id].attend;
+          att.reason=attends[admins.result[i]._id].reson;
         }
         _attend.push(att);
-        if(i == teachers.result.length-1){
-          res.send({result:_attend,count:teachers.count});
+        if(i == admins.result.length-1){
+          res.send({result:_attend,count:admins.count});
         }
       }
     });

@@ -118,6 +118,7 @@ function saveExam(examI,cb){
       var subjects = examI.subjects;
       var subIndex = 0 ;
       for(var sub in subjects){
+        sub;
         var subjectsI = subjects[subIndex];
         subjectsI.exam = examResult._id;
         subjectsI.system = examI.system;
@@ -216,7 +217,7 @@ function saveTS(tsObject,classRoom_id,counterFinalClassRooms,sumFinalClassRooms,
 }
 
 function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb){
-  var obj = {year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft };
+  var obj = {year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft , teacher:classRoom.teacher };
   var classRoomSaved = new model.ClassRoom(obj);
   classRoomSaved.save(function(err,result){
     if (!err) {

@@ -48,8 +48,8 @@ module.exports = {
         model.Result.aggregate([
           {$match : {StuPro:result._id}},
           {$group : {
-             _id : "$subject",
-             exams : {$push:{exam:"$exam",mark:"$mark"}}
+            _id : "$subject",
+            exams : {$push:{exam:"$exam",mark:"$mark"}}
           }}
         ]).exec(function(err,results){
           if(!err){
@@ -70,32 +70,32 @@ module.exports = {
                     if(!err){
                       exams[exam.exam]=exm;
                       switch(exm.exam.type){
-                        case 2:
-                        case 3:
+                      case 2:
+                      case 3:
+                        degree+=exam.mark;
+                        sum+=exm.mark;
+                        break;
+                      case 4:
+                        degree+=exam.mark;
+                        sum+=exm.mark;
+                        final = exam.mark;
+                        finalSum = exm.mark;
+                        if(second!==false){
+                          degree-=exam.mark;
+                          sum-=exm.mark;
+                        }
+                        break;
+                      case 5:
+                        if(exam.mark>0){
                           degree+=exam.mark;
                           sum+=exm.mark;
-                          break;
-                        case 4:
-                          degree+=exam.mark;
-                          sum+=exm.mark;
-                          final = exam.mark;
-                          finalSum = exm.mark;
-                          if(second!==false){
-                            degree-=exam.mark;
-                            sum-=exm.mark;
+                          second=exam.mark;
+                          if(final!==false){
+                            degree-=final;
+                            sum-=finalSum;
                           }
-                          break;
-                        case 5:
-                          if(exam.mark>0){
-                            degree+=exam.mark;
-                            sum+=exm.mark;
-                            second=exam.mark;
-                            if(final!==false){
-                              degree-=final;
-                              sum-=finalSum;
-                            }
-                          }
-                          break;
+                        }
+                        break;
                       }
                       if(ex == rslt.exams.length-1){
                         //success

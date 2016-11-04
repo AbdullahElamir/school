@@ -12,7 +12,7 @@ var options = {
   user: config.user,
   pass: config.password
 };
-var connection=mongoose.connect(config.url, options);
+mongoose.connect(config.url, options);
 // autoIncrement.initialize(connection);
 var model = {};
 fs.readdirSync(__dirname)
