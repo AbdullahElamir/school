@@ -102,6 +102,15 @@ module.exports = {
         cb(false);
       }
     });
+  },
+  deleteEvaluation : function(id,cb){
+    model.Evaluation.remove({_id:id}, function(err) {
+      if (!err) {
+        cb(2);
+      } else {
+        // console.log(err);
+        cb(3);
+      }
+    });
   }
 };
-
