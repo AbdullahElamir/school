@@ -8,7 +8,6 @@ module.exports = {
       if(!err){
         cb(rooms);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -24,7 +23,6 @@ module.exports = {
         if(!err){
           cb({result:rooms,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +39,6 @@ module.exports = {
         if(!err){
           cb({result:rooms,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -53,7 +50,6 @@ module.exports = {
       if(!err){
         cb(classes);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -86,7 +82,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -98,7 +93,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -109,7 +103,6 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        // console.log(err);
         cb(3);
       }
     });
