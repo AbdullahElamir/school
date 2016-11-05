@@ -25,5 +25,4 @@ var Conversation = new Schema({
 });
 
 Conversation.plugin(timestamps);
-Conversation.index({ name: 'text'});
 exports.Conversation = mongoose.model('Conversation', Conversation);
