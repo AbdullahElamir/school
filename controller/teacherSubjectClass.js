@@ -63,14 +63,28 @@ module.exports = {
   getTeacherClassSubject : function(id,cb){
     model.Year.findOne({active : 1}, function(err, activeYear){
       if(!err && activeYear){
-        console.log(activeYear._id);
-        model.TSC.find({teacher:id,status:1,year:activeYear._id}).populate('classRoom subject').exec(function(err, teachers){
-          if(!err){
-            cb(teachers);
+        console.log(id);
+        model.ClassRoom.findOne({teacher:id,status:1,year:activeYear._id}).exec(function(err, teacherClass){
+          console.log(teacherClass);
+          var q = {
+            status:1,
+            year:activeYear._id
+          };
+          if(!err && teacherClass){
+            q.classRoom = teacherClass._id
           }else{
-            // console.log(err);
-            cb(null);
+            q.teacher=id
           }
+          console.log(q);
+          model.TSC.find(q).populate('classRoom subject').exec(function(err, teachers){
+            if(!err){
+              cb(teachers);
+            }else{
+              // console.log(err);
+              cb(null);
+            }
+          });
+
         });
       }else{
         // console.log(err);

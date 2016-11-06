@@ -182,7 +182,6 @@ router.get('/name/:name',userHelpers.isLogin , function(req, res) {
 // get class room by name
 router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
   TSCMgr.getTeacherClassSubject(req.params.id,function(result){
-    console.log(result);
     var tsc = [];
     if(result){
       if(result.length === 0){
