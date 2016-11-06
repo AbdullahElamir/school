@@ -8,12 +8,11 @@ module.exports = {
       if(!err){
         cb(rooms);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
   },
-  
+
   //getAllRoomsBySearchValue
   getAllRoomsBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
@@ -24,7 +23,6 @@ module.exports = {
         if(!err){
           cb({result:rooms,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -41,7 +39,6 @@ module.exports = {
         if(!err){
           cb({result:rooms,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -53,12 +50,11 @@ module.exports = {
       if(!err){
         cb(classes);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
   },
-  
+
   getRoomName :function(school,name,cb){
     model.Room.find({name :{ $regex:name, $options: 'i' },school:school}).limit(30).exec(function(err, custom){
       if(!err){
@@ -86,7 +82,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -98,27 +93,25 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
   },
-  
+
   deleteRoom : function(id,cb){
     model.Room.find({customer:id}, function(err,resul) {
       if(resul.length > 0){
         cb({result:1});
       } else{
-        model.Room.remove({_id:id}, function(err) {
-          if (!err) {
-            cb({result:2});
-          } else {
-            // console.log(err);
-            cb({result:3});
-          }
-        });
-      }
-    });
-  }
-  
-};
+          model.Room.remove({_id:id}, function(err) {
+            if (!err) {
+              cb({result:2});
+            } else {
+              // console.log(err);
+              cb({result:3});
+            }
+          });
+        }
+      });
+    },
+  };

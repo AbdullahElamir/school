@@ -4,6 +4,51 @@ var student = null;
 
 module.exports = {
 
+ 
+
+
+  // Student id genrate 
+  StudentGenerateId :function(gender,cb){
+    // number contains
+    // 1- (1) = male 
+    // 2- (2) = female 
+    // 3- (2007) year 
+    // 4- (0001) sequance number 
+    // 1+2+3+4
+    //generated number 
+    // 220070001
+    model.Student.find({status:1}).sort({'_id':-1}).limit(1).exec(function(err, students){
+      var lastYear = new Date();
+      // insert for first time 
+      if(students.length == 0){
+        var year = gender.toString()+lastYear.getFullYear()+""+"0001"
+        Id = year+"";
+        cb(Id);
+      } else {  
+        if(!err){
+          var lastYear = new Date();
+          var number = students[0].studentid
+          var s = number+"";
+          while (s.length < 4) s = "0" + s;
+          var year = gender.toString()+lastYear.getFullYear()+""+s
+          Id = year+"";
+          console.log(Id);
+          cb(Id);
+        }else{
+          // console.log(err);
+          cb(null);
+        }
+      }
+    });
+  },
+
+   
+
+ 
+
+
+
+
   getAllStudent :function(school,cb){
     model.Student.find({school:school,status:1},function(err, students){
       if(!err){

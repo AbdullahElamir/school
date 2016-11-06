@@ -36,13 +36,13 @@
             <div class="row" ng-repeat="cr in d.classRooms">
               <div class="col-xs-12 col-md-12">
                 <div class="row">
-                  <div class="col-md-3">
+                  <div class="col-md-2">
                     <div class="form-group">
                       <label class="control-label">إسم المجموعة</label>
                       <input class="form-control input-sm" type="text" ng-model="cr.name" placeholder="المجموعة" required>
                     </div>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-2">
                     <div class="form-group">
                       <label class="control-label">الفترة الدراسية</label>
                       <select class="form-control input-sm" ng-model="cr.sheft" required ng-options="sheft.value as sheft.name for sheft in allShefts">
@@ -50,10 +50,18 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-2">
                     <div class="form-group">
                       <label class="control-label">الغرفة الدراسية</label>
                       <select class="form-control input-sm" ng-model="cr.room" required ng-options="room._id as room.name for room in allRooms" >
+                        <option value="" disabled selected>الرجاء الاختيار</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label class="control-label">عريف الفصل</label>
+                      <select class="form-control input-sm" ng-model="cr.teacher" required ng-options="teacher._id as teacher.name for teacher in allTeachers" >
                         <option value="" disabled selected>الرجاء الاختيار</option>
                       </select>
                     </div>

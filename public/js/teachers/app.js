@@ -171,6 +171,21 @@
               });
             }]
           }
+        }).state('getStudentBySubject',{
+          url: '/getStudentBySubject',
+          templateUrl: '/teachers/pages/getStudentBySubject',
+          data: {pageTitle: 'كشف باسماء الطلبة'},
+          controller: 'getStudentBySubjectCtl',
+          resolve: {
+            deps: ['$ocLazyLoad',function($ocLazyLoad){
+              return $ocLazyLoad.load({
+                insertBefore: '#ngLoadControllerAfter',
+                files: [
+                  '/js/teachers/controllers/getStudentBySubjectCtl.js'
+                ]
+              });
+            }]
+          }
         });
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){

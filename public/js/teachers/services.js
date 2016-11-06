@@ -94,6 +94,13 @@
     return self;
   }]);
 
-
+  app.service('getStudentBySubjectServ',['$http',function($http){
+    var self = {
+      'getStudent': function() {
+        return $http.get('/student');
+      }
+    };
+    return self;
+  }]);
 
 }());

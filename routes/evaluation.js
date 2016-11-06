@@ -46,6 +46,11 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
   });
 });
 
+router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
+  evaMgr.deleteEvaluation(req.params.id,function(eva){
+    res.send({result:eva});
+  });
+});
 
 
 

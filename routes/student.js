@@ -31,6 +31,14 @@ router.get('/report1',userHelpers.isLogin , function(req, res) {
 });
 
 
+router.get('/genrateStudentId',function(req, res){
+  studentMgr.StudentGenerateId(1,function(result){
+    console.log(result);
+   res.send(result); 
+  });
+})
+
+
 
 router.get('/report2',userHelpers.isLogin , function(req, res) {
   jsreport.render({
@@ -136,11 +144,14 @@ router.get('/all', userHelpers.isLogin ,function(req, res){
 
 /* Add new student  */
 router.post('/add',function(req, res) {
-  req.body.school=user.school;
-  studentMgr.addStudent(req.body,function(student){
-    res.send(student);
+  studentMgr.StudentGenerateId(req.body.gender,function(result){
+    console.log(result);
+      req.body.school=user.school;
+      req.body.studentrealid =result
+      studentMgr.addStudent(req.body,function(student){
+      res.send(student);
+    });
   });
-
 });
 
 router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {

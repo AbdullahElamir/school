@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var timestamps = require('mongoose-timestamp');
+var autoIncrement = require('mongoose-auto-increment');
 var Schema = mongoose.Schema;
 
 var Student = new Schema({
@@ -23,8 +24,18 @@ var Student = new Schema({
   school:{type: Schema.Types.ObjectId , ref: 'School'},
   clas:{type: Schema.Types.ObjectId , ref: 'Class'},
   status: {type: Number, default:1},
-  active: {type: Number, default:1}
+  active: {type: Number, default:1},
+  studentid:{ type: Number,default:1},
+  studentrealid:{ type: Number,unique : true},
 });
+
+Student.plugin(autoIncrement.plugin, {
+    model: 'Student',
+    field: 'studentid',
+    startAt: 2,
+    incrementBy: 1
+});
+
 
 Student.plugin(timestamps);
 Student.index({ name: 'text'});
