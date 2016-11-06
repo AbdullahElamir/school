@@ -6,6 +6,8 @@ var stuproMgr = require("../controller/studentProcess");
 var MessageMgr = require("../controller/message");
 var parentMsg = require("../controller/parentMsg");
 var userHelpers = require("../controller/userHelpers");
+yearMgr = require("../controller/year");
+var TSCMgr = require("../controller/teacherSubjectClass");
 var jsreport = require("jsreport");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -39,6 +41,22 @@ router.get('/genrateStudentId',function(req, res){
 })
 
 
+
+
+// router.get('/report2/:stupro',userHelpers.isLogin , function(req, res) {
+//   stuproMgr.getStuPro(req.params.stupro,function(stupro){
+//     if(stupro){
+//       classRoomMgr.getClassRoomId(stupro.classRoom,function(claaes){
+//         yearMgr.getYearId(stupro.year,function(system){
+//           // console.log(system)
+//           TSCMgr.getTeacherSubject(stupro.classRoom,stupro.year,function(teacherSub){
+//             console.log(teacherSub)
+//           });
+//         });
+//       });
+//     }
+//   });
+// });
 
 router.get('/report2',userHelpers.isLogin , function(req, res) {
   jsreport.render({

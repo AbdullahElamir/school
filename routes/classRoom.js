@@ -183,18 +183,20 @@ router.get('/name/:name',userHelpers.isLogin , function(req, res) {
 router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
   TSCMgr.getTeacherClassSubject(req.params.id,function(result){
     var tsc = [];
-    if(result.length === 0){
-      res.send([]);
-    }
-    for(var i in result){
-      tsc.push({
-        _id:result[i].classRoom._id,
-        name:result[i].classRoom.name,
-        course:result[i].subject.name,
-        courseId:result[i].subject._id
-      });
-      if(i == result.length-1){
-        res.send(tsc);
+    if(result){
+      if(result.length === 0){
+        res.send([]);
+      }
+      for(var i in result){
+        tsc.push({
+          _id:result[i].classRoom._id,
+          name:result[i].classRoom.name,
+          course:result[i].subject.name,
+          courseId:result[i].subject._id
+        });
+        if(i == result.length-1){
+          res.send(tsc);
+        }
       }
     }
   });
