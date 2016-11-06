@@ -7,7 +7,7 @@ var user={};
 user.school="5801f550e4de0e349c8714c2";
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('index', { title: 'Login' });
 });
 

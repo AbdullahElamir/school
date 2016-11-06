@@ -1,6 +1,6 @@
 <div class="page-sidebar navbar-collapse collapse">
   <!-- BEGIN SIDEBAR MENU -->
-  <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed':settings.layout.pageSidebarClosed}">
+  <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="false" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed':settings.layout.pageSidebarClosed}">
     <li>
       <a href="#/dashboard">
         <i class="fa fa-home" aria-hidden="true"></i>
@@ -19,26 +19,20 @@
         <span class="title">التقارير</span>
         <span class="arrow"></span>
       </a>
-      <ul class="sub-menu">
-        <li>
-         <a href="/teacher/report1" target="_blank">
-           <i class="fa fa-file-o" aria-hidden="true"></i>
-           <span class="title">التقرير 1</span>
-         </a>
-       </li>
-        <li>
-         <a href="/teacher/report2" target="_blank">
-           <i class="fa fa-file-o" aria-hidden="true"></i>
-           <span class="title">التقرير 2</span>
-         </a>
-       </li>
-        <li>
-         <a href="/teacher/report3" target="_blank">
-           <i class="fa fa-file-o" aria-hidden="true"></i>
-           <span class="title">التقرير 3</span>
-         </a>
-       </li>
-      </ul>
+        <ul class="sub-menu">
+          <li>
+           <a href="#/getStudentBySubject">
+             <i class="fa fa-file-o" aria-hidden="true"></i>
+             <span class="title">كشف باسماء الطلبة</span>
+           </a>
+          </li>
+          <li>
+           <a href="/teacher/report3" target="_blank">
+             <i class="fa fa-file-o" aria-hidden="true"></i>
+             <span class="title">كشف الغياب والحضور</span>
+           </a>
+         </li>
+        </ul>
     </li>
 <!--    <li>
       <a href="javascript:;">

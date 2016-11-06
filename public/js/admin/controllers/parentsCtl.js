@@ -84,7 +84,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','NationalityServ'
  }]);
 
   //ParenttCtl
-  app.controller('ParenttCtl',['$scope','$state','ParentServ','toastr','Upload',function($scope,state,ParentServ,toastr,Upload){
+  app.controller('ParenttCtl',['$scope','$state','ParentServ','NationalityServ','toastr','Upload',function($scope,state,ParentServ,NationalityServ,toastr,Upload){
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
@@ -94,6 +94,7 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','NationalityServ'
       }
       ParentServ.getParensBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
         $scope.parents = response.data.result;
+          console.log(response.data.result[0].nationality);
         $scope.total = response.data.count;
       }, function(response) {
         console.log("Something went wrong");
