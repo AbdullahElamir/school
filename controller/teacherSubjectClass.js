@@ -62,7 +62,8 @@ module.exports = {
   
   getTeacherClassSubject : function(id,cb){
     model.Year.findOne({active : 1}, function(err, activeYear){
-      if(!err){
+      if(!err && activeYear){
+        console.log(activeYear._id);
         model.TSC.find({teacher:id,status:1,year:activeYear._id}).populate('classRoom subject').exec(function(err, teachers){
           if(!err){
             cb(teachers);
