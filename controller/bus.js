@@ -32,7 +32,7 @@ module.exports = {
   },
 
   //getAllBusesCount
-  getAllBusesCount :function(school,imit,page,cb){
+  getAllBusesCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);

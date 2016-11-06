@@ -3,7 +3,7 @@ var ClassRoom1 = null;
 
 module.exports = {
 
-  getAllClassRoom :function(schoolcb){
+  getAllClassRoom :function(school,cb){
     model.ClassRoom.find({school:school,status:1}).populate('room')
     .exec(function(err, ClassRoomes){
       if(!err){
@@ -32,7 +32,7 @@ module.exports = {
     });
   },
 
-  getAllClassRoomCount :function(limit,page,cb){
+  getAllClassRoomCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
