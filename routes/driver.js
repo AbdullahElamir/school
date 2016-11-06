@@ -8,26 +8,27 @@ user.school="5801f550e4de0e349c8714c2";
 
 /*GET all Drivers By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  DriverMgr.getAllDriversBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(drivers){
+  DriverMgr.getAllDriversBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(drivers){
     res.send(drivers);
   });
 });
 
 /* GET all Drivers */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  DriverMgr.getAllDriversCount(req.params.limit,req.params.page,function(drivers){
+  DriverMgr.getAllDriversCount(user.school,req.params.limit,req.params.page,function(drivers){
     res.send(drivers);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res){
-  DriverMgr.getAllDrivers(function(drivers){
+  DriverMgr.getAllDrivers(user.school,function(drivers){
     res.send(drivers);
   });
 });
 
 /* Add new driver  */
 router.post('/add',function(req, res) {
+  req.body.school = user.school;
   DriverMgr.addDriver(req.body,function(newDriver){
     res.send(newDriver);
   });

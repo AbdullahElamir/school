@@ -22,7 +22,7 @@ router.post('/data/add', userHelpers.isLogin ,function(req, res) {
 // GET Classes And ClassRooms by System ID
 router.get('/data/:id/:year',userHelpers.isLogin , function(req, res) {
   systemMgr.getClassesAndClassRoomsBySystem(req.params.id,req.params.year,function(data){
-    res.send(data); 
+    res.send(data);
   });
 });
 
@@ -34,7 +34,7 @@ router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  systemMgr.getAllSystem(function(system){
+  systemMgr.getAllSystem(user.school,function(system){
     res.send(system);
   });
 });
@@ -44,7 +44,7 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
   req.body.school=user.school;
   systemMgr.addSystem(req.body,function(system){
     res.send(system);
-  }); 
+  });
 });
 
 // Edit system by id

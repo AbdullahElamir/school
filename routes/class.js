@@ -5,17 +5,17 @@ var classRoomMgr = require("../controller/classRoom");
 var userHelpers = require("../controller/userHelpers");
 var user={};
 user.school="5801f550e4de0e349c8714c2";
-    
+
 // get all class rooms by class and year
 router.get('/classRooms/:clas/:year',userHelpers.isLogin , function(req, res) {
-  classMgr.getAllClassRoomsByClassAndYear(req.params.clas,req.params.year,function(classRooms){
+  classMgr.getAllClassRoomsByClassAndYear(user.school,req.params.clas,req.params.year,function(classRooms){
     res.send(classRooms);
   });
 });
- 
+
 //get all classes by year
 router.get('/classes/:id', userHelpers.isLogin ,function(req, res) {
-  classMgr.getClassesByYear(user.school,req.params.id,function(classes){
+  classMgr.getClassesByYear(user.school,user.school,req.params.id,function(classes){
     res.send(classes);
   });
 });
@@ -39,11 +39,11 @@ router.get('/classRooms/:year', userHelpers.isLogin ,function(req, res) {
     var _class = [];
     var obj=[];
     var k = 0;
-    if( classes.length == 0 ){
+    if( classes.length === 0 ){
       res.send(_class);
     } else {
       for( var i in  classes){
-        if(obj[classes[i].class._id]==undefined){
+        if(obj[classes[i].class._id]===undefined){
           obj[classes[i].class._id]=k;
           k+=1;
           _class.push({_id:classes[i].class._id,name:classes[i].class.name,classRooms:[]});

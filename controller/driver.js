@@ -3,24 +3,24 @@ var driver = null;
 
 module.exports = {
 
-  getAllDrivers :function(cb){
-    model.Driver.find({},function(err, drivers){
+  getAllDrivers :function(school,cb){
+    model.Driver.find({school:school},function(err, drivers){
       if(!err){
         cb(drivers);
       }else{
         // console.log(err);
         cb(null);
-      } 
+      }
     });
   },
 
   //getAllDriversBySearchValue
-  getAllDriversBySearchValue :function(searchValue,limit,page,cb){
+  getAllDriversBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Driver.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]},function(err, count){
-      model.Driver.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,drivers){
+    model.Driver.count({school:school,$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]},function(err, count){
+      model.Driver.find({school:school,$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,drivers){
         if(!err){
           cb({result:drivers,count:count});
         }else{
@@ -32,7 +32,7 @@ module.exports = {
   },
 
   //getAllDriversCount
-  getAllDriversCount :function(limit,page,cb){
+  getAllDriversCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
@@ -114,5 +114,5 @@ module.exports = {
       }
     });
   }
-  
+
 };

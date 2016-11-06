@@ -3,8 +3,8 @@ var ClassRoom1 = null;
 
 module.exports = {
 
-  getAllClassRoom :function(cb){
-    model.ClassRoom.find({status:1}).populate('room')
+  getAllClassRoom :function(schoolcb){
+    model.ClassRoom.find({school:school,status:1}).populate('room')
     .exec(function(err, ClassRoomes){
       if(!err){
         cb(ClassRoomes);
@@ -16,12 +16,12 @@ module.exports = {
   },
 
   //getAllClassRoomesBySearchValue
-  getAllClassRoomesBySearchValue :function(searchValue,limit,page,cb){
+  getAllClassRoomesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.ClassRoom.count({name:new RegExp(searchValue, 'i')}).populate('room').exec(function(err, count){
-      model.ClassRoom.find({name:new RegExp(searchValue, 'i')}).populate('room').limit(limit).skip(page*limit).exec(function(err,ClassRoomes){
+    model.ClassRoom.count({school:school,name:new RegExp(searchValue, 'i')}).populate('room').exec(function(err, count){
+      model.ClassRoom.find({school:school,name:new RegExp(searchValue, 'i')}).populate('room').limit(limit).skip(page*limit).exec(function(err,ClassRoomes){
         if(!err){
           cb({result:ClassRoomes,count:count});
         }else{
@@ -36,8 +36,8 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.ClassRoom.count({status:1},function(err, count){
-      model.ClassRoom.find({status:1}).populate('room').limit(limit).skip(page*limit).exec(function(err,ClassRoomes){
+    model.ClassRoom.count({school:school,status:1},function(err, count){
+      model.ClassRoom.find({school:school,status:1}).populate('room').limit(limit).skip(page*limit).exec(function(err,ClassRoomes){
         if(!err){
           cb({result:ClassRoomes,count:count});
         }else{

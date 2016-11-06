@@ -3,24 +3,24 @@ var bus = null;
 
 module.exports = {
 
-  getAllBuses :function(cb){
-    model.Bus.find({},function(err, buses){
+  getAllBuses :function(school,cb){
+    model.Bus.find({school:school},function(err, buses){
       if(!err){
         cb(buses);
       }else{
         // console.log(err);
         cb(null);
-      } 
+      }
     });
   },
 
   //getAllBusesBySearchValue
-  getAllBusesBySearchValue :function(searchValue,limit,page,cb){
+  getAllBusesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Bus.count({$or :[{name:new RegExp(searchValue, 'i')},{plateNumber:new RegExp(searchValue, 'i')}]},function(err, count){
-      model.Bus.find({$or :[{name:new RegExp(searchValue, 'i')},{plateNumber:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,buses){
+    model.Bus.count({school:school,$or :[{name:new RegExp(searchValue, 'i')},{plateNumber:new RegExp(searchValue, 'i')}]},function(err, count){
+      model.Bus.find({school:school,$or :[{name:new RegExp(searchValue, 'i')},{plateNumber:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,buses){
         if(!err){
           cb({result:buses,count:count});
         }else{
@@ -32,12 +32,12 @@ module.exports = {
   },
 
   //getAllBusesCount
-  getAllBusesCount :function(limit,page,cb){
+  getAllBusesCount :function(school,imit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Bus.count({},function(err, count){
-      model.Bus.find({}).limit(limit).skip(page*limit).exec(function(err,buses){
+    model.Bus.count({school:school},function(err, count){
+      model.Bus.find({school:school}).limit(limit).skip(page*limit).exec(function(err,buses){
         if(!err){
           cb({result:buses,count:count});
         }else{
@@ -114,5 +114,5 @@ module.exports = {
       }
     });
   }
-  
+
 };
