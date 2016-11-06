@@ -21,6 +21,7 @@
     "jsreport": "^0.13.4",
     "lodash": "^4.13.1",
     "mongoose": "^4.5.0",
+    "mongoose-auto-increment": "^5.0.1",
     "mongoose-timestamp": "^0.5.0",
     "morgan": "~1.6.1",
     "passport": "^0.3.2",

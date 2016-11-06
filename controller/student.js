@@ -27,7 +27,7 @@ module.exports = {
       } else {  
         if(!err){
           var lastYear = new Date();
-          var number = students[0].studentid
+          var number = students[0].studentid 
           var s = number+"";
           while (s.length < 4) s = "0" + s;
           var year = gender.toString()+lastYear.getFullYear()+""+s
