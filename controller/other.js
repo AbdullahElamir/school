@@ -3,12 +3,11 @@ var Other = null;
 
 module.exports = {
 
-  getAllOther :function(cb){
-    model.Other.find({status:1}, function(err, Others){
+  getAllOther :function(school,cb){
+    model.Other.find({school:school,status:1}, function(err, Others){
       if(!err){
         cb(Others);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -18,7 +17,6 @@ module.exports = {
       if(!err){
         cb(Others);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -29,23 +27,21 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
   },
 
   //getAllOthersBySearchValue
-  getAllOthersBySearchValue :function(searchValue,limit,page,cb){
+  getAllOthersBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Other.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Other.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Others){
+    model.Other.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
+      model.Other.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Others){
         if(!err){
           cb({result:Others,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -53,16 +49,15 @@ module.exports = {
   },
 
   //getAllOthersCount
-  getAllOtherCount :function(limit,page,cb){
+  getAllOtherCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Other.count({},function(err, count){
-      model.Other.find({}).limit(limit).skip(page*limit).exec(function(err,Others){
+    model.Other.count({school:school},function(err, count){
+      model.Other.find({school:school}).limit(limit).skip(page*limit).exec(function(err,Others){
         if(!err){
           cb({result:Others,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -87,7 +82,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -99,7 +93,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -110,7 +103,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -121,7 +113,6 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        // console.log(err);
         cb(3);
       }
     });
@@ -132,7 +123,6 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        // console.log(err);
         cb(3);
       }
     });

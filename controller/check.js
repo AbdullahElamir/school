@@ -3,12 +3,11 @@ var Check = null;
 
 module.exports = {
 
-  getAllCheck :function(cb){
-    model.Check.find({status:1}, function(err, Checks){
+  getAllCheck :function(school,cb){
+    model.Check.find({school:school,status:1}, function(err, Checks){
       if(!err){
         cb(Checks);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -18,7 +17,6 @@ module.exports = {
       if(!err){
         cb(Checks);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -30,23 +28,21 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
   },
 
   //getAllChecksBySearchValue
-  getAllChecksBySearchValue :function(searchValue,limit,page,cb){
+  getAllChecksBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Check.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Check.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Checks){
+    model.Check.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
+      model.Check.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Checks){
         if(!err){
           cb({result:Checks,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -54,16 +50,15 @@ module.exports = {
   },
 
   //getAllChecksCount
-  getAllCheckCount :function(limit,page,cb){
+  getAllCheckCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Check.count({},function(err, count){
-      model.Check.find({}).limit(limit).skip(page*limit).exec(function(err,Checks){
+    model.Check.count({school:school},function(err, count){
+      model.Check.find({school:school}).limit(limit).skip(page*limit).exec(function(err,Checks){
         if(!err){
           cb({result:Checks,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -88,7 +83,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -100,7 +94,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -111,7 +104,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -122,7 +114,6 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        // console.log(err);
         cb(3);
       }
     });
@@ -133,7 +124,6 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        // console.log(err);
         cb(3);
       }
     });

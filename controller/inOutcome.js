@@ -3,7 +3,7 @@ var model = require('../models');
 module.exports = {
 
   //getAllInOutcomesBySearchValue
-  getAllInOutcomesBySearchValue :function(cat,type,searchValue,limit,page,startDate,finishDate,cb){
+  getAllInOutcomesBySearchValue :function(school,cat,type,searchValue,limit,page,startDate,finishDate,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
@@ -16,23 +16,21 @@ module.exports = {
     d2.setMinutes(59);
     d2.setSeconds(59);
     if(cat === "all"){
-      model.InOutcome.count({title:new RegExp(searchValue, 'i'),type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
-        model.InOutcome.find({title:new RegExp(searchValue, 'i'),type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
+      model.InOutcome.count({school:school,title:new RegExp(searchValue, 'i'),type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
+        model.InOutcome.find({school:school,title:new RegExp(searchValue, 'i'),type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
           if(!err){
             cb({result:InOutcomes,count:count});
           }else{
-//            console.log(err);
             cb(null);
           }
         });
       });
     }else{
-      model.InOutcome.count({title:new RegExp(searchValue, 'i'),inOutcomeType:cat,type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
-        model.InOutcome.find({title:new RegExp(searchValue, 'i'),inOutcomeType:cat,type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
+      model.InOutcome.count({school:school,title:new RegExp(searchValue, 'i'),inOutcomeType:cat,type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
+        model.InOutcome.find({school:school,title:new RegExp(searchValue, 'i'),inOutcomeType:cat,type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
           if(!err){
             cb({result:InOutcomes,count:count});
           }else{
-//            console.log(err);
             cb(null);
           }
         });
@@ -41,7 +39,7 @@ module.exports = {
   },
 
   //getAllInOutcomesCount
-  getAllInOutcomeCount :function(cat,type,limit,page,startDate,finishDate,cb){
+  getAllInOutcomeCount :function(school,cat,type,limit,page,startDate,finishDate,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
@@ -53,15 +51,12 @@ module.exports = {
     d2.setHours(23);
     d2.setMinutes(59);
     d2.setSeconds(59);
-//    console.log(d1);
-//    console.log(d2);
     if(cat === "all"){
       model.InOutcome.count({type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
         model.InOutcome.find({type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
           if(!err){
             cb({result:InOutcomes,count:count});
           }else{
-//            console.log(err);
             cb(null);
           }
         });
@@ -72,7 +67,6 @@ module.exports = {
           if(!err){
             cb({result:InOutcomes,count:count});
           }else{
-//            console.log(err);
             cb(null);
           }
         });
@@ -98,7 +92,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-//        console.log(err);
         cb(false);
       }
     });
@@ -110,7 +103,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-//        console.log(err);
         cb(false);
       }
     });
@@ -121,7 +113,6 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-//        console.log(err);
         cb(3);
       }
     });

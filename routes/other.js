@@ -6,7 +6,7 @@ var user={};
 user.school="57fb8d5606d14d29e32b3c86";
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  OtherMgr.getAllOther(function(other){
+  OtherMgr.getAllOther(user.school,function(other){
     res.send(other);
   });
 });
@@ -19,6 +19,7 @@ router.post('/student', userHelpers.isLogin ,function(req, res) {
 
 // add new other
 router.post('/add', userHelpers.isLogin ,function(req, res) {
+  req.body.school = user.school;
   OtherMgr.addOther(req.body,function(other){
     res.send(other);
   });
@@ -59,14 +60,14 @@ router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
 });
 //get all other By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  OtherMgr.getAllOthersBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(other){
+  OtherMgr.getAllOthersBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(other){
     res.send(other);
   });
 });
 
 // get all other
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  OtherMgr.getAllOtherCount(req.params.limit,req.params.page,function(other){
+  OtherMgr.getAllOtherCount(user.school,req.params.limit,req.params.page,function(other){
     res.send(other);
   });
 });

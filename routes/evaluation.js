@@ -6,20 +6,20 @@ var user={};
 user.school="5801f550e4de0e349c8714c2";
 
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  evaMgr.getAllEvaluationsBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(eva){
+  evaMgr.getAllEvaluationsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(eva){
     res.send(eva);
   });
 });
 
 // get all eva
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  evaMgr.getAllEvaluationCount(req.params.limit,req.params.page,function(eva){
+  evaMgr.getAllEvaluationCount(user.school,req.params.limit,req.params.page,function(eva){
     res.send(eva);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  evaMgr.getAllEvaluation(function(eva){
+  evaMgr.getAllEvaluation(user.school,function(eva){
     res.send(eva);
   });
 });
