@@ -77,7 +77,7 @@ module.exports = {
   },
 
   addStupro : function(body,cb){
-    var obj = body
+    var obj = body;
     Stupro = new model.Stupro(obj);
     Stupro.save(function(err){
       if (!err) {
@@ -90,10 +90,10 @@ module.exports = {
   },
 
   updateStupro : function(id,body,cb){
-    var obj = body
+    var obj = body;
     model.Stupro.findOneAndUpdate({_id:id}, obj, function(err) {
       if (!err) {
-        cb(true)
+        cb(true);
       } else {
         // console.log(err);
         cb(false);
@@ -174,7 +174,7 @@ module.exports = {
       student:students._id,
       year:classRoom.year,
       classRoom:classRoom._id
-    }
+    };
     model.Stupro.findOneAndUpdate(obj,{description:"NULL"}, function(err, stup){
       if(!err){
         if(stup){
