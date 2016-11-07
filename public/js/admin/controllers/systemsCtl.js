@@ -63,6 +63,12 @@
       {value:4,name:"نهائي"},
       {value:5,name:"دور ثاني"}
     ];
+    $scope.nums = [
+      {value:1,name:"الفترة الاولى"},
+      {value:2,name:"الفترة الثانية"},
+      {value:3,name:"الفترة التالثة"},
+      {value:4,name:"الفترة الرابعة"}
+    ];
 
     $scope.editSystem = function(){
       for(var f in $scope.newSystemForm.sys_class){
@@ -346,6 +352,12 @@
       {value:4,name:"نهائي"},
       {value:5,name:"دور ثاني"}
     ];
+    $scope.nums = [
+      {value:1,name:"الفترة الاولى"},
+      {value:2,name:"الفترة الثانية"},
+      {value:3,name:"الفترة التالثة"},
+      {value:4,name:"الفترة الرابعة"}
+    ];
 
     //save submit
     $scope.newSystem = function(){
@@ -598,7 +610,9 @@
         "<input required disable-validation-message='' class='form-control name' ng-model='newSystemForm.sys_class["+i+"].exams[\"0\"].name' s='0' type='text' placeholder='اسم الامتحان' />"+
         "</div>"+
         "<div class='form-group'>"+
-        "<input required disable-validation-message='' min='0' pattern='[+]?[0-9]+' type='number' class='form-control semester' ng-model='newSystemForm.sys_class["+i+"].exams[\"0\"].semester' placeholder='الفترة'>"+
+        "<select ng-options='num.value as num.name for num in nums' required disable-validation-message='' class='form-control semester' ng-model='newSystemForm.sys_class["+i+"].exams[\"0\"].semester'>"+
+            "<option selected disabled value=''>اختر الغترة</option>"+
+        "</select>"+
         "</div>"+
         "<div class='form-group'>"+
         "<select ng-options='type.value as type.name for type in types' required disable-validation-message='' class='form-control' ng-model='newSystemForm.sys_class["+i+"].exams[\"0\"].type'>"+

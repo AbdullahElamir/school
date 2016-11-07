@@ -9,16 +9,14 @@ var Conversation = new Schema({
       type : {type: String,default:""}
     }]
   },
-  messages:{ 
+  messages:{
     type: [{
       text: {type: String,default:""},
       seen: {type: Boolean, default:false},
       date: {type: Date, default: Date.now },
-      from: {
-        type: {
-          id : {type: Schema.Types.ObjectId},
-          type : {type: String,default:""}
-        }
+      from: { 
+        id : {type: Schema.Types.ObjectId},
+        type : {type: String,default:""}
       }
     }]
   }

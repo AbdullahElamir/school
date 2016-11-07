@@ -3,12 +3,11 @@ var Vaccination = null;
 
 module.exports = {
 
-  getAllVaccination :function(cb){
-    model.Vaccination.find({status:1}, function(err, Vaccinations){
+  getAllVaccination :function(school,cb){
+    model.Vaccination.find({school:school,status:1}, function(err, Vaccinations){
       if(!err){
         cb(Vaccinations);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -18,7 +17,6 @@ module.exports = {
       if(!err){
         cb(Vaccinations);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -29,23 +27,21 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
   },
 
   //getAllVaccinationsBySearchValue
-  getAllVaccinationsBySearchValue :function(searchValue,limit,page,cb){
+  getAllVaccinationsBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Vaccination.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Vaccination.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Vaccinations){
+    model.Vaccination.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
+      model.Vaccination.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Vaccinations){
         if(!err){
           cb({result:Vaccinations,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -53,16 +49,15 @@ module.exports = {
   },
 
   //getAllVaccinationsCount
-  getAllVaccinationCount :function(limit,page,cb){
+  getAllVaccinationCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Vaccination.count({},function(err, count){
-      model.Vaccination.find({}).limit(limit).skip(page*limit).exec(function(err,Vaccinations){
+    model.Vaccination.count({school:school},function(err, count){
+      model.Vaccination.find({school:school}).limit(limit).skip(page*limit).exec(function(err,Vaccinations){
         if(!err){
           cb({result:Vaccinations,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -87,7 +82,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -99,7 +93,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -110,7 +103,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -121,7 +113,6 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        // console.log(err);
         cb(3);
       }
     });
@@ -132,7 +123,6 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        // console.log(err);
         cb(3);
       }
     });

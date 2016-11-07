@@ -17,7 +17,7 @@ function setTS(system,sys_class,classRoom_id,yearId,counterOfClassRooms,sumOfCla
 }
 
 function systemSetting(system,sys_class,yearId,counterOfClassRooms,sumOfClassRooms,cb){
-  
+
   if( system.flag != 1 ){
     model.Fees.find({year:yearId,id_class:sys_class.id_class._id}).exec(function(err,fessesResult){
       if(!err){
@@ -111,7 +111,6 @@ function addMarks(examI,custom,cb,counter,sum){
 }
 
 function saveExam(examI,cb){
-//  console.log(examI);
   var exam = new model.Exam(examI);
   exam.save(function(err,examResult){
     if(!err){
@@ -126,7 +125,6 @@ function saveExam(examI,cb){
         subIndex++;
       }
     }else{
-      // console.log(err);
       cb(false);
       return;
     }
@@ -136,7 +134,6 @@ function saveMark(subjectsI,cb){
   var marksSubject = new model.MarksSub(subjectsI);
   marksSubject.save(function(err){
     if(err){
-      // console.log(err);
       cb(false);
       return;
     }
@@ -193,7 +190,6 @@ var addSystem = function(body,cb){
       }
       cb(true);
     } else {
-      // console.log(err);
       cb(false);
     }
   });
@@ -210,14 +206,17 @@ function saveTS(tsObject,classRoom_id,counterFinalClassRooms,sumFinalClassRooms,
         return;
       }
     } else {
-      // console.log(err);
       cb(false);
     }
   });
 }
 
 function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb){
-  var obj = {year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft , teacher:classRoom.teacher };
+  var obj;
+  if(classRoom._id != "")
+    obj = {_id: classRoom._id ,year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft , teacher:classRoom.teacher };
+  else
+    obj = {year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft , teacher:classRoom.teacher };
   var classRoomSaved = new model.ClassRoom(obj);
   classRoomSaved.save(function(err,result){
     if (!err) {
@@ -225,7 +224,6 @@ function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb
         saveTS(ts[i],result._id,counterFinalClassRooms,sumFinalClassRooms,cb);
       }
     } else {
-      // console.log(err);
       cb(false);
     }
   });
@@ -245,7 +243,6 @@ function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,
           }
         }
       } else {
-        // console.log(err);
         cb(false);
         return;
       }
@@ -263,19 +260,16 @@ function updateFees(fees,system,cb){
               system.flag = 1;
               addNewSystemSetting(system,cb);
             } else {
-              // console.log(err);
               cb(false);
               return;
             }
           });
         } else {
-          // console.log(err);
           cb(false);
           return;
         }
       });
     } else {
-      // console.log(err);
       cb(false);
       return;
     }
@@ -305,13 +299,12 @@ module.exports = {
       cb(false);
     }
   },
-  
-  getAllSystem :function(cb){
-    model.System.find({}, function(err, systems){
+
+  getAllSystem :function(school,cb){
+    model.System.find({school:school}, function(err, systems){
       if(!err){
         cb(systems);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -330,7 +323,6 @@ module.exports = {
         if(!err){
           cb({result:systems,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -345,7 +337,6 @@ module.exports = {
       if(!err){
         cb(subjects);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
