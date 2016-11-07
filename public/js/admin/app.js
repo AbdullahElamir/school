@@ -1202,6 +1202,21 @@
           });
         }]
       }
+    }).state('inbox',{
+      url: '/inbox',
+      templateUrl: 'admin/pages/inbox/conversations',
+      data: {pageTitle: 'البريد الوارد'},
+      controller: 'inboxCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/inboxCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);

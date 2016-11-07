@@ -778,5 +778,12 @@
       };
       return self;
     }]);
+  
+    app.service('InboxServ',['$http',function($http){
+      var self = {
+        
+      };
+      return self;
+    }]);
 
 }());
