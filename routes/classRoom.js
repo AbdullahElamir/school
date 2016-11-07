@@ -122,13 +122,14 @@ router.put('/message/:classRoomID',function(req, res) {
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  classRoomMgr.getAllClassRoom(function(Croom){
+  classRoomMgr.getAllClassRoom(user.school,function(Croom){
     res.send(Croom);
   });
 });
 
 // add new  class room
 router.post('/add', userHelpers.isLogin ,function(req, res) {
+  req.body.school = user.school;
   classRoomMgr.addClassRoom(req.body,function(Croom){
     res.send(Croom);
   });
@@ -231,14 +232,14 @@ router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res)
 
 //get all claas Rooms By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  classRoomMgr.getAllClassRoomesBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(Crooms){
+  classRoomMgr.getAllClassRoomesBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(Crooms){
     res.send(Crooms);
   });
 });
 
 // get all class rooms
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  classRoomMgr.getAllClassRoomCount(req.params.limit,req.params.page,function(Croom){
+  classRoomMgr.getAllClassRoomCount(user.school,req.params.limit,req.params.page,function(Croom){
     res.send(Croom);
   });
 });

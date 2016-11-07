@@ -8,7 +8,6 @@ module.exports = {
       if(!err){
         cb(classes);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -22,7 +21,7 @@ module.exports = {
         .exec(function(err, system){
           if(!err){
             var classes = [];
-            if( system.sys_class.length == 0 ){
+            if( system.sys_class.length === 0 ){
               cb([]);
               return;
             }
@@ -41,7 +40,7 @@ module.exports = {
       }
     });
   },
-  
+
   getExamsByYearAndClass : function(school,year,clas,cb){
     model.Year.findOne({school:school , _id:year}, function(err, year_obj){
       if(!err){
@@ -57,7 +56,7 @@ module.exports = {
       }
     });
   },
-  
+
   //getAllClassesBySearchValue
   getAllClassesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
@@ -68,7 +67,6 @@ module.exports = {
         if(!err){
           cb({result:classes,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
@@ -85,19 +83,17 @@ module.exports = {
         if(!err){
           cb({result:classes,count:count});
         }else{
-          // console.log(err);
           cb(null);
         }
       });
     });
   },
 
-  getAllClassRoomsByClassAndYear : function(clas,year,cb){
-    model.ClassRoom.find({class:clas,year:year},function(err, classRooms){
+  getAllClassRoomsByClassAndYear : function(school,clas,year,cb){
+    model.ClassRoom.find({school:school,class:clas,year:year},function(err, classRooms){
       if(!err){
         cb(classRooms);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -108,7 +104,6 @@ module.exports = {
       if(!err){
         cb(classes);
       }else{
-        // console.log(err);
         cb(null);
       }
     });
@@ -136,13 +131,11 @@ module.exports = {
 
   addClass : function(body,cb){
     var obj =body;
-//    console.log(body);
     class1 = new model.Class(obj);
     class1.save(function(err){
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -154,7 +147,6 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
         cb(false);
       }
     });
@@ -165,7 +157,6 @@ module.exports = {
       if (!err) {
         cb(2);
       } else {
-        // console.log(err);
         cb(3);
       }
     });

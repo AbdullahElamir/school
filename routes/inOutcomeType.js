@@ -6,7 +6,7 @@ var user={};
 user.school="57fb8d5606d14d29e32b3c86";
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  inOutcomeTypesMgr.getAllInOutcomeTypes(function(inOutcomeTypes){
+  inOutcomeTypesMgr.getAllInOutcomeTypes(user.school,function(inOutcomeTypes){
     res.send(inOutcomeTypes);
   });
 });
@@ -35,14 +35,14 @@ router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
 
 //get all inOutcomeTypes By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  inOutcomeTypesMgr.getAllInOutcomeTypesBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(inOutcomeTypes){
+  inOutcomeTypesMgr.getAllInOutcomeTypesBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(inOutcomeTypes){
     res.send(inOutcomeTypes);
   });
 });
 
 // get all inOutcomeTypes
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  inOutcomeTypesMgr.getAllInOutcomeTypesCount(req.params.limit,req.params.page,function(inOutcomeTypes){
+  inOutcomeTypesMgr.getAllInOutcomeTypesCount(user.school,req.params.limit,req.params.page,function(inOutcomeTypes){
     res.send(inOutcomeTypes);
   });
 });
