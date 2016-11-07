@@ -255,7 +255,7 @@
         return $http.put('/year/edit/'+id,obj);
       },
       'getAllYears': function(){
-        return $http.get('/year/all');
+        return $http.get('/year/all/thing');
       },
       'activate': function(id,active){
         return $http.put('/year/active/'+id,{active:active});

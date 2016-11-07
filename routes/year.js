@@ -5,11 +5,14 @@ var userHelpers = require("../controller/userHelpers");
 var user={};
 user.school="5801f550e4de0e349c8714c2";
 
-router.get('/all', userHelpers.isLogin ,function(req, res) {
+router.get('/all/thing', userHelpers.isLogin ,function(req, res) {
+  console.log(user.school);
   yearMgr.getAllYear(user.school,function(years){
+    console.log(years);
     res.send(years);
   });
 });
+
 //get the activated year
 router.get('/active', userHelpers.isLogin ,function(req, res) {
   yearMgr.getActiveYear(user.school,function(year){
@@ -80,6 +83,8 @@ router.get('/:id',userHelpers.isLogin , function(req, res) {
     res.send(years);
   });
 });
+
+
 
 
 module.exports = router;
