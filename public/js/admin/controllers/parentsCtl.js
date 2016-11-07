@@ -158,10 +158,26 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','NationalityServ'
 
     $scope.openSendMessageDialog = function(id) {
       $scope.idParent = id;
+      ParentServ.getChildrenOfParent($scope.idParent).then(function(response) {
+        $scope.AllChildren = response.data;
+        $scope.selection = [];
+      }, function(response) {
+        console.log("Something went wrong");
+      });
+    };
+    
+    $scope.selection = [];
+    $scope.toggleSelection = function(stu) {
+      var idx = $scope.selection.indexOf(stu._id);
+      if (idx > -1) {
+        $scope.selection.splice(idx, 1);
+      } else {
+        $scope.selection.push(stu._id);
+      }
     };
 
     $scope.sendMessageToParent = function() {
-      ParentServ.sendMessageToParent($scope.idParent,$scope.message).then(function(response){
+      ParentServ.sendMessageToParent($scope.idParent,$scope.selection,$scope.message).then(function(response){
         if(response.data === true){
           $scope.message.title = "";
           $scope.message.description = "";
@@ -169,19 +185,6 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','NationalityServ'
           toastr.success('تم إرسال الرسالة بنجاح');
         }
       },function(response) {
-        console.log("Somthing went wrong");
-      });
-    };
-
-    $scope.sendMessageAllParentInSchoole = function(){
-      ParentServ.sendMessageAllParentInSchoole($scope.message).then(function(response){
-        if(response.data === true){
-          $scope.message.title = "";
-          $scope.message.description = "";
-          $('#messageAllModal').modal('hide');
-          toastr.success('تم إرسال الرسالة لجميع أولياء الأمور بنجاح');
-        }
-      },function(response){
         console.log("Somthing went wrong");
       });
     };

@@ -217,7 +217,11 @@ function saveTS(tsObject,classRoom_id,counterFinalClassRooms,sumFinalClassRooms,
 }
 
 function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb){
-  var obj = {year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft , teacher:classRoom.teacher };
+  var obj;
+  if(classRoom._id != "")
+    obj = {_id: classRoom._id ,year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft , teacher:classRoom.teacher };
+  else
+    obj = {year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft , teacher:classRoom.teacher };
   var classRoomSaved = new model.ClassRoom(obj);
   classRoomSaved.save(function(err,result){
     if (!err) {

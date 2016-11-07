@@ -26,7 +26,7 @@
         return $http.get('/student/class/'+searchText+'/'+_class);
       },
       'sendMessageToParentOfStudent': function(idStudent,message){
-        return $http.put('/student/message/'+idStudent,message);
+        return $http.put('/student/message/'+idStudent,{message:message,type:"ADMIN"});
       },
       'openFile': function(idStudent){
         return $http.put('/student/openFile/'+idStudent);
@@ -222,14 +222,14 @@
       'getAllParents': function(){
         return $http.get('/parent/all');
       },
-      'sendMessageToParent': function(idParent,message){
-        return $http.put('/parent/message/'+idParent,message);
-      },
-      'sendMessageAllParentInSchoole' : function(message){
-        return $http.put('/parent/message/all',message);
+      'sendMessageToParent': function(idParent,children,message){
+        return $http.put('/parent/message/'+idParent,{message:message,children:children});
       },
       'getAllNationality' : function(){
         return $http.get('/student/nationality');
+      },
+      'getChildrenOfParent' : function(parentId){
+        return $http.get('/student/children/all/'+parentId);
       }
     };
     return self;
@@ -309,7 +309,7 @@
         return $http.put('/classRoom/students/'+classRoom,students);
       },
       'sendMessageToParentsOfClassRoom': function(idClassRoom,message){
-        return $http.put('/classRoom/message/'+idClassRoom,message);
+        return $http.put('/classRoom/message/'+idClassRoom,{message:message,type:"ADMIN"});
       },
       'getStudentsByClassRoomAndYearAndSearchValue': function(classRoom,year,text){
         return $http.get('/classRoom/student/'+classRoom+'/'+year+'/'+text);

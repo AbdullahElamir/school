@@ -3,7 +3,7 @@
   var app = angular.module('adminSchool');
   app.controller('system_settings',['$scope','$state','SystemServ','YearServ','toastr','RoomServ','TeacherServ','ClassRoomsServ',function($scope,state,SystemServ,YearServ,toastr,RoomServ,TeacherServ,ClassRoomsServ){
     $scope.addDataRow = function(index){                    
-      var obj = { year:$scope.year._id , name:"" , room:"" , class:$scope.data.sys_class[index].id_class._id , sheft:"" , teacher:""  };
+      var obj = {_id:"", year:$scope.year._id , name:"" , room:"" , class:$scope.data.sys_class[index].id_class._id , sheft:"" , teacher:""  };
       $scope.data.sys_class[index].classRooms.push(obj);
       var tsArray = [];
       for(var i in $scope.data.sys_class[index].selected){
