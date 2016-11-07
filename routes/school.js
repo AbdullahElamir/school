@@ -32,8 +32,9 @@ router.get('/info', userHelpers.isLogin ,function(req, res) {
 });
 
 //edit school information
-router.put('/edit',function(req, res) {
-  schoolMgr.updateSchool(user.school,req.body,function(school){
+router.put('/edit/:id',function(req, res) {
+  console.log(req.body);
+  schoolMgr.updateSchool(req.params.id,req.body,function(school){
     res.send(school);
   });
 });

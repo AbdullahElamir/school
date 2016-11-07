@@ -3,8 +3,7 @@ var router = express.Router();
 var studentMgr = require("../controller/student");
 var classRoomMgr = require("../controller/classRoom");
 var stuproMgr = require("../controller/studentProcess");
-var MessageMgr = require("../controller/message");
-var parentMsg = require("../controller/parentMsg");
+var conversationMgr = require("../controller/conversation");
 var userHelpers = require("../controller/userHelpers");
 yearMgr = require("../controller/year");
 var TSCMgr = require("../controller/teacherSubjectClass");
@@ -15,8 +14,14 @@ var fs = require("fs");
 var path = require("path");
 var user={};
 user.school="5801f550e4de0e349c8714c2";
+user._id="57df0e437fb8ad40ec8b48c2"; // --> user _id in session (Admin or Teacher)
 
 
+router.get('/children/all/:parentId',userHelpers.isLogin , function(req, res) {
+  studentMgr.getStudentByParentId(user.school,req.params.parentId,function(children){
+    res.send(children);
+  });
+});
 
 router.get('/report1',userHelpers.isLogin , function(req, res) {
   jsreport.render({
@@ -126,18 +131,13 @@ router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
   });
 });
 
-/* Send Message to Parent of Student by studentID */
+/* Send Message From User _id (Admin or Teacher) to Parent of Student by studentID */
 router.put('/message/:studentId',userHelpers.isLogin,function(req, res) {
-  MessageMgr.addMsgParent(req.body,function(msg){
-    studentMgr.getStudentId(req.params.studentId,function(stu){
-      parentMsg.addParentMsg({parent:stu.parent[0],msg:msg._id},function(send){
-        res.send(send);
-      });
+  studentMgr.getStudentId(req.params.studentId,function(stu){
+    conversationMgr.sendMsgFromPersonToPersonWithStudents([req.params.studentId],user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
+      res.send(send);
     });
   });
-  // console.log("#1 : " + req.params.studentId); // student id
-  // console.log("#2 : " + req.body.title);       // message title
-  // console.log("#3 : " + req.body.description); // message description
 });
 
 /*GET all Student By Search Value*/
