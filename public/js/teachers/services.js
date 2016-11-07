@@ -22,7 +22,7 @@
         return $http.put('/studentsProcesses/grades/edit/'+idStudent+'/'+subjectID+'/'+classRoomID,examsGrades);
       },
       'sendMessageToParentOfStudent': function(idStudent,message){
-        return $http.put('/student/message/'+idStudent,message);
+        return $http.put('/student/message/'+idStudent,{message:message,type:"TEACHER"});
       }
     };
     return self;
@@ -34,7 +34,7 @@
         return $http.get('/classRoom/teacher/'+id);
       },
       'sendMessageToParentsOfClassRoom': function(idClassRoom,message){
-        return $http.put('/classRoom/message/'+idClassRoom,message);
+        return $http.put('/classRoom/message/'+idClassRoom,{message:message,type:"TEACHER"});
       }
     };
     return self;

@@ -192,5 +192,15 @@ module.exports = {
         cb(null);
       }
     });
+  },
+  getStudentByParentId:function(school,id,cb){
+    model.Student.find({parent:id,school:school},function(err, students){
+      if(!err){
+        cb(students);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
   }
 };

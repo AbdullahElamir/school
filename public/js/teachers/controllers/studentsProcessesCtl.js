@@ -2,10 +2,10 @@
   'use strict';
   var app = angular.module('teachersSchool');
 
-  app.controller('StudentsProcessesCtl',['$scope','studentsProcessesServ','ClassRoomServ','toastr',function($scope,studentsProcessesServ,ClassRoomServ,toastr){
+  app.controller('StudentsProcessesCtl',['$scope','ClassRoomServ','toastr',function($scope,ClassRoomServ,toastr){
     // id of teacher
 
-    var id ='581dc7f29412642befc3be02';
+    var id ='57df0e437fb8ad40ec8b48c2';
 
     ClassRoomServ.getTeacherClassRooms(id).then(function(response){
       $scope.classRooms = response.data;
