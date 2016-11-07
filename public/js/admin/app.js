@@ -10,6 +10,19 @@
     'mgcrea.ngStrap',
     'nya.bootstrap.select'
   ]);
+  app.constant('$examTypes',[
+    {value:1,name:"متوسط"},
+    {value:2,name:"مجموع متوسطات"},
+    {value:3,name:"اساسي"},
+    {value:4,name:"نهائي"},
+    {value:5,name:"دور ثاني"}
+  ]);
+  app.constant('$semestersNum',[
+    {value:1,name:"الفترة الاولى"},
+    {value:2,name:"الفترة الثانية"},
+    {value:3,name:"الفترة التالثة"},
+    {value:4,name:"الفترة الرابعة"}
+  ]);
   /* Setup global settings */
   app.factory('settings',['$rootScope',function($rootScope){
     // supported languages
