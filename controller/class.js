@@ -153,11 +153,23 @@ module.exports = {
   },
 
   deleteClass : function(id,cb){
-    model.Class.remove({_id:id}, function(err) {
-      if (!err) {
-        cb(2);
-      } else {
-        cb(3);
+    model.System.distinct("sys_class.id_class",function(err,classes){
+      var deleteFun = function(){
+        model.Class.remove({_id:id},function(err) {
+          if (!err) {
+            cb(2);
+          } else {
+            cb(3);
+          }
+        });
+      };
+      for(var cls=0; cls < classes.length ; cls++){
+        if(classes[cls]==id){
+          cb(1);
+          break;
+        }else if(cls === classes.length-1){
+          deleteFun();
+        }
       }
     });
   }
