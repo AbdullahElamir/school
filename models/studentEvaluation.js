@@ -13,5 +13,4 @@ var Stueva = new Schema({
 });
 
 Stueva.plugin(timestamps);
-Stueva.index({ name: 'text'});
 exports.Stueva = mongoose.model('Stueva', Stueva);

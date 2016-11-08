@@ -3,8 +3,8 @@ var Evaluation = null;
 
 module.exports = {
 
-  getAllEvaluation :function(cb){
-    model.Evaluation.find({status:1}, function(err, Evaluations){
+  getAllEvaluation :function(school,cb){
+    model.Evaluation.find({school:school,status:1}).sort({'_id':-1}).exec(function(err, Evaluations){
       if(!err){
         cb(Evaluations);
       }else{

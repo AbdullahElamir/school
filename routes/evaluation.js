@@ -19,7 +19,7 @@ router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  evaMgr.getAllEvaluation(function(eva){
+  evaMgr.getAllEvaluation(user.school,function(eva){
     res.send(eva);
   });
 });

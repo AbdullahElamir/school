@@ -154,6 +154,18 @@ module.exports = {
         });
       }
     });
-  }
+  },
+  getSubjectById :function(school,id,cb){
+    model.Subject.find({_id:{$in:id},school:school,status:1})
+    .populate('clas')
+    .exec(function(err, Subjects){
+      if(!err){
+        cb(Subjects);
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
   
 };

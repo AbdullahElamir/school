@@ -149,10 +149,6 @@ module.exports = {
 
   },
   setReason : function (id,reason,date,cb){
-// <<<<<<< HEAD
-//     console.log(reason);
-//     model.Attendance.findOneAndUpdate({_id:id,date:date}, {reason:reason.reason}, function(err,result) {
-// =======
     var d1 = new Date(date);
     var d2 = new Date(date);
     d1.setHours(0);
@@ -184,15 +180,4 @@ module.exports = {
       }
     });
   }
-  // deleteAttendance : function(id,cb){
-  //   model.Attendance.remove({_id:id}, function(err,result) {
-  //     if (!err) {
-  //       cb(2);
-  //     } else {
-  //       console.log(err);
-  //       cb(3);
-  //     }
-  //   });
-  // }
-
 };
