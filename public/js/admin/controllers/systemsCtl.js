@@ -49,26 +49,15 @@
   }]);
 
 //editSystemCtl
-  app.controller('editSystemCtl',['$scope','$stateParams','ClassServ','SystemServ','SubjectServ','$state','toastr','$compile',function($scope,$stateParams,ClassServ,SystemServ,SubjectServ,$state,toastr,$compile){
+  app.controller('editSystemCtl',['$scope','$stateParams','ClassServ','SystemServ','SubjectServ','$state','toastr','$compile','$examTypes','$semestersNum',function($scope,$stateParams,ClassServ,SystemServ,SubjectServ,$state,toastr,$compile,$examTypes,$semestersNum){
     ClassServ.getAllClasses().then(function(response){
       $scope.getAllClasses = response.data;
     },function(response){
       console.log("Somthing went wrong");
     });
 
-    $scope.types = [
-      {value:1,name:"متوسط"},
-      {value:2,name:"مجموع متوسطات"},
-      {value:3,name:"اساسي"},
-      {value:4,name:"نهائي"},
-      {value:5,name:"دور ثاني"}
-    ];
-    $scope.nums = [
-      {value:1,name:"الفترة الاولى"},
-      {value:2,name:"الفترة الثانية"},
-      {value:3,name:"الفترة التالثة"},
-      {value:4,name:"الفترة الرابعة"}
-    ];
+    $scope.types = $examTypes;
+    $scope.nums = $semestersNum;
 
     $scope.editSystem = function(){
       for(var f in $scope.newSystemForm.sys_class){
@@ -324,7 +313,7 @@
 
   }]);
 
-  app.controller('newSystemCtl',['$scope','ClassServ','SubjectServ','SystemServ','$state','toastr','$compile','AdminServ','SchoolServ',function($scope,ClassServ,SubjectServ,SystemServ,$state,toastr,$compile,AdminServ,SchoolServ){
+  app.controller('newSystemCtl',['$scope','ClassServ','SubjectServ','SystemServ','$state','toastr','$compile','AdminServ','SchoolServ','$examTypes','$semestersNum',function($scope,ClassServ,SubjectServ,SystemServ,$state,toastr,$compile,AdminServ,SchoolServ,$examTypes,$semestersNum){
     $scope.superAdminStatus;
     $scope.schools=[];
     AdminServ.getuser().then(function(response){
@@ -345,19 +334,8 @@
       console.log("Somthing went wrong");
     });
 
-    $scope.types = [
-      {value:1,name:"متوسط"},
-      {value:2,name:"مجموع متوسطات"},
-      {value:3,name:"اساسي"},
-      {value:4,name:"نهائي"},
-      {value:5,name:"دور ثاني"}
-    ];
-    $scope.nums = [
-      {value:1,name:"الفترة الاولى"},
-      {value:2,name:"الفترة الثانية"},
-      {value:3,name:"الفترة التالثة"},
-      {value:4,name:"الفترة الرابعة"}
-    ];
+    $scope.types = $examTypes;
+    $scope.nums = $semestersNum;
 
     //save submit
     $scope.newSystem = function(){
