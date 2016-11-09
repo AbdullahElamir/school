@@ -12,6 +12,7 @@ var jsreport = require("jsreport");
 var subjectMgr = require("../controller/subject");
 var stuEvaMgr = require("../controller/studentEvaluation");
 var evaMgr = require("../controller/evaluation");
+var months = require("../months");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
@@ -44,9 +45,8 @@ router.get('/genrateStudentId',function(req, res){
 
 
 
-router.get('/report2/:stupro',userHelpers.isLogin , function(req, res) {
-  getData(req.params.stupro,function(data){
-    console.log('data');
+router.get('/report2/:stupro/:month',userHelpers.isLogin , function(req, res) {
+  getData(req.params.stupro,req.params.month,function(data){
     jsreport.render({
       template: {
         engine: "jsrender",
@@ -56,7 +56,7 @@ router.get('/report2/:stupro',userHelpers.isLogin , function(req, res) {
           orientation: "landscape"
         },
         content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report2.html"), "utf8")
-      },data:{result:data}
+      },data:{result:data.arr,info:data.info}
     }).then(function(resp) {
       resp.stream.pipe(res);
     }).catch(function(e) {
@@ -219,33 +219,39 @@ function getSubject(sys_class,id,cb){
     }
   });
 }
-function getData(id,cb){
+function getData(id,month,cb){
   stuproMgr.getStuPro(id,function(stupro){
     if(stupro){
       classRoomMgr.getClassRoomId(stupro.classRoom,function(claaes){
+        var info = {
+          student:stupro.student.name,
+          class:claaes.name,
+          month:months[month-1].name
+        };
+
         yearMgr.getYearId(stupro.year,function(system){
           TSCMgr.getTeacherSubject(stupro.classRoom,stupro.year,function(teacherSub){
             var arr=[];
             getSubject(system.system.sys_class,claaes.class._id,function(subjectsID){
               subjectMgr.getSubjectById(user.school,subjectsID,function(subjects){
-                for(i in subjects){
+                subjects.forEach(function(sub,i) {
                   var name = ".................";
-                  if(teacherSub[subjects[i]._id]){
-                    name = teacherSub[subjects[i]._id].name;
+                  if(teacherSub[sub._id]){
+                    name = teacherSub[sub._id].name;
                   }
-                  getEvaluation(stupro,subjects[i]._id,1,function(eva){
+                  getEvaluation(stupro,sub._id,month,function(evaluation){
                     var obj = {
-                      subject:subjects[i].name,
+                      subject:sub.name,
                       teacher:name,
-                      // first:eva.first,
-                      // second:eva.second
+                      first:evaluation.first,
+                      second:evaluation.second
                     }
                     arr.push(obj);
                     if(i == subjects.length-1){
-                      cb(arr);
+                      cb({arr:arr,info:info});
                     }
                   });
-                } 
+                });
               });
               
             });
@@ -273,15 +279,14 @@ function getEvaluation(stupro,subject,month,cb){
           }else{
             obj1.rating=null;
           }
-          first[eva[j]._id]=obj1;
+          first.push(obj1);
           if(evaluationS[eva[j]._id]){
             obj2.rating=evaluationF[eva[j]._id];
           }else{
             obj2.rating=null;
           }
-          second[eva[j]._id]=obj2;
+          second.push(obj2);
           if(j==eva.length-1){
-            console.log(j);
             cb({first:first,second:second});
           }
         }

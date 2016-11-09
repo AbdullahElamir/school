@@ -46,13 +46,13 @@
         <div class="col-xs-12">
           <img src="http://localhost:3000/img/schoolLogo.png" width="13%" class="img-responsive" alt="Responsive image">
           <h4 class="text-center font-bold">تقرير شهري عن المستوى التعليمي للطالب</h4>
-          <h5 class="text-center" style="padding-top:10px;">شهر<span>: ........................... </span></h5>
+          <h5 class="text-center" style="padding-top:10px;">شهر<span>: {{:info.month}} </span></h5>
           <div class="row">
             <div class="col-xs-6">
-              <h5 class="text-center">اســــــــــــم الطالب<span>........................... </span></h5>
+              <h5 class="text-center">اســــــــــــم الطالب <span> : {{:info.student}} </span></h5>
             </div>
             <div class="col-xs-6">
-              <h5 class="text-center">الفصل<span>........................... </span></h5>
+              <h5 class="text-center">الفصل <span> : {{:info.class}} </span></h5>
             </div>
           </div>
           <table class="table table-bordered table-condensed">
@@ -76,10 +76,16 @@
               </tr>
             </thead>
             <tbody>
+            <script type="text/javascript">var i = 1;</script>
             {{for  result}}
               <tr>
                 <td>
-                  <h5 style="padding-top:40px;">1</h5>
+                  <h5 style="padding-top:40px;">
+                    <script type="text/javascript">
+                      document.write(i++);
+                    </script>
+
+                  </h5>
                 </td>
                 <td>
                   <br>
@@ -100,38 +106,37 @@
                       </tr>
                     </thead>
                     <tbody>
+                      {{for first}}
                       <tr>
-                        <td>المستوى</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{:name}}</td>
+                        {{if rating==1}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                          {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==2}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==3}}
+
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==4}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==5}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
                       </tr>
-                      <tr>
-                        <td>المشاركة</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>الواجبات</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>السلوك</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                      {{/for}}
                     </tbody>
                   </table>
                 </td>
@@ -149,38 +154,37 @@
                       </tr>
                     </thead>
                     <tbody>
+                      {{for second}}
                       <tr>
-                        <td>المستوى</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{:name}}</td>
+                        {{if rating==1}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                          {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==2}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==3}}
+
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==4}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==5}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
                       </tr>
-                      <tr>
-                        <td>المشاركة</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>الواجبات</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>السلوك</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                      {{/for}}
                     </tbody>
                   </table>
                 </td>

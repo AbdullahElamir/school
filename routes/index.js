@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var school = require('../controller/school') ;
 
-//var login = require('../controller/login')(router);
+var login = require('../controller/login')(router);
 var user={};
 user.school="5801f550e4de0e349c8714c2";
 
