@@ -3,11 +3,12 @@
   var app = angular.module('adminSchool');
   app.controller('system_settings',['$scope','$state','SystemServ','YearServ','toastr','RoomServ','TeacherServ','ClassRoomsServ',function($scope,state,SystemServ,YearServ,toastr,RoomServ,TeacherServ,ClassRoomsServ){
     $scope.addDataRow = function(index){                    
-      var obj = { year:$scope.year._id , name:"" , room:"" , class:$scope.data.sys_class[index].id_class._id , sheft:"" , teacher:""  };
+      var obj = {_id:"", year:$scope.year._id , name:"" , room:"" , class:$scope.data.sys_class[index].id_class._id , sheft:"" , teacher:""  };
       $scope.data.sys_class[index].classRooms.push(obj);
       var tsArray = [];
       for(var i in $scope.data.sys_class[index].selected){
-        tsArray.push({ subject : { _id: $scope.data.sys_class[index].selected[i].id_subject._id , name : $scope.data.sys_class[index].selected[i].id_subject.name } , teacher:"" , year:$scope.year._id });
+
+        tsArray.push({ subject : { _id: $scope.data.sys_class[index].selected[i]._id , name : $scope.data.sys_class[index].selected[i].id_subject.name } , teacher:"" , year:$scope.year._id });
       }
       $scope.data.sys_class[index].ts.push(tsArray);
     };

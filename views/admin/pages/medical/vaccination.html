@@ -86,13 +86,6 @@
                   <textarea class="form-control input-sm" rows="6" cols="12" ng-model="newVaccinationsForm.description" placeholder="وصف" required></textarea>
                 </div>
               </div>
-              <div class="col-xs-12" ng-if="superAdminStatus">
-                <div class="form-group">
-                  <select class="form-control input-sm" ng-model="newVaccinationsForm.school" ng-options="school._id as school.name for school in getAllSchools" required>
-                    <option value="" disabled selected>الرجاء اختر المدرسة</option>
-                  </select>
-                </div>
-              </div>
             </div>
           </div>
           <div class="modal-footer">

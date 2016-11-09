@@ -62,15 +62,48 @@ module.exports = {
   
   getTeacherClassSubject : function(id,cb){
     model.Year.findOne({active : 1}, function(err, activeYear){
-      if(!err){
-        model.TSC.find({teacher:id,status:1,year:activeYear._id}).populate('classRoom subject').exec(function(err, teachers){
-          if(!err){
-            cb(teachers);
+      if(!err && activeYear){
+        console.log(id);
+        model.ClassRoom.findOne({teacher:id,status:1,year:activeYear._id}).exec(function(err, teacherClass){
+          console.log(teacherClass);
+          var q = {
+            status:1,
+            year:activeYear._id
+          };
+          if(!err && teacherClass){
+            q.classRoom = teacherClass._id
           }else{
-            // console.log(err);
-            cb(null);
+            q.teacher=id
           }
+          console.log(q);
+          model.TSC.find(q).populate('classRoom subject').exec(function(err, teachers){
+            if(!err){
+              cb(teachers);
+            }else{
+              // console.log(err);
+              cb(null);
+            }
+          });
+
         });
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
+  getTeacherSubject : function(classroom,year,cb){
+    console.log(classroom+" ammm "+year);
+    model.TSC.find({year:year,classRoom:classroom}).exec(function(err, teachers){
+      if(!err){
+        console.log(teachers);
+        var teacherSub=[];
+        for(var t in teachers){
+          teacherSub[teachers[t].subject]=teachers[t].teacher;
+          if(t == teachers.length-1){
+            cb(teacherSub);    
+          }
+        }
       }else{
         // console.log(err);
         cb(null);

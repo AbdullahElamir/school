@@ -99,13 +99,19 @@ module.exports = {
   },
 
   deleteRoom : function(id,cb){
-    model.Room.remove({_id:id}, function(err) {
-      if (!err) {
-        cb(2);
-      } else {
-        cb(3);
-      }
-    });
-  }
-
-};
+    model.Room.find({customer:id}, function(err,resul) {
+      if(resul.length > 0){
+        cb({result:1});
+      } else{
+          model.Room.remove({_id:id}, function(err) {
+            if (!err) {
+              cb({result:2});
+            } else {
+              // console.log(err);
+              cb({result:3});
+            }
+          });
+        }
+      });
+    },
+  };

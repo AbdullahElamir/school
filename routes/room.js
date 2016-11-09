@@ -50,7 +50,7 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 // delete room by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   roomMgr.deleteRoom(req.params.id,function(room){
-    res.send({result:room});
+    res.send(room);
   });
 });
 
