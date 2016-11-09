@@ -16,13 +16,17 @@ router.get('/report1/:id', function(req, res) {
   stdProcessMgr.getStudentClassRoom(classRoom,function(result){
     /*console.log(result.stu);*/
     var student =[]
-    for(i in result.stu){
-      console.log(result.stu[i].description);
-      result.stu[i].student.description = 'sss';
-      student.push(result.stu[i].student)
-      /*console.log(result.stu[i]);*/
-    }
-    
+    console.log(result.stu);
+    result.stu.forEach(function(stud){
+      var obj={
+        name : stud.student.name,
+        description:stud.description,
+        studentId:stud.student.studentrealid
+      }
+      student.push(obj);
+      console.log("sssssssss");
+      console.log(student);
+    });
 
     jsreport.render({
       template: {
