@@ -4,9 +4,9 @@ var autoIncrement = require('mongoose-auto-increment');
 var Schema = mongoose.Schema;
 
 var Student = new Schema({
-  name: { type: String, index: true, default: "Unknown user"},
+  name: { type: String, default: "Unknown user"},
   motherName: { type: String, default:"NULL"},
-  nid: {type: String, index: true},
+  nid: {type: String},
   birth_day:{ type:Date, required: [true, 'birth date required']},
   startDate:{ type:Date, required: [true, 'start date required']},
   finishDate:{ type:Date },
@@ -26,7 +26,7 @@ var Student = new Schema({
   status: {type: Number, default:1},
   active: {type: Number, default:1},
   studentid:{ type: Number,default:1},
-  studentrealid:{ type: Number,unique : true},
+  studentrealid:{ type: Number},
 });
 
 Student.plugin(autoIncrement.plugin, {

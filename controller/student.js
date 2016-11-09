@@ -138,6 +138,7 @@ module.exports = {
   },
 
   addStudent : function(body,cb){
+    console.log(body);
     var obj = body;
     obj.startDate = new Date();
     student = new model.Student(obj);
@@ -146,7 +147,7 @@ module.exports = {
       if (!err) {
         cb(true);
       } else {
-        // console.log(err);
+        console.log(err);
         cb(false);
       }
     });

@@ -11,27 +11,25 @@ user.school="5801f550e4de0e349c8714c2";
 var path = require("path");
 var jsreport = require("jsreport");
 
-router.get('/report1', function(req, res) {
-  var classRoom = "5820bf9e05ad1f38400a93a9"
+router.get('/report1/:id', function(req, res) {
+  var classRoom = req.params.id;
   stdProcessMgr.getStudentClassRoom(classRoom,function(result){
-    obj = [{stdid:"123125342",name:"abdullah",notes:"welcome"},
-    {stdid:"123125342",name:"abdullah",notes:"welcome"},
-    {stdid:"",name:"",notes:""},
-    {stdid:"",name:"",notes:""},
-    {stdid:"",name:"",notes:""},
-    {stdid:"",name:"",notes:""},
-    {stdid:"",name:"",notes:""},
-    {stdid:"",name:"",notes:""},
-    {stdid:"",name:"",notes:""},
-    {stdid:"",name:"",notes:""}]
+    /*console.log(result.stu);*/
+    var student =[]
+    for(i in result.stu){
+      console.log(result.stu[i].description);
+      result.stu[i].student.description = 'sss';
+      student.push(result.stu[i].student)
+      /*console.log(result.stu[i]);*/
+    }
+    
 
-  
     jsreport.render({
       template: {
         engine: "jsrender",
         recipe: "phantom-pdf",
         content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report1.html"), "utf8")
-      },data:{result:obj}
+      },data:{result:student}
     }).then(function(resp) {
       resp.stream.pipe(res);
     }).catch(function(e) {

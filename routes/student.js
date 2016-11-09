@@ -163,10 +163,12 @@ router.get('/all', userHelpers.isLogin ,function(req, res){
 /* Add new student  */
 router.post('/add',function(req, res) {
   studentMgr.StudentGenerateId(req.body.gender,function(result){
-    console.log(result);
+    
       req.body.school=user.school;
       req.body.studentrealid =result
+      console.log(req.body);
       studentMgr.addStudent(req.body,function(student){
+
       res.send(student);
     });
   });
@@ -207,10 +209,14 @@ router.put('/closeFile/:id',userHelpers.isLogin,function(req, res) {
 
 /* Edit student by id  */
 router.put('/edit/:id',userHelpers.isLogin,function(req, res) {
-  studentMgr.updateStudent(req.params.id,req.body,function(student){
-    res.send(student);
+  studentMgr.StudentGenerateId(req.body.gender,function(result){
+    req.body.studentrealid =result
+    studentMgr.updateStudent(req.params.id,req.body,function(student){
+      res.send(student);
+    });
   });
 });
+
 
 /* Delete student by id  */
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {

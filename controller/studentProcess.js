@@ -112,6 +112,7 @@ module.exports = {
     });
   },
   getStudentClassRoom : function(classRoom,cb){
+    
     model.Stupro.find({classRoom:classRoom}).distinct('_id',function(err, Stupros){
       if(!err){
         model.Stupro.find({classRoom:classRoom}).populate('student')
