@@ -6,14 +6,13 @@ var userHelpers = require("../controller/userHelpers");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
+
 var path = require("path");
 var jsreport = require("jsreport");
 
 router.get('/report1', function(req, res) {
   var classRoom = "5820bf9e05ad1f38400a93a9"
-  stdProcessMgr.getStudentClassRoom(classRoom,function(result){
+  stdProcessMgr.getStudentClassRoom(req.user.school,classRoom,function(result){
     obj = [{stdid:"123125342",name:"abdullah",notes:"welcome"},
     {stdid:"123125342",name:"abdullah",notes:"welcome"},
     {stdid:"",name:"",notes:""},
@@ -78,14 +77,14 @@ router.get('/report3', function(req, res) {
 
 /*GET all Teachers By Search Value*/
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  teacherMgr.getAllTeacher(user.school,function(teacher){
+  teacherMgr.getAllTeacher(req.user.school,function(teacher){
     res.send(teacher);
   });
 });
 
 /* Add new teacher  */
 router.post('/add', userHelpers.isLogin ,function(req, res) {
-  req.body.school=user.school;
+  req.body.school=req.user.school;
   teacherMgr.addTeacher(req.body,function(teacher){
     res.send(teacher);
   });
@@ -129,14 +128,14 @@ router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   });
 });
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  teacherMgr.getTeachersBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
+  teacherMgr.getTeachersBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 /* GET all teacher */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  teacherMgr.getAllTeacherCount(user.school,req.params.limit,req.params.page,function(teacher){
+  teacherMgr.getAllTeacherCount(req.user.school,req.params.limit,req.params.page,function(teacher){
     res.send(teacher);
   });
 });

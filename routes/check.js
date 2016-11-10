@@ -2,18 +2,17 @@ var express = require('express');
 var router = express.Router();
 var CheckMgr = require("../controller/check");
 var userHelpers = require("../controller/userHelpers");
-var user={};
-user.school="57fb8d5606d14d29e32b3c86";
+
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  CheckMgr.getAllCheck(user.school,function(check){
+  CheckMgr.getAllCheck(req.user.school,function(check){
     res.send(check);
   });
 });
 
 // add new check
 router.post('/add', userHelpers.isLogin ,function(req, res) {
-  req.body.school = user.school;
+  req.body.school = req.user.school;
   CheckMgr.addCheck(req.body,function(check){
     res.send(check);
   });
@@ -61,14 +60,14 @@ router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
 });
 //get all check By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  CheckMgr.getAllChecksBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(check){
+  CheckMgr.getAllChecksBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(check){
     res.send(check);
   });
 });
 
 // get all check
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  CheckMgr.getAllCheckCount(user.school,req.params.limit,req.params.page,function(check){
+  CheckMgr.getAllCheckCount(req.user.school,req.params.limit,req.params.page,function(check){
     res.send(check);
   });
 });

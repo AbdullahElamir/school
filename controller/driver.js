@@ -4,7 +4,13 @@ var driver = null;
 module.exports = {
 
   getAllDrivers :function(school,cb){
-    model.Driver.find({school:school},function(err, drivers){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Driver.find(q,function(err, drivers){
       if(!err){
         cb(drivers);
       }else{
@@ -19,8 +25,18 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Driver.count({school:school,$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]},function(err, count){
-      model.Driver.find({school:school,$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,drivers){
+    var q= {
+      status:1,
+      $or :[
+        {name:new RegExp(searchValue, 'i')},
+        {nid:new RegExp(searchValue, 'i')}
+      ]
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Driver.count(q,function(err, count){
+      model.Driver.find(q).limit(limit).skip(page*limit).exec(function(err,drivers){
         if(!err){
           cb({result:drivers,count:count});
         }else{
@@ -36,8 +52,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Driver.count({},function(err, count){
-      model.Driver.find({}).limit(limit).skip(page*limit).exec(function(err,drivers){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Driver.count(q,function(err, count){
+      model.Driver.find(q).limit(limit).skip(page*limit).exec(function(err,drivers){
         if(!err){
           cb({result:drivers,count:count});
         }else{
@@ -49,7 +71,13 @@ module.exports = {
   },
 
   getAllDriversStatus:function(status,cb){
-    model.Driver.find({status:status},function(err, drivers){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Driver.find(q,function(err, drivers){
       if(!err){
         cb(drivers);
       }else{
@@ -59,8 +87,15 @@ module.exports = {
     });
   },
 
-  getDriverName :function(name,cb){
-    model.Driver.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
+  getDriverName :function(school,name,cb){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Driver.find(q).limit(30).exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{

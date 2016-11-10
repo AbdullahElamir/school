@@ -2,17 +2,16 @@ var express = require('express');
 var router = express.Router();
 var TSCMgr = require("../controller/teacherSubjectClass");
 var userHelpers = require("../controller/userHelpers");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
+
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  TSCMgr.getAllTSC(function(TSCs){
+  TSCMgr.getAllTSC(req.user.school,function(TSCs){
     res.send(TSCs);
   });
 });
 
 router.get('/status/:status', userHelpers.isLogin ,function(req, res) {
-  TSCMgr.getAllTSCStatus(req.params.status,function(TSCs){
+  TSCMgr.getAllTSCStatus(req.user.school,req.params.status,function(TSCs){
     res.send(TSCs);
   });
 });

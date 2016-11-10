@@ -2,33 +2,32 @@ var express = require('express');
 var router = express.Router();
 var DriverMgr = require("../controller/driver");
 var userHelpers = require("../controller/userHelpers");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
+
 
 
 /*GET all Drivers By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  DriverMgr.getAllDriversBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(drivers){
+  DriverMgr.getAllDriversBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(drivers){
     res.send(drivers);
   });
 });
 
 /* GET all Drivers */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  DriverMgr.getAllDriversCount(user.school,req.params.limit,req.params.page,function(drivers){
+  DriverMgr.getAllDriversCount(req.user.school,req.params.limit,req.params.page,function(drivers){
     res.send(drivers);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res){
-  DriverMgr.getAllDrivers(user.school,function(drivers){
+  DriverMgr.getAllDrivers(req.user.school,function(drivers){
     res.send(drivers);
   });
 });
 
 /* Add new driver  */
 router.post('/add',function(req, res) {
-  req.body.school = user.school;
+  req.body.school = req.user.school;
   DriverMgr.addDriver(req.body,function(newDriver){
     res.send(newDriver);
   });

@@ -4,7 +4,13 @@ var bus = null;
 module.exports = {
 
   getAllBuses :function(school,cb){
-    model.Bus.find({school:school},function(err, buses){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Bus.find(q,function(err, buses){
       if(!err){
         cb(buses);
       }else{
@@ -19,8 +25,18 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Bus.count({school:school,$or :[{name:new RegExp(searchValue, 'i')},{plateNumber:new RegExp(searchValue, 'i')}]},function(err, count){
-      model.Bus.find({school:school,$or :[{name:new RegExp(searchValue, 'i')},{plateNumber:new RegExp(searchValue, 'i')}]}).limit(limit).skip(page*limit).exec(function(err,buses){
+    var q= {
+      status:1,
+      $or :[
+        {name:new RegExp(searchValue, 'i')},
+        {plateNumber:new RegExp(searchValue, 'i')}
+      ]
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Bus.count(q,function(err, count){
+      model.Bus.find(q).limit(limit).skip(page*limit).exec(function(err,buses){
         if(!err){
           cb({result:buses,count:count});
         }else{
@@ -36,8 +52,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Bus.count({school:school},function(err, count){
-      model.Bus.find({school:school}).limit(limit).skip(page*limit).exec(function(err,buses){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Bus.count(q,function(err, count){
+      model.Bus.find(q).limit(limit).skip(page*limit).exec(function(err,buses){
         if(!err){
           cb({result:buses,count:count});
         }else{
@@ -49,7 +71,13 @@ module.exports = {
   },
 
   getAllBusesStatus:function(status,cb){
-    model.Bus.find({status:status},function(err, buses){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Bus.find(q,function(err, buses){
       if(!err){
         cb(buses);
       }else{
@@ -60,7 +88,14 @@ module.exports = {
   },
 
   getBusesName :function(name,cb){
-    model.Bus.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Bus.find(q).limit(30).exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{

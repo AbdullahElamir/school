@@ -2,18 +2,17 @@ var express = require('express');
 var router = express.Router();
 var VaccinationMgr = require("../controller/vaccination");
 var userHelpers = require("../controller/userHelpers");
-var user={};
-user.school="57fb8d5606d14d29e32b3c86";
+
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  VaccinationMgr.getAllVaccination(user.school,function(vaccination){
+  VaccinationMgr.getAllVaccination(req.user.school,function(vaccination){
     res.send(vaccination);
   });
 });
 
 // add new vaccination
 router.post('/add', userHelpers.isLogin ,function(req, res) {
-  req.body.school = user.school;
+  req.body.school = req.user.school;
   VaccinationMgr.addVaccination(req.body,function(vaccination){
     res.send(vaccination);
   });
@@ -60,14 +59,14 @@ router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
 });
 //get all vaccination By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  VaccinationMgr.getAllVaccinationsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(vaccination){
+  VaccinationMgr.getAllVaccinationsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(vaccination){
     res.send(vaccination);
   });
 });
 
 // get all vaccination
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  VaccinationMgr.getAllVaccinationCount(user.school,req.params.limit,req.params.page,function(vaccination){
+  VaccinationMgr.getAllVaccinationCount(req.user.school,req.params.limit,req.params.page,function(vaccination){
     res.send(vaccination);
   });
 });

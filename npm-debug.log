@@ -1,34 +1,34 @@
 0 info it worked if it ends with ok
 1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'start' ]
-2 info using npm@3.5.2
-3 info using node@v4.2.6
+2 info using npm@3.8.6
+3 info using node@v5.12.0
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle school@0.0.0~prestart: school@0.0.0
 6 silly lifecycle school@0.0.0~prestart: no script for prestart, continuing
 7 info lifecycle school@0.0.0~start: school@0.0.0
 8 verbose lifecycle school@0.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle school@0.0.0~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/abdullah/school/node_modules/.bin:/usr/local/heroku/bin:/usr/local/heroku/bin:/home/abdullah/bin:/home/abdullah/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-10 verbose lifecycle school@0.0.0~start: CWD: /home/abdullah/school
+9 verbose lifecycle school@0.0.0~start: PATH: /usr/lib/node_modules/npm/bin/node-gyp-bin:/home/abdoo/programm/school/node_modules/.bin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+10 verbose lifecycle school@0.0.0~start: CWD: /home/abdoo/programm/school
 11 silly lifecycle school@0.0.0~start: Args: [ '-c',
 11 silly lifecycle   'eslint controller/ models/ views/ routes/  & node ./bin/www ' ]
 12 silly lifecycle school@0.0.0~start: Returned: code: 1  signal: null
 13 info lifecycle school@0.0.0~start: Failed to exec start script
 14 verbose stack Error: school@0.0.0 start: `eslint controller/ models/ views/ routes/  & node ./bin/www `
 14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (/usr/share/npm/lib/utils/lifecycle.js:232:16)
-14 verbose stack     at emitTwo (events.js:87:13)
-14 verbose stack     at EventEmitter.emit (events.js:172:7)
-14 verbose stack     at ChildProcess.<anonymous> (/usr/share/npm/lib/utils/spawn.js:24:14)
-14 verbose stack     at emitTwo (events.js:87:13)
-14 verbose stack     at ChildProcess.emit (events.js:172:7)
-14 verbose stack     at maybeClose (internal/child_process.js:821:16)
-14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+14 verbose stack     at EventEmitter.<anonymous> (/usr/lib/node_modules/npm/lib/utils/lifecycle.js:239:16)
+14 verbose stack     at emitTwo (events.js:100:13)
+14 verbose stack     at EventEmitter.emit (events.js:185:7)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+14 verbose stack     at emitTwo (events.js:100:13)
+14 verbose stack     at ChildProcess.emit (events.js:185:7)
+14 verbose stack     at maybeClose (internal/child_process.js:850:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:215:5)
 15 verbose pkgid school@0.0.0
-16 verbose cwd /home/abdullah/school
-17 error Linux 4.4.0-45-generic
+16 verbose cwd /home/abdoo/programm/school
+17 error Linux 4.4.0-38-generic
 18 error argv "/usr/bin/nodejs" "/usr/bin/npm" "start"
-19 error node v4.2.6
-20 error npm  v3.5.2
+19 error node v5.12.0
+20 error npm  v3.8.6
 21 error code ELIFECYCLE
 22 error school@0.0.0 start: `eslint controller/ models/ views/ routes/  & node ./bin/www `
 22 error Exit status 1

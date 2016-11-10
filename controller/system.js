@@ -301,7 +301,13 @@ module.exports = {
   },
 
   getAllSystem :function(school,cb){
-    model.System.find({school:school}, function(err, systems){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.System.find(q, function(err, systems){
       if(!err){
         cb(systems);
       }else{
@@ -315,8 +321,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.System.count({school:school,status:1},function(err, count){
-      model.System.find({school:school,status:1}).limit(limit).skip(page*limit)
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.System.count(q,function(err, count){
+      model.System.find(q).limit(limit).skip(page*limit)
       .populate('sys_class')
       .populate('selected')
       .exec(function(err,systems){

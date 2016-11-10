@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 var TaskMgr = require("../controller/task");
 var userHelpers = require("../controller/userHelpers");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
+
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   TaskMgr.getAllTask(function(task){

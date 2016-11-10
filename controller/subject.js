@@ -4,7 +4,13 @@ var subject = null;
 module.exports = {
 
   getAllSubject :function(school,cb){
-    model.Subject.find({school:school,status:1})
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Subject.find(q)
     .populate('clas')
     .exec(function(err, Subjects){
       if(!err){
@@ -33,29 +39,26 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    if( clas != "all" ){
-      model.Subject.count({school:school,$and :[{name:new RegExp(searchValue, 'i')},{clas:clas}]},function(err, count){
-        model.Subject.find({school:school,$and :[{name:new RegExp(searchValue, 'i')},{clas:clas}]}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
-          if(!err){
-            cb({result:subjects,count:count});
-          }else{
-            // console.log(err);
-            cb(null);
-          }
-        });
-      });
-    } else {
-      model.Subject.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){ 
-        model.Subject.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
-          if(!err){
-            cb({result:subjects,count:count});
-          }else{
-            // console.log(err);
-            cb(null);
-          }
-        });
-      });
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
     }
+    if( clas != "all" ){
+      q.clas=clas;
+    }
+    model.Subject.count(q,function(err, count){
+      model.Subject.find(q).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
+        if(!err){
+          cb({result:subjects,count:count});
+        }else{
+          // console.log(err);
+          cb(null);
+        }
+      });
+    });
   },
 
   //getAllCustomerCount
@@ -63,8 +66,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Subject.count({school:school,status:1},function(err, count){
-      model.Subject.find({school:school,status:1}).limit(limit).skip(page*limit)
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Subject.count(q,function(err, count){
+      model.Subject.find(q).limit(limit).skip(page*limit)
       .populate('clas')
       .exec(function(err,subjects){
         if(!err){
@@ -78,7 +87,13 @@ module.exports = {
   },
 
   getAllSubjectStatus:function(school,status,cb){
-    model.Subject.find({school:school,status:status})
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Subject.find(q)
     .populate('clas')
     .exec(function(err, subjects){
       if(!err){
@@ -91,7 +106,14 @@ module.exports = {
   },
   
   getSubjectName :function(school,name,cb){
-    model.Subject.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30)
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Subject.find(q).limit(30)
     .populate('clas')
     .exec(function(err, custom){ 
       if(!err){

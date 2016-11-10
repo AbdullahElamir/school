@@ -4,7 +4,13 @@ var Year1 = null;
 module.exports = {
 
   getAllYear :function(school,cb){
-    model.Year.find({school:school,status:1}, function(err, Years){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Year.find(q, function(err, Years){
       if(!err){
         cb(Years);
       }else{
@@ -19,8 +25,15 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Year.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Year.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Years){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Year.count(q,function(err, count){
+      model.Year.find(q).limit(limit).skip(page*limit).exec(function(err,Years){
         if(!err){
           cb({result:Years,count:count});
         }else{
@@ -36,8 +49,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Year.count({school:school,status:1},function(err, count){
-      model.Year.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,Years){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Year.count(q,function(err, count){
+      model.Year.find(q).limit(limit).skip(page*limit).exec(function(err,Years){
         if(!err){
           cb({result:Years,count:count});
         }else{
@@ -49,7 +68,13 @@ module.exports = {
   },
 
   getAllYearStatus:function(school,status,cb){
-    model.Year.find({school:school,status:status},function(err, classes){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Year.find(q,function(err, classes){
       if(!err){
         cb(classes);
       }else{
@@ -60,7 +85,14 @@ module.exports = {
   },
 
   getYearName :function(school,name,cb){
-    model.Year.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Year.find(q).limit(30).exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -106,7 +138,14 @@ module.exports = {
   },
 
   getActiveYear : function(school,cb){
-    model.Year.findOne({active : 1,school:school}, function(err, custom){
+    var q= {
+      status:1,
+      active : 1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Year.findOne(q, function(err, custom){
       if(!err){
         cb(custom);
       }else{

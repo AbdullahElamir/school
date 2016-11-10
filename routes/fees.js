@@ -3,11 +3,10 @@ var router = express.Router();
 var feesMgr = require("../controller/fees");
 var classRoomMgr = require("../controller/classRoom");
 var userHelpers = require("../controller/userHelpers");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
+
 
 router.get('/all', userHelpers.isLogin ,function(req, res){
-  feesMgr.getAllFees(function(fees){
+  feesMgr.getAllFees(req.user.school,function(fees){
     res.send(fees);
   });
 });
@@ -35,13 +34,13 @@ router.delete('/delete/:id',userHelpers.isLogin , function(req, res){
 });
 // get fees by status
 router.get('/status/:status',userHelpers.isLogin , function(req, res){
-  feesMgr.getAllFeesStatus(req.params.status,function(fees){
+  feesMgr.getAllFeesStatus(req.user.school,req.params.status,function(fees){
     res.send(fees);
   });
 });
 // get fees by name
 router.get('/name/:name',userHelpers.isLogin , function(req, res){
-  feesMgr.getFeesName(req.params.name,function(fees){
+  feesMgr.getFeesName(req.user.school,req.params.name,function(fees){
     res.send(fees);
   });
 });
@@ -61,12 +60,12 @@ router.get('/total/:classRoom/:year',userHelpers.isLogin , function(req, res){
 
 //get all fees By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res){
-  feesMgr.getAllFeesesBySearchValue(req.params.searchValue,req.params.limit,req.params.page,function(feess){
+  feesMgr.getAllFeesesBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(feess){
     res.send(feess);
   });
 });
 router.get('/classRoom/:classRoom',userHelpers.isLogin , function(req, res){
-  classRoomMgr.getClassRoomId(req.params.classRoom,function(Croom){
+  classRoomMgr.getClassRoomId(req.user.school,req.params.classRoom,function(Croom){
     feesMgr.getFeesByClassRoom(Croom,function(fees){
       res.send(fees);
     });
@@ -74,7 +73,7 @@ router.get('/classRoom/:classRoom',userHelpers.isLogin , function(req, res){
 });
 // get all fees
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res){
-  feesMgr.getAllFeesCount(req.params.limit,req.params.page,function(fees){
+  feesMgr.getAllFeesCount(req.user.school,req.params.limit,req.params.page,function(fees){
     res.send(fees);
   });
 });

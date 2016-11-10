@@ -7,9 +7,9 @@ var adminMgr = require("./admin");
 
 
 //read the passport api docs if you wanna know what this does
-passport.use(new LocalStrategy(
+passport.use('local',new LocalStrategy(
   function (username, password, done) {
-    findByUserName(username, function (err, user) {
+    findByUserNameA(username, function (err, user) {
       if (err) {
         return done(err);
       }
@@ -27,6 +27,25 @@ passport.use(new LocalStrategy(
   }
 ));
 
+passport.use('parent',new LocalStrategy(
+  function (username, password, done) {
+    findByUserNameP(username, function (err, user) {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false);
+      }
+      authenticate(user, password, function (valid) {
+        if (valid) {
+          return done(null, user);
+        } else {
+          return done(null, false);
+        }
+      });
+    });
+  }
+));
 //read the passport api docs if you wanna know what this does
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -50,8 +69,23 @@ module.exports = function (router) {
         if (user.level==1){
           return res.send({login: true,admin:1 });
         }else if (user.level==2){
-          return res.send({login: true,admin:2 });  
-        }else{
+          return res.send({login: true,admin:2 });
+        }else if (user.level==7){
+          return res.send({login: true,admin:7 });  
+        }
+        
+      });
+    })(req, res, next);
+  });
+
+  router.post('/loginParent', function(req, res, next) {
+    passport.authenticate('parent', function(err, user) {
+      if (err) { return next(err); }
+      if (!user) { return res.send({login: 2 }); }
+      
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        if (user){
           return res.send({login: true,admin:3 });
         }
         
@@ -91,7 +125,7 @@ function findById(id, fn) {
 
 }
 
-function findByUserName(username, fn) {
+function findByUserNameA(username, fn) {
   adminMgr.getAdminEmail(username,function(user){
     if(user){
       fn(null, user);
@@ -100,13 +134,7 @@ function findByUserName(username, fn) {
         if (user) {
           fn(null, user);
         } else {
-          parentMgr.getParentEmail(username,function(user){
-            if (user) {
-              fn(null, user);
-            } else {
-              return fn(null, null);
-            }
-          });
+          return fn(null, null);
         }
       });
     }
@@ -114,7 +142,17 @@ function findByUserName(username, fn) {
   });
 
 }
+function findByUserNameP(username, fn) {
+  parentMgr.getParentEmail(username,function(user){
+    if (user) {
+      fn(null, user);
+    } else {
+      return fn(null, null);
+    }
+  });
 
+
+}
 function authenticate(user, userEnteredPassword, callback) {
   // make sure the user-entered password is equal to the previously
   // created hash when hashed with the same salt.

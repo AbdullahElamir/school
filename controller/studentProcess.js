@@ -4,8 +4,14 @@ var Stupro = null;
 
 module.exports = {
 
-  getAllStupro :function(cb){
-    model.Stupro.find({},function(err, Stupros){
+  getAllStupro :function(school,cb){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Stupro.find(q,function(err, Stupros){
       if(!err){
         cb(Stupros);
       }else{
@@ -15,8 +21,16 @@ module.exports = {
     });
   },
 
-  getStuProcessesByClassRoomAndYear: function(classRoom,year,cb){
-    model.Stupro.find({classRoom:classRoom,year:year},'student',function(err, stupros){
+  getStuProcessesByClassRoomAndYear: function(school,classRoom,year,cb){
+    var q= {
+      status:1,
+      classRoom:classRoom,
+      year:year
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Stupro.find(q,'student',function(err, stupros){
       if(!err){
         var array = [];
         if( stupros.length == 0){
@@ -37,12 +51,18 @@ module.exports = {
   },
 
   //getAllCustomerCount
-  getAllStuprosCount :function(limit,page,cb){
+  getAllStuprosCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Stupro.count({},function(err, count){
-      model.Stupro.find({}).limit(limit).skip(page*limit).exec(function(err,Stupros){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Stupro.count(q,function(err, count){
+      model.Stupro.find(q).limit(limit).skip(page*limit).exec(function(err,Stupros){
         if(!err){
           cb({result:Stupros,count:count});
         }else{
@@ -53,7 +73,13 @@ module.exports = {
     });
   },
 
-  getAllStuproStatus:function(status,cb){
+  getAllStuproStatus:function(school,status,cb){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
     model.Stupro.find({status:status},function(err, Stupros){
       if(!err){
         cb(Stupros);
@@ -100,8 +126,16 @@ module.exports = {
       }
     });
   },
-  getAllClassRoomeStudentsByYear : function(classRoom,year,cb){
-    model.Stupro.find({classRoom:classRoom,year:year}).populate('student')
+  getAllClassRoomeStudentsByYear : function(school,classRoom,year,cb){
+    var q= {
+      status:1,
+      classRoom:classRoom,
+      year:year
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Stupro.find(q).populate('student')
     .exec(function(err,Stupros) {
       if(!err){
         cb(Stupros);
@@ -111,10 +145,17 @@ module.exports = {
       }
     });
   },
-  getStudentClassRoom : function(classRoom,cb){
-    model.Stupro.find({classRoom:classRoom}).distinct('_id',function(err, Stupros){
+  getStudentClassRoom : function(school,classRoom,cb){
+    var q= {
+      status:1,
+      classRoom:classRoom,
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Stupro.find(q).distinct('_id',function(err, Stupros){
       if(!err){
-        model.Stupro.find({classRoom:classRoom}).populate('student')
+        model.Stupro.find(q).populate('student')
         .exec(function(err,Stu) {
           if(!err){
             cb({StuP:Stupros,stu:Stu});
@@ -130,8 +171,15 @@ module.exports = {
       
     });
   },
-  getStuproRoom : function(classRoom,cb){
-    model.Stupro.find({classRoom:{$in:classRoom}}).distinct('student',function(err, Stupros){
+  getStuproRoom : function(school,classRoom,cb){
+    var q= {
+      status:1,
+      classRoom:{$in:classRoom}
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Stupro.find(q).distinct('student',function(err, Stupros){
       if(!err){
         cb(Stupros);
       }else{
@@ -140,10 +188,18 @@ module.exports = {
       }
     });
   },
-  getStudentClassRoomYear : function(classRoom,year,cb){
-    model.Stupro.find({classRoom:classRoom,year:year}).distinct('_id',function(err, Stupros){
+  getStudentClassRoomYear : function(school,classRoom,year,cb){
+    var q= {
+      status:1,
+      classRoom:classRoom,
+      year:year
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Stupro.find(q).distinct('_id',function(err, Stupros){
       if(!err){
-        model.Stupro.find({classRoom:classRoom,year:year}).populate('student')
+        model.Stupro.find(q).populate('student')
         .exec(function(err,Stu) {
           if(!err){
             cb({StuP:Stupros,stu:Stu});
@@ -158,8 +214,16 @@ module.exports = {
       }
     });
   },
-  getStudentsSto : function(classRoom,student,cb){
-    model.Stupro.findOne({classRoom:classRoom,student:student})
+  getStudentsSto : function(school,classRoom,student,cb){
+    var q= {
+      status:1,
+      classRoom:classRoom,
+      student:student
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Stupro.findOne(q)
     .exec(function(err,Stupros) {
       if(!err){
         cb(Stupros._id);

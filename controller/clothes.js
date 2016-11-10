@@ -3,7 +3,13 @@ var Clothes1 = null;
 module.exports = {
 
   getAllClothes :function(school,cb){
-    model.Clothes.find({school:school,status:1}, function(err, Clothes){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Clothes.find(q, function(err, Clothes){
       if(!err){
         cb(Clothes);
       }else{
@@ -18,8 +24,15 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Clothes.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Clothes.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Clothes){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Clothes.count(q,function(err, count){
+      model.Clothes.find(q).limit(limit).skip(page*limit).exec(function(err,Clothes){
         if(!err){
           cb({result:Clothes,count:count});
         }else{
@@ -35,8 +48,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Clothes.count({school:school,status:1},function(err, count){
-      model.Clothes.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,Clothes){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Clothes.count(q,function(err, count){
+      model.Clothes.find(q).limit(limit).skip(page*limit).exec(function(err,Clothes){
         if(!err){
           cb({result:Clothes,count:count});
         }else{
@@ -48,7 +67,13 @@ module.exports = {
   },
 
   getAllClothesStatus:function(school,status,cb){
-    model.Clothes.find({school:school,status:status},function(err, clothes){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Clothes.find(q,function(err, clothes){
       if(!err){
         cb(clothes);
       }else{
@@ -59,7 +84,14 @@ module.exports = {
   },
   
   getClothesName :function(school,name,cb){
-    model.Clothes.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, name){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Clothes.find(q).limit(30).exec(function(err, name){
       if(!err){
         cb(name);
       }else{

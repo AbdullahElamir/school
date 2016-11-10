@@ -4,7 +4,13 @@ var userHelpers = require("./userHelpers");
 module.exports = {
 
   getAllTeacher :function(school,cb){
-    model.Teacher.find({school:school,status:1},function(err, teachers){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Teacher.find(q,function(err, teachers){
       if(!err){
         cb(teachers);
       }else{
@@ -14,29 +20,23 @@ module.exports = {
     });
   },
 
-  //getTeachersBySearchValue
-  // getTeachersBySearchValue :function(school,searchValue,limit,page,cb){
-  //   page = parseInt(page);
-  //   page-=1;
-  //   limit = parseInt(limit);
-  //   model.Teacher.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school},function(err, count){
-  //     model.Teacher.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).exec(function(err,teachers){
-  //       if(!err){
-  //         cb({result:teachers,count:count});
-  //       }else{
-  //         // console.log(err);
-  //         cb(null);
-  //       }
-  //     });
-  //   });
-  // },
   getTeachersBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Teacher.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school},function(err, count){
-      model.Teacher.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).exec(function(err,teachers){
-        model.Teacher.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).distinct('_id',function(err,teachersId){
+    var q= {
+      status:1,
+      $or :[
+        {name:new RegExp(searchValue, 'i')},
+        {nid:new RegExp(searchValue, 'i')}
+      ]
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Teacher.count(q,function(err, count){
+      model.Teacher.find(q).limit(limit).skip(page*limit).exec(function(err,teachers){
+        model.Teacher.find(q).distinct('_id',function(err,teachersId){
           if(!err){
             cb({result:teachers,count:count,teachersId:teachersId});
           }else{
@@ -51,8 +51,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Teacher.count({school:school,status:1},function(err, count){
-      model.Teacher.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,teachers){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Teacher.count(q,function(err, count){
+      model.Teacher.find(q).limit(limit).skip(page*limit).exec(function(err,teachers){
         if(!err){
           cb({result:teachers,count:count});
         }else{
@@ -64,7 +70,13 @@ module.exports = {
   },
 
   getAllTeacherStatus:function(school,status,cb){
-    model.Teacher.find({status:status,school:school},function(err, teachers){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Teacher.find(q,function(err, teachers){
       if(!err){
         cb(teachers);
       }else{
@@ -75,7 +87,14 @@ module.exports = {
   },
 
   getTeacherName :function(school,name,cb){
-    model.Teacher.find({name :{ $regex:name, $options: 'i' },school:school}).limit(30).exec(function(err, teachers){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Teacher.find(q).limit(30).exec(function(err, teachers){
       if(!err){
         cb(teachers);
       }else{

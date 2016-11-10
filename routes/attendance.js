@@ -7,8 +7,7 @@ var stuproMgr = require("../controller/studentProcess");
 var teacherMgr = require("../controller/teacher");
 var adminMgr = require("../controller/admin");
 var userHelpers = require("../controller/userHelpers");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
+
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   attendMgr.getAllAttend(function(attend){
@@ -90,7 +89,7 @@ router.get('/status/:status',userHelpers.isLogin , function(req, res) {
 
 //################################################
 router.get('/teachers/:searchValue/:date/:limit/:page',userHelpers.isLogin , function(req, res) {
-  teacherMgr.getTeachersBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(teachers){
+  teacherMgr.getTeachersBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(teachers){
     attendTeaMgr.getTeacherAttendanceDate(new Date(req.params.date),teachers.teachersId,function(attends){
       var _attend=[];
       if(teachers.result.length==0){
@@ -116,7 +115,7 @@ router.get('/teachers/:searchValue/:date/:limit/:page',userHelpers.isLogin , fun
   });
 });
 router.get('/teachers//:date/:limit/:page',userHelpers.isLogin , function(req, res) {
-  teacherMgr.getTeachersBySearchValue(user.school,'',req.params.limit,req.params.page,function(teachers){
+  teacherMgr.getTeachersBySearchValue(req.user.school,'',req.params.limit,req.params.page,function(teachers){
     attendTeaMgr.getTeacherAttendanceDate(new Date(req.params.date),teachers.teachersId,function(attends){
       var _attend=[];
       if(teachers.result.length==0){
@@ -152,7 +151,7 @@ router.get('/teachers//:date/:limit/:page',userHelpers.isLogin , function(req, r
 });
 
 router.get('/admins/:searchValue/:date/:limit/:page',userHelpers.isLogin , function(req, res) {
-  adminMgr.getAllAdminsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
+  adminMgr.getAllAdminsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
     attendAdminMgr.getAdminAttendanceDate(new Date(req.params.date),admins.adminsId,function(attends){
       var _attend=[];
       if(admins.result.length==0){
@@ -188,7 +187,7 @@ router.get('/admins/:searchValue/:date/:limit/:page',userHelpers.isLogin , funct
   // });
 });
 router.get('/admins//:date/:limit/:page',userHelpers.isLogin , function(req, res) {
-  adminMgr.getAllAdminsBySearchValue(user.school,'',req.params.limit,req.params.page,function(admins){
+  adminMgr.getAllAdminsBySearchValue(req.user.school,'',req.params.limit,req.params.page,function(admins){
     attendAdminMgr.getAdminAttendanceDate(new Date(req.params.date),admins.adminsId,function(attends){
       var _attend=[];
       if(admins.result.length==0){
@@ -219,7 +218,7 @@ router.get('/admins//:date/:limit/:page',userHelpers.isLogin , function(req, res
 // get attend by date and classRoom
 router.get('/students/:classRoom/:date',userHelpers.isLogin , function(req, res) {
   // get real data _id  id is the id of the stuPro to let you make edits
-  stuproMgr.getStudentClassRoom(req.params.classRoom,function(stupro){
+  stuproMgr.getStudentClassRoom(req.user.school,req.params.classRoom,function(stupro){
     attendMgr.getAttendanceDate(new Date(req.params.date),stupro.StuP,function(attends){
       var _attend=[];
       for(var i in stupro.stu){

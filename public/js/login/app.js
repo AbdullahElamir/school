@@ -46,8 +46,8 @@
           window.location.replace('/');  
         }else if(response.data.admin==2){
           window.location.replace('/admin');
-        }else if(response.data.admin==3){
-          window.location.replace('/');
+        }else if(response.data.admin==7){
+          window.location.replace('/teachers');
         }
       }
         

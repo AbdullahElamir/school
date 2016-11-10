@@ -6,12 +6,12 @@ var easyPbkdf2 = require("easy-pbkdf2")();
 module.exports = {
   /* here we check if the user have root access */
   isLogin : function (req,res,next) {
-    // if (req.isAuthenticated()) {
-    // return next();
-    // }
-    // res.redirect('/');
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect('/');
 
-    return next();
+    // return next();
   },
   Hash : function(password,cb){
     var salt = easyPbkdf2.generateSalt(); //we generate a new salt for every new user

@@ -4,8 +4,6 @@ var paid = require("../controller/paid");
 var stuproMgr = require("../controller/studentProcess");
 var userHelpers = require("../controller/userHelpers");
 
-var user={};
-user.school="5801f550e4de0e349c8714c2";
 
 router.get('/all', userHelpers.isLogin ,function(req, res) {
   paid.getAllPaid(function(paids){
@@ -66,7 +64,7 @@ router.get('/status/:status',userHelpers.isLogin , function(req, res) {
 
 // get paids and stupro
 router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
-  stuproMgr.getStudentClassRoomYear(req.params.classRoom,req.params.year,function(stupro){
+  stuproMgr.getStudentClassRoomYear(req.user.school,req.params.classRoom,req.params.year,function(stupro){
     var _student=[];
     for (var i in stupro.stu){
       paid.getPaidStuPro(stupro.stu[i]._id,function(paid){

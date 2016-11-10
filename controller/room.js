@@ -4,7 +4,13 @@ var room = null;
 module.exports = {
 
   getAllRoom :function(school,cb){
-    model.Room.find({school:school,status:1}, function(err, rooms){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Room.find(q, function(err, rooms){
       if(!err){
         cb(rooms);
       }else{
@@ -18,8 +24,15 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Room.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Room.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,rooms){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Room.count(q,function(err, count){
+      model.Room.find(q).limit(limit).skip(page*limit).exec(function(err,rooms){
         if(!err){
           cb({result:rooms,count:count});
         }else{
@@ -34,8 +47,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Room.count({school:school,status:1},function(err, count){
-      model.Room.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,rooms){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Room.count(q,function(err, count){
+      model.Room.find(q).limit(limit).skip(page*limit).exec(function(err,rooms){
         if(!err){
           cb({result:rooms,count:count});
         }else{
@@ -46,7 +65,13 @@ module.exports = {
   },
 
   getAllRoomStatus:function(school,status,cb){
-    model.Room.find({school:school,status:status},function(err, classes){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Room.find(q,function(err, classes){
       if(!err){
         cb(classes);
       }else{
@@ -56,7 +81,14 @@ module.exports = {
   },
 
   getRoomName :function(school,name,cb){
-    model.Room.find({name :{ $regex:name, $options: 'i' },school:school}).limit(30).exec(function(err, custom){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Room.find(q).limit(30).exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{

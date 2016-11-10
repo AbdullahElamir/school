@@ -12,13 +12,10 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
 var path = require("path");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
-user._id="57df0e437fb8ad40ec8b48c2"; // --> user _id in session (Admin or Teacher)
 
 
 router.get('/children/all/:parentId',userHelpers.isLogin , function(req, res) {
-  studentMgr.getStudentByParentId(user.school,req.params.parentId,function(children){
+  studentMgr.getStudentByParentId(req.user.school,req.params.parentId,function(children){
     res.send(children);
   });
 });
@@ -112,8 +109,8 @@ router.get('/report4',userHelpers.isLogin , function(req, res) {
 });
 router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res) {
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
-    stuproMgr.getStuproRoom(clas,function(stupro){
-      studentMgr.getStudentStupro(user.school,req.params.searchValue,stupro,function(student){
+    stuproMgr.getStuproRoom(req.user.school,clas,function(stupro){
+      studentMgr.getStudentStupro(req.user.school,req.params.searchValue,stupro,function(student){
         res.send(student);
       });
     });
@@ -122,8 +119,8 @@ router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res
 router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
   // get real data without search text
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
-    stuproMgr.getStuproRoom(clas,function(stupro){
-      studentMgr.getStudentStupro(user.school,'',stupro,function(student){
+    stuproMgr.getStuproRoom(req.user.school,clas,function(stupro){
+      studentMgr.getStudentStupro(req.user.school,'',stupro,function(student){
         res.send(student);
       });
 
@@ -134,7 +131,7 @@ router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
 /* Send Message From User _id (Admin or Teacher) to Parent of Student by studentID */
 router.put('/message/:studentId',userHelpers.isLogin,function(req, res) {
   studentMgr.getStudentId(req.params.studentId,function(stu){
-    conversationMgr.sendMsgFromPersonToPersonWithStudents([req.params.studentId],user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
+    conversationMgr.sendMsgFromPersonToPersonWithStudents([req.params.studentId],req.user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
       res.send(send);
     });
   });
@@ -142,20 +139,20 @@ router.put('/message/:studentId',userHelpers.isLogin,function(req, res) {
 
 /*GET all Student By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  studentMgr.getAllStudentsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
+  studentMgr.getAllStudentsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 /* GET all student */
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  studentMgr.getAllStudentsCount(user.school,req.params.limit,req.params.page,function(student){
+  studentMgr.getAllStudentsCount(req.user.school,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,function(req, res){
-  studentMgr.getAllStudent(user.school,function(student){
+  studentMgr.getAllStudent(req.user.school,function(student){
     res.send(student);
   });
 });
@@ -164,7 +161,7 @@ router.get('/all', userHelpers.isLogin ,function(req, res){
 router.post('/add',function(req, res) {
   studentMgr.StudentGenerateId(req.body.gender,function(result){
     console.log(result);
-      req.body.school=user.school;
+      req.body.school=req.user.school;
       req.body.studentrealid =result
       studentMgr.addStudent(req.body,function(student){
       res.send(student);
