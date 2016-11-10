@@ -41,7 +41,7 @@ router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
 // delete clothes by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
   clothesMgr.deleteClothes(req.params.id,function(clothes){
-    res.send(clothes);
+    res.send({result:clothes});
   });
 });
 

@@ -14,22 +14,6 @@ module.exports = {
     });
   },
 
-  //getTeachersBySearchValue
-  // getTeachersBySearchValue :function(school,searchValue,limit,page,cb){
-  //   page = parseInt(page);
-  //   page-=1;
-  //   limit = parseInt(limit);
-  //   model.Teacher.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school},function(err, count){
-  //     model.Teacher.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).exec(function(err,teachers){
-  //       if(!err){
-  //         cb({result:teachers,count:count});
-  //       }else{
-  //         // console.log(err);
-  //         cb(null);
-  //       }
-  //     });
-  //   });
-  // },
   getTeachersBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
@@ -132,14 +116,49 @@ module.exports = {
   },
 
   deleteTeacher : function(id,cb){
-    model.Teacher.remove({_id:id}, function(err) {
-      if (!err) {
-        cb(2);
-      } else {
-        // console.log(err);
-        cb(3);
+    //a function is called to delete
+    var deleteFun= function(){
+      model.Teacher.remove({_id:id}, function(err) {
+        if (!err) {
+          cb(2);
+        } else {
+          cb(3);
+        }
+      });
+    };
+    //collections must be checked before delete
+    var collections = ["ClassRoom","TeacherAttendance","TSC","transferProcessTeachers","TransferProcess","Committee"];
+    //recursive function to check all the collections provided in the array
+    var check = function(){
+      if(collections.length>0){
+        //pop an element from the array and check it
+        var collection = collections.pop();
+        var col = {teacher:id};
+        if(collection === "TransferProcess"){
+          col = {supervisor:id};
+        }else if (collection === "Committee"){
+          col = {"proctors.examCommitteeProctors":id};
+        }
+        model[collection].find(col,function(err,result){
+          if(!err){
+            //contenue finding in the other collections
+            if(result.length===0){
+              check();
+            }else{
+              //this means that there is a document that have this id and we shouldn't delete
+              cb(1);
+            }
+          }else {
+            //error
+            cb(3);
+          }
+        });
+      }else{
+        //this means that we finished the all collections array so delete
+        deleteFun();
       }
-    });
+    };
+    check();
   },
   changePass : function(id,passwords,cb){
     if(passwords.newPass === passwords.confirmPass){
