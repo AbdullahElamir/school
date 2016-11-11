@@ -237,14 +237,7 @@ module.exports = {
         }
       }
     });
-  },
-  
-  
-  
-  
-  
-  
-  
+  },  
   
   // Mobile App Backend :
   
