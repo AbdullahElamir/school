@@ -171,6 +171,21 @@
               });
             }]
           }
+        }).state('inbox',{
+          url: '/inbox',
+          templateUrl: 'teachers/pages/conversations',
+          data: {pageTitle: 'البريد الوارد'},
+          controller: 'inboxCtl',
+          resolve: {
+            deps: ['$ocLazyLoad',function($ocLazyLoad){
+              return $ocLazyLoad.load({
+                insertBefore: '#ngLoadControllerAfter',
+                files: [
+                  '/js/teachers/controllers/inboxCtl.js'
+                ]
+              });
+            }]
+          }
         });
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){

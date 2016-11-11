@@ -11,7 +11,7 @@ var marksSubMgr = require("../controller/marksSubject");
 var examMgr = require("../controller/exam");
 var user={};
 user.school="5801f550e4de0e349c8714c2";
-user._id="57df0e437fb8ad40ec8b48c2"; // --> user _id in session (Admin or Teacher)
+user._id="57e73594e920a11c40beb45d"; // --> user _id in session
 
 router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,function(req, res) {
   stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
@@ -111,19 +111,23 @@ router.get('/student/:classRoom/:year/', userHelpers.isLogin ,function(req, res)
 /* Send Message From User _id in session (Admin or Teacher) to Parent of Students of ClassRoom By classRoomID */
 router.put('/message/:classRoomID',function(req, res) {
   stuproMgr.getStuproRoom(req.params.classRoomID,function(stupros){
-    var counter = 0;
-    stupros.forEach(function(stupro){
-      studentMgr.getStudentId(stupro,function(stu){
-        conversationMgr.sendMsgFromPersonToPersonWithStudents([stupro],user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
-          if ( send ){
-            counter++;
-          }
-          if( counter == stupros.length ){
-            res.send(send);
-          }
+    if( stupros == null || stupros.length == 0 ){
+      res.send(true);
+    } else {
+      var counter = 0;
+      stupros.forEach(function(stupro){
+        studentMgr.getStudentId(stupro,function(stu){
+          conversationMgr.sendMsgFromPersonToPersonWithStudents([stupro],user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
+            if ( send ){
+              counter++;
+            }
+            if( counter == stupros.length ){
+              res.send(send);
+            }
+          });
         });
       });
-    });
+    }
   });
 });
 

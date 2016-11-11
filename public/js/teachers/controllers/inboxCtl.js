@@ -1,14 +1,14 @@
 (function(){
   'use strict';
-  var app = angular.module('adminSchool');
+  var app = angular.module('teachersSchool');
 
   app.controller('inboxCtl',['$scope','$state','InboxServ','$timeout',function($scope,$state,InboxServ,$timeout){
-    
+
     refreshConversations();
     
     function refreshConversations(){
       if( $state.current.name == "inbox" ){
-        InboxServ.getAllConversationsByAdminID().then(function(response) {
+        InboxServ.getAllConversationsByTeacherID().then(function(response) {
           $scope.conversations = response.data;
         }, function(response){
           console.log("Something went wrong");
@@ -92,7 +92,7 @@
     $scope.getUnSeenCounter = function(messages){
       var counter = 0;
       messages.forEach(function(message){
-        if( message.seen==0 && message.from.type != "ADMIN" ){
+        if( message.seen==0 && message.from.type != "TEACHER" ){
           counter++;
         }
       });

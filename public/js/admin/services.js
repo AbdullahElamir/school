@@ -781,7 +781,18 @@
   
     app.service('InboxServ',['$http',function($http){
       var self = {
-        
+        'getAllConversationsByAdminID': function(){
+          return $http.get('/conversation/conversations/admin');
+        },
+        'getMessagesByConversationId': function(id){
+          return $http.get('/conversation/conversation/messages/'+id);
+        },
+        'addMessageInConversation': function(id,message){
+          return $http.post('/conversation/message/add/in/conversation/'+id,{message:message,type:"ADMIN"});
+        },
+        'setSeenAllMessagesInConversation': function(id){
+          return $http.put('/conversation/message/seen/'+id,{type:"ADMIN"});
+        }
       };
       return self;
     }]);

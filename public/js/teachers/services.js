@@ -94,6 +94,22 @@
     return self;
   }]);
 
-
+  app.service('InboxServ',['$http',function($http){
+    var self = {
+      'getAllConversationsByTeacherID': function(){
+        return $http.get('/conversation/conversations/teacher');
+      },
+      'getMessagesByConversationId': function(id){
+        return $http.get('/conversation/conversation/messages/'+id);
+      },
+      'addMessageInConversation': function(id,message){
+        return $http.post('/conversation/message/add/in/conversation/'+id,{message:message,type:"TEACHER"});
+      },
+      'setSeenAllMessagesInConversation': function(id){
+        return $http.put('/conversation/message/seen/'+id,{type:"TEACHER"});
+      }
+    };
+    return self;
+  }]);
 
 }());

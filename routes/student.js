@@ -12,7 +12,7 @@ var fs = require("fs");
 var path = require("path");
 var user={};
 user.school="5801f550e4de0e349c8714c2";
-user._id="57df0e437fb8ad40ec8b48c2"; // --> user _id in session (Admin or Teacher)
+user._id="57e73594e920a11c40beb45d"; // --> user _id in session
 
 
 router.get('/children/all/:parentId',userHelpers.isLogin , function(req, res) {
