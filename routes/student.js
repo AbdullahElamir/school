@@ -14,13 +14,13 @@ var fs = require("fs");
 var path = require("path");
 
 
-router.get('/children/all/:parentId',userHelpers.isLogin , function(req, res) {
+router.get('/children/all/:parentId',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   studentMgr.getStudentByParentId(req.user.school,req.params.parentId,function(children){
     res.send(children);
   });
 });
 
-router.get('/report1',userHelpers.isLogin , function(req, res) {
+router.get('/report1',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   jsreport.render({
     template: {
       engine: "jsrender",
@@ -35,7 +35,7 @@ router.get('/report1',userHelpers.isLogin , function(req, res) {
 });
 
 
-router.get('/genrateStudentId',function(req, res){
+router.get('/genrateStudentId',userHelpers.isAdmin,function(req, res){
   studentMgr.StudentGenerateId(1,function(result){
     console.log(result);
    res.send(result); 
@@ -60,7 +60,7 @@ router.get('/genrateStudentId',function(req, res){
 //   });
 // });
 
-router.get('/report2',userHelpers.isLogin , function(req, res) {
+router.get('/report2',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   jsreport.render({
     template: {
       engine: "jsrender",
@@ -77,7 +77,7 @@ router.get('/report2',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
-router.get('/report3',userHelpers.isLogin , function(req, res) {
+router.get('/report3',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   jsreport.render({
     template: {
       engine: "jsrender",
@@ -90,7 +90,7 @@ router.get('/report3',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
-router.get('/report4',userHelpers.isLogin , function(req, res) {
+router.get('/report4',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   jsreport.render({
     template: {
       engine: "jsrender",
@@ -107,7 +107,7 @@ router.get('/report4',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
-router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res) {
+router.get('/class/:searchValue/:_class',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
     stuproMgr.getStuproRoom(req.user.school,clas,function(stupro){
       studentMgr.getStudentStupro(req.user.school,req.params.searchValue,stupro,function(student){
@@ -116,7 +116,7 @@ router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res
     });
   });
 });
-router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
+router.get('/class//:_class',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   // get real data without search text
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
     stuproMgr.getStuproRoom(req.user.school,clas,function(stupro){
@@ -129,7 +129,7 @@ router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
 });
 
 /* Send Message From User _id (Admin or Teacher) to Parent of Student by studentID */
-router.put('/message/:studentId',userHelpers.isLogin,function(req, res) {
+router.put('/message/:studentId',userHelpers.isLogin,userHelpers.isTeacher,function(req, res) {
   studentMgr.getStudentId(req.params.studentId,function(stu){
     conversationMgr.sendMsgFromPersonToPersonWithStudents([req.params.studentId],req.user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
       res.send(send);
@@ -138,27 +138,27 @@ router.put('/message/:studentId',userHelpers.isLogin,function(req, res) {
 });
 
 /*GET all Student By Search Value*/
-router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
+router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   studentMgr.getAllStudentsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 /* GET all student */
-router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
+router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   studentMgr.getAllStudentsCount(req.user.school,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
-router.get('/all', userHelpers.isLogin ,function(req, res){
+router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res){
   studentMgr.getAllStudent(req.user.school,function(student){
     res.send(student);
   });
 });
 
 /* Add new student  */
-router.post('/add',function(req, res) {
+router.post('/add',userHelpers.isAdmin,function(req, res) {
   studentMgr.StudentGenerateId(req.body.gender,function(result){
     console.log(result);
       req.body.school=req.user.school;
@@ -169,7 +169,7 @@ router.post('/add',function(req, res) {
   });
 });
 
-router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {
+router.post('/upload/:id',userHelpers.isLogin,userHelpers.isAdmin, multipartMiddleware, function(req, res) {
   //save image to public/img/students with a name of "student's id" without extention
   // don't forget to delete all req.files when done
   var dir = './public/img/students';
@@ -190,34 +190,34 @@ router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req
 });
 
 /* open student,s file by id  */
-router.put('/openFile/:id',userHelpers.isLogin,function(req, res) {
+router.put('/openFile/:id',userHelpers.isLogin,userHelpers.isAdmin,function(req, res) {
   studentMgr.updateStudent(req.params.id,{finishDate:null,active:1},function(student){
     res.send(student);
   });
 });
 /* close student;s file by id  */
-router.put('/closeFile/:id',userHelpers.isLogin,function(req, res) {
+router.put('/closeFile/:id',userHelpers.isLogin,userHelpers.isAdmin,function(req, res) {
   studentMgr.updateStudent(req.params.id,{finishDate:new Date(),active:0},function(student){
     res.send(student);
   });
 });
 
 /* Edit student by id  */
-router.put('/edit/:id',userHelpers.isLogin,function(req, res) {
+router.put('/edit/:id',userHelpers.isLogin,userHelpers.isAdmin,function(req, res) {
   studentMgr.updateStudent(req.params.id,req.body,function(student){
     res.send(student);
   });
 });
 
 /* Delete student by id  */
-router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
+router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   studentMgr.deleteStudent(req.params.id,function(student){
     res.send({result:student});
   });
 });
 
 /* GET student by ID  */
-router.get('/:id',userHelpers.isLogin , function(req, res) {
+router.get('/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   studentMgr.getStudentId(req.params.id,function(student){
     res.send(student);
   });

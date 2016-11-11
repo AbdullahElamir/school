@@ -6,27 +6,27 @@ var userHelpers = require("../controller/userHelpers");
 
 
 /*GET all Drivers By Search Value*/
-router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
+router.get('/:searchValue/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   DriverMgr.getAllDriversBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(drivers){
     res.send(drivers);
   });
 });
 
 /* GET all Drivers */
-router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
+router.get('/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   DriverMgr.getAllDriversCount(req.user.school,req.params.limit,req.params.page,function(drivers){
     res.send(drivers);
   });
 });
 
-router.get('/all', userHelpers.isLogin ,function(req, res){
+router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res){
   DriverMgr.getAllDrivers(req.user.school,function(drivers){
     res.send(drivers);
   });
 });
 
 /* Add new driver  */
-router.post('/add',function(req, res) {
+router.post('/add',userHelpers.isAdmin,function(req, res) {
   req.body.school = req.user.school;
   DriverMgr.addDriver(req.body,function(newDriver){
     res.send(newDriver);
@@ -35,21 +35,21 @@ router.post('/add',function(req, res) {
 });
 
 /* Edit Driver by id  */
-router.put('/edit/:id',userHelpers.isLogin,function(req, res) {
+router.put('/edit/:id',userHelpers.isLogin,userHelpers.isAdmin,function(req, res) {
   DriverMgr.updateDriver(req.params.id,req.body,function(returnDriver){
     res.send(returnDriver);
   });
 });
 
 /* Delete Driver by id  */
-router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
+router.delete('/delete/:id',userHelpers.isAdmin,userHelpers.isLogin , function(req, res) {
   DriverMgr.deleteDriver(req.params.id,function(driver){
     res.send({result:driver});
   });
 });
 
 /* GET Driver by ID  */
-router.get('/:id',userHelpers.isLogin , function(req, res) {
+router.get('/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   DriverMgr.getDriverId(req.params.id,function(driver){
     res.send(driver);
   });

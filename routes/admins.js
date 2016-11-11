@@ -9,24 +9,24 @@ var fs = require("fs");
 
 
 /*GET all ADmins By Search Value*/
-router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
+router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   adminMgr.getAllAdminsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
     res.send(admins);
   });
 });
 
 /* GET all admin */
-router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
+router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   adminMgr.getAllAdminCount(req.user.school,req.params.limit,req.params.page,function(admins){
     res.send(admins);
   });
 });
-router.get('/all', userHelpers.isLogin ,function(req, res) {
+router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   adminMgr.getAllAdmin(req.user.school,function(admins){
     res.send(admins);
   });
 });
-router.get('/getuser',userHelpers.isLogin , function(req, res) {
+router.get('/getuser',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   if(req.user.school){
     res.send(true);
   }else{
@@ -34,14 +34,14 @@ router.get('/getuser',userHelpers.isLogin , function(req, res) {
   }
 });
 /* Add new admin  */
-router.post('/add', userHelpers.isLogin ,function(req, res) {
+router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   req.body.school=req.user.school;
   adminMgr.addAdmin(req.body,function(admins){
     res.send(admins);
   });
 
 });
-router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {
+router.post('/upload/:id',userHelpers.isLogin,userHelpers.isAdmin, multipartMiddleware, function(req, res) {
   var dir = './public/img/admins';
   if (!fs.existsSync(dir)){
     fs.mkdirSync(dir);
@@ -59,27 +59,27 @@ router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req
 });
 
 /* Edit admin by id  */
-router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
+router.put('/edit/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   adminMgr.updateAdmin(req.params.id,req.body,function(admins){
     res.send(admins);
   });
 });
 /* Edit admin by id  */
-router.put('/changePass/:id', userHelpers.isLogin ,function(req, res) {
+router.put('/changePass/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   adminMgr.changePass(req.params.id,req.body,function(result){
     res.send({result:result});
   });
 });
 
 /* Delete admin by id  */
-router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
+router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   adminMgr.deleteAdmin(req.params.id,function(admins){
     res.send({result:admins});
   });
 });
 
 /* GET admin by ID  */
-router.get('/:id',userHelpers.isLogin , function(req, res) {
+router.get('/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   adminMgr.getAdminId(req.params.id,function(admins){
     res.send(admins);
   });
