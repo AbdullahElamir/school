@@ -122,9 +122,10 @@ router.put('/message/:classRoomID',userHelpers.isTeacher,function(req, res) {
           }
         });
       });
-    }
+    
   });
 });
+  });
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
   classRoomMgr.getAllClassRoom(req.user.school,function(Croom){
