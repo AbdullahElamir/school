@@ -25,7 +25,7 @@
             <a class="btn btn-success btn-xs" ui-sref="tasks({id:classRoom._id,course:classRoom.courseId})"><i class="fa fa-tasks fa-fw"></i>&nbsp;المهام</a>
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#messageModal" ng-click="openSendMessageDialog(classRoom._id)"><i class="fa fa-envelope fa-fw"></i>&nbsp; رسالة جماعية</a>
             <a class="btn btn-success btn-xs"><i class="fa fa-pie-chart fa-fw"></i>&nbsp;كشف درجات</a>
-            <a class="btn btn-success btn-xs"><i class="fa fa-file-text fa-fw"></i>&nbsp;كشف باسماء الطلبة</a>
+            <a class="btn btn-success btn-xs"  href="/teacher/report1/{{classRoom._id}}" target="_blank"><i class="fa fa-file-text fa-fw"></i>&nbsp;كشف باسماء الطلبة</a>
           </td>
         </tr>
       </tbody>

@@ -37,7 +37,6 @@ module.exports = {
     model.Admin.count(q,function(err, count){
       model.Admin.find(q).limit(limit).skip(page*limit).exec(function(err,admins){
         model.Admin.find(q).distinct('_id',function(err,adminsId){
-        
           if(!err){
             cb({result:admins,count:count,adminsId:adminsId});
           }else{
@@ -181,14 +180,42 @@ module.exports = {
   },
 
   deleteAdmin : function(id,cb){
-    model.Admin.remove({_id:id}, function(err) {
-      if (!err) {
-        cb(2);
-      } else {
-        // console.log(err);
-        cb(3);
+    //a function is called to delete
+    var deleteFun= function(){
+      model.Admin.remove({_id:id}, function(err) {
+        if (!err) {
+          cb(2);
+        } else {
+          cb(3);
+        }
+      });
+    };
+    //collections must be checked before delete
+    var collections = ["AdminAttendance","InOutcome"];
+    //recursive function to check all the collections provided in the array
+    var check = function(){
+      if(collections.length>0){
+        //pop an element from the array and check it
+        model[collections.pop()].find({admin:id},function(err,result){
+          if(!err){
+            //contenue finding in the other collections
+            if(result.length===0){
+              check();
+            }else{
+              //this means that there is a document that have this id and we shouldn't delete
+              cb(1);
+            }
+          }else {
+            //error
+            cb(3);
+          }
+        });
+      }else{
+        //this means that we finished the all collections array so delete
+        deleteFun();
       }
-    });
+    };
+    check();
   },
 
   changePass : function(id,passwords,cb){

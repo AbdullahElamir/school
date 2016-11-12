@@ -14,6 +14,7 @@ var fs = require("fs");
 var path = require("path");
 
 
+
 router.get('/children/all/:parentId',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   studentMgr.getStudentByParentId(req.user.school,req.params.parentId,function(children){
     res.send(children);
@@ -160,10 +161,10 @@ router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res){
 /* Add new student  */
 router.post('/add',userHelpers.isAdmin,function(req, res) {
   studentMgr.StudentGenerateId(req.body.gender,function(result){
-    console.log(result);
       req.body.school=req.user.school;
-      req.body.studentrealid =result
+      req.body.studentrealid =result;
       studentMgr.addStudent(req.body,function(student){
+
       res.send(student);
     });
   });
@@ -208,6 +209,7 @@ router.put('/edit/:id',userHelpers.isLogin,userHelpers.isAdmin,function(req, res
     res.send(student);
   });
 });
+
 
 /* Delete student by id  */
 router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {

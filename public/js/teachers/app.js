@@ -171,17 +171,36 @@
               });
             }]
           }
+
         }).state('getStudentBySubject',{
           url: '/getStudentBySubject',
           templateUrl: '/teachers/pages/getStudentBySubject',
           data: {pageTitle: 'كشف باسماء الطلبة'},
           controller: 'getStudentBySubjectCtl',
+            resolve: {
+            deps: ['$ocLazyLoad',function($ocLazyLoad){
+              return $ocLazyLoad.load({
+                insertBefore: '#ngLoadControllerAfter',
+                files: [
+                  '/js/teachers/controllers/getStudentBySubjectCtl.js'
+                ]
+              });
+            }]
+          }
+
+        }).state('inbox',{
+          url: '/inbox',
+          templateUrl: 'teachers/pages/conversations',
+          data: {pageTitle: 'البريد الوارد'},
+          controller: 'inboxCtl',
+
           resolve: {
             deps: ['$ocLazyLoad',function($ocLazyLoad){
               return $ocLazyLoad.load({
                 insertBefore: '#ngLoadControllerAfter',
                 files: [
                   '/js/teachers/controllers/getStudentBySubjectCtl.js'
+                  '/js/teachers/controllers/inboxCtl.js'
                 ]
               });
             }]

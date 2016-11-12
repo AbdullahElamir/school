@@ -36,7 +36,7 @@ router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) 
   roomMgr.addRoom(req.body,function(room){
     res.send(room);
   });
-  
+
 });
 
 // edit room by id
@@ -49,7 +49,7 @@ router.put('/edit/:id', userHelpers.isLogin ,userHelpers.isAdmin,function(req, r
 // delete room by id
 router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   roomMgr.deleteRoom(req.params.id,function(room){
-    res.send(room);
+    res.send({result:room});
   });
 });
 

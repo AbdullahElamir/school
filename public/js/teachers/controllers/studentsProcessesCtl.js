@@ -5,10 +5,10 @@
   app.controller('StudentsProcessesCtl',['$scope','ClassRoomServ','toastr',function($scope,ClassRoomServ,toastr){
     // id of teacher
 
-    var id ='581c6453a9eb3c1e9d81a417';
-
+    var id ='57df0e437fb8ad40ec8b48c2';
 
     ClassRoomServ.getTeacherClassRooms(id).then(function(response){
+      console.log(response.data);
       $scope.classRooms = response.data;
     },function(response){
       console.log("Something went wrong");

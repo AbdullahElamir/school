@@ -33,7 +33,7 @@ module.exports = {
       }
     });
   },
-  
+
   //getAllStudentsBySearchValue
   getSubjectsBySearchValueAndClass :function(school,searchValue,clas,limit,page,cb){
     page = parseInt(page);
@@ -104,7 +104,7 @@ module.exports = {
       }
     });
   },
-  
+
   getSubjectName :function(school,name,cb){
     var q= {
       status:1,
@@ -115,7 +115,7 @@ module.exports = {
     }
     model.Subject.find(q).limit(30)
     .populate('clas')
-    .exec(function(err, custom){ 
+    .exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -160,22 +160,44 @@ module.exports = {
       }
     });
   },
-  
+
   deleteSubject : function(id,cb){
-    model.Study.find({customer:id}, function(err,resul) {
-      if(resul.length > 0){
-        cb(1);
-      } else{
-        model.Subject.remove({_id:id}, function(err) {
-          if (!err) {
-            cb(2);
-          } else {
-            // console.log(err);
+    //a function is called to delete
+    var deleteFun= function(){
+      model.Subject.remove({_id:id}, function(err) {
+        if (!err) {
+          cb(2);
+        } else {
+          cb(3);
+        }
+      });
+    };
+    //collections must be checked before delete
+    var collections = ["System"];
+    //recursive function to check all the collections provided in the array
+    var check = function(){
+      if(collections.length>0){
+        //pop an element from the array and check it
+        model[collections.pop()].find({"sys_class.selected.id_subject":id},function(err,result){
+          if(!err){
+            //contenue finding in the other collections
+            if(result.length===0){
+              check();
+            }else{
+              //this means that there is a document that have this id and we shouldn't delete
+              cb(1);
+            }
+          }else {
+            //error
             cb(3);
           }
         });
+      }else{
+        //this means that we finished the all collections array so delete
+        deleteFun();
       }
-    });
+    };
+    check();
   }
-  
+
 };

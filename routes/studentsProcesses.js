@@ -118,7 +118,7 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin,use
 router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
   stuproMgr.getStudentClassRoom(req.user.school,req.params.classRoomId,function(Crooms){
     var _room=[];
-    if(Crooms.length === 0){
+    if(Crooms.stu.length === 0){
       res.send([]);
     }
     for (var i in Crooms.stu){

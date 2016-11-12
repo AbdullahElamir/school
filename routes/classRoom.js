@@ -11,6 +11,7 @@ var marksSubMgr = require("../controller/marksSubject");
 var examMgr = require("../controller/exam");
 
 
+
 router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
   stuproMgr.getStuProcessesByClassRoomAndYear(req.user.school,req.params.classRoom,req.params.year,function(stuProsIds){
     studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,req.params.text,function(students){
@@ -121,7 +122,7 @@ router.put('/message/:classRoomID',userHelpers.isTeacher,function(req, res) {
           }
         });
       });
-    });
+    }
   });
 });
 

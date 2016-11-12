@@ -6,7 +6,6 @@ var userHelpers = require("../controller/userHelpers");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
-var user={};
 
 // var path = require("path");
 

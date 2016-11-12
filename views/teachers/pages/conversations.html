@@ -1,0 +1,73 @@
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <div class="col-xs-5 col-md-3">
+      <div class="caption caption-xs">
+        <span class="caption-subject font-green bold font-lg">المحادثات</span>
+      </div>
+    </div>
+    <div class="portlet-body" style="padding-top:0px;">
+      <table class="table table-striped" ng-show="conversations.length">
+        <thead>
+          <tr>
+            <th>أرسلت من أولياء الأمور</th>
+            <th>جميع الرسائل</th>
+            <th>غير المقروءة</th>
+            <th>آخر رسالة</th>
+            <th>تاريخ آخر رسالة</th>
+            <th><i class="fa fa-cog"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="conversation in conversations">
+            <td>{{conversation.participants[1].id.name + ((conversation.participants.length>2)?" (مخصصة)":"") }}</td>
+            <td>{{conversation.messages.length + " رسالة"}}</td>
+            <td>{{getUnSeenCounter(conversation.messages) + " رسالة"}}</td>
+            <td>{{(conversation.messages[conversation.messages.length-1].text.length <= 40)?conversation.messages[conversation.messages.length-1].text:conversation.messages[conversation.messages.length-1].text.substring(0,40) + " ..."}}</td>
+            <td ng-bind="conversation.messages[conversation.messages.length-1].date | date:'hh:mm:ss a yyyy/MM/dd' "></td>
+            <td>
+              <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="openMessagesDialog(conversation)"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;الرسائل</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">محادثة مع : {{conversationSelected.participants[1].id.name}} (ولي أمر)</h4>
+              <h5 ng-if="conversationSelected.participants.length>2">بخصوص الأبناء :
+                <span ng-repeat="x in conversationSelected.participants" ng-if="$index>1" >{{x.id.name + (($index!=(conversationSelected.participants.length-1))?" , ":"")}}</span>
+              </h5>
+            </div>
+            <div id="messages" style="max-height: calc(80vh - 100px);overflow-y: auto;" class="modal-body">
+              <div ng-repeat="message in messages" >
+                <div ng-if='message.from.type=="TEACHER"' style="margin: 6px 0px;padding: 2px 8px;background-color: #0084ff;border-radius: 15px;color: white;float: right;clear: both;width: auto;max-width: 85%">
+                  <h5 style="word-wrap: break-word;line-height: 20px">{{message.text}}</h5>
+                  <h6>{{ (message.seen==1)?"تم رؤيته":("تم الإرسال في ") }}<span ng-if="message.seen==0" ng-bind="message.date | date:'hh:mm:ss a yyyy/MM/dd' "></span><h6>
+                </div>
+                <div ng-if='message.from.type!="TEACHER"' style="margin: 6px 0px;padding: 2px 8px;background-color: #f1eff0;border-radius: 15px;color: black;float: left;clear: both;width: auto;max-width: 85%">
+                  <h5 style="word-wrap: break-word;line-height: 20px">{{message.text}}</h5>
+                  <h6 ng-if="message.seen==1" >تم الإرسال في  {{ message.date | date:'hh:mm:ss a yyyy/MM/dd' }}<h6>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input id="messageInput" style="float:right;width: 85%" class="form-control input-sm" type="text" ng-model="message" placeholder="اكتب رسالة .." required>
+              <button style="float:left;width: 13%" ng-click="sendMessage(conversationSelected._id)" type="button" class="btn btn-success">إرسال</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="conversations.length == 0">
+    <div class="alert alert-info">
+      <p class="text-center">
+        لا يوجد أي محادثات حتى الآن !
+      </p>
+    </div>
+  </div>
+</div>
