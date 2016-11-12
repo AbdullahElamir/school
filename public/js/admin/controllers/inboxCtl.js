@@ -20,17 +20,23 @@
     
     function refreshMessages(id){
       if( $state.current.name == "inbox" ){
-        InboxServ.getMessagesByConversationId(id).then(function(response) {
-          var length  = 0;
-          if( $scope.messages ){
-            length = $scope.messages.length;
-          }
-          $scope.messages = response.data;
-          if( !$scope.messages || ($scope.messages && length != response.data.length) ){
-            $timeout(function(){
-              var scroller = document.getElementById("messages");
-              scroller.scrollTop = scroller.scrollHeight;
-            }, 0, true);
+        InboxServ.setSeenAllMessagesInConversation(id).then(function(response) {
+          if(response.data){
+            InboxServ.getMessagesByConversationId(id).then(function(response) {
+              var length  = 0;
+              if( $scope.messages ){
+                length = $scope.messages.length;
+              }
+              $scope.messages = response.data;
+              if( !$scope.messages || ($scope.messages && length != response.data.length) ){
+                $timeout(function(){
+                  var scroller = document.getElementById("messages");
+                  scroller.scrollTop = scroller.scrollHeight;
+                }, 0, true);
+              }
+            }, function(response){
+              console.log("Something went wrong");
+            });
           }
         }, function(response){
           console.log("Something went wrong");
@@ -45,16 +51,10 @@
       clearInterval(timerConversation);
       $scope.conversationSelected = conversation;
       $scope.message="";
-      InboxServ.setSeenAllMessagesInConversation($scope.conversationSelected._id).then(function(response) {
-        if(response.data){
-          refreshMessages(conversation._id);
-          timerMessages = setInterval(function(){
-            refreshMessages(conversation._id);
-          }, 8000);
-        }
-      }, function(response){
-        console.log("Something went wrong");
-      });
+      refreshMessages(conversation._id);
+      timerMessages = setInterval(function(){
+        refreshMessages(conversation._id);
+      }, 8000);
     };
     
     $scope.sendMessage = function (conversationId){
