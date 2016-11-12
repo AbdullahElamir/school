@@ -21,7 +21,7 @@
     "express-session": "^1.14.1",
     "ico": "^0.3.3",
     "jsonfile": "^2.3.1",
-    "jsreport": "^0.13.4",
+    "jsreport": "^1.1.0",
     "lodash": "^4.13.1",
     "mongoose": "^4.5.0",
     "mongoose-auto-increment": "^5.0.1",
@@ -30,6 +30,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "password-generator": "^2.0.2",
+    "phantomjs-prebuilt": "^2.1.13",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
