@@ -4,7 +4,13 @@ var Check = null;
 module.exports = {
 
   getAllCheck :function(school,cb){
-    model.Check.find({school:school,status:1}, function(err, Checks){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Check.find(q, function(err, Checks){
       if(!err){
         cb(Checks);
       }else{
@@ -38,8 +44,15 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Check.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Check.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Checks){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Check.count(q,function(err, count){
+      model.Check.find(q).limit(limit).skip(page*limit).exec(function(err,Checks){
         if(!err){
           cb({result:Checks,count:count});
         }else{
@@ -54,6 +67,12 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
     model.Check.count({school:school},function(err, count){
       model.Check.find({school:school}).limit(limit).skip(page*limit).exec(function(err,Checks){
         if(!err){

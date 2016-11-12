@@ -3,8 +3,14 @@ var Fees1 = null;
 
 module.exports = {
 
-  getAllFees :function(cb){
-    model.Fees.find({status:1}).populate('id_class').exec(function(err, Feeses){
+  getAllFees :function(school,cb){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Fees.find(q).populate('id_class').exec(function(err, Feeses){
       if(!err){
         cb(Feeses);
       }else{
@@ -13,8 +19,16 @@ module.exports = {
       }
     });
   },
-  getFeesByClassRoom :function(classRoom,cb){
-    model.Fees.find({status:1,year:classRoom.year,id_class:classRoom.class}).exec(function(err, Feeses){
+  getFeesByClassRoom :function(school,classRoom,cb){
+    var q= {
+      status:1,
+      year:classRoom.year,
+      id_class:classRoom.class
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Fees.find(q).exec(function(err, Feeses){
       if(!err){
         cb(Feeses);
       }else{
@@ -25,12 +39,19 @@ module.exports = {
   },
 
   //getAllFeesesBySearchValue
-  getAllFeesesBySearchValue :function(searchValue,limit,page,cb){
+  getAllFeesesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Fees.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Fees.find({name:new RegExp(searchValue, 'i')}).populate('id_class').limit(limit).skip(page*limit).exec(function(err,Feeses){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Fees.count(q,function(err, count){
+      model.Fees.find(q).populate('id_class').limit(limit).skip(page*limit).exec(function(err,Feeses){
         if(!err){
           cb({result:Feeses,count:count});
         }else{
@@ -42,12 +63,18 @@ module.exports = {
   },
 
   //getAllFeesCount
-  getAllFeesCount :function(limit,page,cb){
+  getAllFeesCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Fees.count({status:1},function(err, count){
-      model.Fees.find({status:1}).limit(limit).populate('id_class').skip(page*limit).exec(function(err,Feeses){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Fees.count(q,function(err, count){
+      model.Fees.find(q).limit(limit).populate('id_class').skip(page*limit).exec(function(err,Feeses){
         if(!err){
           cb({result:Feeses,count:count});
         }else{
@@ -58,8 +85,14 @@ module.exports = {
     });
   },
 
-  getAllFeesStatus:function(status,cb){
-    model.Fees.find({status:status}).populate('id_class').exec(function(err, Feeses){
+  getAllFeesStatus:function(school,status,cb){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Fees.find(q).populate('id_class').exec(function(err, Feeses){
       if(!err){
         cb(Feeses);
       }else{
@@ -69,8 +102,15 @@ module.exports = {
     });
   },
 
-  getFeesName :function(name,cb){
-    model.Fees.find({name :{ $regex:name, $options: 'i' }}).populate('id_class').limit(30).exec(function(err, Feeses){
+  getFeesName :function(school,name,cb){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Fees.find(q).populate('id_class').limit(30).exec(function(err, Feeses){
       if(!err){
         cb(Feeses);
       }else{

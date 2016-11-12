@@ -3,8 +3,14 @@ var Exam1 = null;
 
 module.exports = {
 
-  getAllExam :function(cb){
-    model.Exam.find({status:1}).populate('system').populate('clas').exec(function(err, Exames){
+  getAllExam :function(school,cb){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Exam.find(q).populate('system').populate('clas').exec(function(err, Exames){
       if(!err){
         cb(Exames);
       }else{
@@ -15,12 +21,19 @@ module.exports = {
   },
   
   //getAllExamesBySearchValue
-  getAllExamesBySearchValue :function(searchValue,limit,page,cb){
+  getAllExamesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Exam.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Exam.find({name:new RegExp(searchValue, 'i')}).populate('system').populate('clas').limit(limit).skip(page*limit).exec(function(err,Exames){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Exam.count(q,function(err, count){
+      model.Exam.find(q).populate('system').populate('clas').limit(limit).skip(page*limit).exec(function(err,Exames){
         if(!err){
           cb({result:Exames,count:count});
         }else{
@@ -32,12 +45,18 @@ module.exports = {
   },
 
   //getAllCustomerCount
-  getAllExamCount :function(limit,page,cb){
+  getAllExamCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Exam.count({status:1},function(err, count){
-      model.Exam.find({status:1}).limit(limit).populate('system').populate('clas').skip(page*limit).exec(function(err,Exames){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Exam.count(q,function(err, count){
+      model.Exam.find(q).limit(limit).populate('system').populate('clas').skip(page*limit).exec(function(err,Exames){
         if(!err){
           cb({result:Exames,count:count});
         }else{
@@ -49,6 +68,12 @@ module.exports = {
   },
 
   getAllExamStatus:function(status,cb){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
     model.Exam.find({status:status}).populate('system').populate('clas').exec(function(err, Exames){
       if(!err){
         cb(Exames);
@@ -59,8 +84,15 @@ module.exports = {
     });
   },
   
-  getExamName :function(name,cb){
-    model.Exam.find({name :{ $regex:name, $options: 'i' }}).populate('system').populate('clas').limit(30).exec(function(err, Exames){
+  getExamName :function(school,name,cb){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Exam.find(q).populate('system').populate('clas').limit(30).exec(function(err, Exames){
       if(!err){
         cb(Exames);
       }else{

@@ -4,7 +4,13 @@ var class1 = null;
 module.exports = {
 
   getAllClass :function(school,cb){
-    model.Class.find({school:school,status:1}, function(err, classes){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Class.find(q, function(err, classes){
       if(!err){
         cb(classes);
       }else{
@@ -14,9 +20,22 @@ module.exports = {
   },
 
   getClassesByYear :function(school,year_id,cb){
-    model.Year.findOne({school:school , _id:year_id}, function(err, year_obj){
+    var q= {
+      status:1,
+       _id:year_id
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Year.findOne(q, function(err, year_obj){
       if(!err){
-        model.System.findOne({school:school , _id:year_obj.system})
+        var w ={
+           _id:year_obj.system
+        }
+        if(school!= -1){
+          q.school=school
+        }
+        model.System.findOne(w)
         .populate('sys_class.id_class')
         .exec(function(err, system){
           if(!err){
@@ -42,9 +61,24 @@ module.exports = {
   },
 
   getExamsByYearAndClass : function(school,year,clas,cb){
-    model.Year.findOne({school:school , _id:year}, function(err, year_obj){
+    var q= {
+      status:1,
+       _id:year
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Year.findOne(q, function(err, year_obj){
       if(!err){
-        model.Exam.find({school:school , system:year_obj.system ,clas:clas,type : { $ne: 2 } },function(err, exams){
+        var w ={
+          system:year_obj.system ,
+          clas:clas,
+          type : { $ne: 2 } 
+        }
+        if(school!= -1){
+          q.school=school
+        }
+        model.Exam.find(q,function(err, exams){
           if(!err){
             cb(exams);
           } else {
@@ -62,8 +96,15 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Class.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Class.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).populate("prevClass").exec(function(err,classes){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Class.count(q,function(err, count){
+      model.Class.find(q).limit(limit).skip(page*limit).populate("prevClass").exec(function(err,classes){
         if(!err){
           cb({result:classes,count:count});
         }else{
@@ -78,8 +119,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Class.count({school:school,status:1},function(err, count){
-      model.Class.find({school:school,status:1}).limit(limit).skip(page*limit).populate("prevClass").exec(function(err,classes){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Class.count(q,function(err, count){
+      model.Class.find(q).limit(limit).skip(page*limit).populate("prevClass").exec(function(err,classes){
         if(!err){
           cb({result:classes,count:count});
         }else{
@@ -90,7 +137,15 @@ module.exports = {
   },
 
   getAllClassRoomsByClassAndYear : function(school,clas,year,cb){
-    model.ClassRoom.find({school:school,class:clas,year:year},function(err, classRooms){
+    var q= {
+      status:1,
+      class:clas,
+      year:year
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.ClassRoom.find(q,function(err, classRooms){
       if(!err){
         cb(classRooms);
       }else{
@@ -100,7 +155,13 @@ module.exports = {
   },
 
   getAllClassStatus:function(school,status,cb){
-    model.Class.find({school:school,status:status},function(err, classes){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Class.find(q,function(err, classes){
       if(!err){
         cb(classes);
       }else{
@@ -110,7 +171,14 @@ module.exports = {
   },
 
   getClassName :function(school,name,cb){
-    model.Class.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, classes){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Class.find(q).limit(30).exec(function(err, classes){
       if(!err){
         cb(classes);
       }else{

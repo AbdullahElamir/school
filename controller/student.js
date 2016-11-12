@@ -50,7 +50,13 @@ module.exports = {
 
 
   getAllStudent :function(school,cb){
-    model.Student.find({school:school,status:1},function(err, students){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Student.find(q,function(err, students){
       if(!err){
         cb(students);
       }else{
@@ -77,8 +83,18 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Student.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school},function(err, count){
-      model.Student.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).populate("clas").exec(function(err,students){
+    var q= {
+      status:1,
+      $or :[
+        {name:new RegExp(searchValue, 'i')},
+        {nid:new RegExp(searchValue, 'i')}
+      ]
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Student.count(q,function(err, count){
+      model.Student.find(q).limit(limit).skip(page*limit).populate("clas").exec(function(err,students){
         if(!err){
           cb({result:students,count:count});
         }else{
@@ -94,8 +110,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Student.count({school:school,status:1},function(err, count){
-      model.Student.find({school:school,status:1}).limit(limit).skip(page*limit).populate("clas").exec(function(err,students){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Student.count(q,function(err, count){
+      model.Student.find(q).limit(limit).skip(page*limit).populate("clas").exec(function(err,students){
         if(!err){
           cb({result:students,count:count});
         }else{
@@ -107,7 +129,13 @@ module.exports = {
   },
 
   getAllStudentStatus:function(school,status,cb){
-    model.Student.find({status:status,school:school},function(err, students){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Student.find(q,function(err, students){
       if(!err){
         cb(students);
       }else{
@@ -118,7 +146,14 @@ module.exports = {
   },
 
   getStudentName :function(school,name,cb){
-    model.Student.find({name :{ $regex:name, $options: 'i' },school:school}).limit(30).exec(function(err, custom){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Student.find(q).limit(30).exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -204,7 +239,15 @@ module.exports = {
     check();
   },
   getStudentStupro : function(school,name,stupro,cb){
-    model.Student.find({$and:[{name :{ $regex:name, $options: 'i' }},{_id:{$in:stupro}}],school:school},function(err, custom){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' },
+      _id:{$in:stupro}
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Student.find(q,function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -213,7 +256,14 @@ module.exports = {
     });
   },
   getStudentAllID:function(school,id,cb){
-    model.Student.find({_id:{$in:id},school:school},function(err, students){
+    var q= {
+      status:1,
+      _id:{$in:id}
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Student.find(q,function(err, students){
       if(!err){
         cb(students);
       }else{
@@ -223,7 +273,14 @@ module.exports = {
     });
   },
   getStudentByParentId:function(school,id,cb){
-    model.Student.find({parent:id,school:school},function(err, students){
+    var q= {
+      status:1,
+      parent:id
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Student.find(q,function(err, students){
       if(!err){
         cb(students);
       }else{

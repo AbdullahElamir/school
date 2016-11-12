@@ -7,17 +7,16 @@ var stuproMgr = require("../controller/studentProcess");
 var teacherMgr = require("../controller/teacher");
 var adminMgr = require("../controller/admin");
 var userHelpers = require("../controller/userHelpers");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
 
-router.get('/all', userHelpers.isLogin ,function(req, res) {
+
+router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   attendMgr.getAllAttend(function(attend){
     res.send(attend);
   });
 });
 
 // add new attend
-router.post('/add', userHelpers.isLogin ,function(req, res) {
+router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   attendMgr.addAttendance(req.body,function(attend){
     res.send(attend);
   });
@@ -25,72 +24,72 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
 });
 
 // edit attend by id
-router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
+router.put('/edit/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   attendMgr.updateAttendance(req.params.id,req.body,function(attend){
     res.send(attend);
   });
 });
 
 //use this to change the value of reason
-router.put('/reason/:stupro/:date', userHelpers.isLogin ,function(req, res) {
+router.put('/reason/:stupro/:date', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   attendMgr.setReason(req.params.stupro,req.body,req.params.date,function(result){
     res.send(result);
   });
 });
 
 //##################################################
-router.put('/teacher/reason/:id/:date', userHelpers.isLogin ,function(req, res) {
+router.put('/teacher/reason/:id/:date', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   attendTeaMgr.setReason(req.params.id,req.body,req.params.date,function(result){
     res.send(result);
   });
 
 });
 
-router.put('/admin/reason/:id/:date', userHelpers.isLogin ,function(req, res) {
+router.put('/admin/reason/:id/:date', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   res.send(true);
 });
 //##################################################
 
 //use this to change the value of attend from StuPro
-router.put('/stupro/:stupro/:attend/:date', userHelpers.isLogin ,function(req, res) {
+router.put('/stupro/:stupro/:attend/:date', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   attendMgr.setAttendance(req.params.stupro,req.params.attend,req.params.date,function(result){
     res.send(result);
   });
 });
 
 //################################################
-router.put('/teacher/:id/:attend/:date', userHelpers.isLogin ,function(req, res) {
+router.put('/teacher/:id/:attend/:date', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   attendTeaMgr.setTeacherAttendance(req.params.id,req.params.attend,req.params.date,function(result){
     res.send(result);
   });
 });
-router.put('/admin/:id/:attend/:date', userHelpers.isLogin ,function(req, res) {
+router.put('/admin/:id/:attend/:date', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   res.send(true);
 });
 //################################################
 
 // delete attend by id
-router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
+router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   attendMgr.updateAttendance(req.params.id,{status:0},function(attend){
     res.send({result:attend});
   });
 });
 // get all attend
-router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
+router.get('/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   attendMgr.getAllAttendanceCount(req.params.limit,req.params.page,function(attend){
     res.send(attend);
   });
 });
 // get attend by status
-router.get('/status/:status',userHelpers.isLogin , function(req, res) {
+router.get('/status/:status',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   attendMgr.getAllAttendanceStatus(req.params.status,function(attend){
     res.send(attend);
   });
 });
 
 //################################################
-router.get('/teachers/:searchValue/:date/:limit/:page',userHelpers.isLogin , function(req, res) {
-  teacherMgr.getTeachersBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(teachers){
+router.get('/teachers/:searchValue/:date/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  teacherMgr.getTeachersBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(teachers){
     attendTeaMgr.getTeacherAttendanceDate(new Date(req.params.date),teachers.teachersId,function(attends){
       var _attend=[];
       if(teachers.result.length==0){
@@ -115,8 +114,8 @@ router.get('/teachers/:searchValue/:date/:limit/:page',userHelpers.isLogin , fun
     });
   });
 });
-router.get('/teachers//:date/:limit/:page',userHelpers.isLogin , function(req, res) {
-  teacherMgr.getTeachersBySearchValue(user.school,'',req.params.limit,req.params.page,function(teachers){
+router.get('/teachers//:date/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  teacherMgr.getTeachersBySearchValue(req.user.school,'',req.params.limit,req.params.page,function(teachers){
     attendTeaMgr.getTeacherAttendanceDate(new Date(req.params.date),teachers.teachersId,function(attends){
       var _attend=[];
       if(teachers.result.length==0){
@@ -151,8 +150,8 @@ router.get('/teachers//:date/:limit/:page',userHelpers.isLogin , function(req, r
   // });
 });
 
-router.get('/admins/:searchValue/:date/:limit/:page',userHelpers.isLogin , function(req, res) {
-  adminMgr.getAllAdminsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
+router.get('/admins/:searchValue/:date/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  adminMgr.getAllAdminsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
     attendAdminMgr.getAdminAttendanceDate(new Date(req.params.date),admins.adminsId,function(attends){
       var _attend=[];
       if(admins.result.length==0){
@@ -187,8 +186,8 @@ router.get('/admins/:searchValue/:date/:limit/:page',userHelpers.isLogin , funct
   //   count:3
   // });
 });
-router.get('/admins//:date/:limit/:page',userHelpers.isLogin , function(req, res) {
-  adminMgr.getAllAdminsBySearchValue(user.school,'',req.params.limit,req.params.page,function(admins){
+router.get('/admins//:date/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
+  adminMgr.getAllAdminsBySearchValue(req.user.school,'',req.params.limit,req.params.page,function(admins){
     attendAdminMgr.getAdminAttendanceDate(new Date(req.params.date),admins.adminsId,function(attends){
       var _attend=[];
       if(admins.result.length==0){
@@ -217,9 +216,9 @@ router.get('/admins//:date/:limit/:page',userHelpers.isLogin , function(req, res
 
 
 // get attend by date and classRoom
-router.get('/students/:classRoom/:date',userHelpers.isLogin , function(req, res) {
+router.get('/students/:classRoom/:date',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   // get real data _id  id is the id of the stuPro to let you make edits
-  stuproMgr.getStudentClassRoom(req.params.classRoom,function(stupro){
+  stuproMgr.getStudentClassRoom(req.user.school,req.params.classRoom,function(stupro){
     attendMgr.getAttendanceDate(new Date(req.params.date),stupro.StuP,function(attends){
       var _attend=[];
       for(var i in stupro.stu){
@@ -244,7 +243,7 @@ router.get('/students/:classRoom/:date',userHelpers.isLogin , function(req, res)
 });
 
 // get attend by id
-router.get('/:id',userHelpers.isLogin , function(req, res) {
+router.get('/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   attendMgr.getAttendanceId(req.params.id,function(attend){
     res.send(attend);
   });

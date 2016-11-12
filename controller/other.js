@@ -4,7 +4,13 @@ var Other = null;
 module.exports = {
 
   getAllOther :function(school,cb){
-    model.Other.find({school:school,status:1}, function(err, Others){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Other.find(q, function(err, Others){
       if(!err){
         cb(Others);
       }else{
@@ -37,8 +43,15 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Other.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Other.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Others){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Other.count(q,function(err, count){
+      model.Other.find(q).limit(limit).skip(page*limit).exec(function(err,Others){
         if(!err){
           cb({result:Others,count:count});
         }else{
@@ -53,8 +66,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Other.count({school:school},function(err, count){
-      model.Other.find({school:school}).limit(limit).skip(page*limit).exec(function(err,Others){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Other.count(q,function(err, count){
+      model.Other.find(q).limit(limit).skip(page*limit).exec(function(err,Others){
         if(!err){
           cb({result:Others,count:count});
         }else{

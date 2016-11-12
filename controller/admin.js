@@ -4,7 +4,13 @@ var userHelpers = require("./userHelpers");
 module.exports = {
 
   getAllAdmin :function(school,cb){
-    model.Admin.find({school:school,status:1},function(err, Admins){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Admin.find(q,function(err, Admins){
       if(!err){
         cb(Admins);
       }else{
@@ -19,10 +25,18 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Admin.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school},function(err, count){
-      model.Admin.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).exec(function(err,admins){
-        model.Admin.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).distinct('_id',function(err,adminsId){
-
+    var q= {
+      $or :[
+        {name:new RegExp(searchValue, 'i')},
+        {nid:new RegExp(searchValue, 'i')}
+      ]
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Admin.count(q,function(err, count){
+      model.Admin.find(q).limit(limit).skip(page*limit).exec(function(err,admins){
+        model.Admin.find(q).distinct('_id',function(err,adminsId){
           if(!err){
             cb({result:admins,count:count,adminsId:adminsId});
           }else{
@@ -39,8 +53,17 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Admin.count({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school},function(err, count){
-      model.Admin.find({$or :[{name:new RegExp(searchValue, 'i')},{nid:new RegExp(searchValue, 'i')}],school:school}).limit(limit).skip(page*limit).exec(function(err,Admins){
+    var q= {
+      $or :[
+        {name:new RegExp(searchValue, 'i')},
+        {nid:new RegExp(searchValue, 'i')}
+      ]
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Admin.count(q,function(err, count){
+      model.Admin.find(q).limit(limit).skip(page*limit).exec(function(err,Admins){
         if(!err){
           cb({result:Admins,count:count});
         }else{
@@ -55,8 +78,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Admin.count({school:school,status:1},function(err, count){
-      model.Admin.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,Admins){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Admin.count(q,function(err, count){
+      model.Admin.find(q).limit(limit).skip(page*limit).exec(function(err,Admins){
         if(!err){
           cb({result:Admins,count:count});
         }else{
@@ -68,7 +97,13 @@ module.exports = {
   },
 
   getAllAdminStatus:function(school,status,cb){
-    model.Admin.find({school:school,status:status},function(err, Admins){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Admin.find(q,function(err, Admins){
       if(!err){
         cb(Admins);
       }else{
@@ -79,7 +114,14 @@ module.exports = {
   },
 
   getAdminName :function(school,name,cb){
-    model.Admin.find({name :{ $regex:name, $options: 'i' },school:school}).limit(30).exec(function(err, Admins){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school != -1){
+      q.school=school
+    }
+    model.Admin.find(q).limit(30).exec(function(err, Admins){
       if(!err){
         cb(Admins);
       }else{
