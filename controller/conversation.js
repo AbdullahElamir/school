@@ -261,36 +261,7 @@ module.exports = {
   getNewMessages : function(conversationID,startFrom,cb){
     model.Conversation.findOne({ _id : conversationID },function(err, conversation){
       if( !err && conversation != null && conversation.messages.length != 0 && startFrom >= 0  && startFrom < conversation.messages.length ){
-        var sum ,counter = 0;
-        var messages = JSON.parse(JSON.stringify(conversation.messages.slice(startFrom,conversation.messages.length)));
-        sum = messages.length;
-        messages.forEach(function(message) {
-          if( message.from.type == "ADMIN" ){
-            adminMgr.getAdminId(message.from.id,function(obj){
-              message.from.id = obj;
-              counter++;
-              if ( sum == counter ){
-                cb(messages);
-              }
-            });
-          } else if( message.from.type == "PARENT" ){
-            parentMgr.getParentId(message.from.id,function(obj){
-              message.from.id = obj;
-              counter++;
-              if ( sum == counter ){
-                cb(messages);
-              }
-            });
-          } else if( message.from.type == "TEACHER" ){
-            teacherMgr.getTeacherId(message.from.id,function(obj){
-              message.from.id = obj;
-              counter++;
-              if ( sum == counter ){
-                cb(messages);
-              }
-            });
-          }
-        });
+        cb(conversation.messages.slice(startFrom,conversation.messages.length));
       } else {
         cb([]);
       }
