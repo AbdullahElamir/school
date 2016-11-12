@@ -159,12 +159,14 @@ module.exports = {
         if (!err) {
           cb(true);
         } else {
-//          console.log(err);
+         console.log(err);
           cb(false);
         }
       });
     });
   },
+
+
 
   updateAdmin : function(id,body,cb){
     var obj = body;

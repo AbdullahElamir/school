@@ -8,19 +8,7 @@ var fs = require("fs");
 
 
 
-/*GET all ADmins By Search Value*/
-router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  adminMgr.getAllAdminsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
-    res.send(admins);
-  });
-});
 
-/* GET all admin */
-router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  adminMgr.getAllAdminCount(req.user.school,req.params.limit,req.params.page,function(admins){
-    res.send(admins);
-  });
-});
 router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   adminMgr.getAllAdmin(req.user.school,function(admins){
     res.send(admins);
@@ -41,6 +29,9 @@ router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) 
   });
 
 });
+
+
+
 router.post('/upload/:id',userHelpers.isLogin,userHelpers.isAdmin, multipartMiddleware, function(req, res) {
   var dir = './public/img/admins';
   if (!fs.existsSync(dir)){
@@ -57,6 +48,15 @@ router.post('/upload/:id',userHelpers.isLogin,userHelpers.isAdmin, multipartMidd
     });
   });
 });
+
+router.get('/addAdmin/:email/:pass',function(req, res) {
+  body= {email:req.params.email,password:req.params.pass,level:1};
+  console.log(body)
+  adminMgr.addAdmin(body,function(admins){
+    res.send(admins);
+  });
+});
+
 
 /* Edit admin by id  */
 router.put('/edit/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
@@ -81,6 +81,20 @@ router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(r
 /* GET admin by ID  */
 router.get('/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   adminMgr.getAdminId(req.params.id,function(admins){
+    res.send(admins);
+  });
+});
+
+/*GET all ADmins By Search Value*/
+router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  adminMgr.getAllAdminsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
+    res.send(admins);
+  });
+});
+
+/* GET all admin */
+router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  adminMgr.getAllAdminCount(req.user.school,req.params.limit,req.params.page,function(admins){
     res.send(admins);
   });
 });
