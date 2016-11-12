@@ -13,7 +13,7 @@ router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res)
 
 // get all eva
 router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  evaMgr.getAllEvaluationCount(user.school,req.params.limit,req.params.page,function(eva){
+  evaMgr.getAllEvaluationCount(req.params.limit,req.params.page,function(eva){
     res.send(eva);
   });
 });
