@@ -14,9 +14,9 @@ chai.use(chaiHttp);
 //Our parent block
 describe('School', function(){
   beforeEach(function (done){ //Before each test we empty the database
-    model.School.remove({}, function (err){ 
-      done();         
-    });     
+    model.School.remove({}, function (err){
+      done();
+    });
   });
 /*
   * Test the /GET route
@@ -110,6 +110,22 @@ describe('School', function(){
         });
       });
     });
+  });
+
+  describe('/DELETE/:id school', function(){
+      it('it should DELETE a school given the id', function(done){
+        var school = new model.School({ name: "الفرع الثالث", address: "قرجي", phone: "0925032655", des: "الفرع الثالث للمدرسة" });
+        school.save(function(err, school){
+                chai.request(server)
+                .delete('/school/' + school.id)
+                .end(function(err, res){
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('result').eql(2);
+                  done();
+                });
+          });
+      });
   });
 
 });

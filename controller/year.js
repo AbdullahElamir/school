@@ -114,7 +114,7 @@ module.exports = {
       }
     });
   },
-  
+
   activate: function (school,id,cb) {
     model.Year.update({school:school}, {active:0},{multi: true}, function(err) {
       if (!err) {
@@ -132,7 +132,7 @@ module.exports = {
       }
     });
   },
-  
+
   disActivate: function (id,cb) {
     model.Year.update({_id:id}, {active:0},{multi: true}, function(err) {
       if (!err) {
@@ -145,20 +145,42 @@ module.exports = {
   },
 
   deleteYear : function(id,cb){
-    model.Fees.find({year:id}, function(err,result) {
-      if(result.length > 0){
-        cb(1);
-      } else{
-        model.Year.remove({_id:id}, function(err) {
-          if (!err) {
-            cb(2);
-          } else {
-            // console.log(err);
+    //a function is called to delete
+    var deleteFun= function(){
+      model.Year.remove({_id:id}, function(err) {
+        if (!err) {
+          cb(2);
+        } else {
+          cb(3);
+        }
+      });
+    };
+    //collections must be checked before delete
+    var collections = ["ClassRoom","Fees","TSC"];
+    //recursive function to check all the collections provided in the array
+    var check = function(){
+      if(collections.length>0){
+        //pop an element from the array and check it
+        model[collections.pop()].find({year:id},function(err,result){
+          if(!err){
+            //contenue finding in the other collections
+            if(result.length===0){
+              check();
+            }else{
+              //this means that there is a document that have this id and we shouldn't delete
+              cb(1);
+            }
+          }else {
+            //error
             cb(3);
           }
         });
+      }else{
+        //this means that we finished the all collections array so delete
+        deleteFun();
       }
-    });
+    };
+    check();
   }
 
 };

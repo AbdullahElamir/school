@@ -19,12 +19,6 @@ router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   });
 });
 
-router.get('/all', userHelpers.isLogin ,function(req, res) {
-  schoolMgr.getAllSchool(function(school){
-    res.send(school);
-  });
-});
-
 router.get('/info', userHelpers.isLogin ,function(req, res) {
   schoolMgr.getSchoolInfo(user.school,function(info){
     res.send(info);

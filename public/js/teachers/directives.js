@@ -16,11 +16,7 @@
           $rootScope.$on('$stateChangeSuccess', function() {
             element.addClass('hide'); // hide spinner bar
             $('body').removeClass('page-on-load'); // remove page loading indicator
-            Layout.setSidebarMenuActiveLink('match'); // activate selected link in the sidebar menu
-              // auto scorll to page top
-            setTimeout(function () {
-              App.scrollTop(); // scroll to the top on content load
-            }, $rootScope.settings.layout.pageAutoScrollOnLoad);     
+            Layout.setSidebarMenuActiveLink('match'); // activate selected link in the sidebar menu 
           });
           // handle errors
           $rootScope.$on('$stateNotFound', function() {
