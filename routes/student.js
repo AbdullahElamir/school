@@ -29,7 +29,8 @@ router.get('/report1',userHelpers.isLogin , function(req, res) {
       engine: "jsrender",
       recipe: "phantom-pdf",
       phantom: {
-       customPhantomJS: true
+        format: 'A4',
+        customPhantomJS: true
       },
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report1.html"), "utf8")
     },data:{result:null}
@@ -90,7 +91,8 @@ router.get('/report3',userHelpers.isLogin , function(req, res) {
       engine: "jsrender",
       recipe: "phantom-pdf",
       phantom: {
-       customPhantomJS: true
+        format: 'A4',
+        customPhantomJS: true
       },
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report3.html"), "utf8")
     },data:{result:null}
