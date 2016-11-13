@@ -339,14 +339,19 @@ module.exports = {
     });
   },
   
-  // waiting for implementation
-  
   getNewConversations : function(parentID,allConversationIDs,cb){
-    
-  },
-  
-  sendPendingMessage : function(pendingMessage,cb){
-    
+    var option = {$and : []};
+    option.$and.push({_id : { $nin : allConversationIDs }});
+    option.$and.push({participants : { $elemMatch : { id : parentID , type : "PARENT" } } });
+    model.Conversation.find(option)
+    .sort({updatedAt:-1})
+    .exec(function(err, conversationsMongoose){
+      if(!err && conversationsMongoose != null && conversationsMongoose.length != 0){
+        cb(conversationsMongoose);
+      }else{
+        cb([]);
+      }
+    });
   }
   
 };

@@ -2,7 +2,7 @@
   'use strict';
   var app = angular.module('teachersSchool');
   app.controller('TasksCtl',['$scope','$state','$stateParams','TasksServ','toastr',function($scope,state,$stateParams,TasksServ,toastr){
-    var userId = "57e05187611a8c0bb0272833";
+
     $scope.subjectID = $stateParams.course;
     $scope.classRoomID = $stateParams.id;
 
@@ -70,7 +70,6 @@
     };
 
     $scope.newTask = function(){
-      $scope.newTasksForm.teacher = userId;
       $scope.newTasksForm.subject = $scope.subjectID;
       $scope.newTasksForm.classRoom = $scope.classRoomID;
       TasksServ.addTasks($scope.newTasksForm).then(function(response){

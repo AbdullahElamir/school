@@ -5,15 +5,13 @@ var classRoomMgr = require("../controller/classRoom");
 var stuproMgr = require("../controller/studentProcess");
 var conversationMgr = require("../controller/conversation");
 var userHelpers = require("../controller/userHelpers");
-yearMgr = require("../controller/year");
+var yearMgr = require("../controller/year");
 var TSCMgr = require("../controller/teacherSubjectClass");
 var jsreport = require("jsreport");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
 var path = require("path");
-
-
 
 router.get('/children/all/:parentId',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   studentMgr.getStudentByParentId(req.user.school,req.params.parentId,function(children){
@@ -35,13 +33,12 @@ router.get('/report1',userHelpers.isLogin,userHelpers.isAdmin , function(req, re
   });
 });
 
-
 router.get('/genrateStudentId',userHelpers.isAdmin,function(req, res){
   studentMgr.StudentGenerateId(1,function(result){
     console.log(result);
    res.send(result); 
   });
-})
+});
 
 
 
