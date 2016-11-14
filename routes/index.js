@@ -7,6 +7,10 @@ var login = require('../controller/login')(router);
 
 
 /* GET home page. */
+
+router.get('/isLoggedIn', function(req, res) {
+  res.send(req.isAuthenticated());
+})
 router.get('/', function(req, res) {
   res.render('index', { title: 'Login' });
 });

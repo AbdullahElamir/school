@@ -81,12 +81,12 @@ module.exports = function (router) {
   router.post('/loginParent', function(req, res, next) {
     passport.authenticate('parent', function(err, user) {
       if (err) { return next(err); }
-      if (!user) { return res.send({login: 2 }); }
+      if (!user) { return res.send({message: 'خطا في اسم المستخدم او كلمة المرور',hasFailed:true }); }
       
       req.logIn(user, function(err) {
         if (err) { return next(err); }
         if (user){
-          return res.send({login: true,admin:3 });
+          return res.send({hasFailed:false });
         }
         
       });
