@@ -91,8 +91,6 @@
           }
         }
       }
-      console.log($scope.newSystemForm);
-      console.log($stateParams.id);
       SystemServ.editSystem($stateParams.id,$scope.newSystemForm).then(function(response) {
         if(response.data){
           toastr.info('تم التعديل بنجاح');

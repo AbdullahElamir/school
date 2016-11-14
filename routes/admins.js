@@ -6,9 +6,6 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
 
-
-
-
 router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   adminMgr.getAllAdmin(req.user.school,function(admins){
     res.send(admins);
@@ -27,17 +24,13 @@ router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) 
   adminMgr.addAdmin(req.body,function(admins){
     res.send(admins);
   });
-
 });
-
-
 
 router.post('/upload/:id',userHelpers.isLogin,userHelpers.isAdmin, multipartMiddleware, function(req, res) {
   var dir = './public/img/admins';
   if (!fs.existsSync(dir)){
     fs.mkdirSync(dir);
   }
-
   fs.readFile(req.files.file.path, function (err, data) {
     var newPath =dir+'/'+req.params.id;
     fs.writeFile(newPath, data, function (err) {
@@ -51,12 +44,17 @@ router.post('/upload/:id',userHelpers.isLogin,userHelpers.isAdmin, multipartMidd
 
 router.get('/addAdmin/:email/:pass',function(req, res) {
   body= {email:req.params.email,password:req.params.pass,level:1};
-  console.log(body)
   adminMgr.addAdmin(body,function(admins){
     res.send(admins);
   });
 });
 
+/* Edit admin by id On session */
+router.put('/edit/session', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
+  adminMgr.updateAdmin(req.user._id,req.body,function(admins){
+    res.send(admins);
+  });
+});
 
 /* Edit admin by id  */
 router.put('/edit/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
@@ -64,7 +62,13 @@ router.put('/edit/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(req, r
     res.send(admins);
   });
 });
-/* Edit admin by id  */
+
+router.put('/changePass/session', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
+  adminMgr.changePass(req.user._id,req.body,function(result){
+    res.send({result:result});
+  });
+});
+
 router.put('/changePass/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   adminMgr.changePass(req.params.id,req.body,function(result){
     res.send({result:result});
@@ -75,6 +79,13 @@ router.put('/changePass/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(
 router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   adminMgr.deleteAdmin(req.params.id,function(admins){
     res.send({result:admins});
+  });
+});
+
+/* GET admin by ID on Session */
+router.get('/session',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  adminMgr.getAdminId(req.user._id,function(admins){
+    res.send(admins);
   });
 });
 

@@ -30,8 +30,8 @@
 
   app.service('ClassRoomServ',['$http',function($http){
     var self = {
-      'getTeacherClassRooms': function(id){
-        return $http.get('/classRoom/teacher/'+id);
+      'getTeacherClassRooms': function(){
+        return $http.get('/classRoom/teacher/session');
       },
       'sendMessageToParentsOfClassRoom': function(idClassRoom,message){
         return $http.put('/classRoom/message/'+idClassRoom,{message:message,type:"TEACHER"});
@@ -57,11 +57,20 @@
       'getTeacherById': function(id) {
         return $http.get('/teacher/'+id.id);
       },
+      'getTeacherByIdInSession': function(){
+        return $http.get('/teacher/session');
+      },
       'editTeacher': function(id,obj) {
         return $http.put('/teacher/edit/'+id,obj);
       },
+      'editTeacherInSession': function(obj){
+        return $http.put('/teacher/edit/session',obj);
+      },
       'changePass': function(userId,passwords){
         return $http.put('/teacher/changePass/'+userId,passwords);
+      },
+      'changePassInSession': function(passwords){
+        return $http.put('/teacher/changePass/session',passwords);
       }
     };
     return self;

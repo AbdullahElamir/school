@@ -81,6 +81,4 @@ router.get('/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
 });
 
 
-
-
 module.exports = router;

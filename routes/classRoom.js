@@ -11,7 +11,6 @@ var marksSubMgr = require("../controller/marksSubject");
 var examMgr = require("../controller/exam");
 
 
-
 router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
   stuproMgr.getStuProcessesByClassRoomAndYear(req.user.school,req.params.classRoom,req.params.year,function(stuProsIds){
     studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,req.params.text,function(students){
@@ -113,7 +112,7 @@ router.put('/message/:classRoomID',userHelpers.isTeacher,function(req, res) {
     var counter = 0;
     stupros.forEach(function(stupro){
       studentMgr.getStudentId(stupro,function(stu){
-        conversationMgr.sendMsgFromPersonToPersonWithStudents([stupro],user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
+        conversationMgr.sendMsgFromPersonToPersonWithStudents([stupro],req.user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
           if ( send ){
             counter++;
           }
@@ -122,10 +121,9 @@ router.put('/message/:classRoomID',userHelpers.isTeacher,function(req, res) {
           }
         });
       });
-    
+    });
   });
 });
-  });
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
   classRoomMgr.getAllClassRoom(req.user.school,function(Croom){
@@ -186,7 +184,28 @@ router.get('/name/:name',userHelpers.isLogin ,userHelpers.isAdmin, function(req,
   });
 });
 
-// get class room by name
+router.get('/teacher/session',userHelpers.isLogin,userHelpers.isTeacher , function(req, res) {
+  TSCMgr.getTeacherClassSubject(req.user._id,function(result){
+    var tsc = [];
+    if(result){
+      if(result.length === 0){
+        res.send([]);
+      }
+      for(var i in result){
+        tsc.push({
+          _id:result[i].classRoom._id,
+          name:result[i].classRoom.name,
+          course:result[i].subject.name,
+          courseId:result[i].subject._id
+        });
+        if(i == result.length-1){
+          res.send(tsc);
+        }
+      }
+    }
+  });
+});
+
 router.get('/teacher/:id',userHelpers.isLogin,userHelpers.isTeacher , function(req, res) {
   TSCMgr.getTeacherClassSubject(req.params.id,function(result){
     var tsc = [];
@@ -223,12 +242,6 @@ router.get('/students/:classRoom/:year',userHelpers.isLogin,userHelpers.isAdmin 
       }
     }
   });
-  // res.send([
-  //   {_id:745645645,name:"a"},
-  //   {_id:845613541,name:"b"},
-  //   {_id:874515717,name:"c"},
-  //   {_id:812674577,name:"d"}
-  // ]);
 });
 
 //get all claas Rooms By Search Value
