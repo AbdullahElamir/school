@@ -12,7 +12,7 @@ var Conversation = new Schema({
   messages:{
     type: [{
       text: {type: String,default:""},
-      seen: {type: Boolean, default:false},
+      seen: {type: Number, default:0},
       date: {type: Date, default: Date.now },
       from: { 
         id : {type: Schema.Types.ObjectId},

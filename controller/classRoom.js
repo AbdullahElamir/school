@@ -4,7 +4,13 @@ var ClassRoom1 = null;
 module.exports = {
 
   getAllClassRoom :function(school,cb){
-    model.ClassRoom.find({school:school,status:1}).populate('room')
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school;
+    }
+    model.ClassRoom.find(q).populate('room')
     .exec(function(err, ClassRoomes){
       if(!err){
         cb(ClassRoomes);
@@ -20,8 +26,15 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.ClassRoom.count({school:school,name:new RegExp(searchValue, 'i')}).populate('room').exec(function(err, count){
-      model.ClassRoom.find({school:school,name:new RegExp(searchValue, 'i')}).populate('room').limit(limit).skip(page*limit).exec(function(err,ClassRoomes){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.ClassRoom.count(q).populate('room').exec(function(err, count){
+      model.ClassRoom.find(q).populate('room').limit(limit).skip(page*limit).exec(function(err,ClassRoomes){
         if(!err){
           cb({result:ClassRoomes,count:count});
         }else{
@@ -36,8 +49,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.ClassRoom.count({school:school,status:1},function(err, count){
-      model.ClassRoom.find({school:school,status:1}).populate('room').limit(limit).skip(page*limit).exec(function(err,ClassRoomes){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.ClassRoom.count(q,function(err, count){
+      model.ClassRoom.find(q).populate('room').limit(limit).skip(page*limit).exec(function(err,ClassRoomes){
         if(!err){
           cb({result:ClassRoomes,count:count});
         }else{
@@ -49,7 +68,13 @@ module.exports = {
   },
 
   getAllClassRoomStatus:function(status,cb){
-    model.ClassRoom.find({status:status}).populate('room').exec(function(err, ClassRoomes){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.ClassRoom.find(q).populate('room').exec(function(err, ClassRoomes){
       if(!err){
         cb(ClassRoomes);
       }else{
@@ -60,7 +85,14 @@ module.exports = {
   },
 
   getClassRoomName :function(name,cb){
-    model.ClassRoom.find({$and:[{status:1},{name :{ $regex:name, $options: 'i' }}]}).populate('room').limit(30).exec(function(err, ClassRoomes){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.ClassRoom.find(q).populate('room').limit(30).exec(function(err, ClassRoomes){
       if(!err){
         cb(ClassRoomes);
       }else{

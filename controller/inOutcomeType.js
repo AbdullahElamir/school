@@ -3,7 +3,13 @@ var model = require('../models');
 module.exports = {
 
   getAllInOutcomeTypes :function(school,cb){
-    model.InOutcomeType.find({school:school}, function(err, InOutcomeTypes){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.InOutcomeType.find(q, function(err, InOutcomeTypes){
       if(!err){
         cb(InOutcomeTypes);
       }else{
@@ -17,8 +23,15 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.InOutcomeType.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.InOutcomeType.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,InOutcomeTypes){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.InOutcomeType.count(q,function(err, count){
+      model.InOutcomeType.find(q).limit(limit).skip(page*limit).exec(function(err,InOutcomeTypes){
         if(!err){
           cb({result:InOutcomeTypes,count:count});
         }else{
@@ -33,8 +46,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.InOutcomeType.count({school:school},function(err, count){
-      model.InOutcomeType.find({school:school}).limit(limit).skip(page*limit).exec(function(err,InOutcomeTypes){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.InOutcomeType.count(q,function(err, count){
+      model.InOutcomeType.find(q).limit(limit).skip(page*limit).exec(function(err,InOutcomeTypes){
         if(!err){
           cb({result:InOutcomeTypes,count:count});
         }else{

@@ -102,6 +102,24 @@
         }]
       }
     })
+    .state('report2Filter',{
+      url: '/report2Filter',
+      templateUrl: 'admin/pages/school/report2Filter',
+      data: {pageTitle: 'ألفروع'},
+      controller: 'SchoolsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/schoolCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+
+
     .state('schools',{
       url: '/schools',
       templateUrl: 'admin/pages/school/schools',

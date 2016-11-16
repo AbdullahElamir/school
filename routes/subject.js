@@ -2,45 +2,45 @@ var express = require('express');
 var router = express.Router();
 var subjectMgr = require("../controller/subject");
 var userHelpers = require("../controller/userHelpers");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
+
+
 /*GET all Subjects By Search Value And Class*/
-router.get('/:searchValue/:clas/:limit/:page',userHelpers.isLogin , function(req, res) {
-  subjectMgr.getSubjectsBySearchValueAndClass(user.school,req.params.searchValue,req.params.clas,req.params.limit,req.params.page,function(subject){
+router.get('/:searchValue/:clas/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  subjectMgr.getSubjectsBySearchValueAndClass(req.user.school,req.params.searchValue,req.params.clas,req.params.limit,req.params.page,function(subject){
     res.send(subject);
   });
 });
 
 // GET all subject
-router.get('/:clas/:limit/:page',userHelpers.isLogin , function(req, res) {
-  subjectMgr.getSubjectsBySearchValueAndClass(user.school,"",req.params.clas,req.params.limit,req.params.page,function(subject){
+router.get('/:clas/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  subjectMgr.getSubjectsBySearchValueAndClass(req.user.school,"",req.params.clas,req.params.limit,req.params.page,function(subject){
     res.send(subject);
   });
 });
 
 // GET subjects by class
-router.get('/class/:id',userHelpers.isLogin , function(req, res) {
+router.get('/class/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   subjectMgr.getSubjectsByClass(req.params.id,function(subject){
     res.send(subject);
   });
 });
 
 // GET all subject
-router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  subjectMgr.getAllSubjectCount(user.school,req.params.limit,req.params.page,function(subject){
+router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  subjectMgr.getAllSubjectCount(req.user.school,req.params.limit,req.params.page,function(subject){
     res.send(subject);
   });
 });
 
-router.get('/all', userHelpers.isLogin ,function(req, res) {
-  subjectMgr.getAllSubject(user.school,function(subject){
+router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
+  subjectMgr.getAllSubject(req.user.school,function(subject){
     res.send(subject);
   });
 });
 
 // Add new subject
-router.post('/add', userHelpers.isLogin ,function(req, res) {
-  req.body.school=user.school;
+router.post('/add',userHelpers.isAdmin, userHelpers.isLogin ,function(req, res) {
+  req.body.school=req.user.school;
   subjectMgr.addSubject(req.body,function(subject){
     res.send(subject);
   });
@@ -48,21 +48,21 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
 });
 
 // Edit subject by id
-router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
+router.put('/edit/:id',userHelpers.isAdmin, userHelpers.isLogin ,function(req, res) {
   subjectMgr.updateSubject(req.params.id,req.body,function(subject){
     res.send(subject);
   });
 });
 
 // Delete subject by id
-router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
+router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   subjectMgr.deleteSubject(req.params.id,function(subject){
     res.send({result:subject});
   });
 });
 
 // GET subject by ID
-router.get('/:id',userHelpers.isLogin , function(req, res) {
+router.get('/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   subjectMgr.getSubjectId(req.params.id,function(subject){
     res.send(subject);
   });

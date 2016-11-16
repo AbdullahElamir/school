@@ -2,9 +2,8 @@
   'use strict';
   var app = angular.module('adminSchool');
   app.controller('ProfileCtl',['$scope','$state','AdminServ','toastr',function($scope,state,AdminServ,toastr){
-    var userId = "57e275243ae2eb38516c6da8";
 
-    AdminServ.getAdminById({id:userId}).then(function(response) {
+    AdminServ.getAdminByIdInSession().then(function(response) {
      response.data.birth_day=new Date(response.data.birth_day);
      response.data.password="";
       $scope.user = response.data;
@@ -13,7 +12,7 @@
     });
 
     $scope.changePassFun = function(){
-      AdminServ.changePass(userId,$scope.changePass).then(function(response){
+      AdminServ.changePassInSession($scope.changePass).then(function(response){
         if(response.data.result == 1){
           toastr.success("تم تغيير كلمة المرور بنجاح");
           $('#changePassModal').modal('hide');
@@ -31,9 +30,8 @@
   }]);
 
   app.controller('EditProfileCtl',['$scope','$state','AdminServ','toastr',function($scope,$state,AdminServ,toastr){
-    var userId = "57e275243ae2eb38516c6da8";
-
-    AdminServ.getAdminById({id:userId}).then(function(response) {
+    
+    AdminServ.getAdminByIdInSession().then(function(response) {
      response.data.birth_day=new Date(response.data.birth_day);
      delete response.data.password;
       $scope.editAdminForm = response.data;
@@ -42,16 +40,16 @@
     });
 
     $scope.editAdmin = function(){
-     AdminServ.editAdmin(userId,$scope.editAdminForm).then(function(response) {
-       if(response.data){
-         toastr.info('تم التعديل بنجاح');
-         $state.go('profile');
-       } else {
-         console.log(response.data);
-       }
-     }, function(response) {
-       console.log("Something went wrong");
-     });
+      AdminServ.editAdminInSession($scope.editAdminForm).then(function(response) {
+        if(response.data){
+          toastr.info('تم التعديل بنجاح');
+          $state.go('profile');
+        } else {
+          console.log(response.data);
+        }
+      }, function(response) {
+        console.log("Something went wrong");
+      });
    };
   }]);
 

@@ -21,7 +21,7 @@ var Teacher = new Schema({
   nationality:{type: Number},
   address:{type: String,default:"NULL"},
   closestPoint:{type: String,default:"NULL"},
-  level:{type:Number, default:2},
+  level:{type:Number, default:7},
   school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });

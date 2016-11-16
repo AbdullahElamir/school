@@ -15,27 +15,28 @@ module.exports = {
     d2.setHours(23);
     d2.setMinutes(59);
     d2.setSeconds(59);
-    if(cat === "all"){
-      model.InOutcome.count({school:school,title:new RegExp(searchValue, 'i'),type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
-        model.InOutcome.find({school:school,title:new RegExp(searchValue, 'i'),type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
-          if(!err){
-            cb({result:InOutcomes,count:count});
-          }else{
-            cb(null);
-          }
-        });
-      });
-    }else{
-      model.InOutcome.count({school:school,title:new RegExp(searchValue, 'i'),inOutcomeType:cat,type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
-        model.InOutcome.find({school:school,title:new RegExp(searchValue, 'i'),inOutcomeType:cat,type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
-          if(!err){
-            cb({result:InOutcomes,count:count});
-          }else{
-            cb(null);
-          }
-        });
-      });
+    var q= {
+      status:1,
+      title:new RegExp(searchValue, 'i'),
+      type:type,
+      date:{"$gte": new Date(d1), "$lte": new Date(d2)}
+    };
+    if(school!= -1){
+      q.school=school
     }
+    if(cat !== "all"){
+      q.inOutcomeType=cat;
+    }
+
+    model.InOutcome.count(q,function(err, count){
+      model.InOutcome.find(q).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
+        if(!err){
+          cb({result:InOutcomes,count:count});
+        }else{
+          cb(null);
+        }
+      });
+    });
   },
 
   //getAllInOutcomesCount
@@ -51,27 +52,27 @@ module.exports = {
     d2.setHours(23);
     d2.setMinutes(59);
     d2.setSeconds(59);
-    if(cat === "all"){
-      model.InOutcome.count({type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
-        model.InOutcome.find({type:type,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
-          if(!err){
-            cb({result:InOutcomes,count:count});
-          }else{
-            cb(null);
-          }
-        });
-      });
-    }else{
-      model.InOutcome.count({type:type,inOutcomeType:cat,date:{"$gte": new Date(d1), "$lte": new Date(d2)}},function(err, count){
-        model.InOutcome.find({type:type,inOutcomeType:cat,date:{"$gte": new Date(d1), "$lte": new Date(d2)}}).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
-          if(!err){
-            cb({result:InOutcomes,count:count});
-          }else{
-            cb(null);
-          }
-        });
-      });
+    var q= {
+      status:1,
+      type:type,
+      date:{"$gte": new Date(d1), "$lte": new Date(d2)}
+    };
+    if(school!= -1){
+      q.school=school
     }
+    if(cat !== "all"){
+      q.inOutcomeType=cat;
+    }
+    model.InOutcome.count(q,function(err, count){
+      model.InOutcome.find(q).limit(limit).skip(page*limit).populate('inOutcomeType').exec(function(err,InOutcomes){
+        if(!err){
+          cb({result:InOutcomes,count:count});
+        }else{
+          cb(null);
+        }
+      });
+    });
+
   },
 
   getInOutcomeId :function(id,cb){

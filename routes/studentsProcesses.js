@@ -8,11 +8,10 @@ var stuproMgr = require("../controller/studentProcess");
 var resultMgr = require("../controller/result");
 var stuEvaMgr = require("../controller/studentEvaluation");
 var evaMgr = require("../controller/evaluation");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
+
 //get student information
-router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(req, res) {
-  evaMgr.getAllEvaluation(function(result){
+router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
+  evaMgr.getAllEvaluation(req.user.school,function(result){
     stuEvaMgr.getStuEva(req.params.stupro,req.params.course,req.params.month,req.params.half,function(evaluation){
       var obj=[];
       if(result.length === 0){
@@ -38,7 +37,7 @@ router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(r
   });
 });
 
-router.get('/stuPro', userHelpers.isLogin ,function(req, res) {
+router.get('/stuPro', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   var info = [{
     "name":"mohammed",
     "description":"tripoli",
@@ -48,8 +47,8 @@ router.get('/stuPro', userHelpers.isLogin ,function(req, res) {
 });
 
 // update grades of exams student in subject on classRoom for a current year (where year is Active)
-router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
-  stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
+router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
+  stuproMgr.getStudentsSto(req.user.school,req.params.classRoomId,req.params.idStudent,function(sto){
     for( var k in req.body){
       var obj={
         StuPro:sto,
@@ -69,7 +68,7 @@ router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogi
   });
 });
 
-router.put('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(req, res) {
+router.put('/rate/:stupro/:course/:month/:half', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
   //req.body
   for (var index in req.body){
     stuEvaMgr.addStuEva(req.params.stupro,req.params.course,req.params.month,req.params.half,req.body[index],function(){});
@@ -80,12 +79,12 @@ router.put('/rate/:stupro/:course/:month/:half', userHelpers.isLogin ,function(r
 });
 
 // get grades of exams for student in subject on classRoom for a current year (where year is Active)
-router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
+router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
   classRoomMgr.getClassRoomIdWithYear(req.params.classRoomId,function(classR){
     var system=classR.year.system;
-    marksSubMgr.getMarksSubSubject(req.params.subjectId,system,function(examssub){
+    marksSubMgr.getMarksSubSubject(req.user.school,req.params.subjectId,system,function(examssub){
       examMgr.getExamSClass(classR.class,system,function(exams){
-        stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
+        stuproMgr.getStudentsSto(req.user.school,req.params.classRoomId,req.params.idStudent,function(sto){
           resultMgr.getResultSubject(sto,exams,req.params.subjectId,function(marksS){
             var examsGrades=[];
             for(var i in examssub){
@@ -116,10 +115,10 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin ,fu
 });
 
 // get students By subject Id and class room Id for a current year (where year is Active)
-router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin ,function(req, res) {
-  stuproMgr.getStudentClassRoom(req.params.classRoomId,function(Crooms){
+router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
+  stuproMgr.getStudentClassRoom(req.user.school,req.params.classRoomId,function(Crooms){
     var _room=[];
-    if(Crooms.length === 0){
+    if(Crooms.stu.length === 0){
       res.send([]);
     }
     for (var i in Crooms.stu){
@@ -131,7 +130,7 @@ router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin ,function(re
   });
 });
 
-router.post('/add', userHelpers.isLogin ,function(req, res) {
+router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   stuproMgr.addStupro(req.body,function(Stupro){
     res.send(Stupro);
   });

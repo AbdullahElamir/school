@@ -9,20 +9,18 @@ var userHelpers = require("../controller/userHelpers");
 var resultMgr = require("../controller/result");
 var marksSubMgr = require("../controller/marksSubject");
 var examMgr = require("../controller/exam");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
-user._id="57df0e437fb8ad40ec8b48c2"; // --> user _id in session (Admin or Teacher)
 
-router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,function(req, res) {
-  stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
+
+router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
+  stuproMgr.getStuProcessesByClassRoomAndYear(req.user.school,req.params.classRoom,req.params.year,function(stuProsIds){
     studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,req.params.text,function(students){
       res.send(students);
     });
   });
 });
 
-router.get('/results/:classRoom/:year', userHelpers.isLogin ,function(req, res) {
-  stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
+router.get('/results/:classRoom/:year', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
+  stuproMgr.getStuProcessesByClassRoomAndYear(req.user.school,req.params.classRoom,req.params.year,function(stuProsIds){
     studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,"",function(students){
       var cb = function(std,status){
         students[std] = students[std].toObject();
@@ -41,7 +39,7 @@ router.get('/results/:classRoom/:year', userHelpers.isLogin ,function(req, res) 
   });
 });
 
-router.get('/grades/:idStudent/:classRoomId', userHelpers.isLogin ,function(req, res) {
+router.get('/grades/:idStudent/:classRoomId', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
   classRoomMgr.getClassRoomIdWithYearAndSystem(req.params.classRoomId,function(classR){
     var clssY=classR.class;
     var system=classR.year.system;
@@ -49,9 +47,9 @@ router.get('/grades/:idStudent/:classRoomId', userHelpers.isLogin ,function(req,
     var flag = 0;
     var func = function(subject,size){
       subject = subject.id_subject.toObject();
-      marksSubMgr.getMarksSubSubject(subject._id,system._id,function(examssub){
+      marksSubMgr.getMarksSubSubject(req.user.school,subject._id,system._id,function(examssub){
         examMgr.getExamSClass(classR.class,system._id,function(exams){
-          stuproMgr.getStudentsSto(req.params.classRoomId,req.params.idStudent,function(sto){
+          stuproMgr.getStudentsSto(req.user.school,req.params.classRoomId,req.params.idStudent,function(sto){
             resultMgr.getResultSubject(sto,exams,subject._id,function(marksS){
               var examsGrades=[];
               var fun = function(i){
@@ -100,8 +98,8 @@ router.get('/grades/:idStudent/:classRoomId', userHelpers.isLogin ,function(req,
   });
 });
 
-router.get('/student/:classRoom/:year/', userHelpers.isLogin ,function(req, res) {
-  stuproMgr.getStuProcessesByClassRoomAndYear(req.params.classRoom,req.params.year,function(stuProsIds){
+router.get('/student/:classRoom/:year/', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
+  stuproMgr.getStuProcessesByClassRoomAndYear(req.user.school,req.params.classRoom,req.params.year,function(stuProsIds){
     studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,"",function(students){
       res.send(students);
     });
@@ -109,12 +107,12 @@ router.get('/student/:classRoom/:year/', userHelpers.isLogin ,function(req, res)
 });
 
 /* Send Message From User _id in session (Admin or Teacher) to Parent of Students of ClassRoom By classRoomID */
-router.put('/message/:classRoomID',function(req, res) {
-  stuproMgr.getStuproRoom(req.params.classRoomID,function(stupros){
+router.put('/message/:classRoomID',userHelpers.isTeacher,function(req, res) {
+  stuproMgr.getStuproRoom(req.user.school,req.params.classRoomID,function(stupros){
     var counter = 0;
     stupros.forEach(function(stupro){
       studentMgr.getStudentId(stupro,function(stu){
-        conversationMgr.sendMsgFromPersonToPersonWithStudents([stupro],user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
+        conversationMgr.sendMsgFromPersonToPersonWithStudents([stupro],req.user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
           if ( send ){
             counter++;
           }
@@ -127,29 +125,29 @@ router.put('/message/:classRoomID',function(req, res) {
   });
 });
 
-router.get('/all', userHelpers.isLogin ,function(req, res) {
-  classRoomMgr.getAllClassRoom(user.school,function(Croom){
+router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
+  classRoomMgr.getAllClassRoom(req.user.school,function(Croom){
     res.send(Croom);
   });
 });
 
 // add new  class room
-router.post('/add', userHelpers.isLogin ,function(req, res) {
-  req.body.school = user.school;
+router.post('/add', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
+  req.body.school = req.user.school;
   classRoomMgr.addClassRoom(req.body,function(Croom){
     res.send(Croom);
   });
 });
 
 // edit class room by id
-router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
+router.put('/edit/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
   classRoomMgr.updateClassRoom(req.params.id,req.body,function(Croom){
     res.send(Croom);
   });
 });
 
 // edit class room students
-router.put('/students/:id', userHelpers.isLogin ,function(req, res) {
+router.put('/students/:id', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
   //update students of this classroom
   classRoomMgr.getClassRoomId(req.params.id,function(Croom){
     if(req.body.length===0){
@@ -166,28 +164,49 @@ router.put('/students/:id', userHelpers.isLogin ,function(req, res) {
 });
 
 // delete room by id
-router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
+router.delete('/delete/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   classRoomMgr.updateClassRoom(req.params.id,{status:0},function(Croom){
     res.send({result:Croom});
   });
 });
 
 // get class room by status
-router.get('/status/:status',userHelpers.isLogin , function(req, res) {
+router.get('/status/:status',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   classRoomMgr.getAllClassRoomStatus(req.params.status,function(Croom){
     res.send(Croom);
   });
 });
 
 // get class room by name
-router.get('/name/:name',userHelpers.isLogin , function(req, res) {
+router.get('/name/:name',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   classRoomMgr.getClassRoomName(req.params.name,function(Croom){
     res.send(Croom);
   });
 });
 
-// get class room by name
-router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
+router.get('/teacher/session',userHelpers.isLogin,userHelpers.isTeacher , function(req, res) {
+  TSCMgr.getTeacherClassSubject(req.user._id,function(result){
+    var tsc = [];
+    if(result){
+      if(result.length === 0){
+        res.send([]);
+      }
+      for(var i in result){
+        tsc.push({
+          _id:result[i].classRoom._id,
+          name:result[i].classRoom.name,
+          course:result[i].subject.name,
+          courseId:result[i].subject._id
+        });
+        if(i == result.length-1){
+          res.send(tsc);
+        }
+      }
+    }
+  });
+});
+
+router.get('/teacher/:id',userHelpers.isLogin,userHelpers.isTeacher , function(req, res) {
   TSCMgr.getTeacherClassSubject(req.params.id,function(result){
     var tsc = [];
     if(result){
@@ -210,8 +229,8 @@ router.get('/teacher/:id',userHelpers.isLogin , function(req, res) {
 });
 
 //get all claas Rooms By Search Value
-router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res) {
-  stuproMgr.getAllClassRoomeStudentsByYear(req.params.classRoom,req.params.year,function(Crooms){
+router.get('/students/:classRoom/:year',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  stuproMgr.getAllClassRoomeStudentsByYear(req.user.school,req.params.classRoom,req.params.year,function(Crooms){
     var _room=[];
     if(Crooms.length === 0){
       res.send([]);
@@ -223,30 +242,24 @@ router.get('/students/:classRoom/:year',userHelpers.isLogin , function(req, res)
       }
     }
   });
-  // res.send([
-  //   {_id:745645645,name:"a"},
-  //   {_id:845613541,name:"b"},
-  //   {_id:874515717,name:"c"},
-  //   {_id:812674577,name:"d"}
-  // ]);
 });
 
 //get all claas Rooms By Search Value
-router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  classRoomMgr.getAllClassRoomesBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(Crooms){
+router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  classRoomMgr.getAllClassRoomesBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(Crooms){
     res.send(Crooms);
   });
 });
 
 // get all class rooms
-router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  classRoomMgr.getAllClassRoomCount(user.school,req.params.limit,req.params.page,function(Croom){
+router.get('/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
+  classRoomMgr.getAllClassRoomCount(req.user.school,req.params.limit,req.params.page,function(Croom){
     res.send(Croom);
   });
 });
 
 // get  class room by id
-router.get('/:id',userHelpers.isLogin , function(req, res) {
+router.get('/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   classRoomMgr.getClassRoomId(req.params.id,function(Croom){
     res.send(Croom);
   });
