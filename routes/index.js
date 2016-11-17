@@ -11,7 +11,7 @@ var login = require('../controller/login')(router);
 router.get('/isLoggedIn', function(req, res) {
   res.send(req.isAuthenticated());
 });
-router.get('/adminlevel',userHelpers.isLogin function(req, res) {
+router.get('/adminlevel',userHelpers.isLogin ,function(req, res) {
   res.send(req.user.level);
 });
 router.get('/', function(req, res) {
