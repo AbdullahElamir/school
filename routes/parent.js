@@ -11,7 +11,7 @@ var fs = require("fs");
 
 /*GET all Student By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  parentMgr.getAllParentsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(parents){
+  parentMgr.getAllParentsBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(parents){
     res.send(parents);
   });
 });
@@ -25,20 +25,20 @@ router.put('/message/:parentId',userHelpers.isLogin,userHelpers.isAdmin,function
 
 /* GET all parent */
 router.get('/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  parentMgr.getAllParentCount(req.user.school,req.params.limit,req.params.page,function(parents){
+  parentMgr.getAllParentCount(req.session.school,req.params.limit,req.params.page,function(parents){
     res.send(parents);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  parentMgr.getAllParent(req.user.school,function(parents){
+  parentMgr.getAllParent(req.session.school,function(parents){
     res.send(parents);
   });
 });
 
 /* Add new parent  */
 router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  req.body.school=req.user.school;
+  req.body.school=req.session.school;
   parentMgr.addParent(req.body,function(parents){
     res.send(parents);
   });

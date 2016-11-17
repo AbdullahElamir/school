@@ -64,7 +64,7 @@ router.get('/status/:status',userHelpers.isLogin ,userHelpers.isAdmin, function(
 
 // get paids and stupro
 router.get('/students/:classRoom/:year',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  stuproMgr.getStudentClassRoomYear(req.user.school,req.params.classRoom,req.params.year,function(stupro){
+  stuproMgr.getStudentClassRoomYear(req.session.school,req.params.classRoom,req.params.year,function(stupro){
     var _student=[];
     for (var i in stupro.stu){
       paid.getPaidStuPro(stupro.stu[i]._id,function(paid){

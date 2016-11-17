@@ -4,10 +4,9 @@
     <div class="col-lg-10 col-lg-offset-1">
       <br>
       <label class="control-label">اسم المدرسة</label>
-      <select class="form-control input-sm" ng-model="newParentForm.gender" required>
+      <select class="form-control input-sm" ng-model="schoolId" ng-options="school._id as school.name for school in superAdminSchool" ng-change="setSchool(schoolId)" required>
         <option value="" disabled selected>الرجاء الاختيار</option>
-        <option value="1">ذكر</option>
-        <option value="2">انثي</option>
+        
       </select>
     </div>
   </div>

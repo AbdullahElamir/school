@@ -5,14 +5,14 @@ var userHelpers = require("../controller/userHelpers");
 
 
 router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  inOutcomeTypesMgr.getAllInOutcomeTypes(req.user.school,function(inOutcomeTypes){
+  inOutcomeTypesMgr.getAllInOutcomeTypes(req.session.school,function(inOutcomeTypes){
     res.send(inOutcomeTypes);
   });
 });
 
 // add new inOutcomeTypes
 router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  req.body.school=req.user.school;
+  req.body.school=req.session.school;
   inOutcomeTypesMgr.addInOutcomeTypes(req.body,function(inOutcomeTypes){
     res.send(inOutcomeTypes);
   });
@@ -34,14 +34,14 @@ router.delete('/delete/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(r
 
 //get all inOutcomeTypes By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  inOutcomeTypesMgr.getAllInOutcomeTypesBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(inOutcomeTypes){
+  inOutcomeTypesMgr.getAllInOutcomeTypesBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(inOutcomeTypes){
     res.send(inOutcomeTypes);
   });
 });
 
 // get all inOutcomeTypes
 router.get('/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  inOutcomeTypesMgr.getAllInOutcomeTypesCount(req.user.school,req.params.limit,req.params.page,function(inOutcomeTypes){
+  inOutcomeTypesMgr.getAllInOutcomeTypesCount(req.session.school,req.params.limit,req.params.page,function(inOutcomeTypes){
     res.send(inOutcomeTypes);
   });
 });

@@ -16,7 +16,6 @@ router.get('/report1/:id', function(req, res) {
   stdProcessMgr.getStudentClassRoom(classRoom,function(result){
     /*console.log(result.stu);*/
     var student =[];
-    console.log(result.stu);
     result.stu.forEach(function(stud){
       var obj={
         name : stud.student.name,
@@ -78,14 +77,14 @@ router.get('/report3', function(req, res) {
 
 /*GET all Teachers By Search Value*/
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  teacherMgr.getAllTeacher(req.user.school,function(teacher){
+  teacherMgr.getAllTeacher(req.session.school,function(teacher){
     res.send(teacher);
   });
 });
 
 /* Add new teacher  */
 router.post('/add', userHelpers.isLogin ,function(req, res) {
-  req.body.school=req.user.school;
+  req.body.school=req.session.school;
   teacherMgr.addTeacher(req.body,function(teacher){
     res.send(teacher);
   });
@@ -143,14 +142,14 @@ router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(r
   });
 });
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  teacherMgr.getTeachersBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
+  teacherMgr.getTeachersBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 /* GET all teacher */
 router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  teacherMgr.getAllTeacherCount(req.user.school,req.params.limit,req.params.page,function(teacher){
+  teacherMgr.getAllTeacherCount(req.session.school,req.params.limit,req.params.page,function(teacher){
     res.send(teacher);
   });
 });

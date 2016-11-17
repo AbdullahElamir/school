@@ -66,11 +66,24 @@
   app.run(['$rootScope','settings','$state','$http',function($rootScope,settings,$state,$http){
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
-    $http.get('/adminlevel').then(function(response) {
-      $rootScope.superAdminStatus = response.data;
+    $http.get('/users/adminlevel').then(function(response) {
+      $rootScope.superAdminStatus = response.data.level;
     },function(response){
       console.log("An error there isn't admin level "+ response.data);
     });
+    $http.get('/school/all').then(function(response) {
+      $rootScope.superAdminSchool = response.data;
+    },function(response){
+      console.log("An error there isn't admin school "+ response.data);
+    });
+    $rootScope.setSchool=function(id){
+      console.log(id);
+       $http.get('/school/setSchoolAdmin/'+id).then(function(response) {
+          
+        },function(response){
+          console.log("An error there isn't admin school "+ response.data);
+        });
+    }
   }]);
   /* Setup Rounting For All Pages */
   app.config(['$stateProvider','$urlRouterProvider','$datepickerProvider',function($stateProvider,$urlRouterProvider,$datepickerProvider){

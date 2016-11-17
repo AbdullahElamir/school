@@ -7,34 +7,34 @@ var userHelpers = require("../controller/userHelpers");
 
 // get all class rooms by class and year
 router.get('/classRooms/:clas/:year',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  classMgr.getAllClassRoomsByClassAndYear(req.user.school,req.params.clas,req.params.year,function(classRooms){
+  classMgr.getAllClassRoomsByClassAndYear(req.session.school,req.params.clas,req.params.year,function(classRooms){
     res.send(classRooms);
   });
 });
 
 //get all classes by year
 router.get('/classes/:id', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  classMgr.getClassesByYear(req.user.school,req.user.school,req.params.id,function(classes){
+  classMgr.getClassesByYear(req.session.school,req.session.school,req.params.id,function(classes){
     res.send(classes);
   });
 });
 
 //get all exams by year and class
 router.get('/exams/:year/:clas', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  classMgr.getExamsByYearAndClass(req.user.school,req.params.year,req.params.clas,function(exams){
+  classMgr.getExamsByYearAndClass(req.session.school,req.params.year,req.params.clas,function(exams){
     res.send(exams);
   });
 });
 
 /*GET all Classes By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  classMgr.getAllClassesBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(parents){
+  classMgr.getAllClassesBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(parents){
     res.send(parents);
   });
 });
 
 router.get('/classRooms/:year', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  classRoomMgr.getAllClassesAndClassRoomsByYear(req.user.school,req.params.year, function(classes){
+  classRoomMgr.getAllClassesAndClassRoomsByYear(req.session.school,req.params.year, function(classes){
     var _class = [];
     var obj=[];
     var k = 0;
@@ -58,19 +58,19 @@ router.get('/classRooms/:year', userHelpers.isLogin ,userHelpers.isAdmin,functio
 
 // GET all class
 router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  classMgr.getAllClassCount(req.user.school,req.params.limit,req.params.page,function(_class){
+  classMgr.getAllClassCount(req.session.school,req.params.limit,req.params.page,function(_class){
     res.send(_class);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  classMgr.getAllClass(req.user.school,function(_class){
+  classMgr.getAllClass(req.session.school,function(_class){
     res.send(_class);
   });
 });
 // Add new class
 router.post('/add', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  req.body.school=req.user.school;
+  req.body.school=req.session.school;
   classMgr.addClass(req.body,function(_class){
     res.send(_class);
   });

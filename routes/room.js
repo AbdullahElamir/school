@@ -12,27 +12,27 @@ router.post('/addY', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res)
 });
 
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  roomMgr.getAllRoomsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(rooms){
+  roomMgr.getAllRoomsBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(rooms){
     res.send(rooms);
   });
 });
 
 // get all rooms
 router.get('/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  roomMgr.getAllRoomCount(req.user.school,req.params.limit,req.params.page,function(room){
+  roomMgr.getAllRoomCount(req.session.school,req.params.limit,req.params.page,function(room){
     res.send(room);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  roomMgr.getAllRoom(req.user.school,function(room){
+  roomMgr.getAllRoom(req.session.school,function(room){
     res.send(room);
   });
 });
 
 // add new room
 router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  req.body.school=req.user.school;
+  req.body.school=req.session.school;
   roomMgr.addRoom(req.body,function(room){
     res.send(room);
   });

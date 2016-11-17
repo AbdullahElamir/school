@@ -5,7 +5,7 @@ var userHelpers = require("../controller/userHelpers");
 
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  OtherMgr.getAllOther(req.user.school,function(other){
+  OtherMgr.getAllOther(req.session.school,function(other){
     res.send(other);
   });
 });
@@ -18,7 +18,7 @@ router.post('/student', userHelpers.isLogin ,userHelpers.isAdmin,function(req, r
 
 // add new other
 router.post('/add', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  req.body.school = req.user.school;
+  req.body.school = req.session.school;
   OtherMgr.addOther(req.body,function(other){
     res.send(other);
   });
@@ -59,14 +59,14 @@ router.delete('/delete/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(r
 });
 //get all other By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  OtherMgr.getAllOthersBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(other){
+  OtherMgr.getAllOthersBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(other){
     res.send(other);
   });
 });
 
 // get all other
 router.get('/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  OtherMgr.getAllOtherCount(req.user.school,req.params.limit,req.params.page,function(other){
+  OtherMgr.getAllOtherCount(req.session.school,req.params.limit,req.params.page,function(other){
     res.send(other);
   });
 });

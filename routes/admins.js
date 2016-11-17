@@ -7,12 +7,12 @@ var multipartMiddleware = multipart();
 var fs = require("fs");
 
 router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  adminMgr.getAllAdmin(req.user.school,function(admins){
+  adminMgr.getAllAdmin(req.session.school,function(admins){
     res.send(admins);
   });
 });
 router.get('/getuser',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  if(req.user.school){
+  if(req.session.school){
     res.send(true);
   }else{
     res.send(false);
@@ -20,7 +20,7 @@ router.get('/getuser',userHelpers.isLogin,userHelpers.isAdmin , function(req, re
 });
 /* Add new admin  */
 router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  req.body.school=req.user.school;
+  req.body.school=req.session.school;
   adminMgr.addAdmin(req.body,function(admins){
     res.send(admins);
   });
@@ -98,14 +98,14 @@ router.get('/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
 
 /*GET all ADmins By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  adminMgr.getAllAdminsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
+  adminMgr.getAllAdminsBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
     res.send(admins);
   });
 });
 
 /* GET all admin */
 router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  adminMgr.getAllAdminCount(req.user.school,req.params.limit,req.params.page,function(admins){
+  adminMgr.getAllAdminCount(req.session.school,req.params.limit,req.params.page,function(admins){
     res.send(admins);
   });
 });

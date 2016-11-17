@@ -66,6 +66,7 @@ module.exports = function (router) {
       
       req.logIn(user, function(err) {
         if (err) { return next(err); }
+        req.session.school=req.user.school;
         if (user.level==1){
           return res.send({login: true,admin:1 });
         }else if (user.level==2){

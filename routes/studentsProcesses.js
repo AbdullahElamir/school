@@ -11,7 +11,7 @@ var evaMgr = require("../controller/evaluation");
 
 //get student information
 router.get('/rate/:stupro/:course/:month/:half', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
-  evaMgr.getAllEvaluation(req.user.school,function(result){
+  evaMgr.getAllEvaluation(req.session.school,function(result){
     stuEvaMgr.getStuEva(req.params.stupro,req.params.course,req.params.month,req.params.half,function(evaluation){
       var obj=[];
       if(result.length === 0){
@@ -48,7 +48,7 @@ router.get('/stuPro', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res
 
 // update grades of exams student in subject on classRoom for a current year (where year is Active)
 router.put('/grades/edit/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
-  stuproMgr.getStudentsSto(req.user.school,req.params.classRoomId,req.params.idStudent,function(sto){
+  stuproMgr.getStudentsSto(req.session.school,req.params.classRoomId,req.params.idStudent,function(sto){
     for( var k in req.body){
       var obj={
         StuPro:sto,
@@ -82,9 +82,9 @@ router.put('/rate/:stupro/:course/:month/:half', userHelpers.isLogin,userHelpers
 router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
   classRoomMgr.getClassRoomIdWithYear(req.params.classRoomId,function(classR){
     var system=classR.year.system;
-    marksSubMgr.getMarksSubSubject(req.user.school,req.params.subjectId,system,function(examssub){
+    marksSubMgr.getMarksSubSubject(req.session.school,req.params.subjectId,system,function(examssub){
       examMgr.getExamSClass(classR.class,system,function(exams){
-        stuproMgr.getStudentsSto(req.user.school,req.params.classRoomId,req.params.idStudent,function(sto){
+        stuproMgr.getStudentsSto(req.session.school,req.params.classRoomId,req.params.idStudent,function(sto){
           resultMgr.getResultSubject(sto,exams,req.params.subjectId,function(marksS){
             var examsGrades=[];
             for(var i in examssub){
@@ -116,7 +116,7 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin,use
 
 // get students By subject Id and class room Id for a current year (where year is Active)
 router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
-  stuproMgr.getStudentClassRoom(req.user.school,req.params.classRoomId,function(Crooms){
+  stuproMgr.getStudentClassRoom(req.session.school,req.params.classRoomId,function(Crooms){
     var _room=[];
     if(Crooms.stu.length === 0){
       res.send([]);

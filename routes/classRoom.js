@@ -12,7 +12,7 @@ var examMgr = require("../controller/exam");
 
 
 router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  stuproMgr.getStuProcessesByClassRoomAndYear(req.user.school,req.params.classRoom,req.params.year,function(stuProsIds){
+  stuproMgr.getStuProcessesByClassRoomAndYear(req.session.school,req.params.classRoom,req.params.year,function(stuProsIds){
     studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,req.params.text,function(students){
       res.send(students);
     });
@@ -20,7 +20,7 @@ router.get('/student/:classRoom/:year/:text', userHelpers.isLogin ,userHelpers.i
 });
 
 router.get('/results/:classRoom/:year', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  stuproMgr.getStuProcessesByClassRoomAndYear(req.user.school,req.params.classRoom,req.params.year,function(stuProsIds){
+  stuproMgr.getStuProcessesByClassRoomAndYear(req.session.school,req.params.classRoom,req.params.year,function(stuProsIds){
     studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,"",function(students){
       var cb = function(std,status){
         students[std] = students[std].toObject();
@@ -47,9 +47,9 @@ router.get('/grades/:idStudent/:classRoomId', userHelpers.isLogin ,userHelpers.i
     var flag = 0;
     var func = function(subject,size){
       subject = subject.id_subject.toObject();
-      marksSubMgr.getMarksSubSubject(req.user.school,subject._id,system._id,function(examssub){
+      marksSubMgr.getMarksSubSubject(req.session.school,subject._id,system._id,function(examssub){
         examMgr.getExamSClass(classR.class,system._id,function(exams){
-          stuproMgr.getStudentsSto(req.user.school,req.params.classRoomId,req.params.idStudent,function(sto){
+          stuproMgr.getStudentsSto(req.session.school,req.params.classRoomId,req.params.idStudent,function(sto){
             resultMgr.getResultSubject(sto,exams,subject._id,function(marksS){
               var examsGrades=[];
               var fun = function(i){
@@ -99,7 +99,7 @@ router.get('/grades/:idStudent/:classRoomId', userHelpers.isLogin ,userHelpers.i
 });
 
 router.get('/student/:classRoom/:year/', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  stuproMgr.getStuProcessesByClassRoomAndYear(req.user.school,req.params.classRoom,req.params.year,function(stuProsIds){
+  stuproMgr.getStuProcessesByClassRoomAndYear(req.session.school,req.params.classRoom,req.params.year,function(stuProsIds){
     studentMgr.getStudentByStuProcessAndSearchValue(stuProsIds,"",function(students){
       res.send(students);
     });
@@ -108,7 +108,7 @@ router.get('/student/:classRoom/:year/', userHelpers.isLogin,userHelpers.isAdmin
 
 /* Send Message From User _id in session (Admin or Teacher) to Parent of Students of ClassRoom By classRoomID */
 router.put('/message/:classRoomID',userHelpers.isTeacher,function(req, res) {
-  stuproMgr.getStuproRoom(req.user.school,req.params.classRoomID,function(stupros){
+  stuproMgr.getStuproRoom(req.session.school,req.params.classRoomID,function(stupros){
     var counter = 0;
     stupros.forEach(function(stupro){
       studentMgr.getStudentId(stupro,function(stu){
@@ -126,14 +126,14 @@ router.put('/message/:classRoomID',userHelpers.isTeacher,function(req, res) {
 });
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  classRoomMgr.getAllClassRoom(req.user.school,function(Croom){
+  classRoomMgr.getAllClassRoom(req.session.school,function(Croom){
     res.send(Croom);
   });
 });
 
 // add new  class room
 router.post('/add', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  req.body.school = req.user.school;
+  req.body.school = req.session.school;
   classRoomMgr.addClassRoom(req.body,function(Croom){
     res.send(Croom);
   });
@@ -230,7 +230,7 @@ router.get('/teacher/:id',userHelpers.isLogin,userHelpers.isTeacher , function(r
 
 //get all claas Rooms By Search Value
 router.get('/students/:classRoom/:year',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  stuproMgr.getAllClassRoomeStudentsByYear(req.user.school,req.params.classRoom,req.params.year,function(Crooms){
+  stuproMgr.getAllClassRoomeStudentsByYear(req.session.school,req.params.classRoom,req.params.year,function(Crooms){
     var _room=[];
     if(Crooms.length === 0){
       res.send([]);
@@ -246,14 +246,14 @@ router.get('/students/:classRoom/:year',userHelpers.isLogin,userHelpers.isAdmin 
 
 //get all claas Rooms By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  classRoomMgr.getAllClassRoomesBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(Crooms){
+  classRoomMgr.getAllClassRoomesBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(Crooms){
     res.send(Crooms);
   });
 });
 
 // get all class rooms
 router.get('/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  classRoomMgr.getAllClassRoomCount(req.user.school,req.params.limit,req.params.page,function(Croom){
+  classRoomMgr.getAllClassRoomCount(req.session.school,req.params.limit,req.params.page,function(Croom){
     res.send(Croom);
   });
 });

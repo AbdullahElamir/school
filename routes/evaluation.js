@@ -5,20 +5,20 @@ var userHelpers = require("../controller/userHelpers");
 
 
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  evaMgr.getAllEvaluationsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(eva){
+  evaMgr.getAllEvaluationsBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(eva){
     res.send(eva);
   });
 });
 
 // get all eva
 router.get('/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  evaMgr.getAllEvaluationCount(req.user.school,req.params.limit,req.params.page,function(eva){
+  evaMgr.getAllEvaluationCount(req.session.school,req.params.limit,req.params.page,function(eva){
     res.send(eva);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  evaMgr.getAllEvaluation(req.user.school,function(eva){
+  evaMgr.getAllEvaluation(req.session.school,function(eva){
     res.send(eva);
   });
 });

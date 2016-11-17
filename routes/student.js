@@ -14,7 +14,7 @@ var fs = require("fs");
 var path = require("path");
 
 router.get('/children/all/:parentId',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  studentMgr.getStudentByParentId(req.user.school,req.params.parentId,function(children){
+  studentMgr.getStudentByParentId(req.session.school,req.params.parentId,function(children){
     res.send(children);
   });
 });
@@ -35,7 +35,6 @@ router.get('/report1',userHelpers.isLogin,userHelpers.isAdmin , function(req, re
 
 router.get('/genrateStudentId',userHelpers.isAdmin,function(req, res){
   studentMgr.StudentGenerateId(1,function(result){
-    console.log(result);
    res.send(result); 
   });
 });
@@ -107,8 +106,8 @@ router.get('/report4',userHelpers.isLogin,userHelpers.isAdmin , function(req, re
 });
 router.get('/class/:searchValue/:_class',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
-    stuproMgr.getStuproRoom(req.user.school,clas,function(stupro){
-      studentMgr.getStudentStupro(req.user.school,req.params.searchValue,stupro,function(student){
+    stuproMgr.getStuproRoom(req.session.school,clas,function(stupro){
+      studentMgr.getStudentStupro(req.session.school,req.params.searchValue,stupro,function(student){
         res.send(student);
       });
     });
@@ -117,8 +116,8 @@ router.get('/class/:searchValue/:_class',userHelpers.isLogin,userHelpers.isAdmin
 router.get('/class//:_class',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   // get real data without search text
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
-    stuproMgr.getStuproRoom(req.user.school,clas,function(stupro){
-      studentMgr.getStudentStupro(req.user.school,'',stupro,function(student){
+    stuproMgr.getStuproRoom(req.session.school,clas,function(stupro){
+      studentMgr.getStudentStupro(req.session.school,'',stupro,function(student){
         res.send(student);
       });
 
@@ -137,20 +136,20 @@ router.put('/message/:studentId',userHelpers.isLogin,userHelpers.isTeacher,funct
 
 /*GET all Student By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  studentMgr.getAllStudentsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
+  studentMgr.getAllStudentsBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 /* GET all student */
 router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  studentMgr.getAllStudentsCount(req.user.school,req.params.limit,req.params.page,function(student){
+  studentMgr.getAllStudentsCount(req.session.school,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res){
-  studentMgr.getAllStudent(req.user.school,function(student){
+  studentMgr.getAllStudent(req.session.school,function(student){
     res.send(student);
   });
 });
@@ -158,7 +157,7 @@ router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res){
 /* Add new student  */
 router.post('/add',userHelpers.isAdmin,function(req, res) {
   studentMgr.StudentGenerateId(req.body.gender,function(result){
-      req.body.school=req.user.school;
+      req.body.school=req.session.school;
       req.body.studentrealid =result;
       studentMgr.addStudent(req.body,function(student){
 
