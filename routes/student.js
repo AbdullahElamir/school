@@ -24,6 +24,10 @@ router.get('/report1',userHelpers.isLogin,userHelpers.isAdmin , function(req, re
     template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
+      phantom: {
+        format: 'A4',
+        customPhantomJS: true
+      },
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report1.html"), "utf8")
     },data:{result:null}
   }).then(function(resp) {
@@ -64,7 +68,8 @@ router.get('/report2',userHelpers.isLogin,userHelpers.isAdmin , function(req, re
       recipe: "phantom-pdf",
       phantom:{
         format: 'A4',
-        orientation: "landscape"
+        orientation: "landscape",
+        customPhantomJS: true
       },
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report2.html"), "utf8")
     },data:{result:null}
@@ -79,6 +84,10 @@ router.get('/report3',userHelpers.isLogin,userHelpers.isAdmin , function(req, re
     template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
+      phantom: {
+        format: 'A4',
+        customPhantomJS: true
+      },
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report3.html"), "utf8")
     },data:{result:null}
   }).then(function(resp) {
@@ -94,7 +103,8 @@ router.get('/report4',userHelpers.isLogin,userHelpers.isAdmin , function(req, re
       recipe: "phantom-pdf",
       phantom:{
         format: 'A4',
-        orientation: "landscape"
+        orientation: "landscape",
+        customPhantomJS: true
       },
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report4.html"), "utf8")
     },data:{result:null}

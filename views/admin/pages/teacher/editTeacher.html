@@ -76,7 +76,7 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">تاريخ الحصول عليه</label>
-              <input class="form-control input-sm" type="text" ng-model="editTeacherForm.qualificationDate" placeholder="تاريخ الحصول عليه" required>
+              <input class="form-control input-sm" type="text" ng-model="editTeacherForm.qualificationDate" data-autoclose="1" bs-datepicker placeholder="تاريخ الحصول عليه" required>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
@@ -88,7 +88,7 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">تاريخ البدء في العمل</label>
-              <input class="form-control input-sm" type="text" ng-model="editTeacherForm.startDate" placeholder="تاريخ البدء في العمل" required>
+              <input class="form-control input-sm" type="text" ng-model="editTeacherForm.startDate" data-autoclose="1" bs-datepicker placeholder="تاريخ البدء في العمل" required>
             </div>
           </div>
         </div>
@@ -108,7 +108,7 @@
           <div class="col-xs-12 col-md-3">
             <div class="form-group">
               <label class="control-label">تاريخ الميلاد</label>
-              <input type="text" required class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="editTeacherForm.birth_day" />
+              <input type="text" class="form-control input-sm" data-autoclose="1" bs-datepicker ng-model="editTeacherForm.birth_day" placeholder="تاريخ الميلاد" required/>
             </div>
           </div>
           <div class="col-xs-12 col-md-3">

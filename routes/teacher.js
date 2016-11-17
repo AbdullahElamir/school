@@ -29,6 +29,10 @@ router.get('/report1/:id', function(req, res) {
       template: {
         engine: "jsrender",
         recipe: "phantom-pdf",
+        phantom: {
+          format: 'A4',
+          customPhantomJS: true
+        },
         content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report1.html"), "utf8")
       },data:{result:student}
     }).then(function(resp) {
@@ -48,6 +52,10 @@ router.get('/report2', function(req, res) {
     template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
+      phantom: {
+        format: 'A4',
+        customPhantomJS: true
+      },
       content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report2.html"), "utf8")
     },data:{result:null}
   }).then(function(resp) {
@@ -64,7 +72,8 @@ router.get('/report3', function(req, res) {
       recipe: "phantom-pdf",
       phantom:{
         format: 'A4',
-        orientation: "landscape"
+        orientation: "landscape",
+        customPhantomJS: true
       },
       content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report3.html"), "utf8")
     },data:{result:null}
