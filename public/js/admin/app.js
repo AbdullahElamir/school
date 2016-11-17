@@ -63,10 +63,27 @@
     });
   }]);
   /* Init global settings and run the app */
-  app.run(['$rootScope','settings','$state',function($rootScope,settings,$state){
+  app.run(['$rootScope','settings','$state','$http',function($rootScope,settings,$state,$http){
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
-    $rootScope.superAdminStatus = true;
+    $http.get('/users/adminlevel').then(function(response) {
+      $rootScope.superAdminStatus = response.data.level;
+    },function(response){
+      console.log("An error there isn't admin level "+ response.data);
+    });
+    $http.get('/school/all').then(function(response) {
+      $rootScope.superAdminSchool = response.data;
+    },function(response){
+      console.log("An error there isn't admin school "+ response.data);
+    });
+    $rootScope.setSchool=function(id){
+      console.log(id);
+       $http.get('/school/setSchoolAdmin/'+id).then(function(response) {
+          
+        },function(response){
+          console.log("An error there isn't admin school "+ response.data);
+        });
+    }
   }]);
   /* Setup Rounting For All Pages */
   app.config(['$stateProvider','$urlRouterProvider','$datepickerProvider',function($stateProvider,$urlRouterProvider,$datepickerProvider){
@@ -102,6 +119,24 @@
         }]
       }
     })
+    .state('report2Filter',{
+      url: '/report2Filter',
+      templateUrl: 'admin/pages/school/report2Filter',
+      data: {pageTitle: 'ألفروع'},
+      controller: 'SchoolsCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/schoolCtl.js'
+            ]
+          });
+        }]
+      }
+    })
+
+
     .state('schools',{
       url: '/schools',
       templateUrl: 'admin/pages/school/schools',

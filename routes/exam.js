@@ -6,7 +6,7 @@ var resultMgr = require("../controller/result");
 
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  examMgr.getAllExam(req.user.school,function(exam){
+  examMgr.getAllExam(req.session.school,function(exam){
     res.send(exam);
   });
 });
@@ -39,25 +39,25 @@ router.delete('/delete/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(r
 });
 // get class room by status
 router.get('/status/:status',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  examMgr.getAllExamStatus(req.user.school,req.params.status,function(exam){
+  examMgr.getAllExamStatus(req.session.school,req.params.status,function(exam){
     res.send(exam);
   });
 });
 // get class room by name
 router.get('/name/:name',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  examMgr.getExamName(req.user.school,req.params.name,function(exam){
+  examMgr.getExamName(req.session.school,req.params.name,function(exam){
     res.send(exam);
   });
 });
 //get all claas Rooms By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  examMgr.getAllExamesBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(exams){
+  examMgr.getAllExamesBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(exams){
     res.send(exams);
   });
 });
 // get all class rooms
 router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  examMgr.getAllExamCount(req.user.school,req.params.limit,req.params.page,function(exam){
+  examMgr.getAllExamCount(req.session.school,req.params.limit,req.params.page,function(exam){
     res.send(exam);
   });
 });

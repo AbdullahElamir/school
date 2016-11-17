@@ -3,29 +3,20 @@ var router = express.Router();
 var conversationMgr = require("../controller/conversation");
 var userHelpers = require("../controller/userHelpers");
 
-var user={};
-user._id="57e73594e920a11c40beb45d"; // --> user _id in session
-
 router.get('/conversations/admin', userHelpers.isLogin ,function(req, res) {
-  conversationMgr.getAllConversationsByUserIDAndType(user._id,"ADMIN",function(conversations){
+  conversationMgr.getAllConversationsByUserIDAndType(req.user._id,"ADMIN",function(conversations){
     res.send(conversations);
   });
 });
 
 router.get('/conversations/teacher', userHelpers.isLogin ,function(req, res) {
-  conversationMgr.getAllConversationsByUserIDAndType(user._id,"TEACHER",function(conversations){
-    res.send(conversations);
-  });
-});
-
-router.get('/conversations/parent/:id', userHelpers.isLogin ,function(req, res) {
-  conversationMgr.getAllConversationsByUserIDAndType(req.params.id,"PARENT",function(conversations){
+  conversationMgr.getAllConversationsByUserIDAndType(req.user._id,"TEACHER",function(conversations){
     res.send(conversations);
   });
 });
 
 router.post('/message/add/in/conversation/:id', userHelpers.isLogin ,function(req, res) {
-  conversationMgr.addMessageInConversation(req.params.id,req.body.message,{id:user._id,type:req.body.type},function(send){
+  conversationMgr.addMessageInConversation(req.params.id,req.body.message,{id:req.user._id,type:req.body.type},function(send){
     res.send(send);
   });
 });
@@ -92,8 +83,8 @@ router.post('/get/new/conversations/:parentID', userHelpers.isLogin ,function(re
   });
 });
 
-router.put('/send/pending/message', userHelpers.isLogin ,function(req, res) {
-  conversationMgr.sendPendingMessage(req.body,function(send){
+router.put('/send/message/:conversationID', userHelpers.isLogin ,function(req, res) {
+  conversationMgr.addMessageInConversation(req.params.conversationID,req.body.text,{id:req.body.from.id,type:"PARENT"},function(send){
     res.send(send);
   });
 });

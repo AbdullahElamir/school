@@ -3,9 +3,8 @@
   var app = angular.module('teachersSchool');
 
   app.controller('ProfileCtl',['$scope','$state','TeacherServ','toastr',function($scope,state,TeacherServ,toastr){
-    var userId = "57df0e437fb8ad40ec8b48c2";
 
-    TeacherServ.getTeacherById({id:userId}).then(function(response) {
+    TeacherServ.getTeacherByIdInSession().then(function(response) {
      response.data.birth_day=new Date(response.data.birth_day);
      response.data.password="";
       $scope.user = response.data;
@@ -14,7 +13,7 @@
     });
 
     $scope.changePassFun = function(){
-      TeacherServ.changePass(userId,$scope.changePass).then(function(response){
+      TeacherServ.changePassInSession($scope.changePass).then(function(response){
         if(response.data.result == 1){
           toastr.success("تم تغيير كلمة المرور بنجاح");
           $('#changePassModal').modal('hide');
@@ -32,9 +31,8 @@
   }]);
 
   app.controller('EditProfileCtl',['$scope','$state','TeacherServ','toastr',function($scope,$state,TeacherServ,toastr){
-    var userId = "580653580347bd24e312108e";
-
-    TeacherServ.getTeacherById({id:userId}).then(function(response) {
+      
+    TeacherServ.getTeacherByIdInSession().then(function(response) {
      response.data.birth_day=new Date(response.data.birth_day);
      delete response.data.password;
       $scope.editTeacherForm = response.data;
@@ -43,7 +41,7 @@
     });
 
     $scope.editTeacher = function(){
-     TeacherServ.editTeacher(userId,$scope.editTeacherForm).then(function(response) {
+     TeacherServ.editTeacherInSession($scope.editTeacherForm).then(function(response) {
        if(response.data){
          toastr.info('تم التعديل بنجاح');
          $state.go('profile');

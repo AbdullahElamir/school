@@ -5,13 +5,13 @@ var userHelpers = require("../controller/userHelpers");
 
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  TSCMgr.getAllTSC(req.user.school,function(TSCs){
+  TSCMgr.getAllTSC(req.session.school,function(TSCs){
     res.send(TSCs);
   });
 });
 
 router.get('/status/:status', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  TSCMgr.getAllTSCStatus(req.user.school,req.params.status,function(TSCs){
+  TSCMgr.getAllTSCStatus(req.session.school,req.params.status,function(TSCs){
     res.send(TSCs);
   });
 });

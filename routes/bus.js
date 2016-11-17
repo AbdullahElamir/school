@@ -6,27 +6,27 @@ var userHelpers = require("../controller/userHelpers");
 
 /*GET all Buses By Search Value*/
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  BusMgr.getAllBusesBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(buses){
+  BusMgr.getAllBusesBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(buses){
     res.send(buses);
   });
 });
 
 /* GET all Buses */
 router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  BusMgr.getAllBusesCount(req.user.school,req.params.limit,req.params.page,function(buses){
+  BusMgr.getAllBusesCount(req.session.school,req.params.limit,req.params.page,function(buses){
     res.send(buses);
   });
 });
 
 router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res){
-  BusMgr.getAllBuses(req.user.school,function(buses){
+  BusMgr.getAllBuses(req.session.school,function(buses){
     res.send(buses);
   });
 });
 
 /* Add new bus  */
 router.post('/add',userHelpers.isAdmin,function(req, res) {
-  req.body.school=req.user.school;
+  req.body.school=req.session.school;
   BusMgr.addBus(req.body,function(newBus){
     res.send(newBus);
   });

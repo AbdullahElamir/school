@@ -5,14 +5,14 @@ var userHelpers = require("../controller/userHelpers");
 
 
 router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  CheckMgr.getAllCheck(req.user.school,function(check){
+  CheckMgr.getAllCheck(req.session.school,function(check){
     res.send(check);
   });
 });
 
 // add new check
 router.post('/add', userHelpers.isLogin,userHelpers.isAdmin,function(req, res) {
-  req.body.school = req.user.school;
+  req.body.school = req.session.school;
   CheckMgr.addCheck(req.body,function(check){
     res.send(check);
   });
@@ -60,14 +60,14 @@ router.delete('/delete/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(r
 });
 //get all check By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  CheckMgr.getAllChecksBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(check){
+  CheckMgr.getAllChecksBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(check){
     res.send(check);
   });
 });
 
 // get all check
 router.get('/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  CheckMgr.getAllCheckCount(req.user.school,req.params.limit,req.params.page,function(check){
+  CheckMgr.getAllCheckCount(req.session.school,req.params.limit,req.params.page,function(check){
     res.send(check);
   });
 });

@@ -1,5 +1,15 @@
 <div class="page-sidebar navbar-collapse collapse">
   <!-- BEGIN SIDEBAR MENU -->
+  <div class="row" ng-if="superAdminStatus==1">
+    <div class="col-lg-10 col-lg-offset-1">
+      <br>
+      <label class="control-label">اسم المدرسة</label>
+      <select class="form-control input-sm" ng-model="schoolId" ng-options="school._id as school.name for school in superAdminSchool" ng-change="setSchool(schoolId)" required>
+        <option value="" disabled selected>الرجاء الاختيار</option>
+        
+      </select>
+    </div>
+  </div>
   <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="false" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed':settings.layout.pageSidebarClosed}">
     <li>
       <a href="#/dashboard">
@@ -15,7 +25,7 @@
         <span class="arrow "></span>
       </a>
       <ul class="sub-menu">
-        <li>
+        <li ng-if="superAdminStatus==1">
           <a href="#/schools">
             <i class="fa fa-building" aria-hidden="true"></i>
             <span class="title">الفروع</span>
@@ -451,7 +461,8 @@
          </a>
        </li>
         <li>
-         <a href="student/report2" target="_blank">
+
+         <a href="/admin#/report2Filter" >
            <i class="fa fa-file-o" aria-hidden="true"></i>
            <span class="title">التقرير 2</span>
          </a>

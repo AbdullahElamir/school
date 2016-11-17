@@ -12,6 +12,7 @@ router.get('/all', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res)
 
 // add new task
 router.post('/add', userHelpers.isLogin ,userHelpers.isTeacher,function(req, res) {
+  req.body.teacher = req.user._id;
   TaskMgr.addTask(req.body,function(task){
     res.send(task);
   });

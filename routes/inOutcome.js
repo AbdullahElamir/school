@@ -6,14 +6,14 @@ var userHelpers = require("../controller/userHelpers");
 
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  InOutcomeMgr.getAllInOutcome(req.user.school,function(inOutcome){
+  InOutcomeMgr.getAllInOutcome(req.session.school,function(inOutcome){
     res.send(inOutcome);
   });
 });
 
 // add new inOutcome
 router.post('/add', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  req.body.school = req.user.school;
+  req.body.school = req.session.school;
   InOutcomeMgr.addInOutcome(req.body,function(inOutcome){
     res.send(inOutcome);
   });
@@ -34,14 +34,14 @@ router.delete('/delete/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(r
 });
 //get all inOutcome By Search Value
 router.get('/:searchValue/:startDate/:finishDate/:limit/:page/:type/:cat',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  InOutcomeMgr.getAllInOutcomesBySearchValue(req.user.school,req.params.cat,req.params.type,req.params.searchValue,req.params.limit,req.params.page,req.params.startDate,req.params.finishDate,function(inOutcome){
+  InOutcomeMgr.getAllInOutcomesBySearchValue(req.session.school,req.params.cat,req.params.type,req.params.searchValue,req.params.limit,req.params.page,req.params.startDate,req.params.finishDate,function(inOutcome){
     res.send(inOutcome);
   });
 });
 
 // get all inOutcome
 router.get('/:startDate/:finishDate/:limit/:page/:type/:cat',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  InOutcomeMgr.getAllInOutcomeCount(req.user.school,req.params.cat,req.params.type,req.params.limit,req.params.page,req.params.startDate,req.params.finishDate,function(inOutcome){
+  InOutcomeMgr.getAllInOutcomeCount(req.session.school,req.params.cat,req.params.type,req.params.limit,req.params.page,req.params.startDate,req.params.finishDate,function(inOutcome){
     res.send(inOutcome);
   });
 });

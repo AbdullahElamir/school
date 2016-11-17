@@ -7,12 +7,18 @@ var login = require('../controller/login')(router);
 
 
 /* GET home page. */
+
+router.get('/isLoggedIn', function(req, res) {
+  res.send(req.isAuthenticated());
+});
+
+
 router.get('/', function(req, res) {
   res.render('index', { title: 'Login' });
 });
 
 router.get('/login', function(req, res) {
-  // school.getSchoolInfo(req.user.school,function(result){
+  // school.getSchoolInfo(req.session.school,function(result){
     var schoolName ="لا يوجد";
     // if(result!=null){
     //   schoolName = result.name;
@@ -26,7 +32,7 @@ router.get('/forget', function(req, res) {
 });
 router.get('/:name',userHelpers.isLogin, function(req, res) {
   var name = req.params.name;
-  school.getSchoolInfo(req.user.school,function(result){
+  school.getSchoolInfo(req.session.school,function(result){
     var schoolName ="لا يوجد";
     if(result!=null){
       schoolName = result.name;

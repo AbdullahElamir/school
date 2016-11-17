@@ -9,6 +9,9 @@ router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
     res.send(admins);
   });
 });
+router.get('/adminlevel',userHelpers.isLogin ,function(req, res) {
+  res.send({level:req.user.level});
+});
 
 /* Add new admins  */
 router.post('/add', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {

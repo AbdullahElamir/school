@@ -89,7 +89,7 @@ router.get('/status/:status',userHelpers.isLogin,userHelpers.isAdmin , function(
 
 //################################################
 router.get('/teachers/:searchValue/:date/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  teacherMgr.getTeachersBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(teachers){
+  teacherMgr.getTeachersBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(teachers){
     attendTeaMgr.getTeacherAttendanceDate(new Date(req.params.date),teachers.teachersId,function(attends){
       var _attend=[];
       if(teachers.result.length==0){
@@ -115,7 +115,7 @@ router.get('/teachers/:searchValue/:date/:limit/:page',userHelpers.isLogin,userH
   });
 });
 router.get('/teachers//:date/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  teacherMgr.getTeachersBySearchValue(req.user.school,'',req.params.limit,req.params.page,function(teachers){
+  teacherMgr.getTeachersBySearchValue(req.session.school,'',req.params.limit,req.params.page,function(teachers){
     attendTeaMgr.getTeacherAttendanceDate(new Date(req.params.date),teachers.teachersId,function(attends){
       var _attend=[];
       if(teachers.result.length==0){
@@ -151,7 +151,7 @@ router.get('/teachers//:date/:limit/:page',userHelpers.isLogin,userHelpers.isAdm
 });
 
 router.get('/admins/:searchValue/:date/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  adminMgr.getAllAdminsBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
+  adminMgr.getAllAdminsBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(admins){
     attendAdminMgr.getAdminAttendanceDate(new Date(req.params.date),admins.adminsId,function(attends){
       var _attend=[];
       if(admins.result.length==0){
@@ -187,7 +187,7 @@ router.get('/admins/:searchValue/:date/:limit/:page',userHelpers.isLogin,userHel
   // });
 });
 router.get('/admins//:date/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  adminMgr.getAllAdminsBySearchValue(req.user.school,'',req.params.limit,req.params.page,function(admins){
+  adminMgr.getAllAdminsBySearchValue(req.session.school,'',req.params.limit,req.params.page,function(admins){
     attendAdminMgr.getAdminAttendanceDate(new Date(req.params.date),admins.adminsId,function(attends){
       var _attend=[];
       if(admins.result.length==0){
@@ -218,7 +218,7 @@ router.get('/admins//:date/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmi
 // get attend by date and classRoom
 router.get('/students/:classRoom/:date',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   // get real data _id  id is the id of the stuPro to let you make edits
-  stuproMgr.getStudentClassRoom(req.user.school,req.params.classRoom,function(stupro){
+  stuproMgr.getStudentClassRoom(req.session.school,req.params.classRoom,function(stupro){
     attendMgr.getAttendanceDate(new Date(req.params.date),stupro.StuP,function(attends){
       var _attend=[];
       for(var i in stupro.stu){

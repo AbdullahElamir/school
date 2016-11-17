@@ -5,7 +5,7 @@ var userHelpers = require("../controller/userHelpers");
 
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  marksSubMgr.getAllMarksSub(req.user.school,function(marksSub){
+  marksSubMgr.getAllMarksSub(req.session.school,function(marksSub){
     res.send(marksSub);
   });
 });
@@ -25,17 +25,17 @@ router.put('/edit/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(req, r
   });
 });
 router.put('/markexam/:exam', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  marksSubMgr.getMarksSubExam(req.user.school,req.params.exam,function(marksSub){
+  marksSubMgr.getMarksSubExam(req.session.school,req.params.exam,function(marksSub){
     res.send(marksSub);
   });
 });
 router.put('/marksub/:subject', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  marksSubMgr.getMarksSubSubject(req.user.school,req.params.subject,function(marksSub){
+  marksSubMgr.getMarksSubSubject(req.session.school,req.params.subject,function(marksSub){
     res.send(marksSub);
   });
 });
 router.put('/marksubexam/:exam/:subject/:semester', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  marksSubMgr.getMarksSubExamSubject(req.user.school,req.params.exam,req.params.subject,req.params.semester,function(marksSub){
+  marksSubMgr.getMarksSubExamSubject(req.session.school,req.params.exam,req.params.subject,req.params.semester,function(marksSub){
     res.send(marksSub);
   });
 });
@@ -47,14 +47,14 @@ router.delete('/delete/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(r
 });
 // get marksSub by status
 router.get('/status/:status',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  marksSubMgr.getAllMarksSubStatus(req.user.school,req.params.status,function(marksSub){
+  marksSubMgr.getAllMarksSubStatus(req.session.school,req.params.status,function(marksSub){
     res.send(marksSub);
   });
 });
 
 //get all marksSub By Search Value
 router.get('/:searchValue/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
-  marksSubMgr.getAllMarksSubesBySearchValue(req.user.school,req.params.searchValue,req.params.limit,req.params.page,function(marksSubs){
+  marksSubMgr.getAllMarksSubesBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(marksSubs){
     res.send(marksSubs);
   });
 });

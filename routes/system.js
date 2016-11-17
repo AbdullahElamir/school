@@ -27,20 +27,20 @@ router.get('/data/:id/:year',userHelpers.isLogin ,userHelpers.isAdmin, function(
 
 // GET all systems
 router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  systemMgr.getAllSystemCount(req.user.school,req.params.limit,req.params.page,function(system){
+  systemMgr.getAllSystemCount(req.session.school,req.params.limit,req.params.page,function(system){
     res.send(system);
   });
 });
 
 router.get('/all', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  systemMgr.getAllSystem(req.user.school,function(system){
+  systemMgr.getAllSystem(req.session.school,function(system){
     res.send(system);
   });
 });
 
 // Add new system
 router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  req.body.school=req.user.school;
+  req.body.school=req.session.school;
   systemMgr.addSystem(req.body,function(system){
     res.send(system);
   });
@@ -48,7 +48,7 @@ router.post('/add', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) 
 
 // Edit system by id
 router.put('/edit/:id', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  req.body.school=req.user.school;
+  req.body.school=req.session.school;
   systemMgr.updateSystem(req.params.id,req.body,function(system){
     res.send(system);
   });
