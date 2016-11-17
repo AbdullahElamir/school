@@ -63,10 +63,14 @@
     });
   }]);
   /* Init global settings and run the app */
-  app.run(['$rootScope','settings','$state',function($rootScope,settings,$state){
+  app.run(['$rootScope','settings','$state','$http',function($rootScope,settings,$state,$http){
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
-    $rootScope.superAdminStatus = true;
+    $http.get('/adminlevel').then(function(response) {
+      $rootScope.superAdminStatus = response.data;
+    },function(response){
+      console.log("An error there isn't admin level "+ response.data);
+    });
   }]);
   /* Setup Rounting For All Pages */
   app.config(['$stateProvider','$urlRouterProvider','$datepickerProvider',function($stateProvider,$urlRouterProvider,$datepickerProvider){
