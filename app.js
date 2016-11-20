@@ -45,6 +45,8 @@ var vaccination = require('./routes/vaccination');
 var others = require('./routes/other');
 var committee = require('./routes/committee');
 var conversation = require('./routes/conversation');
+var mobile = require('./routes/mobile');
+
 
 
 var app = express();
@@ -122,6 +124,7 @@ app.use('/vaccinations',vaccination);
 app.use('/others',others);
 app.use('/committee',committee);
 app.use('/conversation',conversation);
+app.use('/mobile',mobile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
