@@ -3,8 +3,15 @@ var timestamps = require('mongoose-timestamp');
 var Schema = mongoose.Schema;
 
 var Clothes = new Schema({
-  name: { type: String, index: true, default: "Unknown"},
   school:{type: Schema.Types.ObjectId , ref: 'School'},
+  stock: [{
+    name: {type: String,default:""},
+    status: {type: Number, default:1},
+    info: [{
+      size: {type: String,default:""},
+      quantity : {type: Number, default:0}
+    }]
+  }],
   status: {type: Number, default:1}
 });
 

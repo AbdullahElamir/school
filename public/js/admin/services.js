@@ -428,6 +428,10 @@
       'editClothes': function(id,obj){
         return $http.put('/clothes/edit/'+id,obj);
       },
+      'addStockOnClothes': function(obj){
+        console.log(obj);
+        return $http.put('/clothes/addStock',obj);
+      },
       'getAllClothes': function(){
         return $http.get('/clothes/all');
       }

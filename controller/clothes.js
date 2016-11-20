@@ -68,10 +68,10 @@ module.exports = {
     });
   },
 
-  getClothesId :function(id,cb){
-    model.Clothes.findOne({_id : id}, function(err, custom){
+  getClothesId :function(school,id,cb){
+    model.Clothes.findOne({ school: school},{stock: {$elemMatch: {_id: id}}},function(err, clothes){
       if(!err){
-        cb(custom);
+        cb(clothes);
       }else{
         cb(null);
       }
@@ -79,7 +79,7 @@ module.exports = {
   },
 
   addClothes : function(body,cb){
-    var obj =body;
+    var obj = body;
     Clothes1 = new model.Clothes(obj);
     Clothes1.save(function(err){
       if (!err) {
@@ -91,25 +91,61 @@ module.exports = {
     });
   },
 
-  updateClothes : function(id,body,cb){
+  updateClothes : function(school,id,body,cb){
     var obj = body;
-    model.Clothes.findOneAndUpdate({_id:id}, obj, function(err) {
-      if (!err) {
-        cb(true);
-      } else {
-        // console.log(err);
-        cb(false);
-      }
+    model.Clothes.findOne({school: school},{stock: {$elemMatch: {_id:{ $ne: id}}}}, function(err, custom){
+      var cLArray = custom.stock;
+      cLArray.push(obj);
+      model.Clothes.findOneAndUpdate({school: school},{stock:cLArray}, function(err,result) {
+        console.log(result);
+        if (!err) {
+          cb(true);
+        } else {
+          cb(false);
+        }
+      });
     });
   },
   
-  deleteClothes : function(id,cb){
-    model.Clothes.remove({_id:id}, function(err) {
-      if (!err) {
-        cb({result : 2});
-      } else {
-        // console.log(err);
-        cb({result : 3});
+  //delete stock by id 
+  deleteClothes : function(school,id,cb){
+    model.Clothes.findOne({school: school},{stock: {$elemMatch: {_id:{ $ne: id}}}}, function(err, custom){
+      var cLArray = custom.stock;
+      model.Clothes.findOneAndUpdate({school: school},{stock:cLArray}, function(err,result) {
+        console.log(result);
+        if (!err) {
+          cb({result : 2});
+        } else {
+          cb({result : 3});
+        }
+      });
+    });
+  },
+
+  // add new stock on old clothes by school
+  addStockOnClothes : function(body,cb){
+    var obj = body;
+    var school = obj.school;
+    model.Clothes.findOne({school : school}, function(err, custom){
+      var cLarray = custom.stock;
+      cLarray.push(obj.stock[0]);
+      model.Clothes.findOneAndUpdate({school:school}, {stock:cLarray}, function(err) {
+        if (!err) {
+          cb(true);
+        } else {
+          cb(false);
+        }
+      });
+    });
+  },
+
+  getClothesBySchoolId : function(school1,cb){
+    model.Clothes.findOne({school : school1}, function(err, custom){
+      console.log(custom);
+      if(!err){
+        cb(custom);
+      }else{
+        cb(null);
       }
     });
   }
