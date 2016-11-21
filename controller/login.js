@@ -87,7 +87,12 @@ module.exports = function (router) {
       req.logIn(user, function(err) {
         if (err) { return next(err); }
         if (user){
-          return res.send({hasFailed:false });
+          return res.send({message:'',hasFailed:false,person:{
+            type:'PARENT',
+            _id:user._id,
+            name:user.name,
+            school_id:school
+          } });
         }
         
       });
