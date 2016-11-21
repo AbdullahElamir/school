@@ -55,6 +55,9 @@
       'getTeacherById': function(id){
         return $http.get('/teacher/'+id.id);
       },
+      'getTeacherByIdInSession': function(){
+        return $http.get('/teacher/session');
+      },
       'editTeacher': function(id,obj){
         return $http.put('/teacher/edit/'+id,obj);
       },
@@ -255,7 +258,7 @@
         return $http.put('/year/edit/'+id,obj);
       },
       'getAllYears': function(){
-        return $http.get('/year/all');
+        return $http.get('/year/all/thing');
       },
       'activate': function(id,active){
         return $http.put('/year/active/'+id,{active:active});
@@ -395,14 +398,23 @@
       'getAdminById': function(id) {
         return $http.get('/admins/'+id.id);
       },
+      'getAdminByIdInSession': function() {
+        return $http.get('/admins/session');
+      },
       'editAdmin': function(id,obj) {
         return $http.put('/admins/edit/'+id,obj);
+      },
+      'editAdminInSession': function(obj) {
+        return $http.put('/admins/edit/session',obj);
       },
       'getAllAdmins': function(){
         return $http.get('/admins/all');
       },
       'changePass': function(userId,passwords){
         return $http.put('/admins/changePass/'+userId,passwords);
+      },
+      'changePassInSession': function(passwords){
+        return $http.put('/admins/changePass/session',passwords);
       }
     };
     return self;
@@ -781,7 +793,18 @@
   
     app.service('InboxServ',['$http',function($http){
       var self = {
-        
+        'getAllConversationsByAdminID': function(){
+          return $http.get('/conversation/conversations/admin');
+        },
+        'getMessagesByConversationId': function(id){
+          return $http.get('/conversation/conversation/messages/'+id);
+        },
+        'addMessageInConversation': function(id,message){
+          return $http.post('/conversation/message/add/in/conversation/'+id,{message:message,type:"ADMIN"});
+        },
+        'setSeenAllMessagesInConversation': function(id){
+          return $http.put('/conversation/message/seen/'+id,{type:"ADMIN"});
+        }
       };
       return self;
     }]);

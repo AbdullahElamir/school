@@ -79,14 +79,42 @@ module.exports = {
     });
   },
   deleteSchool : function(id,cb){
-    model.School.remove({_id:id}, function(err) {
-      if (!err) {
-        cb(2);
-      } else {
-        // console.log(err);
-        cb(3);
+    //a function is called to delete
+    var deleteFun= function(){
+      model.School.remove({_id:id}, function(err) {
+        if (!err) {
+          cb(2);
+        } else {
+          cb(3);
+        }
+      });
+    };
+    //collections must be checked before delete
+    var collections = ["Admin","Bus","Check","Class","Clothes","Driver","Evaluation","InOutcomeType","Other","Parent","Room","Student","Teacher","Vaccination"];
+    //recursive function to check all the collections provided in the array
+    var check = function(){
+      if(collections.length>0){
+        //pop an element from the array and check it
+        model[collections.pop()].find({school:id},function(err,school){
+          if(!err){
+            //if this collection does not restrict this school from deleting contenue finding in the other collections
+            if(school.length===0){
+              check();
+            }else{
+              //this means that there is a document that have this school id and we shouldn't delete the school
+              cb(1);
+            }
+          }else {
+            //error
+            cb(3);
+          }
+        });
+      }else{
+        //this means that we finished the all collections array so delete
+        deleteFun();
       }
-    });
+    };
+    check();
   }
 
 };

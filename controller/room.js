@@ -4,7 +4,13 @@ var room = null;
 module.exports = {
 
   getAllRoom :function(school,cb){
-    model.Room.find({school:school,status:1}, function(err, rooms){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Room.find(q, function(err, rooms){
       if(!err){
         cb(rooms);
       }else{
@@ -18,8 +24,15 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Room.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Room.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,rooms){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Room.count(q,function(err, count){
+      model.Room.find(q).limit(limit).skip(page*limit).exec(function(err,rooms){
         if(!err){
           cb({result:rooms,count:count});
         }else{
@@ -34,8 +47,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Room.count({school:school,status:1},function(err, count){
-      model.Room.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,rooms){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Room.count(q,function(err, count){
+      model.Room.find(q).limit(limit).skip(page*limit).exec(function(err,rooms){
         if(!err){
           cb({result:rooms,count:count});
         }else{
@@ -46,7 +65,13 @@ module.exports = {
   },
 
   getAllRoomStatus:function(school,status,cb){
-    model.Room.find({school:school,status:status},function(err, classes){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Room.find(q,function(err, classes){
       if(!err){
         cb(classes);
       }else{
@@ -56,7 +81,14 @@ module.exports = {
   },
 
   getRoomName :function(school,name,cb){
-    model.Room.find({name :{ $regex:name, $options: 'i' },school:school}).limit(30).exec(function(err, custom){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Room.find(q).limit(30).exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -99,19 +131,41 @@ module.exports = {
   },
 
   deleteRoom : function(id,cb){
-    model.Room.find({customer:id}, function(err,resul) {
-      if(resul.length > 0){
-        cb({result:1});
-      } else{
-          model.Room.remove({_id:id}, function(err) {
-            if (!err) {
-              cb({result:2});
-            } else {
-              // console.log(err);
-              cb({result:3});
-            }
-          });
+    //a function is called to delete
+    var deleteFun= function(){
+      model.Room.remove({_id:id}, function(err) {
+        if (!err) {
+          cb(2);
+        } else {
+          cb(3);
         }
       });
-    },
-  };
+    };
+    //collections must be checked before delete
+    var collections = ["ClassRoom","Committee"];
+    //recursive function to check all the collections provided in the array
+    var check = function(){
+      if(collections.length>0){
+        //pop an element from the array and check it
+        model[collections.pop()].find({room:id},function(err,result){
+          if(!err){
+            //contenue finding in the other collections
+            if(result.length===0){
+              check();
+            }else{
+              //this means that there is a document that have this id and we shouldn't delete
+              cb(1);
+            }
+          }else {
+            //error
+            cb(3);
+          }
+        });
+      }else{
+        //this means that we finished the all collections array so delete
+        deleteFun();
+      }
+    };
+    check();
+  }
+};

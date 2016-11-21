@@ -3,8 +3,14 @@ var TSC1 = null;
 
 module.exports = {
 
-  getAllTSC :function(cb){
-    model.TSC.find({status:1}, function(err, TSCs){
+  getAllTSC :function(school,cb){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.TSC.find(q, function(err, TSCs){
       if(!err){
         cb(TSCs);
       }else{
@@ -14,8 +20,14 @@ module.exports = {
     });
   },
 
-  getAllTSCStatus:function(status,cb){
-    model.TSC.find({status:status},function(err, TSCs){
+  getAllTSCStatus:function(school,status,cb){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.TSC.find(q,function(err, TSCs){
       if(!err){
         cb(TSCs);
       }else{
@@ -63,9 +75,7 @@ module.exports = {
   getTeacherClassSubject : function(id,cb){
     model.Year.findOne({active : 1}, function(err, activeYear){
       if(!err && activeYear){
-        console.log(id);
         model.ClassRoom.findOne({teacher:id,status:1,year:activeYear._id}).exec(function(err, teacherClass){
-          console.log(teacherClass);
           var q = {
             status:1,
             year:activeYear._id
@@ -75,7 +85,6 @@ module.exports = {
           }else{
             q.teacher=id
           }
-          console.log(q);
           model.TSC.find(q).populate('classRoom subject').exec(function(err, teachers){
             if(!err){
               cb(teachers);
@@ -93,7 +102,6 @@ module.exports = {
     });
   },
   getTeacherSubject : function(classroom,year,cb){
-    console.log(classroom+" ammm "+year);
     model.TSC.find({year:year,classRoom:classroom}).exec(function(err, teachers){
       if(!err){
         console.log(teachers);

@@ -4,7 +4,13 @@ var subject = null;
 module.exports = {
 
   getAllSubject :function(school,cb){
-    model.Subject.find({school:school,status:1})
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Subject.find(q)
     .populate('clas')
     .exec(function(err, Subjects){
       if(!err){
@@ -27,35 +33,32 @@ module.exports = {
       }
     });
   },
-  
+
   //getAllStudentsBySearchValue
   getSubjectsBySearchValueAndClass :function(school,searchValue,clas,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    if( clas != "all" ){
-      model.Subject.count({school:school,$and :[{name:new RegExp(searchValue, 'i')},{clas:clas}]},function(err, count){
-        model.Subject.find({school:school,$and :[{name:new RegExp(searchValue, 'i')},{clas:clas}]}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
-          if(!err){
-            cb({result:subjects,count:count});
-          }else{
-            // console.log(err);
-            cb(null);
-          }
-        });
-      });
-    } else {
-      model.Subject.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){ 
-        model.Subject.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
-          if(!err){
-            cb({result:subjects,count:count});
-          }else{
-            // console.log(err);
-            cb(null);
-          }
-        });
-      });
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
     }
+    if( clas != "all" ){
+      q.clas=clas;
+    }
+    model.Subject.count(q,function(err, count){
+      model.Subject.find(q).limit(limit).skip(page*limit).populate('clas').exec(function(err,subjects){
+        if(!err){
+          cb({result:subjects,count:count});
+        }else{
+          // console.log(err);
+          cb(null);
+        }
+      });
+    });
   },
 
   //getAllCustomerCount
@@ -63,8 +66,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Subject.count({school:school,status:1},function(err, count){
-      model.Subject.find({school:school,status:1}).limit(limit).skip(page*limit)
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Subject.count(q,function(err, count){
+      model.Subject.find(q).limit(limit).skip(page*limit)
       .populate('clas')
       .exec(function(err,subjects){
         if(!err){
@@ -78,7 +87,13 @@ module.exports = {
   },
 
   getAllSubjectStatus:function(school,status,cb){
-    model.Subject.find({school:school,status:status})
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Subject.find(q)
     .populate('clas')
     .exec(function(err, subjects){
       if(!err){
@@ -89,11 +104,18 @@ module.exports = {
       }
     });
   },
-  
+
   getSubjectName :function(school,name,cb){
-    model.Subject.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30)
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Subject.find(q).limit(30)
     .populate('clas')
-    .exec(function(err, custom){ 
+    .exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -138,22 +160,44 @@ module.exports = {
       }
     });
   },
-  
+
   deleteSubject : function(id,cb){
-    model.Study.find({customer:id}, function(err,resul) {
-      if(resul.length > 0){
-        cb(1);
-      } else{
-        model.Subject.remove({_id:id}, function(err) {
-          if (!err) {
-            cb(2);
-          } else {
-            // console.log(err);
+    //a function is called to delete
+    var deleteFun= function(){
+      model.Subject.remove({_id:id}, function(err) {
+        if (!err) {
+          cb(2);
+        } else {
+          cb(3);
+        }
+      });
+    };
+    //collections must be checked before delete
+    var collections = ["System"];
+    //recursive function to check all the collections provided in the array
+    var check = function(){
+      if(collections.length>0){
+        //pop an element from the array and check it
+        model[collections.pop()].find({"sys_class.selected.id_subject":id},function(err,result){
+          if(!err){
+            //contenue finding in the other collections
+            if(result.length===0){
+              check();
+            }else{
+              //this means that there is a document that have this id and we shouldn't delete
+              cb(1);
+            }
+          }else {
+            //error
             cb(3);
           }
         });
+      }else{
+        //this means that we finished the all collections array so delete
+        deleteFun();
       }
-    });
+    };
+    check();
   }
-  
+
 };

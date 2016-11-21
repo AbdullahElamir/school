@@ -14,7 +14,7 @@ var Admin = new Schema({
   qualification: {type: String, default:"NULL"},
   qualificationDate: {type: String, default:"NULL"},
   specialization: {type: String, default:"NULL"},
-  birth_day:{ type:Date, required: [true, 'start date required']},
+  birth_day:{ type:Date /*required: [true, 'start date required']*/},
   startDate:{ type:String , default:"NULL"},
   /*last_login:{ type:Date, required: [true, 'start date required']},*/
   gender:{type: String,default:"NULL"},

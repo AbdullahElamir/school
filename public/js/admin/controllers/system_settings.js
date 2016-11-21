@@ -7,7 +7,8 @@
       $scope.data.sys_class[index].classRooms.push(obj);
       var tsArray = [];
       for(var i in $scope.data.sys_class[index].selected){
-        tsArray.push({ subject : { _id: $scope.data.sys_class[index].selected[i].id_subject._id , name : $scope.data.sys_class[index].selected[i].id_subject.name } , teacher:"" , year:$scope.year._id });
+
+        tsArray.push({ subject : { _id: $scope.data.sys_class[index].selected[i]._id , name : $scope.data.sys_class[index].selected[i].id_subject.name } , teacher:"" , year:$scope.year._id });
       }
       $scope.data.sys_class[index].ts.push(tsArray);
     };

@@ -3,8 +3,14 @@ var Evaluation = null;
 
 module.exports = {
 
-  getAllEvaluation :function(cb){
-    model.Evaluation.find({status:1}, function(err, Evaluations){
+  getAllEvaluation :function(school,cb){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Evaluation.find(q, function(err, Evaluations){
       if(!err){
         cb(Evaluations);
       }else{
@@ -14,12 +20,19 @@ module.exports = {
   },
 
   //getAllEvaluationsBySearchValue
-  getAllEvaluationsBySearchValue :function(searchValue,limit,page,cb){
+  getAllEvaluationsBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Evaluation.count({name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Evaluation.find({name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Evaluations){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Evaluation.count(q,function(err, count){
+      model.Evaluation.find(q).limit(limit).skip(page*limit).exec(function(err,Evaluations){
         if(!err){
           cb({result:Evaluations,count:count});
         }else{
@@ -30,12 +43,18 @@ module.exports = {
   },
 
   //getAllEvaluationsCount
-  getAllEvaluationCount :function(limit,page,cb){
+  getAllEvaluationCount :function(school,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Evaluation.count({},function(err, count){
-      model.Evaluation.find({}).limit(limit).skip(page*limit).exec(function(err,Evaluations){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Evaluation.count(q,function(err, count){
+      model.Evaluation.find(q).limit(limit).skip(page*limit).exec(function(err,Evaluations){
         if(!err){
           cb({result:Evaluations,count:count});
         }else{
@@ -45,8 +64,14 @@ module.exports = {
     });
   },
 
-  getAllEvaluationStatus:function(status,cb){
-    model.Evaluation.find({status:status},function(err, classes){
+  getAllEvaluationStatus:function(school,status,cb){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Evaluation.find(q,function(err, classes){
       if(!err){
         cb(classes);
       }else{
@@ -55,8 +80,15 @@ module.exports = {
     });
   },
 
-  getEvaluationName :function(name,cb){
-    model.Evaluation.find({name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, custom){
+  getEvaluationName :function(school,name,cb){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Evaluation.find(q).limit(30).exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{
@@ -98,12 +130,41 @@ module.exports = {
     });
   },
   deleteEvaluation : function(id,cb){
-    model.Evaluation.remove({_id:id}, function(err) {
-      if (!err) {
-        cb(2);
-      } else {
-        cb(3);
+    //a function is called to delete
+    var deleteFun= function(){
+      model.Evaluation.remove({_id:id}, function(err) {
+        if (!err) {
+          cb(2);
+        } else {
+          cb(3);
+        }
+      });
+    };
+    //collections must be checked before delete
+    var collections = ["Stueva"];
+    //recursive function to check all the collections provided in the array
+    var check = function(){
+      if(collections.length>0){
+        //pop an element from the array and check it
+        model[collections.pop()].find({evaluation:id},function(err,result){
+          if(!err){
+            //contenue finding in the other collections
+            if(result.length===0){
+              check();
+            }else{
+              //this means that there is a document that have this id and we shouldn't delete
+              cb(1);
+            }
+          }else {
+            //error
+            cb(3);
+          }
+        });
+      }else{
+        //this means that we finished the all collections array so delete
+        deleteFun();
       }
-    });
+    };
+    check();
   }
 };

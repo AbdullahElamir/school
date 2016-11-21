@@ -4,7 +4,13 @@ var Vaccination = null;
 module.exports = {
 
   getAllVaccination :function(school,cb){
-    model.Vaccination.find({school:school,status:1}, function(err, Vaccinations){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Vaccination.find(q, function(err, Vaccinations){
       if(!err){
         cb(Vaccinations);
       }else{
@@ -37,8 +43,15 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Vaccination.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Vaccination.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Vaccinations){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Vaccination.count(q,function(err, count){
+      model.Vaccination.find(q).limit(limit).skip(page*limit).exec(function(err,Vaccinations){
         if(!err){
           cb({result:Vaccinations,count:count});
         }else{
@@ -53,8 +66,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Vaccination.count({school:school},function(err, count){
-      model.Vaccination.find({school:school}).limit(limit).skip(page*limit).exec(function(err,Vaccinations){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Vaccination.count(q,function(err, count){
+      model.Vaccination.find(q).limit(limit).skip(page*limit).exec(function(err,Vaccinations){
         if(!err){
           cb({result:Vaccinations,count:count});
         }else{

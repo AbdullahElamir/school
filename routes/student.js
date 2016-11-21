@@ -5,29 +5,29 @@ var classRoomMgr = require("../controller/classRoom");
 var stuproMgr = require("../controller/studentProcess");
 var conversationMgr = require("../controller/conversation");
 var userHelpers = require("../controller/userHelpers");
-yearMgr = require("../controller/year");
+var yearMgr = require("../controller/year");
 var TSCMgr = require("../controller/teacherSubjectClass");
 var jsreport = require("jsreport");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
 var path = require("path");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
-user._id="57df0e437fb8ad40ec8b48c2"; // --> user _id in session (Admin or Teacher)
 
-
-router.get('/children/all/:parentId',userHelpers.isLogin , function(req, res) {
-  studentMgr.getStudentByParentId(user.school,req.params.parentId,function(children){
+router.get('/children/all/:parentId',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  studentMgr.getStudentByParentId(req.session.school,req.params.parentId,function(children){
     res.send(children);
   });
 });
 
-router.get('/report1',userHelpers.isLogin , function(req, res) {
+router.get('/report1',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   jsreport.render({
     template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
+      phantom: {
+        format: 'A4',
+        customPhantomJS: true
+      },
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report1.html"), "utf8")
     },data:{result:null}
   }).then(function(resp) {
@@ -37,13 +37,11 @@ router.get('/report1',userHelpers.isLogin , function(req, res) {
   });
 });
 
-
-router.get('/genrateStudentId',function(req, res){
+router.get('/genrateStudentId',userHelpers.isAdmin,function(req, res){
   studentMgr.StudentGenerateId(1,function(result){
-    console.log(result);
    res.send(result); 
   });
-})
+});
 
 
 
@@ -63,14 +61,15 @@ router.get('/genrateStudentId',function(req, res){
 //   });
 // });
 
-router.get('/report2',userHelpers.isLogin , function(req, res) {
+router.get('/report2',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   jsreport.render({
     template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
       phantom:{
         format: 'A4',
-        orientation: "landscape"
+        orientation: "landscape",
+        customPhantomJS: true
       },
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report2.html"), "utf8")
     },data:{result:null}
@@ -80,11 +79,15 @@ router.get('/report2',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
-router.get('/report3',userHelpers.isLogin , function(req, res) {
+router.get('/report3',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   jsreport.render({
     template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
+      phantom: {
+        format: 'A4',
+        customPhantomJS: true
+      },
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report3.html"), "utf8")
     },data:{result:null}
   }).then(function(resp) {
@@ -93,14 +96,15 @@ router.get('/report3',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
-router.get('/report4',userHelpers.isLogin , function(req, res) {
+router.get('/report4',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   jsreport.render({
     template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
       phantom:{
         format: 'A4',
-        orientation: "landscape"
+        orientation: "landscape",
+        customPhantomJS: true
       },
       content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report4.html"), "utf8")
     },data:{result:null}
@@ -110,20 +114,20 @@ router.get('/report4',userHelpers.isLogin , function(req, res) {
     res.end(e.message);
   });
 });
-router.get('/class/:searchValue/:_class',userHelpers.isLogin , function(req, res) {
+router.get('/class/:searchValue/:_class',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
-    stuproMgr.getStuproRoom(clas,function(stupro){
-      studentMgr.getStudentStupro(user.school,req.params.searchValue,stupro,function(student){
+    stuproMgr.getStuproRoom(req.session.school,clas,function(stupro){
+      studentMgr.getStudentStupro(req.session.school,req.params.searchValue,stupro,function(student){
         res.send(student);
       });
     });
   });
 });
-router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
+router.get('/class//:_class',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   // get real data without search text
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){
-    stuproMgr.getStuproRoom(clas,function(stupro){
-      studentMgr.getStudentStupro(user.school,'',stupro,function(student){
+    stuproMgr.getStuproRoom(req.session.school,clas,function(stupro){
+      studentMgr.getStudentStupro(req.session.school,'',stupro,function(student){
         res.send(student);
       });
 
@@ -132,47 +136,47 @@ router.get('/class//:_class',userHelpers.isLogin , function(req, res) {
 });
 
 /* Send Message From User _id (Admin or Teacher) to Parent of Student by studentID */
-router.put('/message/:studentId',userHelpers.isLogin,function(req, res) {
+router.put('/message/:studentId',userHelpers.isLogin,userHelpers.isTeacher,function(req, res) {
   studentMgr.getStudentId(req.params.studentId,function(stu){
-    conversationMgr.sendMsgFromPersonToPersonWithStudents([req.params.studentId],user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
+    conversationMgr.sendMsgFromPersonToPersonWithStudents([req.params.studentId],req.user._id,req.body.type,stu.parent[0]+"","PARENT",req.body.message,function(send){
       res.send(send);
     });
   });
 });
 
 /*GET all Student By Search Value*/
-router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  studentMgr.getAllStudentsBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
+router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  studentMgr.getAllStudentsBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 /* GET all student */
-router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  studentMgr.getAllStudentsCount(user.school,req.params.limit,req.params.page,function(student){
+router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  studentMgr.getAllStudentsCount(req.session.school,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
-router.get('/all', userHelpers.isLogin ,function(req, res){
-  studentMgr.getAllStudent(user.school,function(student){
+router.get('/all', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res){
+  studentMgr.getAllStudent(req.session.school,function(student){
     res.send(student);
   });
 });
 
 /* Add new student  */
-router.post('/add',function(req, res) {
+router.post('/add',userHelpers.isAdmin,function(req, res) {
   studentMgr.StudentGenerateId(req.body.gender,function(result){
-    console.log(result);
-      req.body.school=user.school;
-      req.body.studentrealid =result
+      req.body.school=req.session.school;
+      req.body.studentrealid =result;
       studentMgr.addStudent(req.body,function(student){
+
       res.send(student);
     });
   });
 });
 
-router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req, res) {
+router.post('/upload/:id',userHelpers.isLogin,userHelpers.isAdmin, multipartMiddleware, function(req, res) {
   //save image to public/img/students with a name of "student's id" without extention
   // don't forget to delete all req.files when done
   var dir = './public/img/students';
@@ -193,34 +197,35 @@ router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req
 });
 
 /* open student,s file by id  */
-router.put('/openFile/:id',userHelpers.isLogin,function(req, res) {
+router.put('/openFile/:id',userHelpers.isLogin,userHelpers.isAdmin,function(req, res) {
   studentMgr.updateStudent(req.params.id,{finishDate:null,active:1},function(student){
     res.send(student);
   });
 });
 /* close student;s file by id  */
-router.put('/closeFile/:id',userHelpers.isLogin,function(req, res) {
+router.put('/closeFile/:id',userHelpers.isLogin,userHelpers.isAdmin,function(req, res) {
   studentMgr.updateStudent(req.params.id,{finishDate:new Date(),active:0},function(student){
     res.send(student);
   });
 });
 
 /* Edit student by id  */
-router.put('/edit/:id',userHelpers.isLogin,function(req, res) {
+router.put('/edit/:id',userHelpers.isLogin,userHelpers.isAdmin,function(req, res) {
   studentMgr.updateStudent(req.params.id,req.body,function(student){
     res.send(student);
   });
 });
 
+
 /* Delete student by id  */
-router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
+router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   studentMgr.deleteStudent(req.params.id,function(student){
     res.send({result:student});
   });
 });
 
 /* GET student by ID  */
-router.get('/:id',userHelpers.isLogin , function(req, res) {
+router.get('/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   studentMgr.getStudentId(req.params.id,function(student){
     res.send(student);
   });

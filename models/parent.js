@@ -14,7 +14,7 @@ var Parent = new Schema({
   nationality:{type: Number},
   job:{type: String,default:"NULL"},
   workPlace:{type: String,default:"NULL"},
-  level:{type:Number,default:3},
+  level:{type:Number,default:9},
   school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });

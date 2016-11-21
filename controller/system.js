@@ -21,7 +21,7 @@ function systemSetting(system,sys_class,yearId,counterOfClassRooms,sumOfClassRoo
   if( system.flag != 1 ){
     model.Fees.find({year:yearId,id_class:sys_class.id_class._id}).exec(function(err,fessesResult){
       if(!err){
-        if( fessesResult == null || fessesResult.length == 0 ){  // get new system setting
+        if( fessesResult === null || fessesResult.length === 0 ){  // get new system setting
           system.flag = 1;
           cb(system);
           return;
@@ -117,7 +117,6 @@ function saveExam(examI,cb){
       var subjects = examI.subjects;
       var subIndex = 0 ;
       for(var sub in subjects){
-        sub;
         var subjectsI = subjects[subIndex];
         subjectsI.exam = examResult._id;
         subjectsI.system = examI.system;
@@ -213,7 +212,7 @@ function saveTS(tsObject,classRoom_id,counterFinalClassRooms,sumFinalClassRooms,
 
 function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb){
   var obj;
-  if(classRoom._id != "")
+  if(classRoom._id !== "")
     obj = {_id: classRoom._id ,year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft , teacher:classRoom.teacher };
   else
     obj = {year: classRoom.year, name:classRoom.name , room:classRoom.room , class:classRoom.class , sheft:classRoom.sheft , teacher:classRoom.teacher };
@@ -301,7 +300,13 @@ module.exports = {
   },
 
   getAllSystem :function(school,cb){
-    model.System.find({school:school}, function(err, systems){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.System.find(q, function(err, systems){
       if(!err){
         cb(systems);
       }else{
@@ -315,8 +320,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.System.count({school:school,status:1},function(err, count){
-      model.System.find({school:school,status:1}).limit(limit).skip(page*limit)
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.System.count(q,function(err, count){
+      model.System.find(q).limit(limit).skip(page*limit)
       .populate('sys_class')
       .populate('selected')
       .exec(function(err,systems){
@@ -388,7 +399,17 @@ module.exports = {
   },
 
   addSystem : addSystem,
-  deleteSystem : deleteSystem,
+  deleteSystem : function(id,cb){
+    model.Year.find({system:id},function(err,years){
+      if(!err && years.length>0){
+        cb(1);
+      }else if (!err){
+        deleteSystem(id,cb);
+      }else{
+        cb(3);
+      }
+    });
+  },
   // still update thier exams and  marks
   updateSystem : function(id,body,cb){
     deleteSystem(id,function(no){

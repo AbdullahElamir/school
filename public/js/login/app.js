@@ -43,11 +43,11 @@
          toastr.error('خطأ : اسم المستخدم او كلمة المرور غير صحيح');
         } else {
         if(response.data.admin==1){
-          window.location.replace('/');  
+          window.location.replace('/admin');  
         }else if(response.data.admin==2){
           window.location.replace('/admin');
-        }else if(response.data.admin==3){
-          window.location.replace('/');
+        }else if(response.data.admin==7){
+          window.location.replace('/teachers');
         }
       }
         

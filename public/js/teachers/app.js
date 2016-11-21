@@ -111,82 +111,97 @@
           }
         })
     .state('studentsEvaluate',{
-          url: '/studentsEvaluate/:id/:course/:student',
-          templateUrl: '/teachers/pages/studentsEvaluate',
-          data: {pageTitle: 'تقييم الطلبة'},
-          controller: 'StudentsEvaluateCtl',
-          resolve: {
-            deps: ['$ocLazyLoad',function($ocLazyLoad){
-              return $ocLazyLoad.load({
-                insertBefore: '#ngLoadControllerAfter',
-                files: [
-                  '/js/teachers/controllers/studentsEvaluateCtl.js'
-                ]
-              });
-            }]
-          }
-        }).state('profile',{
-          url: '/profile',
-          templateUrl: '/teachers/pages/profile',
-          data: {pageTitle: 'الصفحة الشخصية'},
-          controller: 'ProfileCtl',
-          resolve: {
-            deps: ['$ocLazyLoad',function($ocLazyLoad){
-              return $ocLazyLoad.load({
-                insertBefore: '#ngLoadControllerAfter',
-                files: [
-                  '/js/teachers/controllers/profileCtl.js',
-                  '/assets/css/profile.css'
-                ]
-              });
-            }]
-          }
-        }).state('editProfile',{
-          url: '/editProfile',
-          templateUrl: '/teachers/pages/editProfile',
-          data: {pageTitle: 'تعديل الصفحة الشخصية'},
-          controller: 'EditProfileCtl',
-          resolve: {
-            deps: ['$ocLazyLoad',function($ocLazyLoad){
-              return $ocLazyLoad.load({
-                insertBefore: '#ngLoadControllerAfter',
-                files: [
-                  '/js/teachers/controllers/profileCtl.js'
-                ]
-              });
-            }]
-          }
-        }).state('tasks',{
-          url: '/tasks/:id/:course',
-          templateUrl: '/teachers/pages/tasks',
-          data: {pageTitle: 'المهام'},
-          controller: 'TasksCtl',
-          resolve: {
-            deps: ['$ocLazyLoad',function($ocLazyLoad){
-              return $ocLazyLoad.load({
-                insertBefore: '#ngLoadControllerAfter',
-                files: [
-                  '/js/teachers/controllers/tasksCtl.js'
-                ]
-              });
-            }]
-          }
-        }).state('getStudentBySubject',{
-          url: '/getStudentBySubject',
-          templateUrl: '/teachers/pages/getStudentBySubject',
-          data: {pageTitle: 'كشف باسماء الطلبة'},
-          controller: 'getStudentBySubjectCtl',
-          resolve: {
-            deps: ['$ocLazyLoad',function($ocLazyLoad){
-              return $ocLazyLoad.load({
-                insertBefore: '#ngLoadControllerAfter',
-                files: [
-                  '/js/teachers/controllers/getStudentBySubjectCtl.js'
-                ]
-              });
-            }]
-          }
-        });
+      url: '/studentsEvaluate/:id/:course/:student',
+      templateUrl: '/teachers/pages/studentsEvaluate',
+      data: {pageTitle: 'تقييم الطلبة'},
+      controller: 'StudentsEvaluateCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/teachers/controllers/studentsEvaluateCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('profile',{
+      url: '/profile',
+      templateUrl: '/teachers/pages/profile',
+      data: {pageTitle: 'الصفحة الشخصية'},
+      controller: 'ProfileCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/teachers/controllers/profileCtl.js',
+              '/assets/css/profile.css'
+            ]
+          });
+        }]
+      }
+    }).state('editProfile',{
+      url: '/editProfile',
+      templateUrl: '/teachers/pages/editProfile',
+      data: {pageTitle: 'تعديل الصفحة الشخصية'},
+      controller: 'EditProfileCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/teachers/controllers/profileCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('tasks',{
+      url: '/tasks/:id/:course',
+      templateUrl: '/teachers/pages/tasks',
+      data: {pageTitle: 'المهام'},
+      controller: 'TasksCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/teachers/controllers/tasksCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('getStudentBySubject',{
+      url: '/getStudentBySubject',
+      templateUrl: '/teachers/pages/getStudentBySubject',
+      data: {pageTitle: 'كشف باسماء الطلبة'},
+      controller: 'getStudentBySubjectCtl',
+        resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/teachers/controllers/getStudentBySubjectCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('inbox',{
+      url: '/inbox',
+      templateUrl: 'teachers/pages/conversations',
+      data: {pageTitle: 'البريد الوارد'},
+      controller: 'inboxCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/teachers/controllers/inboxCtl.js'
+            ]
+          });
+        }]
+      }
+    });
   }]);
   app.run(['defaultErrorMessageResolver', function (defaultErrorMessageResolver){
     defaultErrorMessageResolver.setI18nFileRootPath('/lang');

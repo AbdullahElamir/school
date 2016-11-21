@@ -1,26 +1,45 @@
 var express = require('express');
 var router = express.Router();
 var teacherMgr = require("../controller/teacher");
+var stdProcessMgr = require("../controller/studentProcess");
 var userHelpers = require("../controller/userHelpers");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require("fs");
-var user={};
-user.school="5801f550e4de0e349c8714c2";
+
 var path = require("path");
 var jsreport = require("jsreport");
 
-router.get('/report1', function(req, res) {
-  jsreport.render({
-    template: {
-      engine: "jsrender",
-      recipe: "phantom-pdf",
-      content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report1.html"), "utf8")
-    },data:{result:null}
-  }).then(function(resp) {
-    resp.stream.pipe(res);
-  }).catch(function(e) {
-    res.end(e.message);
+
+router.get('/report1/:id', function(req, res) {
+  var classRoom = req.params.id;
+  stdProcessMgr.getStudentClassRoom(classRoom,function(result){
+    /*console.log(result.stu);*/
+    var student =[];
+    result.stu.forEach(function(stud){
+      var obj={
+        name : stud.student.name,
+        description:stud.description,
+        studentId:stud.student.studentrealid
+      };
+      student.push(obj);
+    });
+
+    jsreport.render({
+      template: {
+        engine: "jsrender",
+        recipe: "phantom-pdf",
+        phantom: {
+          format: 'A4',
+          customPhantomJS: true
+        },
+        content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report1.html"), "utf8")
+      },data:{result:student}
+    }).then(function(resp) {
+      resp.stream.pipe(res);
+    }).catch(function(e) {
+      res.end(e.message);
+    });
   });
 });
 
@@ -33,6 +52,10 @@ router.get('/report2', function(req, res) {
     template: {
       engine: "jsrender",
       recipe: "phantom-pdf",
+      phantom: {
+        format: 'A4',
+        customPhantomJS: true
+      },
       content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report2.html"), "utf8")
     },data:{result:null}
   }).then(function(resp) {
@@ -49,7 +72,8 @@ router.get('/report3', function(req, res) {
       recipe: "phantom-pdf",
       phantom:{
         format: 'A4',
-        orientation: "landscape"
+        orientation: "landscape",
+        customPhantomJS: true
       },
       content: fs.readFileSync(path.join(__dirname, "../views/teachers/reports/report3.html"), "utf8")
     },data:{result:null}
@@ -62,14 +86,14 @@ router.get('/report3', function(req, res) {
 
 /*GET all Teachers By Search Value*/
 router.get('/all', userHelpers.isLogin ,function(req, res) {
-  teacherMgr.getAllTeacher(user.school,function(teacher){
+  teacherMgr.getAllTeacher(req.session.school,function(teacher){
     res.send(teacher);
   });
 });
 
 /* Add new teacher  */
 router.post('/add', userHelpers.isLogin ,function(req, res) {
-  req.body.school=user.school;
+  req.body.school=req.session.school;
   teacherMgr.addTeacher(req.body,function(teacher){
     res.send(teacher);
   });
@@ -94,38 +118,60 @@ router.post('/upload/:id',userHelpers.isLogin, multipartMiddleware, function(req
   });
 });
 
+/* Edit teacher by id On session */
+router.put('/edit/session', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
+  teacherMgr.updateTeacher(req.user._id,req.body,function(teacher){
+    res.send(teacher);
+  });
+});
+
 /* Edit teacher by id  */
-router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
+router.put('/edit/:id', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
   teacherMgr.updateTeacher(req.params.id,req.body,function(teacher){
     res.send(teacher);
   });
 });
 
-router.put('/changePass/:id', userHelpers.isLogin ,function(req, res) {
+// change pass for teacher by id on ssesion
+router.put('/changePass/session', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
+  teacherMgr.changePass(req.user._id,req.body,function(result){
+    res.send({result:result});
+  });
+});
+
+router.put('/changePass/:id', userHelpers.isLogin,userHelpers.isTeacher ,function(req, res) {
   teacherMgr.changePass(req.params.id,req.body,function(result){
     res.send({result:result});
   });
 });
 /* Delete teacher by id  */
-router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
+router.delete('/delete/:id',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   teacherMgr.deleteTeacher(req.params.id,function(teacher){
     res.send({result:teacher});
   });
 });
-router.get('/:searchValue/:limit/:page',userHelpers.isLogin , function(req, res) {
-  teacherMgr.getTeachersBySearchValue(user.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
+router.get('/:searchValue/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  teacherMgr.getTeachersBySearchValue(req.session.school,req.params.searchValue,req.params.limit,req.params.page,function(student){
     res.send(student);
   });
 });
 
 /* GET all teacher */
-router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
-  teacherMgr.getAllTeacherCount(user.school,req.params.limit,req.params.page,function(teacher){
+router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  teacherMgr.getAllTeacherCount(req.session.school,req.params.limit,req.params.page,function(teacher){
     res.send(teacher);
   });
 });
+
+/* GET teacher by ID In Session  */
+router.get('/session',userHelpers.isLogin ,userHelpers.isTeacher, function(req, res) {
+  teacherMgr.getTeacherId(req.user._id,function(teacher){
+    res.send(teacher);
+  });
+});
+
 /* GET teacher by ID  */
-router.get('/:id',userHelpers.isLogin , function(req, res) {
+router.get('/:id',userHelpers.isLogin ,userHelpers.isTeacher, function(req, res) {
   teacherMgr.getTeacherId(req.params.id,function(teacher){
     res.send(teacher);
   });

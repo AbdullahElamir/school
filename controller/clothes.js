@@ -3,7 +3,13 @@ var Clothes1 = null;
 module.exports = {
 
   getAllClothes :function(school,cb){
-    model.Clothes.find({school:school,status:1}, function(err, Clothes){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Clothes.find(q, function(err, Clothes){
       if(!err){
         cb(Clothes);
       }else{
@@ -12,14 +18,21 @@ module.exports = {
       }
     });
   },
-  
+
   //getAllClothesBySearchValue
   getAllClothesBySearchValue :function(school,searchValue,limit,page,cb){
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Clothes.count({school:school,name:new RegExp(searchValue, 'i')},function(err, count){
-      model.Clothes.find({school:school,name:new RegExp(searchValue, 'i')}).limit(limit).skip(page*limit).exec(function(err,Clothes){
+    var q= {
+      status:1,
+      name:new RegExp(searchValue, 'i')
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Clothes.count(q,function(err, count){
+      model.Clothes.find(q).limit(limit).skip(page*limit).exec(function(err,Clothes){
         if(!err){
           cb({result:Clothes,count:count});
         }else{
@@ -35,8 +48,14 @@ module.exports = {
     page = parseInt(page);
     page-=1;
     limit = parseInt(limit);
-    model.Clothes.count({school:school,status:1},function(err, count){
-      model.Clothes.find({school:school,status:1}).limit(limit).skip(page*limit).exec(function(err,Clothes){
+    var q= {
+      status:1
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Clothes.count(q,function(err, count){
+      model.Clothes.find(q).limit(limit).skip(page*limit).exec(function(err,Clothes){
         if(!err){
           cb({result:Clothes,count:count});
         }else{
@@ -48,7 +67,13 @@ module.exports = {
   },
 
   getAllClothesStatus:function(school,status,cb){
-    model.Clothes.find({school:school,status:status},function(err, clothes){
+    var q= {
+      status:status
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Clothes.find(q,function(err, clothes){
       if(!err){
         cb(clothes);
       }else{
@@ -57,9 +82,16 @@ module.exports = {
       }
     });
   },
-  
+
   getClothesName :function(school,name,cb){
-    model.Clothes.find({school:school,name :{ $regex:name, $options: 'i' }}).limit(30).exec(function(err, name){
+    var q= {
+      status:1,
+      name :{ $regex:name, $options: 'i' }
+    };
+    if(school!= -1){
+      q.school=school
+    }
+    model.Clothes.find(q).limit(30).exec(function(err, name){
       if(!err){
         cb(name);
       }else{
@@ -102,16 +134,44 @@ module.exports = {
       }
     });
   },
-  
+
   deleteClothes : function(id,cb){
-    model.Clothes.remove({_id:id}, function(err) {
-      if (!err) {
-        cb({result : 2});
-      } else {
-        // console.log(err);
-        cb({result : 3});
+    //a function is called to delete
+    var deleteFun= function(){
+      model.Clothes.remove({_id:id}, function(err) {
+        if (!err) {
+          cb(2);
+        } else {
+          cb(3);
+        }
+      });
+    };
+    //collections must be checked before delete
+    var collections = ["Request"];
+    //recursive function to check all the collections provided in the array
+    var check = function(){
+      if(collections.length>0){
+        //pop an element from the array and check it
+        model[collections.pop()].find({clothes:id},function(err,result){
+          if(!err){
+            //contenue finding in the other collections
+            if(result.length===0){
+              check();
+            }else{
+              //this means that there is a document that have this id and we shouldn't delete
+              cb(1);
+            }
+          }else {
+            //error
+            cb(3);
+          }
+        });
+      }else{
+        //this means that we finished the all collections array so delete
+        deleteFun();
       }
-    });
+    };
+    check();
   }
-  
+
 };
