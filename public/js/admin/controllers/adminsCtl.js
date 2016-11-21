@@ -84,7 +84,7 @@ app.controller('EditAdminCtl',['$scope','$state','AdminServ','NationalityServ','
 
   //AdminCtl
 
-  app.controller('AdminsCtl',['$scope','$state','AdminServ','toastr','Upload',function($scope,state,AdminServ,toastr,Upload){
+  app.controller('AdminsCtl',['$scope','$state','AdminServ','NationalityServ','toastr','Upload',function($scope,state,AdminServ,NationalityServ,toastr,Upload){
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
@@ -92,10 +92,15 @@ app.controller('EditAdminCtl',['$scope','$state','AdminServ','NationalityServ','
       if( searchValue === 'undefined' || !searchValue ){
         searchValue = "";
       }
-      AdminServ.getAdminsBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
-        $scope.admins = response.data.result;
-        $scope.total = response.data.count;
-      }, function(response) {
+      AdminServ.getAdminsBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response1) {
+        NationalityServ.getAllNationality().then(function(response){
+          $scope.admins = response1.data.result;
+          $scope.total = response1.data.count;
+          $scope.nat = response.data;
+            },function(response){
+              console.log("Somthing went wrong");
+          });
+      }, function(response1) {
         console.log("Something went wrong");
       });
      };

@@ -2,7 +2,7 @@
   'use strict';
   var app = angular.module('adminSchool');
 
-  app.controller('TeachersCtl',['$scope','$state','TeacherServ','toastr','Upload',function($scope,state,TeacherServ,toastr,Upload){
+  app.controller('TeachersCtl',['$scope','$state','TeacherServ','NationalityServ','toastr','Upload',function($scope,state,TeacherServ,NationalityServ,toastr,Upload){
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
@@ -11,12 +11,17 @@
       if( searchValue === 'undefined' || !searchValue ){
         searchValue = "";
       }
-      TeacherServ.getTeachersBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
-        $scope.teachers = response.data.result;
-        $scope.total = response.data.count;
-      }, function(response){
-        console.log("Something went wrong");
-      });
+      TeacherServ.getTeachersBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response1) {
+        NationalityServ.getAllNationality().then(function(response){
+          $scope.teachers = response1.data.result;
+          $scope.total = response1.data.count;
+          $scope.nat = response.data;
+            },function(response){
+              console.log("Somthing went wrong");
+          });
+        }, function(response1){
+            console.log("Something went wrong");
+        });
     };
     $scope.init("");
 

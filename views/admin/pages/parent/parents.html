@@ -34,7 +34,7 @@
           <td>{{parent.name}}</td>
           <td>{{parent.email}}</td>
           <td>{{parent.phone}}</td>
-          <td>{{parent.nationality}}</td>
+          <td>{{nat[parent.nationality-1].name}}</td>
           <td>{{parent.job}}</td>
           <td>
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#messageModal" ng-click="openSendMessageDialog(parent._id)"><i class="fa fa-envelope fa-fw"></i>&nbsp; إرسال رسالة</a>

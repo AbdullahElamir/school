@@ -23,6 +23,7 @@ router.get('/info', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) 
 });
 
 //edit school information
+
 router.put('/edit',userHelpers.isAdmin,function(req, res) {
   schoolMgr.updateSchool(req.session.school,req.body,function(school){
     res.send(school);

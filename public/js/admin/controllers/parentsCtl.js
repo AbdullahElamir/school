@@ -92,11 +92,15 @@ app.controller('editParentCtl',['$scope','$state','ParentServ','NationalityServ'
       if( searchValue === 'undefined' || !searchValue ){
         searchValue = "";
       }
-      ParentServ.getParensBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
-        $scope.parents = response.data.result;
-          console.log(response.data.result[0].nationality);
-        $scope.total = response.data.count;
-      }, function(response) {
+      ParentServ.getParensBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response1) {
+        NationalityServ.getAllNationality().then(function(response){
+          $scope.parents = response1.data.result;
+          $scope.total = response1.data.count;
+          $scope.nat = response.data;
+          },function(response){
+            console.log("Somthing went wrong");
+        });
+      }, function(response1) {
         console.log("Something went wrong");
       });
     };
