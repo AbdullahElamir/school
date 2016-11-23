@@ -170,15 +170,31 @@ module.exports = {
 
   updateAdmin : function(id,body,cb){
     var obj = body;
+    if(body.password){
+      userHelpers.Hash(body.password,function(hash){
+        obj.password=hash.password;
+        obj.salt=hash.salt;
+        model.Admin.findOneAndUpdate({_id:id}, obj, function(err) {
+          if (!err) {
 
-    model.Admin.findOneAndUpdate({_id:id}, obj, function(err) {
-      if (!err) {
-        cb(true);
-      } else {
-        // console.log(err);
-        cb(false);
-      }
-    });
+            cb(true);
+          } else {
+            // console.log(err);
+            cb(false);
+          }
+        });
+      });
+    }else{
+      model.Admin.findOneAndUpdate({_id:id}, obj, function(err) {
+        if (!err) {
+
+          cb(true);
+        } else {
+          // console.log(err);
+          cb(false);
+        }
+      });
+    }
   },
 
   deleteAdmin : function(id,cb){
