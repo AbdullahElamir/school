@@ -4,7 +4,7 @@ var yearMgr = require("../controller/year");
 var userHelpers = require("../controller/userHelpers");
 
 router.get('/all/thing', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  yearMgr.getAllYear(req.req.session.school,function(years){
+  yearMgr.getAllYear(req.session.school,function(years){
     res.send(years);
   });
 });
