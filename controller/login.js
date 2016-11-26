@@ -87,6 +87,7 @@ module.exports = function (router) {
       req.logIn(user, function(err) {
         if (err) { return next(err); }
         if (user){
+          req.session.school=req.user.school;
           return res.send({message:'',hasFailed:false,person:{
             type:'PARENT',
             _id:user._id,

@@ -8,9 +8,18 @@ var teacherMgr = require("../controller/teacher");
 var parentMgr = require("../controller/parent");
 
 
-router.get('/children/all/',userHelpers.isLogin, function(req, res) {
-  studentMgr.getStudentByParentId(req.session.school,req.user._id,function(children){
-    res.send(children);
+router.post('/children/all', function(req, res) {
+  studentMgr.getStudentByParentId(req.session.school,req.body._id,function(child){
+    children=[];
+    for (i in child){
+      createObject(child[i],req.body.type,function(obj){
+        children.push(obj);
+        if(i == child.length-1){
+          res.send(children);
+        }
+      });
+    }
+    
   });
 });
 
@@ -101,7 +110,7 @@ function createObject(obj,type,cb){
   cb({type:type,
     _id:obj._id,
     name:obj.name,
-    school_id:school
+    school_id:obj.school
   });
 }
 
