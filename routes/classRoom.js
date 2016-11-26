@@ -154,7 +154,7 @@ router.put('/students/:id', userHelpers.isLogin ,userHelpers.isAdmin,function(re
       res.send(true);
     }
     for(var t in req.body){
-      stuproMgr.addStudentsProcess(Croom,req.body[t],function(){});
+      stuproMgr.addStudentsProcess(req.session.school ,Croom,req.body[t],function(){});
       studentMgr.updateStudent(req.body[t]._id,{class:Croom.class},function(){}); //set this class as student's current class
       if(t == req.body.length-1){
         res.send(true);

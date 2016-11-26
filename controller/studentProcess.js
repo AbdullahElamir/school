@@ -233,11 +233,12 @@ module.exports = {
       }
     });
   },
-  addStudentsProcess : function(classRoom,students,cb){
+  addStudentsProcess : function(school,classRoom,students,cb){
     var obj = {
       student:students._id,
       year:classRoom.year,
-      classRoom:classRoom._id
+      classRoom:classRoom._id,
+      school:school
     };
     model.Stupro.findOneAndUpdate(obj,{description:"NULL"}, function(err, stup){
       if(!err){
