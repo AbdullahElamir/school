@@ -222,8 +222,8 @@
         newEntry.find('input').val('');
         newEntry.find('select').val('');
         newEntry.find('input.name').attr('s',exi).attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].name');
-        newEntry.find('input.semester').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].semester');
-        newEntry.find('select').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].type');
+        newEntry.find('select.semester').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].semester');
+        newEntry.find('select.type').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].type');
         angular.element( document.querySelector('.controls'+cls)).append(angular.element($compile(newEntry)($scope)));
 
         exi++;
@@ -491,8 +491,8 @@
         newEntry.find('input').val('');
         newEntry.find('select').val('');
         newEntry.find('input.name').attr('s',exi).attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].name');
-        newEntry.find('input.semester').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].semester');
-        newEntry.find('select').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].type');
+        newEntry.find('select.semester').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].semester');
+        newEntry.find('select.type').attr('ng-model','newSystemForm.sys_class['+cls+'].exams[\"'+exi+'\"].type');
         angular.element( document.querySelector('.controls'+cls)).append(angular.element($compile(newEntry)($scope)));
 
         exi++;
@@ -591,7 +591,7 @@
         "</select>"+
         "</div>"+
         "<div class='form-group'>"+
-        "<select ng-options='type.value as type.name for type in types' required disable-validation-message='' class='form-control' ng-model='newSystemForm.sys_class["+i+"].exams[\"0\"].type'>"+
+        "<select ng-options='type.value as type.name for type in types' required disable-validation-message='' class='form-control type' ng-model='newSystemForm.sys_class["+i+"].exams[\"0\"].type'>"+
           "<option selected disabled value=''>اختر نوع</option>"+
         "</select>"+
         "</div>"+
