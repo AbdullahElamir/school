@@ -790,7 +790,7 @@
       };
       return self;
     }]);
-  
+
     app.service('InboxServ',['$http',function($http){
       var self = {
         'getAllConversationsByAdminID': function(){
@@ -804,6 +804,15 @@
         },
         'setSeenAllMessagesInConversation': function(id){
           return $http.put('/conversation/message/seen/'+id,{type:"ADMIN"});
+        }
+      };
+      return self;
+    }]);
+
+    app.service('RequiredFeesServ',['$http',function($http){
+      var self = {
+        'getRequiredFees': function(limit,page){
+          return $http.get('/fees/required/'+limit+'/'+page);
         }
       };
       return self;

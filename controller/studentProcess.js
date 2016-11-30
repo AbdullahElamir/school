@@ -9,7 +9,7 @@ module.exports = {
       status:1
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Stupro.find(q,function(err, Stupros){
       if(!err){
@@ -20,7 +20,15 @@ module.exports = {
       }
     });
   },
-
+  getStudentsOfClassRooms: function(classRooms,cb){
+    model.Stupro.find({classRoom:{$in:classRooms}},function(err, stupros){
+      if(!err){
+        cb(stupros);
+      }else{
+        cb(null);
+      }
+    });
+  },
   getStuProcessesByClassRoomAndYear: function(school,classRoom,year,cb){
     var q= {
       status:1,
@@ -28,12 +36,12 @@ module.exports = {
       year:year
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Stupro.find(q,'student',function(err, stupros){
       if(!err){
         var array = [];
-        if( stupros.length == 0){
+        if( stupros.length === 0){
           cb([]);
           return;
         }
@@ -59,7 +67,7 @@ module.exports = {
       status:1
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Stupro.count(q,function(err, count){
       model.Stupro.find(q).limit(limit).skip(page*limit).exec(function(err,Stupros){
@@ -78,7 +86,7 @@ module.exports = {
       status:status
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Stupro.find({status:status},function(err, Stupros){
       if(!err){
@@ -89,7 +97,7 @@ module.exports = {
       }
     });
   },
-  
+
 
 
   getStuproId :function(id,cb){
@@ -133,7 +141,7 @@ module.exports = {
       year:year
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Stupro.find(q).populate('student')
     .exec(function(err,Stupros) {
@@ -151,7 +159,7 @@ module.exports = {
       classRoom:classRoom,
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Stupro.find(q).distinct('_id',function(err, Stupros){
       if(!err){
@@ -168,7 +176,7 @@ module.exports = {
         // console.log(err);
         cb(null);
       }
-      
+
     });
   },
   getStuproRoom : function(school,classRoom,cb){
@@ -177,7 +185,7 @@ module.exports = {
       classRoom:{$in:classRoom}
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Stupro.find(q).distinct('student',function(err, Stupros){
       if(!err){
@@ -195,7 +203,7 @@ module.exports = {
       year:year
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Stupro.find(q).distinct('_id',function(err, Stupros){
       if(!err){
@@ -221,7 +229,7 @@ module.exports = {
       student:student
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Stupro.findOne(q)
     .exec(function(err,Stupros) {
@@ -248,7 +256,7 @@ module.exports = {
           Stupro = new model.Stupro(obj);
           Stupro.save(function(err){
             if (!err) {
-              cb(true);  
+              cb(true);
             } else {
               // console.log(err);
               cb(false);

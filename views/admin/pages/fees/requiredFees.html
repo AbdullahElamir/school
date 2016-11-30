@@ -1,0 +1,45 @@
+<div class="portlet light bordered ">
+  <div class="portlet-title">
+    <div class="row">
+      <div class="col-xs-3 col-md-3">
+        <div class="caption caption-xs">
+          <i class="icon-settings font-green"></i>
+          <span class="caption-subject font-green bold">المستحقات المطلوبة</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="portlet-body" style="padding-top:0px;">
+    <table class="table table-striped" ng-show="fees.length">
+      <thead>
+        <tr>
+          <th>إسم الطالب</th>
+          <th>الدفعة</th>
+          <th>المبلغ</th>
+          <th>اخر موعد</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="f in fees">
+          <td>{{f.studentName}}</td>
+          <td>{{f.name}}</td>
+          <td>{{f.amount}}</td>
+          <td>{{f.date}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div ng-show="fees.length == 0">
+      <div class="alert alert-info">
+        <p class="text-center">
+          عفوا لاتوجد بيانات
+        </p>
+      </div>
+    </div>
+    <div class="row" ng-show="fees.length">
+      <div class="col-xs-12 col-md-12 text-center">
+        <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
+        <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init()" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
+      </div>
+    </div>
+  </div>
+</div>

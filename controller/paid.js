@@ -67,6 +67,15 @@ module.exports = {
       }
     });
   },
+  studentsPaidFees :function(fees,cb){
+    model.Paid.find({id_fees : fees,status:1}).exec(function(err, Paides){
+      if(!err){
+        cb(Paides);
+      }else{
+        cb(null);
+      }
+    });
+  },
   getPaidStu:function(stu,cb){
     model.Paid.find({StuPro : stu,status:1}).populate('id_fees').populate('StuPro').exec(function(err, Paides){
       if(!err){

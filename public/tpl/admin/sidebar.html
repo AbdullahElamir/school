@@ -6,7 +6,7 @@
       <label class="control-label">اسم المدرسة</label>
       <select class="form-control input-sm" ng-model="schoolId" ng-options="school._id as school.name for school in superAdminSchool" ng-change="setSchool(schoolId)" required>
         <option value="" disabled selected>الرجاء الاختيار</option>
-        
+
       </select>
     </div>
   </div>
@@ -417,7 +417,11 @@
             </li>
           </ul>
         </li>
-
+        <li>
+          <a href="#/requiredFees">
+            <i class="fa fa-usd" aria-hidden="true"></i>المستحقات المطلوبة
+          </a>
+        </li>
       </ul>
     </li>
     <li>
