@@ -50,7 +50,7 @@ router.get('/name/:name',userHelpers.isLogin ,userHelpers.isAdmin, function(req,
 //get total fees of a class in specific year
 router.get('/total/:classRoom/:year',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res){
   classRoomMgr.getClassRoomId(req.params.classRoom,function(Croom){
-    feesMgr.getSumFees(Croom.class,function(fees){
+    feesMgr.getSumFees(Croom.class._id,function(fees){
       if(fees){
         res.send({amount:fees[0].sum});
       }else{
@@ -108,8 +108,8 @@ router.get('/:searchValue/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin
   });
 });
 router.get('/classRoom/:classRoom',userHelpers.isLogin,userHelpers.isAdmin , function(req, res){
-  classRoomMgr.getClassRoomId(req.session.school,req.params.classRoom,function(Croom){
-    feesMgr.getFeesByClassRoom(Croom,function(fees){
+  classRoomMgr.getClassRoomId(req.params.classRoom,function(Croom){
+    feesMgr.getFeesByClassRoom(req.session.school,Croom,function(fees){
       res.send(fees);
     });
   });

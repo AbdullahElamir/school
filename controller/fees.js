@@ -23,7 +23,7 @@ module.exports = {
     var q= {
       status:1,
       year:classRoom.year,
-      id_class:classRoom.class
+      id_class:classRoom.class._id
     };
     if(school!= -1){
       q.school=school;
