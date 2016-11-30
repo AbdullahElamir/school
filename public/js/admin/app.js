@@ -66,6 +66,7 @@
   app.run(['$rootScope','settings','$state','$http',function($rootScope,settings,$state,$http){
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
+    $rootScope.superAdminSelectStatus = '';
     $http.get('/users/adminlevel').then(function(response) {
       $rootScope.superAdminStatus = response.data.level;
     },function(response){
@@ -77,12 +78,12 @@
       console.log("An error there isn't admin school "+ response.data);
     });
     $rootScope.setSchool=function(id){
-      console.log(id);
-       $http.get('/school/setSchoolAdmin/'+id).then(function(response) {
-          
-        },function(response){
-          console.log("An error there isn't admin school "+ response.data);
-        });
+      $rootScope.superAdminSelectStatus = id;
+      $http.get('/school/setSchoolAdmin/'+id).then(function(response) {
+        
+      },function(response){
+        console.log("An error there isn't admin school "+ response.data);
+      });
     }
   }]);
   /* Setup Rounting For All Pages */
