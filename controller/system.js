@@ -231,6 +231,7 @@ function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb
 function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,cb){
   var feesCounter = 0;
   for(var feesObj in fees){
+
     var feesSaved = new model.Fees(fees[feesObj]);
     feesSaved.save(function(err){
       if (!err) {
@@ -276,7 +277,6 @@ function updateFees(fees,system,cb){
 }
 
 function addNewSystemSetting (system,cb){
-
   var counterFinalClassRooms = {value : 0};
   var sumFinalClassRooms = {value : 0};
   if( system.flag == 1 ){
