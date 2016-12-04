@@ -7,7 +7,7 @@ var Fees = new Schema({
   id_class:{type: Schema.Types.ObjectId , ref: 'Class'},
   amount:{type:Number},
   name:{type: String, default:""},
-  feesDate:{type:String, default:""},
+  feesDate:{type:Date},
   school:{type: Schema.Types.ObjectId , ref: 'School'},
   status: {type: Number, default:1}
 });

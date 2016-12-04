@@ -173,8 +173,8 @@ module.exports = {
   },
   getRequiredFees :function(school,cb){
     var date = new Date();
-    // data to next month ........
-
+    // data of next month
+    date.setMonth(date.getMonth()+1);
     var q= {
       status:1,
       feesDate :{$lte : date}

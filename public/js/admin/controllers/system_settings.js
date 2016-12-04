@@ -2,7 +2,7 @@
   'use strict';
   var app = angular.module('adminSchool');
   app.controller('system_settings',['$scope','$state','SystemServ','YearServ','toastr','RoomServ','TeacherServ','ClassRoomsServ',function($scope,state,SystemServ,YearServ,toastr,RoomServ,TeacherServ,ClassRoomsServ){
-    $scope.addDataRow = function(index){                    
+    $scope.addDataRow = function(index){
       var obj = {_id:"", year:$scope.year._id , name:"" , room:"" , class:$scope.data.sys_class[index].id_class._id , sheft:"" , teacher:""  };
       $scope.data.sys_class[index].classRooms.push(obj);
       var tsArray = [];
@@ -48,7 +48,7 @@
     }, function(response){
       console.log("Something went wrong");
     });
-    
+
     $scope.refresh = function (){
       $scope.data = [];
       SystemServ.getClassesAndClassRoomsBySystem($scope.year.system,$scope.year._id).then(function(response){
@@ -65,25 +65,25 @@
       },function(response){
         console.log("Somthing went wrong");
       });
-      
+
     };
-    
+
     $scope.openDialog = function(classIndex,calssRoomIndex){
       $scope.allSubjects = JSON.parse(JSON.stringify($scope.data.sys_class[classIndex].ts[calssRoomIndex]));
       $scope.classIndex = classIndex;
       $scope.calssRoomIndex = calssRoomIndex;
     };
-    
+
     $scope.saveTeachersSubjects = function(){
       $scope.data.sys_class[$scope.classIndex].ts[$scope.calssRoomIndex] = JSON.parse(JSON.stringify($scope.allSubjects));
       $('#myModal').modal('hide');
     };
-    
+
     $('#saveBtn').removeAttr("disabled");
-    
+
     $scope.save = function (){
       $('#saveBtn').attr("disabled", true);
-      
+
       for(var i in $scope.data.sys_class){
         for(var j in $scope.data.sys_class[i].fees){
           if( $scope.data.sys_class[i].fees[j].name == "" ){
@@ -93,7 +93,7 @@
           }
         }
       }
-      
+
       for(var i in $scope.data.sys_class){
         for(var j in $scope.data.sys_class[i].ts){
           for(var k in $scope.data.sys_class[i].ts[j]){
@@ -102,10 +102,10 @@
               $('#saveBtn').removeAttr("disabled");
               return;
             }
-          } 
+          }
         }
       }
-      
+
       if($scope.data.flag == 1){
         SystemServ.addNewSystemSetting($scope.data).then(function(response) {
           if(response.data){
@@ -141,20 +141,23 @@
     $scope.openFeesDialog = function(classFeesIndex){
       $scope.classFeesIndex = classFeesIndex;
       $scope.allFeesClass = JSON.parse(JSON.stringify($scope.data.sys_class[$scope.classFeesIndex].fees));
+      for(var fee in $scope.allFeesClass){
+        $scope.allFeesClass[fee].feesDate = new Date($scope.allFeesClass[fee].feesDate);
+      }
     };
 
     $scope.saveFeesClass = function(classFeesIndex){
       $scope.data.sys_class[classFeesIndex].fees = JSON.parse(JSON.stringify($scope.allFeesClass));
       $('#myFeesModal').modal('hide');
     };
-    
+
     $scope.deleteFeesClassRow = function(feesIndes){
       $scope.allFeesClass.splice(feesIndes, 1);
     };
-    
+
     $scope.addFeesClassRow = function(classFeesIndex){
       $scope.allFeesClass.push({name:"", feesDate:"" , amount : '' , id_class:$scope.data.sys_class[classFeesIndex].id_class._id , year:$scope.year._id});
     };
-    
+
   }]);
 }());
