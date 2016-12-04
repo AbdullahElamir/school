@@ -228,10 +228,10 @@ function saveClassRoom(classRoom,ts,counterFinalClassRooms,sumFinalClassRooms,cb
   });
 }
 
-function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,cb){
+function saveFees(school,fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,cb){
   var feesCounter = 0;
   for(var feesObj in fees){
-
+    fees[feesObj].school = school;
     var feesSaved = new model.Fees(fees[feesObj]);
     feesSaved.save(function(err){
       if (!err) {
@@ -250,7 +250,7 @@ function saveFees(fees,classRooms,tss,counterFinalClassRooms,sumFinalClassRooms,
   }
 }
 
-function updateFees(fees,system,cb){
+function updateFees(school,fees,system,cb){
   model.Fees.remove({year:fees.year},function(err){
     if (!err){
       model.ClassRoom.remove({year:fees.year}, function(err){
@@ -258,7 +258,7 @@ function updateFees(fees,system,cb){
           model.TSC.remove({year:fees.year}, function(err){
             if(!err){
               system.flag = 1;
-              addNewSystemSetting(system,cb);
+              addNewSystemSetting(school,system,cb);
             } else {
               cb(false);
               return;
@@ -276,12 +276,12 @@ function updateFees(fees,system,cb){
   });
 }
 
-function addNewSystemSetting (system,cb){
+function addNewSystemSetting (school,system,cb){
   var counterFinalClassRooms = {value : 0};
   var sumFinalClassRooms = {value : 0};
   if( system.flag == 1 ){
     for(var i in system.sys_class){
-      saveFees(system.sys_class[i].fees,system.sys_class[i].classRooms,system.sys_class[i].ts,counterFinalClassRooms,sumFinalClassRooms,cb);
+      saveFees(school,system.sys_class[i].fees,system.sys_class[i].classRooms,system.sys_class[i].ts,counterFinalClassRooms,sumFinalClassRooms,cb);
     }
   }else{
     cb(false);
@@ -291,9 +291,9 @@ function addNewSystemSetting (system,cb){
 module.exports = {
 
   addNewSystemSetting :addNewSystemSetting,
-  updateSystemSetting : function(system,cb){
+  updateSystemSetting : function(school,system,cb){
     if( system.flag == 2 ){
-      updateFees(system.sys_class[0].fees[0],system,cb);
+      updateFees(school,system.sys_class[0].fees[0],system,cb);
     }else{
       cb(false);
     }

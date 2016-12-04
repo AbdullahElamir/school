@@ -21,7 +21,7 @@ module.exports = {
     });
   },
   getStudentsOfClassRooms: function(classRooms,cb){
-    model.Stupro.find({classRoom:{$in:classRooms}},function(err, stupros){
+    model.Stupro.find({classRoom:{$in:classRooms}}).populate('student').exec(function(err, stupros){
       if(!err){
         cb(stupros);
       }else{

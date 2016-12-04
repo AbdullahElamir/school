@@ -179,11 +179,10 @@ module.exports = {
       status:1,
       feesDate :{$lte : date}
     };
-    // if(school!= -1){
-    //   q.school=school;
-    // }
+    if(school!= -1){
+      q.school=school;
+    }
     model.Fees.find(q).exec(function(err, Feeses){
-      console.log(Feeses);
       if(!err){
         cb(Feeses);
       }else{

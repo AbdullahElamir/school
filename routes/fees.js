@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var feesMgr = require("../controller/fees");
 var classRoomMgr = require("../controller/classRoom");
-var paidMgr = require("../controller/classRoom");
+var paidMgr = require("../controller/paid");
 var stuProMgr = require("../controller/studentProcess");
 var userHelpers = require("../controller/userHelpers");
 
@@ -73,14 +73,15 @@ router.get('/required/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, fu
       }
       if(!found){
         results.push({
-          studentName:clrStudents[std].name,
+          studentName:clrStudents[std].student.name,
           name:fee.name,
           amount:fee.amount,
           date:fee.feesDate
         });
       }
-      if(lastOne){
-        res.send({data:results,count:0});
+      if(lastOne && std == clrStudents.length-1){
+        var page=req.params.page - 1 ,limit = req.params.limit , count = results.length;
+        res.send({result:results.splice((page*limit),limit),count:count});
       }
     }
   };
@@ -94,9 +95,11 @@ router.get('/required/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, fu
         });
       });
     };
+    if(!fees || fees.length === 0){
+      res.send([]);
+    }
     for(var fee in fees){
-    console.log("saaas");
-      fun(fees[fee],fee === fees.length-1);
+      fun(fees[fee],fee == fees.length-1);
     }
   });
 });

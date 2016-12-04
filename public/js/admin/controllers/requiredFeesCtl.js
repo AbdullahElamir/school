@@ -6,10 +6,8 @@
     $scope.currentPage = 1;
     $scope.total = 0;
     $scope.fees=[];
-    $scope.total=0;
     $scope.init = function () {
       RequiredFeesServ.getRequiredFees($scope.pageSize,$scope.currentPage).then(function(response) {
-        console.log("aaaaaaaaaaaaaaaaaa");
         $scope.fees = response.data.result;
         $scope.total = response.data.count;
       }, function(response) {

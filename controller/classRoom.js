@@ -167,7 +167,7 @@ module.exports = {
     });
   },
   getClassRoomClass : function(clas,cb){
-    model.ClassRoom.find({class:clas},{_id:""}).distinct('_id',function(err, ClassRoomes){
+    model.ClassRoom.find({class:clas}).distinct('_id',function(err, ClassRoomes){
       if(!err){
         cb(ClassRoomes);
       }else{
