@@ -32,6 +32,7 @@ router.get('/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
 
 // add new eva
 router.post('/add', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
+  req.body.school=req.session.school;
   evaMgr.addEvaluation(req.body,function(eva){
     res.send(eva);
   });
