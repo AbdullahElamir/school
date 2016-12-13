@@ -6,14 +6,14 @@ var userHelpers = require("../controller/userHelpers");
 
 // edit system setting
 router.put('/data/edit', userHelpers.isLogin,userHelpers.isAdmin ,function(req, res) {
-  systemMgr.updateSystemSetting(req.body,function(system){
+  systemMgr.updateSystemSetting(req.session.school,req.body,function(system){
     res.send(system);
   });
 });
 
 // Add new system setting
 router.post('/data/add', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
-  systemMgr.addNewSystemSetting(req.body,function(system){
+  systemMgr.addNewSystemSetting(req.session.school,req.body,function(system){
     res.send(system);
   });
 });

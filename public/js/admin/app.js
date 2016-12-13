@@ -80,11 +80,11 @@
     $rootScope.setSchool=function(id){
       $rootScope.superAdminSelectStatus = id;
       $http.get('/school/setSchoolAdmin/'+id).then(function(response) {
-        
+
       },function(response){
         console.log("An error there isn't admin school "+ response.data);
       });
-    }
+    };
   }]);
   /* Setup Rounting For All Pages */
   app.config(['$stateProvider','$urlRouterProvider','$datepickerProvider',function($stateProvider,$urlRouterProvider,$datepickerProvider){
@@ -1262,6 +1262,21 @@
             insertBefore: '#ngLoadControllerAfter',
             files: [
               '/js/admin/controllers/inboxCtl.js'
+            ]
+          });
+        }]
+      }
+    }).state('requiredFees',{
+      url: '/requiredFees',
+      templateUrl: 'admin/pages/fees/requiredFees',
+      data: {pageTitle: 'المستحقات المطلوبة'},
+      controller: 'RequiredFeesCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/requiredFeesCtl.js'
             ]
           });
         }]

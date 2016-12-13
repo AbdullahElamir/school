@@ -8,7 +8,7 @@ module.exports = {
       status:1
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Fees.find(q).populate('id_class').exec(function(err, Feeses){
       if(!err){
@@ -26,7 +26,7 @@ module.exports = {
       id_class:classRoom.class._id
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Fees.find(q).exec(function(err, Feeses){
       if(!err){
@@ -48,7 +48,7 @@ module.exports = {
       name:new RegExp(searchValue, 'i')
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Fees.count(q,function(err, count){
       model.Fees.find(q).populate('id_class').limit(limit).skip(page*limit).exec(function(err,Feeses){
@@ -71,7 +71,7 @@ module.exports = {
       status:1
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Fees.count(q,function(err, count){
       model.Fees.find(q).limit(limit).populate('id_class').skip(page*limit).exec(function(err,Feeses){
@@ -90,7 +90,7 @@ module.exports = {
       status:status
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Fees.find(q).populate('id_class').exec(function(err, Feeses){
       if(!err){
@@ -108,7 +108,7 @@ module.exports = {
       name :{ $regex:name, $options: 'i' }
     };
     if(school!= -1){
-      q.school=school
+      q.school=school;
     }
     model.Fees.find(q).populate('id_class').limit(30).exec(function(err, Feeses){
       if(!err){
@@ -167,6 +167,25 @@ module.exports = {
         cb(results);
       } else {
         // console.log(err);
+        cb(null);
+      }
+    });
+  },
+  getRequiredFees :function(school,cb){
+    var date = new Date();
+    // data of next month
+    date.setMonth(date.getMonth()+1);
+    var q= {
+      status:1,
+      feesDate :{$lte : date}
+    };
+    if(school!= -1){
+      q.school=school;
+    }
+    model.Fees.find(q).exec(function(err, Feeses){
+      if(!err){
+        cb(Feeses);
+      }else{
         cb(null);
       }
     });

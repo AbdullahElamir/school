@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var feesMgr = require("../controller/fees");
 var classRoomMgr = require("../controller/classRoom");
+var paidMgr = require("../controller/paid");
+var stuProMgr = require("../controller/studentProcess");
 var userHelpers = require("../controller/userHelpers");
 
 
@@ -55,6 +57,50 @@ router.get('/total/:classRoom/:year',userHelpers.isLogin ,userHelpers.isAdmin, f
         res.send({amount:0});
       }
     });
+  });
+});
+//required fees
+router.get('/required/:limit/:page',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res){
+  var results = [];
+  var filterStudents = function(clrStudents,fee,students,lastOne){
+    for(var std in clrStudents){
+      var found = false;
+      for(var s in students){
+        if(s.StuPro._id === std._id){
+          found = true;
+          break;
+        }
+      }
+      if(!found){
+        results.push({
+          studentName:clrStudents[std].student.name,
+          name:fee.name,
+          amount:fee.amount,
+          date:fee.feesDate
+        });
+      }
+      if(lastOne && std == clrStudents.length-1){
+        var page=req.params.page - 1 ,limit = req.params.limit , count = results.length;
+        res.send({result:results.splice((page*limit),limit),count:count});
+      }
+    }
+  };
+  feesMgr.getRequiredFees(req.session.school,function(fees){
+    var fun = function(fee,lastOne){
+      paidMgr.studentsPaidFees(fee,function(students){
+        classRoomMgr.getClassRoomClass(fee.id_class,function(classRooms){
+          stuProMgr.getStudentsOfClassRooms(classRooms,function(clrStudents){
+            filterStudents(clrStudents,fee,students,lastOne);
+          });
+        });
+      });
+    };
+    if(!fees || fees.length === 0){
+      res.send([]);
+    }
+    for(var fee in fees){
+      fun(fees[fee],fee == fees.length-1);
+    }
   });
 });
 
