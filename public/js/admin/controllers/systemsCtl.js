@@ -280,6 +280,9 @@
             $checkBox.addClass('selected').closest('.con').find('ul li:not(.active)').addClass('active');
             $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
             $scope.newSystemForm.sys_class[i].selected= $scope.newSystemForm.sys_class[i].allSubjects.slice();
+            for(var is in $scope.newSystemForm.sys_class[i].selected){
+              $scope.newSystemForm.sys_class[i].selected[is].id_subject = $scope.newSystemForm.sys_class[i].selected[is]._id;
+            }
           }else {
             $checkBox.removeClass('selected').closest('.con').find('ul li.active').removeClass('active');
             $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
@@ -545,6 +548,9 @@
             $checkBox.addClass('selected').closest('.con').find('ul li:not(.active)').addClass('active');
             $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
             $scope.newSystemForm.sys_class[i].selected= $scope.newSystemForm.sys_class[i].allSubjects.slice();
+            for (var is in $scope.newSystemForm.sys_class[i].selected){
+              $scope.newSystemForm.sys_class[i].selected[is].id_subject = $scope.newSystemForm.sys_class[i].selected[is]._id;
+            }
           }else {
             $checkBox.removeClass('selected').closest('.con').find('ul li.active').removeClass('active');
             $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
