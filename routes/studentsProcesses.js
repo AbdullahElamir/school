@@ -88,7 +88,6 @@ router.get('/grades/:idStudent/:subjectId/:classRoomId', userHelpers.isLogin,use
           resultMgr.getResultSubject(sto,exams,req.params.subjectId,function(marksS){
             var examsGrades=[];
             for(var i in examssub){
-
               var obj ={
                 _id:examssub[i].exam._id,
                 name:examssub[i].exam.name,

@@ -51,7 +51,6 @@
 
     $scope.openGradesDialog = function(id) {
       $scope.idStudent = id;
-
       studentInformationServ.getExamsGradesByStudentBySubjectAndClassRoom($scope.idStudent,$scope.subjectID,$scope.classRoomID).then(function(response){
         $scope.examsGrades=response.data;
 

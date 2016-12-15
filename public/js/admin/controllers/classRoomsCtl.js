@@ -229,7 +229,6 @@
     $scope.refresh = function(){
       AttendanceServ.getStudentsByDateAndClassRoom($stateParams.id,$scope.date).then(function(students){
         $scope.students=students.data;
-        console.log(students.data);
       });
     };
     $scope.refresh();

@@ -17,27 +17,28 @@ function setTS(system,sys_class,classRoom_id,yearId,counterOfClassRooms,sumOfCla
 }
 
 function systemSetting(system,sys_class,yearId,counterOfClassRooms,sumOfClassRooms,cb){
-
   if( system.flag != 1 ){
     model.Fees.find({year:yearId,id_class:sys_class.id_class._id}).exec(function(err,fessesResult){
       if(!err){
-        if( fessesResult === null || fessesResult.length === 0 ){  // get new system setting
-          system.flag = 1;
-          cb(system);
-          return;
-        }else{                     // get edit system setting
-          system.flag = 2;
-          sys_class.fees = fessesResult;
-          model.ClassRoom.find({year:yearId,class:sys_class.id_class._id}).exec(function(err,classRoomsResult){
-            if(!err){
-              sys_class.classRooms = classRoomsResult;
-              sys_class.ts = [];
-              sumOfClassRooms.value += sys_class.classRooms.length;
-              for(var i in sys_class.classRooms){
-                setTS(system,sys_class,sys_class.classRooms[i]._id,yearId,counterOfClassRooms,sumOfClassRooms,cb);
+        if( system.flag != 1){
+          if( fessesResult === null || fessesResult.length === 0  ){  // get new system setting
+            system.flag = 1;
+            cb(system);
+            return;
+          }else{                     // get edit system setting
+            system.flag = 2;
+            sys_class.fees = fessesResult;
+            model.ClassRoom.find({year:yearId,class:sys_class.id_class._id}).exec(function(err,classRoomsResult){
+              if(!err){
+                sys_class.classRooms = classRoomsResult;
+                sys_class.ts = [];
+                sumOfClassRooms.value += sys_class.classRooms.length;
+                for(var i in sys_class.classRooms){
+                  setTS(system,sys_class,sys_class.classRooms[i]._id,yearId,counterOfClassRooms,sumOfClassRooms,cb);
+                }
               }
-            }
-          });
+            });
+          }
         }
       }
     });
@@ -120,6 +121,7 @@ function saveExam(examI,cb){
         var subjectsI = subjects[subIndex];
         subjectsI.exam = examResult._id;
         subjectsI.system = examI.system;
+        subjectsI.school = examI.school;
         saveMark(subjectsI,cb);
         subIndex++;
       }
@@ -173,7 +175,6 @@ var deleteSystem = function (id,cb){
 
 var addSystem = function(body,cb){
   var obj=body;
-  /*console.log(obj.sys_class[0].exams['0'].subjects);*/
   system = new model.System(obj);
   system.save(function(err,sysResult){
     if (!err) {
@@ -184,6 +185,7 @@ var addSystem = function(body,cb){
           var examI=exams[ex];
           examI.system = sysResult._id;
           examI.clas = classI.id_class;
+          examI.school=body.school;
           saveExam(examI,cb);
         }
       }

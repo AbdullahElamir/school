@@ -66,11 +66,11 @@ router.get('/status/:status',userHelpers.isLogin ,userHelpers.isAdmin, function(
 router.get('/students/:classRoom/:year',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
   stuproMgr.getStudentClassRoomYear(req.session.school,req.params.classRoom,req.params.year,function(stupro){
     var _student=[];
-    for (var i in stupro.stu){
-      paid.getPaidStuPro(stupro.stu[i]._id,function(paid){
+    stupro.stu.forEach(function(stupr,i){
+      paid.getPaidStuPro(stupr._id,function(paid){
         var obj={
-          _id:stupro.stu[i]._id,
-          name:stupro.stu[i].student.name,
+          _id:stupr._id,
+          name:stupr.student.name,
           paid:paid
         };
         obj.paidUp= 0;
@@ -84,7 +84,7 @@ router.get('/students/:classRoom/:year',userHelpers.isLogin ,userHelpers.isAdmin
           res.send(_student);
         }
       });
-    }
+    });
   });
 });
 

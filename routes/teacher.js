@@ -13,8 +13,7 @@ var jsreport = require("jsreport");
 
 router.get('/report1/:id', function(req, res) {
   var classRoom = req.params.id;
-  stdProcessMgr.getStudentClassRoom(classRoom,function(result){
-    /*console.log(result.stu);*/
+  stdProcessMgr.getStudentClassRoom(req.session.school ,classRoom,function(result){
     var student =[];
     result.stu.forEach(function(stud){
       var obj={
