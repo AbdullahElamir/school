@@ -10,6 +10,9 @@
       'getStudents': function(limit,page){
         return $http.get('/student/'+limit+'/'+page);
       },
+      'getMonth': function(){
+        return $http.get('/student/months');
+      },
       'getStudentsBySearchValue': function(searchValue,limit,page){
         return $http.get('/student/'+searchValue+'/'+limit+'/'+page);
       },
@@ -96,6 +99,12 @@
       },
       'getAllClassesByYear': function(year){
         return $http.get('/class/classRooms/'+year);
+      },
+      'classRoomsReport': function(year){
+        return $http.get('/class/classRoomsReport/'+year);
+      },
+      'getStudentsInfoBySubjectAndClassRoom': function(classRoomId){
+        return $http.get('/studentsProcesses/studInfo/1/'+classRoomId);
       },
       'getClassesByYear': function(id){
         return $http.get('/class/classes/'+id);

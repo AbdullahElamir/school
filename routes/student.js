@@ -7,6 +7,10 @@ var conversationMgr = require("../controller/conversation");
 var userHelpers = require("../controller/userHelpers");
 var yearMgr = require("../controller/year");
 var TSCMgr = require("../controller/teacherSubjectClass");
+var subjectMgr = require("../controller/subject");
+var stuEvaMgr = require("../controller/studentEvaluation");
+var evaMgr = require("../controller/evaluation");
+var months = require("../months");
 var jsreport = require("jsreport");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -18,7 +22,9 @@ router.get('/children/all/:parentId',userHelpers.isLogin,userHelpers.isAdmin , f
     res.send(children);
   });
 });
-
+router.get('/months',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  res.send(months);
+});
 router.get('/report1',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   jsreport.render({
     template: {
@@ -46,37 +52,23 @@ router.get('/genrateStudentId',userHelpers.isAdmin,function(req, res){
 
 
 
-// router.get('/report2/:stupro',userHelpers.isLogin , function(req, res) {
-//   stuproMgr.getStuPro(req.params.stupro,function(stupro){
-//     if(stupro){
-//       classRoomMgr.getClassRoomId(stupro.classRoom,function(claaes){
-//         yearMgr.getYearId(stupro.year,function(system){
-//           // console.log(system)
-//           TSCMgr.getTeacherSubject(stupro.classRoom,stupro.year,function(teacherSub){
-//             console.log(teacherSub)
-//           });
-//         });
-//       });
-//     }
-//   });
-// });
-
-router.get('/report2',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  jsreport.render({
-    template: {
-      engine: "jsrender",
-      recipe: "phantom-pdf",
-      phantom:{
-        format: 'A4',
-        orientation: "landscape",
-        customPhantomJS: true
-      },
-      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report2.html"), "utf8")
-    },data:{result:null}
-  }).then(function(resp) {
-    resp.stream.pipe(res);
-  }).catch(function(e) {
-    res.end(e.message);
+router.get('/report2/:stupro/:month',userHelpers.isLogin , function(req, res) {
+  getData(req.params.stupro,req.params.month,req.session.school,function(data){
+    jsreport.render({
+      template: {
+        engine: "jsrender",
+        recipe: "phantom-pdf",
+        phantom:{
+          format: 'A4',
+          orientation: "landscape"
+        },
+        content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report2.html"), "utf8")
+      },data:{result:data.arr,info:data.info}
+    }).then(function(resp) {
+      resp.stream.pipe(res);
+    }).catch(function(e) {
+      res.end(e.message);
+    });
   });
 });
 router.get('/report3',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
@@ -230,5 +222,87 @@ router.get('/:id',userHelpers.isLogin ,userHelpers.isAdmin, function(req, res) {
     res.send(student);
   });
 });
+function getSubject(sys_class,id,cb){
+  sys_class.forEach(function(i,k) {
+    if(i.id_class.toString()==id.toString()){
+      cb(i.selected);
+    }
+  });
+ }
+function getData(id,month,school,cb){
+  stuproMgr.getStuPro(id,function(stupro){
+    if(stupro){
+      classRoomMgr.getClassRoomId(stupro.classRoom,function(claaes){
+        var info = {
+          student:stupro.student.name,
+          class:claaes.name,
+          month:months[month-1].name
+        };
 
+        yearMgr.getYearId(stupro.year,function(system){
+          TSCMgr.getTeacherSubject(stupro.classRoom,stupro.year,function(teacherSub){
+            var arr=[];
+            getSubject(system.system.sys_class,claaes.class._id,function(subjectsID){
+              subjectMgr.getSubjectById(school,subjectsID,function(subjects){
+                subjects.forEach(function(sub,i) {
+                  var name = ".................";
+                  if(teacherSub[sub._id]){
+                    name = teacherSub[sub._id].name;
+                  }
+                  getEvaluation(stupro,sub._id,month,school,function(evaluation){
+                    var obj = {
+                      subject:sub.name,
+                      teacher:name,
+                      first:evaluation.first,
+                      second:evaluation.second
+                    }
+                    arr.push(obj);
+                    if(i == subjects.length-1){
+                      cb({arr:arr,info:info});
+                    }
+                  });
+                });
+              });
+              
+            });
+          });
+        });
+      });
+    }
+  });
+ }
+function getEvaluation(stupro,subject,month,school,cb){
+  evaMgr.getAllEvaluation(school,function(eva){
+    stuEvaMgr.getStuEva(stupro,subject,month,1,function(evaluationF){
+      stuEvaMgr.getStuEva(stupro,subject,month,2,function(evaluationS){
+        var first=[];
+        var second=[]; 
+        for(var j in eva){
+          var obj1={
+            name:eva[j].name
+          };
+          var obj2={
+            name:eva[j].name
+          };
+          if(evaluationF[eva[j]._id]){
+            obj1.rating=evaluationF[eva[j]._id];
+          }else{
+            obj1.rating=null;
+          }
+          first.push(obj1);
+          if(evaluationS[eva[j]._id]){
+            obj2.rating=evaluationF[eva[j]._id];
+          }else{
+            obj2.rating=null;
+          }
+          second.push(obj2);
+          if(j==eva.length-1){
+            cb({first:first,second:second});
+          }
+        }
+      });
+    });
+  });
+
+ }
 module.exports = router;

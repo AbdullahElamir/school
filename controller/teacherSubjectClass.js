@@ -102,7 +102,7 @@ module.exports = {
     });
   },
   getTeacherSubject : function(classroom,year,cb){
-    model.TSC.find({year:year,classRoom:classroom}).exec(function(err, teachers){
+    model.TSC.find({year:year,classRoom:classroom}).populate("teacher").exec(function(err, teachers){
       if(!err){
         console.log(teachers);
         var teacherSub=[];

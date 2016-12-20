@@ -32,7 +32,6 @@ module.exports = {
           while (s.length < 4) s = "0" + s;
           var year = gender.toString()+lastYear.getFullYear()+""+s
           Id = year+"";
-          console.log(Id);
           cb(Id);
         }else{
           // console.log(err);
@@ -173,7 +172,6 @@ module.exports = {
   },
 
   addStudent : function(body,cb){
-    console.log(body);
     var obj = body;
     obj.startDate = new Date();
     student = new model.Student(obj);

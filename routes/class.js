@@ -55,7 +55,11 @@ router.get('/classRooms/:year', userHelpers.isLogin ,userHelpers.isAdmin,functio
     }
   });
 });
-
+router.get('/classRoomsReport/:year', userHelpers.isLogin ,userHelpers.isAdmin,function(req, res) {
+  classRoomMgr.getAllClassesAndClassRoomsByYear(req.session.school,req.params.year, function(classes){
+    res.send(classes);
+  });
+});
 // GET all class
 router.get('/:limit/:page',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   classMgr.getAllClassCount(req.session.school,req.params.limit,req.params.page,function(_class){

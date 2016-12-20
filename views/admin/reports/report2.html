@@ -21,8 +21,9 @@
         font-size: 10px;
       }
       .table,.table>thead>tr>th,.table>tbody>tr>td{
-        font-size: 8px;
+        font-size: 10px;
         border: 1px solid #000 !important;
+        
       }
       .condensed>thead>tr>th, .condensed>tbody>tr>td {
         padding: 5px;
@@ -45,90 +46,97 @@
         <div class="col-xs-12">
           <img src="http://localhost:3000/img/schoolLogo.png" width="13%" class="img-responsive" alt="Responsive image">
           <h4 class="text-center font-bold">تقرير شهري عن المستوى التعليمي للطالب</h4>
-          <h5 class="text-center" style="padding-top:5px;">شهر<span>: ........................... </span></h5>
+          <h5 class="text-center" style="padding-top:10px;">شهر<span>: {{:info.month}} </span></h5>
           <div class="row">
             <div class="col-xs-6">
-              <h5 class="text-center">اسم الطالب<span>........................... </span></h5>
+              <h5 class="text-center">اســــــــــــم الطالب <span> : {{:info.student}} </span></h5>
             </div>
             <div class="col-xs-6">
-              <h5 class="text-center">الفصل<span>........................... </span></h5>
+              <h5 class="text-center">الفصل <span> : {{:info.class}} </span></h5>
             </div>
           </div>
           <table class="table table-bordered table-condensed">
             <thead>
               <tr>
                 <th width="3%"></th>
-                <th width="11%" style="vertical-align:middle;">
-                  <h6>المواد الدراسية</h6>
+                <th width="11%">
+                  <h5>المواد الدراسية</h5>
                 </th>
-                <th style="vertical-align:middle;">
-                  <h6>النصف اﻷول من الشهر</h6>
-                </th>
-                <th width="5.5%" style="vertical-align:middle;">توقيع ولي اﻷمر</th>
-                <th style="vertical-align:middle;">
-                  <h6>النصف الثاني من الشهر</h6>
-                </th>
-                <th width="5.5%" style="vertical-align:middle;">توقيع ولي اﻷمر</th>
-                <th width="10%" style="vertical-align:middle;">
-                  <h6>التوصيات</h6>
-                </th>
+                <th>
+                  <h5>النصف اﻷول من الشهر</h5>
+                  </th>
+                <th width="6.5%" style="padding-bottom:8px;">توقيع ولي اﻷمر</th>
+                <th>
+                  <h5>النصف الثاني من الشهر</h5>
+                  </th>
+                <th width="6.5%" style="padding-bottom:8px;">توقيع ولي اﻷمر</th>
+                <th width="12%">
+                  <h5>التوصيات</h5>
+                  </th>
               </tr>
             </thead>
             <tbody>
+            <script type="text/javascript">var i = 1;</script>
+            {{for  result}}
               <tr>
                 <td>
-                  <h5 style="padding-top:40px;">1</h5>
+                  <h5 style="padding-top:40px;">
+                    <script type="text/javascript">
+                      document.write(i++);
+                    </script>
+
+                  </h5>
                 </td>
                 <td>
-                  <h6>التربية اﻹسلامية</h6>
+                  <br>
+                  <h6>{{:subject}}</h6>
                   <h6>اسم المدرس</h6>
-                  <h6>.................</h6>
+                  <h6>{{:teacher}}</h6>
                 </td>
                 <td style="padding:0px;">
                   <table class="table table-bordered table-condensed inside-table" style="margin:0px;">
                     <thead>
                       <tr>
                         <th></th>
-                        <th width="20%" style="vertical-align:middle;">ممتاز</th>
-                        <th width="20%" style="vertical-align:middle;">جيد جدا</th>
-                        <th width="20%" style="vertical-align:middle;">جيد</th>
-                        <th width="20%" style="vertical-align:middle;">مقبول</th>
-                        <th width="20%" style="vertical-align:middle;">ضعيف</th>
+                        <th width="20%">ممتاز</th>
+                        <th width="20%">جيد جدا</th>
+                        <th width="20%">جيد</th>
+                        <th width="20%">مقبول</th>
+                        <th width="20%">ضعيف</th>
                       </tr>
                     </thead>
                     <tbody>
+                      {{for first}}
                       <tr>
-                        <td>المستوى</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{:name}}</td>
+                        {{if rating==1}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                          {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==2}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==3}}
+
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==4}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==5}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
                       </tr>
-                      <tr>
-                        <td>المشاركة</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>الواجبات</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>السلوك</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                      {{/for}}
                     </tbody>
                   </table>
                 </td>
@@ -146,38 +154,37 @@
                       </tr>
                     </thead>
                     <tbody>
+                      {{for second}}
                       <tr>
-                        <td>المستوى</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{:name}}</td>
+                        {{if rating==1}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                          {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==2}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==3}}
+
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==4}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
+                        {{if rating==5}}
+                          <td><span class="glyphicon glyphicon-ok"></span></td>
+                        {{else}}
+                          <td></td>
+                        {{/if}}
                       </tr>
-                      <tr>
-                        <td>المشاركة</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>الواجبات</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>السلوك</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                      {{/for}}
                     </tbody>
                   </table>
                 </td>
@@ -204,264 +211,7 @@
                   </table>
                 </td>
               </tr>
-              <tr>
-                <td>
-                  <h5 style="padding-top:40px;">1</h5>
-                </td>
-                <td>
-                  <h6>التربية اﻹسلامية</h6>
-                  <h6>اسم المدرس</h6>
-                  <h6>.................</h6>
-                </td>
-                <td style="padding:0px;">
-                  <table class="table table-bordered table-condensed inside-table" style="margin:0px;">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th width="20%">ممتاز</th>
-                        <th width="20%">جيد جدا</th>
-                        <th width="20%">جيد</th>
-                        <th width="20%">مقبول</th>
-                        <th width="20%">ضعيف</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>المستوى</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>المشاركة</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>الواجبات</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>السلوك</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-                <td></td>
-                <td style="padding:0px;">
-                  <table class="table table-bordered table-condensed inside-table" style="margin:0px;">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th width="20%">ممتاز</th>
-                        <th width="20%">جيد جدا</th>
-                        <th width="20%">جيد</th>
-                        <th width="20%">مقبول</th>
-                        <th width="20%">ضعيف</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>المستوى</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>المشاركة</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>الواجبات</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>السلوك</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-                <td></td>
-                <td style="padding:0px;">
-                  <table class="table table-bordered table-condensed inside-table" style="margin:0px;">
-                    <thead>
-                      <tr>
-                        <th><br></th>
-                      </tr>
-                    </thead>
-                    <tr>
-                      <td><br></td>
-                    </tr>
-                    <tr>
-                      <td><br></td>
-                    </tr>
-                    <tr>
-                      <td><br></td>
-                    </tr>
-                    <tr>
-                      <td><br></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h5 style="padding-top:40px;">1</h5>
-                </td>
-                <td>
-                  <h6>التربية اﻹسلامية</h6>
-                  <h6>اسم المدرس</h6>
-                  <h6>.................</h6>
-                </td>
-                <td style="padding:0px;">
-                  <table class="table table-bordered table-condensed inside-table" style="margin:0px;">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th width="20%">ممتاز</th>
-                        <th width="20%">جيد جدا</th>
-                        <th width="20%">جيد</th>
-                        <th width="20%">مقبول</th>
-                        <th width="20%">ضعيف</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>المستوى</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>المشاركة</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>الواجبات</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>السلوك</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-                <td></td>
-                <td style="padding:0px;">
-                  <table class="table table-bordered table-condensed inside-table" style="margin:0px;">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th width="20%">ممتاز</th>
-                        <th width="20%">جيد جدا</th>
-                        <th width="20%">جيد</th>
-                        <th width="20%">مقبول</th>
-                        <th width="20%">ضعيف</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>المستوى</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>المشاركة</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>الواجبات</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>السلوك</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-                <td></td>
-                <td style="padding:0px;">
-                  <table class="table table-bordered table-condensed inside-table" style="margin:0px;">
-                    <thead>
-                      <tr>
-                        <th><br></th>
-                      </tr>
-                    </thead>
-                    <tr>
-                      <td><br></td>
-                    </tr>
-                    <tr>
-                      <td><br></td>
-                    </tr>
-                    <tr>
-                      <td><br></td>
-                    </tr>
-                    <tr>
-                      <td><br></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+              {{/for}}
             </tbody>
           </table>
         </div>

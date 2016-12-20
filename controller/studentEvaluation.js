@@ -53,18 +53,6 @@ module.exports = {
     });
   },
 
-  // addStueva : function(body,cb){
-  //   var obj =body;
-  //   stueva = new model.Stueva(obj);
-  //   stueva.save(function(err,result){
-  //     if (!err) {
-  //       cb(true);
-  //     } else {
-        // console.log(err);
-  //       cb(false);
-  //     }
-  //   });
-  // },
 
   updateStueva : function(id,body,cb){
     var obj = body;

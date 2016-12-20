@@ -124,13 +124,13 @@
       url: '/report2Filter',
       templateUrl: 'admin/pages/school/report2Filter',
       data: {pageTitle: 'ألفروع'},
-      controller: 'SchoolsCtl',
+      controller: 'reportCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({
             insertBefore: '#ngLoadControllerAfter',
             files: [
-              '/js/admin/controllers/schoolCtl.js'
+              '/js/admin/controllers/reportCtl.js'
             ]
           });
         }]

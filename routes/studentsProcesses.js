@@ -121,7 +121,7 @@ router.get('/studInfo/:subjectId/:classRoomId', userHelpers.isLogin,userHelpers.
       res.send([]);
     }
     for (var i in Crooms.stu){
-      _room.push(Crooms.stu[i].student);
+      _room.push({student:Crooms.stu[i].student,stupro:Crooms.stu[i]._id});
       if(i == Crooms.stu.length-1){
         res.send(_room);
       }

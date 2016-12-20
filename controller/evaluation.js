@@ -10,7 +10,7 @@ module.exports = {
     if(school!= -1){
       q.school=school
     }
-    model.Evaluation.find(q, function(err, Evaluations){
+    model.Evaluation.find(q).sort({'_id':-1}).exec(function(err, Evaluations){
       if(!err){
         cb(Evaluations);
       }else{

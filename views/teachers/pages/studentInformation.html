@@ -21,11 +21,11 @@
       <tbody>
         <tr ng-repeat="studentinfo in studentinformtion">
           <td>{{$index+1}}</td>
-          <td>{{studentinfo.name}}</td>
+          <td>{{studentinfo.student.name}}</td>
           <td>
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#messageModal" ng-click="openSendMessageDialog(studentinfo._id)"><i class="fa fa-envelope fa-fw"></i>&nbsp; رسالة لولي الأمر</a>
             <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#gradesModal" ng-click="openGradesDialog(studentinfo._id)"><i class="fa fa-file-text-o fa-fw"></i>&nbsp; الدرجات</a>
-            <a class="btn btn-success btn-xs" ui-sref="studentsEvaluate({id:classRoomID,course:subjectID,student:studentinfo._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;التقييم الشهري</a>
+            <a class="btn btn-success btn-xs" ui-sref="studentsEvaluate({id:classRoomID,course:subjectID,student:studentinfo.stupro})"><i class="fa fa-pencil fa-fw"></i>&nbsp;التقييم الشهري</a>
           </td>
         </tr>
       </tbody>
