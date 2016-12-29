@@ -155,6 +155,24 @@ module.exports = {
       }
     });
   },
+  getAllMarks : function(school,exam,system,cb){
+    model.MarksSub.find({school:school,exam:exam,system:system}).sort({subject:1}).exec(function(err, MarksSubes){
+      if(!err){
+        var mark=[];
+        if(MarksSubes.length==0){
+          cb(mark);
+        }
+        MarksSubes.forEach(function(marks,m){
+          mark[marks.subject]=marks.mark;
+          if(m == MarksSubes.length-1){
+            cb(mark);
+          }
+        });
+      }else{
+        cb(null);
+      }
+    });
+  },
 
   updateMarksSub : function(id,body,cb){
     var obj = body;

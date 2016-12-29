@@ -114,10 +114,18 @@ module.exports = {
 
   addYear : function(body,cb){
     var obj =body;
+
     Year1 = new model.Year(obj);
-    Year1.save(function(err){
+    Year1.save(function(err,result){
       if (!err) {
-        cb(true);
+        var s_year = new model.SystemYear({system:body.system,year:result._id,school:body.school});
+        s_year.save(function(err,result){
+          if (!err) {
+            cb(true);
+          }else{
+            cb(false);
+          }
+        });
       } else {
         // console.log(err);
         cb(false);

@@ -144,7 +144,16 @@ module.exports = {
         cb(null);
       }
     });
-  }
+  },
+  getAllExamS : function(system,clas,school,cb){
+    model.Exam.find({system:system,clas:clas,school:school}).sort({semester:1,type:1,_id:1}).exec(function(err, Exames){
+      if(!err){
+        cb(Exames);
+      }else{
+        cb(null);
+      }
+    });
+  },
   
   // deleteExam : function(id,cb){
   //   model.Exam.remove({_id:id}, function(err,result) {

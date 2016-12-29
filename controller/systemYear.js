@@ -77,6 +77,27 @@ module.exports = {
     });
   },
 
+  getsystemY : function(year,school,classes,cb){
+    model.SystemYear.findOne({year:year,school:school}).exec(function(err, SystemY){
+      if(!err){
+        model.System.findOne({_id:SystemY.system},{sys_class: 
+                { $elemMatch : 
+                   { 
+                     id_class: classes 
+                   } 
+        }}).populate('sys_class.selected.id_subject').exec(function(err,system){
+          if(!err){
+            cb(system);
+          }else{
+            cb(null);
+          }  
+        });
+      }else{
+        // console.log(err);
+        cb(null);
+      }
+    });
+  },
   updateSystemYear : function(id,body,cb){
     var obj = body;
     model.SystemYear.findOneAndUpdate({_id:id}, obj, function(err) {

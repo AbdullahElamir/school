@@ -101,7 +101,7 @@ module.exports = {
 
 
   getStuproId :function(id,cb){
-    model.Stupro.findOne({_id : id}, function(err, custom){
+    model.Stupro.findOne({_id : id}).populate('student').populate('classRoom').exec(function(err, custom){
       if(!err){
         cb(custom);
       }else{

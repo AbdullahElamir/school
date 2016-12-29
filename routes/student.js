@@ -10,6 +10,10 @@ var TSCMgr = require("../controller/teacherSubjectClass");
 var subjectMgr = require("../controller/subject");
 var stuEvaMgr = require("../controller/studentEvaluation");
 var evaMgr = require("../controller/evaluation");
+var systemYearMgr = require("../controller/systemYear");
+var examMgr = require("../controller/exam");
+var resultMgr = require("../controller/result");
+var marksSubMgr = require("../controller/marksSubject");
 var months = require("../months");
 var jsreport = require("jsreport");
 var multipart = require('connect-multiparty');
@@ -88,23 +92,81 @@ router.get('/report3',userHelpers.isLogin,userHelpers.isAdmin , function(req, re
     res.end(e.message);
   });
 });
-router.get('/report4',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
-  jsreport.render({
-    template: {
-      engine: "jsrender",
-      recipe: "phantom-pdf",
-      phantom:{
-        format: 'A4',
-        orientation: "landscape",
-        customPhantomJS: true
-      },
-      content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report4.html"), "utf8")
-    },data:{result:null}
-  }).then(function(resp) {
-    resp.stream.pipe(res);
-  }).catch(function(e) {
-    res.end(e.message);
+router.get('/report4/:stupro',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
+  getcer(req.params.stupro,function(data,exsam){
+    jsreport.render({
+      template: {
+        engine: "jsrender",
+        recipe: "phantom-pdf",
+        phantom:{
+          format: 'A4',
+          orientation: "landscape",
+          customPhantomJS: true
+        },
+        content: fs.readFileSync(path.join(__dirname, "../views/admin/reports/report4.html"), "utf8")
+      },data:{subject:data,exsam:exsam}
+    }).then(function(resp) {
+      resp.stream.pipe(res);
+    }).catch(function(e) {
+      res.end(e.message);
+    });
   });
+  function getcer(id,cb){
+    stuproMgr.getStuproId(id,function(stupros){
+      systemYearMgr.getsystemY(stupros.year,req.session.school,stupros.classRoom.class,function(system){
+        examMgr.getAllExamS(system._id,stupros.classRoom.class,req.session.school,function(exsam){
+          var ex=[]
+          exsam.forEach(function(exsamI,E){
+            marksSubMgr.getAllMarks(req.session.school,exsamI._id,system._id,function(marks){
+              resultMgr.getAllMStupro(id,exsamI._id,function(stuMark){
+                // console.log(system.sys_class[0].selected);
+                ex[exsamI._id]={exsamM:marks,exsamR:stuMark}
+                if(E==exsam.length-1){
+                  // console.log(ex);
+                  // cb(system.sys_class[0].selected,exsam,ex);
+                  meakObj(system.sys_class[0].selected,exsam,ex,function(data){
+                    cb(data,exsam);
+                  });
+                }
+              });
+            });
+          });
+        });
+      }); 
+    });
+  };
+  function meakObj(subject,exsam,marks,cb){
+    var obj=[];
+    subject.forEach(function(sub,i){
+      var m =[];
+      
+      for(e in exsam){
+        if(marks[exsam[e]._id].exsamR[sub.id_subject._id] == undefined){
+          var resul = marks[exsam[e]._id].exsamM[sub.id_subject._id]+" / "+0;
+        }else{
+          var resul = marks[exsam[e]._id].exsamM[sub.id_subject._id]+" / "+marks[exsam[e]._id].exsamR[sub.id_subject._id];
+        }
+        m.push({
+          mark:resul
+        });
+        if(e == exsam.length-1){
+          obj.push({
+            id_subject: 
+              { name: sub.id_subject.name,
+                description: sub.id_subject.description,
+                marks:m,
+                _id: sub.id_subject._id 
+              },
+            _id: sub._id
+          });
+        }
+      }
+      if(i == subject.length-1){
+        cb(obj);
+
+      }
+    });
+  };
 });
 router.get('/class/:searchValue/:_class',userHelpers.isLogin,userHelpers.isAdmin , function(req, res) {
   classRoomMgr.getClassRoomClass(req.params._class,function(clas){

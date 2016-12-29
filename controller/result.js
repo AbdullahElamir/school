@@ -180,6 +180,25 @@ module.exports = {
       }
     });
   },
+
+  getAllMStupro : function(stupro,exam,cb){
+    model.Result.find({StuPro:stupro,exam:exam}).sort({subject:1}).exec(function(err, result){
+      if(!err){
+        var re = [];
+        if(result.length ==0){
+          cb(re);
+        }
+        for( i in result){
+          re[result[i].subject]=result[i].mark;
+          if(i == result.length-1){
+            cb(re);
+          }
+        }
+      }else{
+        cb(null);
+      }
+    });
+  },
   addResultUpdate : function(body,cb){
     var obj = body;
     model.Result.findOneAndUpdate({StuPro:obj.StuPro,exam:obj.exam,subject:obj.subject}, {mark:obj.mark}, function(err,result) {
