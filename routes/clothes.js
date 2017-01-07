@@ -32,15 +32,15 @@ router.post('/add', userHelpers.isLogin ,function(req, res) {
 
 // edit clothes by id
 router.put('/edit/:id', userHelpers.isLogin ,function(req, res) {
-  clothesMgr.updateClothes(req.params.id,req.body,function(clothes){
+  clothesMgr.updateClothes(req.session.school,req.params.id,req.body,function(clothes){
     res.send(clothes);
   });
 });
 
 // delete clothes by id
 router.delete('/delete/:id',userHelpers.isLogin , function(req, res) {
-  clothesMgr.deleteClothes(req.params.id,function(clothes){
-    res.send({result:clothes});
+  clothesMgr.deleteClothes(req.session.school,req.params.id,function(clothes){
+    res.send(clothes);
   });
 });
 
@@ -58,9 +58,25 @@ router.get('/:limit/:page',userHelpers.isLogin , function(req, res) {
   });
 });
 
-// get clothes by id
+// get clothes by stock id 
 router.get('/:id',userHelpers.isLogin , function(req, res) {
-  clothesMgr.getClothesId(req.params.id,function(clothes){
+  clothesMgr.getClothesId(req.session.school,req.params.id,function(clothes){
+    res.send(clothes);
+  });
+});
+
+// add new stock on old clothes by school
+router.put('/addStock', userHelpers.isLogin ,function(req, res) {
+  req.body.school =req.session.school;
+  clothesMgr.addStockOnClothes(req.body,function(clothes){
+    res.send(clothes);
+  });
+});
+
+// add new info on old stock by school
+router.put('/addInfoOnStock/:id', userHelpers.isLogin ,function(req, res) {
+  // console.log(req.body);
+  clothesMgr.addInfoOnStock(req.session.school,req.params.id,req.body,function(clothes){
     res.send(clothes);
   });
 });

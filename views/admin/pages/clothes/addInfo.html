@@ -1,25 +1,17 @@
-<form novalidate ng-submit="newClothes()">
+<form novalidate ng-submit="addInfoInStock()">
   <div class="portlet light bordered">
     <div class="portlet-title">
       <div class="row">
         <div class="col-xs-6 col-md-6">
           <div class="caption caption-md">
             <i class="icon-settings font-green"></i>
-            <span class="caption-subject font-green bold">إضافة لباس جديد</span>
+            <span class="caption-subject font-green bold">إضافة قياس وكمية جديدة</span>
           </div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-12 col-lg-12">
-        <div class="row">
-          <div class="col-xs-12 col-md-4">
-            <div class="form-group">
-              <label class="control-label">إسم اللباس</label>
-              <input class="form-control input-sm" type="text" ng-model="newClothesForm.stock[0].name" placeholder="اللباس" required>
-            </div>
-          </div>
-        </div> 
         <div class="row">
           <div class="col-xs-12 col-md-2">
             <label class="control-label">القياس</label>
@@ -59,7 +51,7 @@
             <button type="submit" class="btn btn-primary btn-sm btn-block"><i class="fa fa-plus"></i>&nbsp;إضافة</button>
           </div>
           <div class="col-xs-6 col-md-2">
-            <a class="btn btn-success btn-sm btn-block" onclick="$('#clothesId').click();"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+            <a class="btn btn-success btn-sm btn-block" ui-sref="clothes"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
           </div>
         </div>
       </div>

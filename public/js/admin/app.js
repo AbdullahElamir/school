@@ -779,6 +779,21 @@
           });
         }]
       }
+    }).state('addInfo',{
+      url: '/editClothes/addInfo/:id',
+      templateUrl: 'admin/pages/clothes/addInfo',
+      data: {pageTitle: 'أضافة قياس وكمية جديدة'},
+      controller: 'addInfoCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/js/admin/controllers/clothesCtl.js'
+            ]
+          });
+        }]
+      }
     }).state('teacherAttendance',{
       url: '/teacherAttendance',
       templateUrl: 'admin/pages/attendance/teachersAttendance',

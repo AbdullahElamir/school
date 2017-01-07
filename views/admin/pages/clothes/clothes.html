@@ -23,7 +23,7 @@
         <tr>
           <th>إسم اللباس</th>
           <th>الحالة</th>
-          <th><i class="fa fa-cog"></i></th>
+          <th class="text-center"><i class="fa fa-cog"></i></th>
         </tr>
       </thead>
       <tbody>
@@ -32,9 +32,10 @@
           <td>
             <span class="label label-{{(c.status)?'success':'danger'}}">{{(c.status)?'مفعلة':'غير مفعلة'}}</span>
           </td>
-          <td>
+          <td class="text-center">
             <a class="btn btn-success btn-xs" ui-sref="editClothes({id:c._id})"><i class="fa fa-pencil fa-fw"></i>&nbsp;تعديل</a>
-            <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteClothes(c._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a> 
+            <a class="btn btn-primary btn-xs" ui-sref="addInfo({id:c._id})"><i class="fa fa-plus fa-fw"></i>&nbsp;قياس جديد</a>
+            <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" ng-click="deleteClothes(c._id)"><i class="fa fa-trash fa-fw"></i>&nbsp;حذف</a> 
           </td>
         </tr>
       </tbody>

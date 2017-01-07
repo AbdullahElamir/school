@@ -100,10 +100,20 @@ module.exports = {
     });
   },
 
-  getClothesId :function(id,cb){
-    model.Clothes.findOne({_id : id}, function(err, custom){
+  getClothesId :function(school,id,cb){
+    model.Clothes.findOne({ school: school},{stock: {$elemMatch: {_id: id}}},function(err, clothes){
       if(!err){
-        cb(custom);
+        cb(clothes);
+      }else{
+        cb(null);
+      }
+    });
+  },
+
+  getStock1 :function(school,cb){
+    model.Clothes.findOne({ school: school},function(err, clothes){
+      if(!err){
+        cb(clothes.stock);
       }else{
         cb(null);
       }
@@ -111,7 +121,7 @@ module.exports = {
   },
 
   addClothes : function(body,cb){
-    var obj =body;
+    var obj = body;
     Clothes1 = new model.Clothes(obj);
     Clothes1.save(function(err){
       if (!err) {
@@ -123,55 +133,81 @@ module.exports = {
     });
   },
 
-  updateClothes : function(id,body,cb){
+  updateClothes : function(school,id,body,cb){
     var obj = body;
-    model.Clothes.findOneAndUpdate({_id:id}, obj, function(err) {
-      if (!err) {
-        cb(true);
-      } else {
-        // console.log(err);
-        cb(false);
-      }
+    model.Clothes.findOne({school: school},{stock: {$elemMatch: {_id:{ $ne: id}}}}, function(err, custom){
+      var cLArray = custom.stock;
+      cLArray.push(obj);
+      model.Clothes.findOneAndUpdate({school: school},{stock:cLArray}, function(err,result) {
+        console.log(result);
+        if (!err) {
+          cb(true);
+        } else {
+          cb(false);
+        }
+      });
+    });
+  },
+  
+  //delete stock by id 
+  deleteClothes : function(school,id,cb){
+    model.Clothes.findOne({school: school},{stock: {$elemMatch: {_id:{ $ne: id}}}}, function(err, custom){
+      var cLArray = custom.stock;
+      model.Clothes.findOneAndUpdate({school: school},{stock:cLArray}, function(err,result) {
+        console.log(result);
+        if (!err) {
+          cb({result : 2});
+        } else {
+          cb({result : 3});
+        }
+      });
     });
   },
 
-  deleteClothes : function(id,cb){
-    //a function is called to delete
-    var deleteFun= function(){
-      model.Clothes.remove({_id:id}, function(err) {
+  // add new stock on old clothes by school
+  addStockOnClothes : function(body,cb){
+    var obj = body;
+    var school = obj.school;
+    console.log(school);
+    model.Clothes.findOne({school : school}, function(err, custom){
+      var cLarray = custom.stock;
+      cLarray.push(obj.stock[0]);
+      model.Clothes.findOneAndUpdate({school:school}, {stock:cLarray}, function(err) {
         if (!err) {
-          cb(2);
+          cb(true);
         } else {
-          cb(3);
+          cb(false);
         }
       });
-    };
-    //collections must be checked before delete
-    var collections = ["Request"];
-    //recursive function to check all the collections provided in the array
-    var check = function(){
-      if(collections.length>0){
-        //pop an element from the array and check it
-        model[collections.pop()].find({clothes:id},function(err,result){
-          if(!err){
-            //contenue finding in the other collections
-            if(result.length===0){
-              check();
-            }else{
-              //this means that there is a document that have this id and we shouldn't delete
-              cb(1);
-            }
-          }else {
-            //error
-            cb(3);
-          }
-        });
+    });
+  },
+
+  getClothesBySchoolId : function(school1,cb){
+    model.Clothes.findOne({school : school1}, function(err, custom){
+      console.log(custom);
+      if(!err){
+        cb(custom);
       }else{
-        //this means that we finished the all collections array so delete
-        deleteFun();
+        cb(null);
       }
-    };
-    check();
+    })
+  },
+
+   // add new info on old stock by school
+  addInfoOnStock : function(school,id,body,cb){
+    var obj = body;
+    model.Clothes.findOne({school: school},{stock: {$elemMatch: {_id:{ $ne: id}}}}, function(err, custom){
+      var infOarray = custom.stock[0].info;
+      infOarray.push(obj);
+      console.log(infOarray);
+      model.Clothes.findOneAndUpdate({school:school, stock: {$elemMatch: {_id:{ $ne: id}}}}, {info:infOarray}, function(err) {
+        if (!err) {
+          cb(true);
+        } else {
+          cb(false);
+        }
+      });
+    });
   }
 
 };

@@ -9,12 +9,34 @@
     <div class="col-xs-12 col-md-12 col-lg-12">
       <form novalidate ng-submit="editClothes()">
         <div class="row">
-          <div class="col-xs-12 col-md-4 col-md-offset-4">
+          <div class="col-xs-12 col-md-4">
             <div class="form-group">
               <label class="control-label">إسم اللباس</label>
               <input class="form-control input-sm" type="text" ng-model="editClothesForm.name" placeholder="الاسم" required>
             </div>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-2">
+            <label class="control-label">القياس</label>
+          </div> 
+          <div class="col-xs-12 col-md-2">
+            <label class="control-label">الكمية</label>
+          </div> 
+        </div>
+        <div class="row" ng-repeat="i in editClothesForm.info">  
+          <div class='input-group input-group-sm'>  
+            <div class="col-xs-12 col-md-5">
+              <div class='form-group'>
+                <input class='form-control input-sm' ng-model='i.size' type='text' placeholder='القياس' required>
+              </div> 
+            </div>
+            <div class="col-xs-12 col-md-5">
+              <div class='form-group'>
+                <input type='number' min="0" pattern='[+]?[0-9]+' class='form-control input-sm' ng-model='i.quantity' placeholder='الكمية' required>
+              </div>
+            </div>
+          </div><br>
         </div>
         <hr>
         <div class="row">
