@@ -139,7 +139,6 @@ module.exports = {
       var cLArray = custom.stock;
       cLArray.push(obj);
       model.Clothes.findOneAndUpdate({school: school},{stock:cLArray}, function(err,result) {
-        console.log(result);
         if (!err) {
           cb(true);
         } else {
@@ -151,16 +150,21 @@ module.exports = {
   
   //delete stock by id 
   deleteClothes : function(school,id,cb){
-    model.Clothes.findOne({school: school},{stock: {$elemMatch: {_id:{ $ne: id}}}}, function(err, custom){
-      var cLArray = custom.stock;
-      model.Clothes.findOneAndUpdate({school: school},{stock:cLArray}, function(err,result) {
-        console.log(result);
-        if (!err) {
-          cb({result : 2});
-        } else {
-          cb({result : 3});
-        }
-      });
+    model.Clothes.findOne({school: school},{stock: {$elemMatch: {_id:{ $eq: id}}}}, function(err, custom){
+      if(custom.stock[0].info.length > 0){ // checked before delete
+        cb({result : 1});
+      } else { 
+        model.Clothes.findOne({school: school},{stock: {$elemMatch: {_id:{ $ne: id}}}}, function(err, custom){
+          var cLArray = custom.stock;
+          model.Clothes.findOneAndUpdate({school: school},{stock:cLArray}, function(err,result) {
+            if (!err) {
+              cb({result : 2});
+            } else {
+              cb({result : 3});
+            }
+          });
+        });
+      }
     });
   },
 
@@ -168,7 +172,6 @@ module.exports = {
   addStockOnClothes : function(body,cb){
     var obj = body;
     var school = obj.school;
-    console.log(school);
     model.Clothes.findOne({school : school}, function(err, custom){
       var cLarray = custom.stock;
       cLarray.push(obj.stock[0]);
@@ -184,7 +187,6 @@ module.exports = {
 
   getClothesBySchoolId : function(school1,cb){
     model.Clothes.findOne({school : school1}, function(err, custom){
-      console.log(custom);
       if(!err){
         cb(custom);
       }else{
@@ -194,19 +196,28 @@ module.exports = {
   },
 
    // add new info on old stock by school
+
   addInfoOnStock : function(school,id,body,cb){
     var obj = body;
-    model.Clothes.findOne({school: school},{stock: {$elemMatch: {_id:{ $ne: id}}}}, function(err, custom){
-      var infOarray = custom.stock[0].info;
-      infOarray.push(obj);
-      console.log(infOarray);
-      model.Clothes.findOneAndUpdate({school:school, stock: {$elemMatch: {_id:{ $ne: id}}}}, {info:infOarray}, function(err) {
-        if (!err) {
-          cb(true);
-        } else {
-          cb(false);
-        }
-      });
+    model.Clothes.findOne({school: school},{stock: {$elemMatch: {_id:{ $eq: id}}}}, function(err, custom){
+      var infoArray = custom.stock[0].info;
+      infoArray.push(obj);
+      var stock ={ 
+        name: custom.stock[0].name,
+        status: custom.stock[0].status,
+        info: infoArray,
+        _id: custom.stock[0]._id
+      };
+       console.log(stock);
+       console.log("####");
+       console.log(obj);
+      // model.Clothes.findOneAndUpdate({school:school, stock: {$elemMatch: {_id:{ $eq: id}}}}, {stock:stock}, function(err) {
+      //   if (!err) {
+      //     cb(true);
+      //   } else {
+      //     cb(false);
+      //   }
+      // });
     });
   }
 

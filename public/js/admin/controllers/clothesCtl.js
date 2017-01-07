@@ -32,6 +32,7 @@
     $scope.deleteConfirm = function(id) {
       ClothesServ.deleteClothes(id).then(function(response){
         if(response.data.result == 1){
+          $('#myModal').modal('hide');
           toastr.error('لايمكن الحذف لوجود كيانات تعتمد عليها');
         } else if (response.data.result == 2){
           $('#myModal').modal('hide');
