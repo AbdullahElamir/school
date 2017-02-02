@@ -1,0 +1,56 @@
+<div class="modal fade-in-up" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="$hide()">&times;</button>
+        <h3 class="modal-title">تفاصيل الطلبية</h3>
+      </div>
+      <div class="modal-body">
+        <div style="max-height: calc(80vh - 100px);overflow-y: auto;" class="modal-body">
+          <div class="portlet-body" style="padding-top:0px;">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>النوع</th>
+                  <th>القياس</th>
+                  <th>الكمية</th>
+                  <th>تاريخ الطلاب</th>
+                  <th class="text-center"><i class="fa fa-cog"></i></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>سورية</td>
+                  <td>m</td>
+                  <td>55</td>
+                  <td>2017/01/01</td>
+                  <td class="text-center">
+                    <a class="btn btn-success btn-xs" ui-sref="orderStatus({statu:'ACCEPTED'})"><i class="fa fa-check-circle-o fa-fw"></i>&nbsp;تأكيد</a>
+                    <a class="btn btn-danger btn-xs" ui-sref="orderStatus({statu:'REJECTED'})"><i class="fa fa-times-circle-o fa-fw"></i>&nbsp;رفض</a>
+                    <a class="btn btn-warning btn-xs" ui-sref="orderStatus({statu:'PENDING'})"><i class="fa fa-spinner fa-fw"></i>&nbsp;انتظار</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <div>
+              <div class="alert alert-info">
+                <p class="text-center">
+                  عفوا لاتوجد بيانات
+                </p>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <!-- <form ng-submit="confirmDelete(id)">
+        <div class="modal-body">
+          <h5>هل تريد فعلا حذف {{deleteName}} ؟</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" ng-click="deleteModel.hide()">لا</button>
+          <button type="submit" class="btn btn-info">نعم</button>
+        </div>
+      </form> -->
+    </div>
+  </div>
+</div>

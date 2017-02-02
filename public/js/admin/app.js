@@ -1296,6 +1296,22 @@
           });
         }]
       }
+    }).state('orders',{
+      url: '/orders',
+      templateUrl: 'admin/pages/order/orders',
+      data: {pageTitle: 'طلبات الزي'},
+      controller: 'NewOrderCtl',
+      resolve: {
+        deps: ['$ocLazyLoad',function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            insertBefore: '#ngLoadControllerAfter',
+            files: [
+              '/css/admin/tabsStyle.css',
+              '/js/admin/controllers/orderCtl.js'
+            ]
+          });
+        }]
+      }
     });
 
   }]);

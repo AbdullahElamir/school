@@ -46,6 +46,7 @@ var others = require('./routes/other');
 var committee = require('./routes/committee');
 var conversation = require('./routes/conversation');
 var mobile = require('./routes/mobile');
+var order = require('./routes/order');
 
 
 
@@ -125,6 +126,7 @@ app.use('/others',others);
 app.use('/committee',committee);
 app.use('/conversation',conversation);
 app.use('/mobile',mobile);
+app.use('/order',order);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

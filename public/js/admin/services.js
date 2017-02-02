@@ -833,4 +833,20 @@
       return self;
     }]);
 
+    app.service('OrderServ',['$http',function($http){
+      var self = {
+        'newOrder': function(){
+          return $http.post('/mobile');
+        },
+        'getNewOrder': function(){
+          console.log("##1");
+          return $http.get('/order/all');
+        },
+        'getClothes': function(limit,page){
+        return $http.get('/clothes/'+limit+'/'+page);
+      }
+      };
+      return self;
+    }]);
+
 }());
