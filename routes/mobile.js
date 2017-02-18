@@ -6,7 +6,7 @@ var conversationMgr = require("../controller/conversation");
 var adminMgr = require("../controller/admin");
 var teacherMgr = require("../controller/teacher");
 var parentMgr = require("../controller/parent");
-
+var orderMgr = require("../controller/order");
 
 router.post('/children/all', function(req, res) {
   studentMgr.getStudentByParentId(req.session.school,req.body._id,function(child){
@@ -19,10 +19,27 @@ router.post('/children/all', function(req, res) {
         }
       });
     }
-    
+
   });
 });
+router.post('/order', function(req, res) {
+  var details={
+    name: "dd",
+    size:'s',
+    quantity:2
+    };
+    var detArray = [];
+      detArray.push(details);
+    var obj= {
+          student:'585153067086c158330be792',
+          school:'5851510d7086c158330be778',
+          details:detArray
 
+    };
+  orderMgr.addOrder(obj,function(result){
+
+  });
+});
 router.post('/person',userHelpers.isLogin, function(req, res) {
   if(req.body.type=='STUDENT'){
     studentMgr.getStudentId(req.body._id,function(student){
@@ -49,7 +66,7 @@ router.post('/person',userHelpers.isLogin, function(req, res) {
       });
     });
   }
-  
+
 });
 
 // Mobile App Router :
