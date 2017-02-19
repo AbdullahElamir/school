@@ -15,6 +15,7 @@
     $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
+    
     $scope.init = function (searchValue) {
       if( searchValue === 'undefined' || !searchValue ){
         searchValue = "";

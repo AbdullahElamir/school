@@ -844,6 +844,9 @@
         },
         'getClothes': function(limit,page){
         return $http.get('/clothes/'+limit+'/'+page);
+      },
+      getOrderById: function(id){
+        return $http.get('/order/getOrderById/'+id);
       }
       };
       return self;

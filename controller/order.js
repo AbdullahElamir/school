@@ -35,6 +35,18 @@ module.exports = {
         cb(null);
       }
     });
+  },
+
+  getOrderById :function(id,cb){
+    model.Order.find({student:id})
+    .populate("school")
+    .exec(function(err, result){
+      if(!err){
+        cb(result);
+      }else{
+        cb(null);
+      }
+    });
   }
 
 };
