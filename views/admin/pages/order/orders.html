@@ -32,21 +32,23 @@
             <div class="tab-content">
               <div class="tab-pane active" id="tab_default_1">
                 <div class="col-xs-7 col-md-6">
-                  <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getOrderBySearchValue(searchValue)" placeholder="بحث ..">
+                  <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getStudentBySearchValue(searchValue)" placeholder="بحث ..">
                 </div>
                 <div class="portlet-body" style="padding-top:0px;">
                   <table class="table table-striped">
                     <thead>
                       <tr >
                         <th class="text-center">الاسم</th>
+                         <th class="text-center">الرقم الوطني</th>
                         <th class="text-center"><i class="fa fa-cog"></i></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td class="text-center">محمد علي القماطي</td>
+                      <tr ng-repeat="std in students">
+                        <td class="text-center">{{std.name}}</td>
+                         <td class="text-center">{{std.nid}}</td>
                         <td class="text-center">
-                          <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent()"><i class="fa fa-bars fa-fw"></i>&nbsp;عرض الطلبية</a>
+                          <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent(std._id)"><i class="fa fa-bars fa-fw"></i>&nbsp;عرض الطلبية</a>
                         </td>
                       </tr>
                     </tbody>
@@ -69,22 +71,24 @@
               </div>
               <div class="tab-pane" id="tab_default_2">
                 <div class="col-xs-7 col-md-6">
-                  <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getOrderBySearchValue(searchValue)" placeholder="بحث ..">
+                  <input type="text" class="form-control input-sm" ng-model="searchValue" ng-init="searchValue = '' " ng-change="getStudentBySearchValue(searchValue)" placeholder="بحث ..">
                 </div>
                 <div class="portlet-body" style="padding-top:0px;">
                   <table class="table table-striped">
                     <thead>
                       <tr >
                         <th class="text-center">الاسم</th>
+                         <th class="text-center">الرقم الوطني</th>
                         <th class="text-center"><i class="fa fa-cog"></i></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td class="text-center">محمد علي القماطي</td>
+                      <tr ng-repeat="std in students">
+                        <td class="text-center">{{std.name}}</td>
+                         <td class="text-center">{{std.nid}}</td>
                         <td class="text-center">
-                          <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent()"><i class="fa fa-bars fa-fw"></i>&nbsp;عرض الطلبية</a>
-                          <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent()"><i class="fa fa-ban fa-fw"></i>&nbsp;رفض الطلبية</a>
+                          <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent(std._id)"><i class="fa fa-bars fa-fw"></i>&nbsp;عرض الطلبية</a>
+                          <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent(std._id)"><i class="fa fa-ban fa-fw"></i>&nbsp;رفض الطلبية</a>
                         </td>
                       </tr>
                     </tbody>
@@ -100,14 +104,14 @@
                     <thead>
                       <tr >
                         <th class="text-center">الاسم</th>
-                        <th class="text-center">تاريخ الطلبية</th>
+                         <th class="text-center">الرقم الوطني</th>
                         <th class="text-center"><i class="fa fa-cog"></i></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td class="text-center">محمد علي القماطي</td>
-                        <td class="text-center">2017/01/01</td>
+                      <tr ng-repeat="std in students">
+                        <td class="text-center">{{std.name}}</td>
+                         <td class="text-center">{{std.nid}}</td>
                         <td class="text-center">
                           <a class="btn btn-success btn-xs"  href="/teacher/report1" target="_blank"><i class="fa fa-file-text fa-fw"></i>&nbsp;طباعة واصل الاستلام</a>
                         </td>
@@ -122,4 +126,10 @@
       </div>
   </div>
 </form>
+      <div class="row" ng-show="students.length">
+        <div class="col-xs-12 col-md-12 text-center">
+          <uib-pagination class="hidden-xs btn-sm" boundary-links="true" rotate="false" max-size="5" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="السابق" next-text="التالي" first-text="الاول" last-text="الاخير"></uib-pagination>
+          <uib-pagination class="visible-xs" boundary-links="true" rotate="false" max-size="3" total-items="total" ng-model="currentPage" items-per-page="pageSize" ng-click="init(searchValue)" previous-text="‹" next-text="›" first-text="«" last-text="»"></uib-pagination>
+        </div>
+      </div>
 

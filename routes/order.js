@@ -11,5 +11,13 @@ router.get('/all', userHelpers.isLogin,function(req, res) {
 
 });
 
+router.get('/getOrderById/:id', userHelpers.isLogin,function(req, res) {
+  OrderMgr.getOrderById(req.params.id, function(order){
+    res.send(order);
+  });
+
+});
+
+
 
 module.exports = router;
