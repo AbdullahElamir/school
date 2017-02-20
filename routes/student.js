@@ -141,7 +141,9 @@ router.get('/report4/:stupro',userHelpers.isLogin,userHelpers.isAdmin , function
       var m =[];
       
       for(e in exsam){
-        if(marks[exsam[e]._id].exsamR[sub.id_subject._id] == undefined){
+        if(marks[exsam[e]._id] == undefined){
+          var resul = marks[exsam[e]._id].exsamM[sub.id_subject._id]+" / "+0; 
+        }else if(marks[exsam[e]._id].exsamR[sub.id_subject._id] == undefined){
           var resul = marks[exsam[e]._id].exsamM[sub.id_subject._id]+" / "+0;
         }else{
           var resul = marks[exsam[e]._id].exsamM[sub.id_subject._id]+" / "+marks[exsam[e]._id].exsamR[sub.id_subject._id];

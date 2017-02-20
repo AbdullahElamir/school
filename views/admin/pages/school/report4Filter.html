@@ -1,0 +1,70 @@
+<form novalidate ng-submit="newSubject()">
+  <div class="portlet light bordered">
+    <div class="portlet-title">
+      <div class="row">
+        <div class="col-xs-6 col-md-6">
+          <div class="caption caption-md">
+            <i class="icon-settings font-green"></i>
+            <span class="caption-subject font-green bold">تقرير التقيم النصف الشهري</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label class="control-label">السنة الدراسية</label>
+              <select required class="form-control input-sm" ng-model="year" ng-options="year._id as year.name for year in years" ng-change="getClass()">
+                <option value="" disabled selected>الرجاء الاختيار</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label class="control-label">الفصول الدراسية</label>
+              <select required class="form-control input-sm" ng-model="classRoom" ng-options="clas._id as clas.name for clas in AllclassRooms" ng-change="getstudent()">
+                <option value="" disabled selected>الرجاء الاختيار</option>
+              </select>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-10 col-md-10 col-lg-10 col-md-offset-2">
+        <div class="row">
+          <div class="col-xs-12 col-md-5">
+            <div class="form-group">
+              <label class="control-label">الطلبة</label>
+              <select required class="form-control input-sm" ng-model="stupro" ng-options="stu.stupro as stu.student.name for stu in students">
+                <option value="" disabled selected>الرجاء الاختيار</option>
+              </select>
+            </div>
+          </div>
+        <!--   <div class="col-xs-12 col-md-5">
+            <div class="form-group">
+              <label class="control-label">الاشهر</label>
+              <select required class="form-control input-sm" ng-model="month" ng-options="m.id as m.name for m in months">
+                <option value="" disabled selected>الرجاء الاختيار</option>
+              </select>
+            </div>
+          </div> -->
+        </div>
+
+    </div>
+      <hr>
+        <div class="row">
+          <div class="col-xs-6 col-md-2 col-md-offset-5">
+            <button type="button" class="btn btn-primary btn-sm btn-block" ng-click="report4()"><i class="fa fa-plus"></i>&nbsp; عرض التقرير</button>
+          </div>
+        <!--   <div class="col-xs-6 col-md-2">
+            <a class="btn btn-success btn-sm btn-block" onclick="$('#SubjectsId').click();"><i class="fa fa-ban"></i>&nbsp;إلغاء</a>
+          </div> -->
+        </div>
+      </div>
+
+
+  </div>
+</form>
