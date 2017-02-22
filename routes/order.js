@@ -4,8 +4,8 @@ var OrderMgr = require("../controller/order");
 var userHelpers = require("../controller/userHelpers");
 
 
-router.get('/all', userHelpers.isLogin,function(req, res) {
-  OrderMgr.getNewOrder(req.session.school, function(order){
+router.get('/all/:limit/:page/:status', userHelpers.isLogin,function(req, res) {
+  OrderMgr.getAllOrder(req.params.status,req.params.limit,req.params.page,req.session.school, function(order){
     res.send(order);
   });
 
@@ -13,7 +13,7 @@ router.get('/all', userHelpers.isLogin,function(req, res) {
 
 router.get('/getOrderById/:id', userHelpers.isLogin,function(req, res) {
   OrderMgr.getOrderById(req.params.id, function(order){
-    res.send(order);
+    // res.send(order);
   });
 
 });

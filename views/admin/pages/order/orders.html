@@ -17,15 +17,15 @@
           <div class="tabbable-line">
             <ul class="nav nav-tabs ">
               <li class="active 1">
-                <a data-target="#tab_default_1" data-toggle="tab">
+                <a data-target="#tab_default_1" data-toggle="tab" ng-click="sendStatus('SENDING')">
                 جديدة </a>
               </li>
               <li class="2">
-                <a data-target="#tab_default_2" data-toggle="tab">
+                <a data-target="#tab_default_2" data-toggle="tab" ng-click="sendStatus('PENDING')">
                 قيد الطلب </a>
               </li>
               <li class="3">
-                <a data-target="#tab_default_3" data-toggle="tab">
+                <a data-target="#tab_default_3" data-toggle="tab" ng-click="sendStatus('ACCEPTED')">
                 تم التوفير </a>
               </li>
             </ul>
@@ -45,8 +45,8 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="std in students">
-                        <td class="text-center">{{std.name}}</td>
-                         <td class="text-center">{{std.nid}}</td>
+                        <td class="text-center">{{std.student.name}}</td>
+                         <td class="text-center">{{std.student.nid}}</td>
                         <td class="text-center">
                           <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent(std._id)"><i class="fa fa-bars fa-fw"></i>&nbsp;عرض الطلبية</a>
                         </td>
@@ -84,8 +84,8 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="std in students">
-                        <td class="text-center">{{std.name}}</td>
-                         <td class="text-center">{{std.nid}}</td>
+                         <td class="text-center">{{std.student.name}}</td>
+                         <td class="text-center">{{std.student.nid}}</td>
                         <td class="text-center">
                           <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent(std._id)"><i class="fa fa-bars fa-fw"></i>&nbsp;عرض الطلبية</a>
                           <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent(std._id)"><i class="fa fa-ban fa-fw"></i>&nbsp;رفض الطلبية</a>
@@ -110,10 +110,10 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="std in students">
-                        <td class="text-center">{{std.name}}</td>
-                         <td class="text-center">{{std.nid}}</td>
+                        <td class="text-center">{{std.student.name}}</td>
+                        <td class="text-center">{{std.student.nid}}</td>
                         <td class="text-center">
-                          <a class="btn btn-success btn-xs"  href="/teacher/report1" target="_blank"><i class="fa fa-file-text fa-fw"></i>&nbsp;طباعة واصل الاستلام</a>
+                        <a class="btn btn-success btn-xs"  href="/teacher/report1" target="_blank"><i class="fa fa-file-text fa-fw"></i>&nbsp;طباعة واصل الاستلام</a>
                         </td>
                       </tr>
                     </tbody>

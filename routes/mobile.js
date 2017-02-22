@@ -22,7 +22,7 @@ router.post('/children/all', function(req, res) {
 
   });
 });
-router.post('/order', function(req, res) {
+router.get('/order', function(req, res) {
   var details={
     name: "dd",
     size:'s',
@@ -31,8 +31,8 @@ router.post('/order', function(req, res) {
     var detArray = [];
       detArray.push(details);
     var obj= {
-          student:'585153067086c158330be792',
-          school:'5851510d7086c158330be778',
+          student:'58a9ceded328aa211cce3af2',
+          school:'588f966a82bf9923af13bf19',
           details:detArray
 
     };

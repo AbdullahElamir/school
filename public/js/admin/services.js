@@ -838,9 +838,8 @@
         'newOrder': function(){
           return $http.post('/mobile');
         },
-        'getNewOrder': function(){
-          console.log("##1");
-          return $http.get('/order/all');
+        'getAllOrder': function(status,limit,page){
+          return $http.get('/order/all/'+limit+'/'+page+'/'+status);
         },
         'getClothes': function(limit,page){
         return $http.get('/clothes/'+limit+'/'+page);

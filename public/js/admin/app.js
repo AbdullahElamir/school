@@ -1300,7 +1300,7 @@
       url: '/orders',
       templateUrl: 'admin/pages/order/orders',
       data: {pageTitle: 'طلبات الزي'},
-      controller: 'NewOrderCtl',
+      controller: 'orderCtl',
       resolve: {
         deps: ['$ocLazyLoad',function($ocLazyLoad){
           return $ocLazyLoad.load({

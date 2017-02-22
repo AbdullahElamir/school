@@ -27,13 +27,20 @@ module.exports = {
     });
   },
 
-  getNewOrder :function(school,cb){
-    model.Order.find({school: school ,details: {$elemMatch: {status:"SENDING"}}}).populate("student").exec(function(err, result){
-      if(!err){
-        cb(result);
-      }else{
-        cb(null);
-      }
+  getAllOrder :function(status,limit,page,school,cb){
+    console.log(school);
+    page = parseInt(page);
+    page-=1;
+    limit = parseInt(limit);
+    model.Order.count({school: school ,details: {$elemMatch: {status:status}}} ,function(err,count){
+      model.Order.find({school: school},{details: {$elemMatch: {status:status}}}).exec(function(err, result){
+        if(!err){
+          console.log(result);
+          cb({result:result,count:count});
+        }else{
+          cb(null);
+        }
+      });
     });
   },
 

@@ -1,31 +1,49 @@
 (function(){
   'use strict';
   var app = angular.module('adminSchool');
-  app.controller('NewOrderCtl',['$scope','$modal','OrderServ','StudentServ',function($scope,$modal,OrderServ,StudentServ){
+  app.controller('orderCtl',['$scope','$modal','OrderServ','StudentServ',function($scope,$modal,OrderServ,StudentServ){
 
-      $scope.pageSize = 10;
+    $scope.pageSize = 10;
     $scope.currentPage = 1;
     $scope.total = 0;
 
-    $scope.init = function (searchValue) {
-      if( searchValue === 'undefined' || !searchValue ){
-        searchValue = "";
-      }
-      searchValue = encodeURIComponent(searchValue);
-      StudentServ.getStudentsBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
+    // $scope.init = function (searchValue) {
+    //   if( searchValue === 'undefined' || !searchValue ){
+    //     searchValue = "";
+    //   }
+    //   searchValue = encodeURIComponent(searchValue);
+    //   StudentServ.getStudentsBySearchValue(searchValue,$scope.pageSize,$scope.currentPage).then(function(response) {
+    //     // $scope.students = response.data.result;
+    //     console.log($scope.students);
+    //     $scope.total = response.data.count;
+    //   }, function(response){
+    //     console.log("Something went wrong");
+    //   });
+
+    $scope.sendStatus=function(status){
+      OrderServ.getAllOrder(status,$scope.pageSize,$scope.currentPage).then(function(response) {
         $scope.students = response.data.result;
         console.log($scope.students);
         $scope.total = response.data.count;
       }, function(response){
         console.log("Something went wrong");
       });
-     };
-    $scope.init("");
-
-      $scope.getStudentBySearchValue = function (searchValue){
-      $scope.currentPage = 1;
-      $scope.init(searchValue);
     };
+    $scope.sendStatus("SENDING");
+      //  OrderServ.getNewOrder($scope.pageSize,$scope.currentPage).then(function(response) {
+      //    $scope.students = response.data.result;
+      //   console.log($scope.students);
+      //   $scope.total = response.data.count;
+      // }, function(response){
+      //   console.log("Something went wrong");
+      // });
+     
+    // $scope.init("");
+
+    //   $scope.getStudentBySearchValue = function (searchValue){
+    //   $scope.currentPage = 1;
+    //   $scope.init(searchValue);
+    // };
 
     //   OrderServ.newOrder().then(function(response) {
     //     OrderServ.getNewOrder().then(function(response1) {
