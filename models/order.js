@@ -16,5 +16,4 @@ var Order = new Schema({
 });
 
 Order.plugin(timestamps);
-Order.index({ name: 'text'});
 exports.Order = mongoose.model('Order', Order);

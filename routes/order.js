@@ -15,8 +15,14 @@ router.get('/getOrderById/:id', userHelpers.isLogin,function(req, res) {
   OrderMgr.getOrderById(req.params.id, function(order){
     // res.send(order);
   });
-
 });
+
+router.post('/changeStatus', userHelpers.isLogin,function(req, res) {
+  OrderMgr.changeStatus(req.body,req.session.school, function(order){
+    res.send(order);
+  });
+});
+
 
 
 

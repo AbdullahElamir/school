@@ -48,7 +48,7 @@
                         <td class="text-center">{{std.student.name}}</td>
                          <td class="text-center">{{std.student.nid}}</td>
                         <td class="text-center">
-                          <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent(std._id)"><i class="fa fa-bars fa-fw"></i>&nbsp;عرض الطلبية</a>
+                          <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent(std.details)"><i class="fa fa-bars fa-fw"></i>&nbsp;عرض الطلبية</a>
                         </td>
                       </tr>
                     </tbody>
@@ -87,8 +87,7 @@
                          <td class="text-center">{{std.student.name}}</td>
                          <td class="text-center">{{std.student.nid}}</td>
                         <td class="text-center">
-                          <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent(std._id)"><i class="fa fa-bars fa-fw"></i>&nbsp;عرض الطلبية</a>
-                          <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudent(std._id)"><i class="fa fa-ban fa-fw"></i>&nbsp;رفض الطلبية</a>
+                          <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="viewStudentPending(std.details)"><i class="fa fa-bars fa-fw"></i>&nbsp;عرض الطلبية</a>
                         </td>
                       </tr>
                     </tbody>

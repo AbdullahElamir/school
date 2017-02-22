@@ -33,9 +33,8 @@ module.exports = {
     page-=1;
     limit = parseInt(limit);
     model.Order.count({school: school ,details: {$elemMatch: {status:status}}} ,function(err,count){
-      model.Order.find({school: school},{details: {$elemMatch: {status:status}}}).exec(function(err, result){
+      model.Order.find({school: school,details: {$elemMatch: {status:status}}}).populate("student").limit(limit).skip(page*limit).exec(function(err, result){
         if(!err){
-          console.log(result);
           cb({result:result,count:count});
         }else{
           cb(null);
@@ -54,7 +53,17 @@ module.exports = {
         cb(null);
       }
     });
+  },
+  changeStatus: function(body,school,cb){
+    model.Order.findOneAndUpdate({school: school ,details: {$elemMatch: {_id:body.id}}},{ $set: {"details.$.status": body.statu}},function(err,result){
+      if(!err){
+        cb(result);
+      }else{
+        cb(null);
+      }
+    });
   }
+
 
 };
 

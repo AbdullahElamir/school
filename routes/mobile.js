@@ -22,7 +22,7 @@ router.post('/children/all', function(req, res) {
 
   });
 });
-router.get('/order', function(req, res) {
+router.post('/order', function(req, res) {
   var details={
     name: "dd",
     size:'s',
@@ -37,7 +37,7 @@ router.get('/order', function(req, res) {
 
     };
   orderMgr.addOrder(obj,function(result){
-
+    
   });
 });
 router.post('/person',userHelpers.isLogin, function(req, res) {

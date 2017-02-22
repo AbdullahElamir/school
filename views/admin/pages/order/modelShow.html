@@ -1,7 +1,7 @@
 
 <div class="modal fade-in-up" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
   <div class="modal-dialog" >
-    <div class="modal-content" ng-repeat="det in Alldetails">
+    <div class="modal-content">
       <div class="modal-header" >
         <button type="button" class="close" ng-click="$hide()">&times;</button>
         <h3 class="modal-title">تفاصيل الطلبية</h3>
@@ -19,38 +19,22 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="det in det.details">
+                <tr ng-repeat="det in Alldetails">
                   <td>{{det.name}}</td>
                   <td>{{det.size}}</td>
                   <td>{{det.quantity}}</td>
 
                   <td class="text-center">
-                    <a class="btn btn-success btn-xs" ui-sref="orderStatus({statu:'ACCEPTED'})"><i class="fa fa-check-circle-o fa-fw"></i>&nbsp;تأكيد</a>
-                    <a class="btn btn-danger btn-xs" ui-sref="orderStatus({statu:'REJECTED'})"><i class="fa fa-times-circle-o fa-fw"></i>&nbsp;رفض</a>
-                    <a class="btn btn-warning btn-xs" ui-sref="orderStatus({statu:'PENDING'})"><i class="fa fa-spinner fa-fw"></i>&nbsp;انتظار</a>
+                    <a class="btn btn-success btn-xs" ng-click="orderStatus({statu:'ACCEPTED',id:det._id})"><i class="fa fa-check-circle-o fa-fw"></i>&nbsp;تأكيد</a>
+                    <a class="btn btn-danger btn-xs" ng-click="orderStatus({statu:'REJECTED',id:det._id})"><i class="fa fa-times-circle-o fa-fw"></i>&nbsp;رفض</a>
+                    <a ng-if="det.status!='PENDING'" class="btn btn-warning btn-xs" ng-click="orderStatus({statu:'PENDING',id:det._id})"><i class="fa fa-spinner fa-fw"></i>&nbsp;انتظار</a>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <!-- <div>
-              <div class="alert alert-info">
-                <p class="text-center">
-                  عفوا لاتوجد بيانات
-                </p>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
-      <!-- <form ng-submit="confirmDelete(id)">
-        <div class="modal-body">
-          <h5>هل تريد فعلا حذف {{deleteName}} ؟</h5>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" ng-click="deleteModel.hide()">لا</button>
-          <button type="submit" class="btn btn-info">نعم</button>
-        </div>
-      </form> -->
     </div>
   </div>
 </div>

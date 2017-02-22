@@ -846,6 +846,9 @@
       },
       getOrderById: function(id){
         return $http.get('/order/getOrderById/'+id);
+      },
+      changeStatus: function(ff){
+        return $http.post('/order/changeStatus',ff);
       }
       };
       return self;
