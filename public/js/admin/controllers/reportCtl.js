@@ -36,6 +36,9 @@
     $scope.report = function(){
      window.location.href='student/report2/'+$scope.stupro+'/'+$scope.month;
     };
+    $scope.report4 = function(){
+     window.location.href='student/report4/'+$scope.stupro;
+    };
   }]);
 
 
