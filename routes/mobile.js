@@ -24,20 +24,32 @@ router.post('/children/all', function(req, res) {
 });
 router.post('/order', function(req, res) {
   var details={
-    name: "dd",
-    size:'s',
-    quantity:2
+    name: req.body.type,
+    size:req.body.size,
+    quantity:req.body.quantity,
+    date:req.body.date
     };
     var detArray = [];
       detArray.push(details);
     var obj= {
-          student:'58a9ceded328aa211cce3af2',
-          school:'588f966a82bf9923af13bf19',
+          student:req.body.studentId,
+          school:req.body.schoolId,
           details:detArray
 
     };
   orderMgr.addOrder(obj,function(result){
-    
+    var obj={
+      schoolId:result.school,
+      type:result.details[result.details.length-1].name,
+      quantity:result.details[result.details.length-1].quantity,
+      size:result.details[result.details.length-1].size,
+      date:result.details[result.details.length-1].date,
+      status:result.details[result.details.length-1].status,
+      _id:result._id,
+      studentName:req.body.studentName,
+      studentId:result.student
+    };
+    res.send(obj);
   });
 });
 router.post('/person',userHelpers.isLogin, function(req, res) {

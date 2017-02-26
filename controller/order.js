@@ -7,15 +7,17 @@ module.exports = {
       if (!err) {
         if(result){
           result.details.push(data.details[0]);
-          model.Order.findOneAndUpdate({student : data.student}, {details:result.details}, function(err,result1) {
-            cb(result1);
+          model.Order.update({student : data.student}, {details:result.details}, function(err,result1) {
+              model.Order.findOne({student : data.student}, function(err, result){
+                cb(result);
+              });
           });
 
         }else{
           order = new model.Order(data);
-          order.save(function(err){
+          order.save(function(err,result2){
             if (!err) {
-              cb(true);
+              cb(result2);
             } else {
               cb(false);
             }
