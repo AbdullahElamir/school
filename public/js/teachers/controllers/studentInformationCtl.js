@@ -25,13 +25,13 @@
     }
 
     $scope.calculateAvg = function(semester) {
-      var type2 = {};
-
-      for(var i=0 ; i<$scope.examsGrades.length ; i++ ){
-        if( $scope.examsGrades[i].semester == semester && $scope.examsGrades[i].type == 2 ){
-          type2 = $scope.examsGrades[i];
-        }
-      }
+      var type2 = {mark:22};
+      // for(var i=0 ; i<$scope.examsGrades.length ; i++ ){
+      //   if( $scope.examsGrades[i].semester == semester && $scope.examsGrades[i].type == 2 ){
+      //     type2 = $scope.examsGrades[i];
+      //     console.log(type2);
+      //   }
+      // }
 
       var sum = 0.0 , count=0;
 
@@ -86,15 +86,15 @@
             }
           }
         }
-
         for(var s=0 ; s<semesters.length ; s++ ){
+
           $scope.calculateAvg(semesters[s]);
         }
 
       },function(err){
         console.log("Something went wrong");
       });
-
+      console.log($scope.examsGrades);
     };
 
     $scope.saveGrades = function() {
@@ -125,7 +125,7 @@
         console.log("Somthing went wrong");
       });
     };
-
+    
   }]);
 
 }());

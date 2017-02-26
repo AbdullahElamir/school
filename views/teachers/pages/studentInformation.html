@@ -91,7 +91,7 @@
                                 <span ng-if="ex.type!=2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
                                 <input  ng-if="ex.type!=2" aria-describedby="basic-addon1" type="number" required="required" placeholder="الدرجة" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" ng-change="calculateAvg(ex.semester)" >
                                 <span ng-if="ex.type==2" class="input-group-addon" id="basic-addon1">{{ ex.mark }} /</span>
-                                <input  ng-if="ex.type==2"  disabled="disabled" readonly="readonly" aria-describedby="basic-addon1" type="number" required="required" ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" >
+                                <input  ng-if="ex.type==2"  disabled="disabled" readonly="readonly" aria-describedby="basic-addon1" type="number"  ng-model="ex.studentMark" class="form-control text-center"  min="{{0}}" max="{{ex.mark}}" >
                             </div>
                           </div>
                         </td>
